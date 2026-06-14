@@ -54,8 +54,15 @@ h1.tt em{color:#3fd0b8;font-style:italic;font-weight:500}
 .worldlab.l{left:clamp(1.2rem,4vw,3rem);color:var(--brass)}.worldlab.r{right:clamp(1.2rem,4vw,3rem);color:#3fd0b8}
 .rev{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ezl) var(--d,0s),transform 1.1s var(--ezl) var(--d,0s)}
 .rev.in{opacity:1;transform:none}
+.stations .station.rev:not(.in){transform:translateY(28px) scale(.97)}
+.timeline .tl.rev:not(.in){transform:translateX(-30px)}
+.wall .pc.rev:not(.in){transform:translateY(46px) scale(.96)}
+.certs .cert.rev:not(.in){transform:translateY(30px) scale(.98)}
+.acards .ac.rev:not(.in){transform:translateY(34px)}
+.wall .pc.rev,.certs .cert.rev,.acards .ac.rev{transition-timing-function:cubic-bezier(.34,1.28,.64,1)}
 .sec{padding:8rem 0}
-.panel{background:linear-gradient(180deg,rgba(7,13,28,.88),rgba(7,13,28,.94));border:1px solid var(--iv-14);border-radius:24px;padding:clamp(2rem,5vw,4rem);backdrop-filter:blur(4px)}
+.panel{position:relative;background:linear-gradient(180deg,rgba(7,13,28,.88),rgba(7,13,28,.94));border:1px solid var(--iv-14);border-radius:24px;padding:clamp(2rem,5vw,4rem);backdrop-filter:blur(4px)}
+.panel::before{content:"";position:absolute;top:0;left:clamp(2rem,5vw,4rem);right:clamp(2rem,5vw,4rem);height:1px;background:linear-gradient(90deg,transparent,rgba(224,162,60,.55),transparent)}
 .eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);display:inline-flex;gap:.7rem;align-items:center}
 .eyebrow .no{color:var(--iv-30)}
 h2.h{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,5.2vw,4rem);line-height:1.04;letter-spacing:-.015em;margin-top:1rem;max-width:22ch;color:#fff}
@@ -233,10 +240,10 @@ a:focus-visible,.btn:focus-visible,.pc:focus-visible,.cert:focus-visible,.nav a:
       <div class="ac rev" style="--d:.22s"><div class="n">Team</div><h3>Multi-Agent-Orchestrierung</h3><p>BMAD, Subagenten, Agent-SDK, MCP-Server. Ich steuere mehrere Agenten parallel — diese Seite ist über orchestrierte Agenten entstanden, ich habe dirigiert.</p><div class="m">Claude Code · Cowork · Terminal</div></div>
     </div>
     <div class="screens rev" style="--d:.2s">
-      <a href="/claude-code.html"><img src="/assets/img/term-web-research.jpg" alt="Workflow"></a>
-      <a href="/claude-code.html"><img src="/assets/img/term-dokumenten-analyst.jpg" alt="Agent"></a>
-      <a href="/claude-code.html"><img src="/assets/img/term-revenue.jpg" alt="Dashboard"></a>
-      <a href="/claude-code.html"><img src="/assets/img/scene-mechanismus.jpg" alt="Mechanismus"></a>
+      <a href="https://myflowmotion.cloud" target="_blank" rel="noopener"><img src="/assets/img/term-web-research.jpg" alt="Workflow"></a>
+      <a href="https://myflowmotion.cloud" target="_blank" rel="noopener"><img src="/assets/img/term-dokumenten-analyst.jpg" alt="Agent"></a>
+      <a href="https://myflowmotion.cloud" target="_blank" rel="noopener"><img src="/assets/img/term-revenue.jpg" alt="Dashboard"></a>
+      <a href="https://myflowmotion.cloud" target="_blank" rel="noopener"><img src="/assets/img/scene-mechanismus.jpg" alt="Mechanismus"></a>
     </div>
   </div>
 </section>
@@ -311,8 +318,10 @@ void main(){
   col=mix(col,ivory,fil*.55);
   float d=length(p-m*1.2);
   col+=teal*.09*exp(-d*2.2)*(1.-warm)+brass*.09*exp(-d*2.2)*warm;
+  col=mix(col,teal,prog*0.13);
+  col=mix(col,brass*0.85,(1.0-prog)*0.10*warm);
   col*=.8+.3*f;
-  col*=0.6;
+  col*=0.62;
   col*=1.0-0.4*dot(uv-.5,uv-.5);
   col=pow(max(col,0.),vec3(.96));
   gl_FragColor=vec4(col,1.);
