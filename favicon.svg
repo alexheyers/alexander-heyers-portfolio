@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Alex Heyers — Vibe Coding">
+  <!-- cremefarbene Skizzenbuch-Kachel mit Tinten-Rand -->
+  <rect x="5.5" y="5.5" width="89" height="89" rx="22" fill="#FBF7EE" stroke="#2B2A26" stroke-width="4.5"/>
+  <!-- teal Akzent-Ecke (Washi-Tape-Andeutung) -->
+  <path d="M66 9 L91 9 L91 34 Z" fill="#1AA591" opacity="0.85"/>
+  <!-- handgezeichnetes A -->
+  <g fill="none" stroke="#2B2A26" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M27 77 L49.5 23 L72.5 76"/>
+    <path d="M35 57 L64 56"/>
+  </g>
+  <!-- roter Marker-Schwung darunter -->
+  <path d="M26 85 q24 -8 48 1.5" fill="none" stroke="#E94B5D" stroke-width="6.5" stroke-linecap="round"/>
+</svg>

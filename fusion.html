@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>86 Tage · AI-Adoption Studio — Eine Reise im Skizzenbuch · Alex Heyers</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.svg">
+<meta name="theme-color" content="#FBF7EE">
+<meta name="description" content="Von Session 01 bis zum eigenen Multi-Agent-System: 86 Tage Vibe Coding, handgezeichnet als eine durchgehende Skizzenbuch-Reise. Story und Werk in einem Pfad. Auch eine Bewerbung.">
+<!-- ============================================================
+     SKETCH-EDITION · Eine Reise · Alex Heyers
+     Fusion: 86-Tage-Story (Teil I) + AI-Adoption Studio (Teil II)
+     in EINER durchgehenden Skizzenbuch-Erzaehlung.
+     EIN durchgehender SVG-Pfad zeichnet sich beim Scrollen ueber
+     die GANZE Seite: Story (Teal) -> Studio (Rot). An Wegpunkten
+     leuchten handgemalte Marker auf.
+     Gelber Textmarker GENAU EINMAL — fuer die Uhrzeit 20:34.
+     Alle Texte 1:1 aus CONTENT-MASTER.md. Selbst-enthalten,
+     file://-tauglich, responsive, Umlaute korrekt.
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Architects+Daughter&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF7EE;        /* warmes Papier */
+  --paper-deep:#F2EADB;   /* Schattenkante / Falten */
+  --card:#FFFCF4;         /* Karteikarten-Weiss, einen Tick heller */
+  --ink:#2B2A26;          /* Tinte / Haupttext */
+  --pencil:#8A8578;       /* Bleistift-Grau / Sekundaer */
+  --red:#E94B5D;          /* Marker-Rot: Durchstreichen, Kreise, Studio-Pfad */
+  --teal:#1AA591;         /* Marker-Teal: Highlights, Story-Pfad */
+  --yellow:#F5A623;       /* Gelber Textmarker — GENAU EINMAL (20:34) */
+  --washi:#cfe6e0;        /* Washi-Tape Grundton */
+  --ease:cubic-bezier(.16,1,.3,1);
+  --wobble:255px 15px 225px 15px / 15px 225px 15px 255px;
+  --wobble2:15px 225px 15px 255px / 255px 15px 225px 15px;
+  --wobble3:225px 15px 255px 15px / 15px 255px 15px 225px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Shantell Sans',cursive;
+  overflow-x:clip;
+  line-height:1.6;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--teal);color:var(--paper)}
+code,.mono{font-family:'JetBrains Mono',monospace}
+a{color:inherit}
+
+/* ===== Papier: Koernung + dezentes Punktraster + warme Vignette ===== */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(rgba(43,42,38,.10) 1px, transparent 1px);
+  background-size:26px 26px;opacity:.5;
+}
+.paper-edge{position:fixed;inset:0;z-index:1;pointer-events:none;
+  box-shadow:inset 0 0 180px rgba(120,100,60,.14),inset 0 0 60px rgba(120,100,60,.08)}
+
+/* ====== EIN durchgehender Pfad ueber die GANZE Seite ====== */
+#routeLayer{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+#routeLayer path{fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+#routeLayer #routeInk{stroke:var(--ink);opacity:.10;stroke-width:5.5;filter:url(#rough)}
+/* gepunktete Wanderroute — der „geplante Weg", immer sichtbar */
+#routeLayer #routeBase{stroke:var(--ink);opacity:.30;stroke-dasharray:.5 15;stroke-width:3.6;stroke-linecap:round}
+/* gezeichnete Tinten-Spur — zeichnet sich beim Scrollen ueber die Punkte */
+#routeLayer #routeLine{filter:url(#rough);opacity:.6;
+  stroke-dasharray:var(--rlen);stroke-dashoffset:var(--rlen)}
+/* Nib (Stiftspitze) = der Reisende, wandert mit dem Fortschritt */
+#routeLayer #routeNib{fill:var(--teal);opacity:0;transition:opacity .4s var(--ease)}
+#routeLayer #routeNib.on{opacity:.95}
+/* Wegmarken = Reise-Stempel: handgemalter Ring + Icon je Station, leuchten beim Erreichen auf */
+.route-mark{position:absolute;z-index:1;pointer-events:none;opacity:.18;
+  transform:translate(-50%,-50%) scale(.82) rotate(-7deg);
+  transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.route-mark.lit{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-5deg)}
+.route-mark .rm-pin{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+  font-size:1.4rem;line-height:1;background:var(--card);box-shadow:0 2px 8px rgba(43,42,38,.18)}
+.route-mark .rm-pin::before{content:"";position:absolute;inset:-3px;border-radius:50%;border:2.6px solid var(--teal)}
+.route-mark.studio .rm-pin::before{border-color:var(--red)}
+.route-mark.lit .rm-pin{box-shadow:0 4px 14px rgba(43,42,38,.24)}
+.route-mark .rm-lab{position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;
+  font-family:'Caveat',cursive;font-weight:700;font-size:1.25rem;color:var(--ink);opacity:0;
+  transition:opacity .5s var(--ease)}
+.route-mark.lit .rm-lab{opacity:.8}
+.route-mark.rm-left .rm-lab{left:60px}
+.route-mark.rm-right .rm-lab{right:60px;text-align:right}
+.route-mark.studio .rm-lab{color:#9a3340}
+@media(max-width:1240px){.route-mark .rm-lab{display:none}}
+@media(max-width:680px){.route-mark .rm-pin{width:38px;height:38px;font-size:1.15rem}}
+
+/* Galaxie-iframe: auf Touch nicht interaktiv (kein Scroll-Trap) — stattdessen in gross oeffnen */
+.galaxy-tap{display:none}
+@media (hover:none) and (pointer:coarse){
+  .galaxy-frame iframe{pointer-events:none}
+  .galaxy-tap{display:flex;align-items:flex-end;justify-content:center;position:absolute;inset:0;
+    padding-bottom:14px;text-decoration:none}
+  .galaxy-tap span{font-family:'Caveat',cursive;font-weight:700;font-size:1.35rem;color:var(--ink);
+    background:var(--card);border:2px solid var(--ink);border-radius:999px;padding:.45rem 1.1rem;
+    box-shadow:0 4px 14px rgba(43,42,38,.2)}
+}
+
+/* progress bar — Marker-Strich, wechselt Teal -> Rot */
+.scroll-bar{position:fixed;top:0;left:0;height:5px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--teal),var(--red));border-radius:0 4px 4px 0;opacity:.85}
+
+/* obere Notiz-Leiste */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.85rem 5vw;font-family:'Architects Daughter',cursive;font-size:.92rem;color:var(--pencil);
+  background:linear-gradient(180deg,rgba(251,247,238,.94),rgba(251,247,238,0));pointer-events:none}
+.topbar b{color:var(--ink)}
+.topbar .mid{display:inline-flex;align-items:center;gap:.5rem;color:var(--teal)}
+.topbar .mid::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 0 0 rgba(26,165,145,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(26,165,145,.5)}70%{box-shadow:0 0 0 9px rgba(26,165,145,0)}100%{box-shadow:0 0 0 0 rgba(26,165,145,0)}}
+@media(max-width:760px){.topbar .mid{display:none}}
+@media(max-width:520px){.topbar .right{display:none}}
+
+.wrap{position:relative;z-index:2}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:7rem 6vw;position:relative;max-width:1240px;margin:0 auto}
+section.short{min-height:auto}
+@media(max-width:680px){section{padding:5.5rem 7vw}}
+
+/* Eyebrow = handgeschriebenes Kapitel-Label mit Doodle */
+.eyebrow{font-family:'Architects Daughter',cursive;font-size:1rem;letter-spacing:.04em;color:var(--teal);
+  margin-bottom:1.3rem;display:inline-flex;align-items:center;gap:.7rem}
+.eyebrow::before{content:"\270E";font-size:1.1rem;opacity:.8}
+.eyebrow.red{color:var(--red)}
+.eyebrow.red::before{content:"\25CF";font-size:.62rem}
+.kicker{font-family:'Architects Daughter',cursive;color:var(--teal);letter-spacing:.03em;font-size:1rem;margin-bottom:.7rem;display:inline-block}
+.kicker .num{color:var(--red);font-weight:700;margin-right:.4rem;font-family:'JetBrains Mono',monospace}
+.scene-label{font-family:'Architects Daughter',cursive;color:var(--red);font-size:.86rem;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:.45rem;margin-bottom:.9rem}
+.scene-label::before{content:"\25CF";font-size:.6rem;color:var(--red)}
+
+/* Headlines */
+h1,h2,.head,.big,.title{font-family:'Caveat',cursive;font-weight:700;line-height:.99;color:var(--ink)}
+
+.lede,.lead{max-width:640px;font-size:clamp(1.05rem,1.7vw,1.3rem);line-height:1.65;color:var(--ink);font-weight:400}
+.lede strong,.lead strong{font-weight:700;color:var(--ink);background:linear-gradient(transparent 60%, rgba(26,165,145,.32) 60%)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px) rotate(-1.6deg);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.40s}
+
+/* Hand-Marker-Helfer */
+.hl-teal{background:linear-gradient(transparent 55%, rgba(26,165,145,.42) 55%);padding:0 .12em;border-radius:2px}
+.mark{position:relative;white-space:nowrap}
+.mark::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.02em;height:.5em;z-index:-1;
+  background:var(--teal);opacity:.3;border-radius:40% 60% 55% 45%/60% 50% 60% 50%;transform:rotate(-1.2deg)}
+.mark.r::after{background:var(--red);opacity:.24}
+/* selbst-zeichnende Marker-Unterstreichung */
+.uline{position:relative;display:inline-block}
+.uline svg{position:absolute;left:-4%;bottom:-.18em;width:108%;height:.5em;pointer-events:none;overflow:visible}
+.uline svg path{fill:none;stroke:var(--teal);stroke-width:7;stroke-linecap:round;opacity:.55;
+  stroke-dasharray:var(--ul);stroke-dashoffset:var(--ul);transition:stroke-dashoffset 1s var(--ease)}
+.uline.drawn svg path{stroke-dashoffset:0}
+/* eingekreistes Wort — Ellipse zeichnet sich beim Scroll */
+.circle-word{position:relative;display:inline-block;color:var(--red)}
+.circle-word svg{position:absolute;left:-14%;top:-30%;width:128%;height:162%;pointer-events:none;overflow:visible}
+.circle-word svg path{fill:none;stroke:var(--red);stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:var(--cl);stroke-dashoffset:var(--cl);transition:stroke-dashoffset 1.1s var(--ease)}
+.circle-word.drawn svg path{stroke-dashoffset:0}
+
+/* Sticky Note (sanftes Float) */
+.sticky{font-family:'Architects Daughter',cursive;background:#FFF7C9;color:#5a4a12;
+  padding:1rem 1.2rem;max-width:320px;box-shadow:3px 6px 14px rgba(43,42,38,.18);
+  position:relative;font-size:1rem;line-height:1.45;will-change:transform}
+.sticky::before{content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-4deg);
+  width:90px;height:26px;background:rgba(26,165,145,.32);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.float{animation:float 6s ease-in-out infinite}
+.float.f2{animation-duration:7.5s;animation-delay:-2s}
+@keyframes float{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(-3deg) translateY(-9px)}}
+
+/* Washi-Tape Streifen generisch */
+.washi{position:absolute;width:120px;height:30px;background:repeating-linear-gradient(45deg,rgba(233,75,93,.28) 0 8px,rgba(233,75,93,.14) 8px 16px);
+  box-shadow:0 1px 3px rgba(0,0,0,.12);z-index:3}
+
+/* Margin-Doodle — wackeln beim Reveal */
+.doodle{position:absolute;color:var(--red);font-family:'Caveat',cursive;font-weight:700;opacity:0;pointer-events:none;z-index:1;
+  transition:opacity .5s var(--ease)}
+.doodle.pop{opacity:.82;animation:wiggle 1.1s var(--ease)}
+@keyframes wiggle{0%{transform:rotate(var(--r,0deg)) scale(.5)}40%{transform:rotate(calc(var(--r,0deg) + 14deg)) scale(1.12)}
+  70%{transform:rotate(calc(var(--r,0deg) - 9deg)) scale(.96)}100%{transform:rotate(var(--r,0deg)) scale(1)}}
+
+/* Kaffeefleck */
+.coffee{position:absolute;width:140px;height:140px;border-radius:50%;pointer-events:none;z-index:0;
+  border:7px solid rgba(150,100,40,.16);box-shadow:inset 0 0 0 5px rgba(150,100,40,.07);
+  background:radial-gradient(circle at 60% 40%,rgba(150,100,40,.05),transparent 70%)}
+
+/* handgezeichnete Trennlinie */
+.rule{width:100%;max-width:1240px;margin:1vh auto;height:14px;overflow:visible;display:block}
+.rule path{fill:none;stroke:var(--pencil);stroke-width:2;stroke-linecap:round;opacity:.55}
+
+/* ====== getapetes Foto / Polaroid ====== */
+.photo{position:relative;display:inline-block;background:#fff;padding:12px 12px 14px;
+  box-shadow:7px 12px 26px rgba(43,42,38,.24);z-index:2;will-change:transform;border-radius:3px}
+.photo .ph{position:relative;overflow:hidden;background:var(--paper-deep);border:1px solid rgba(43,42,38,.10)}
+.photo .ph img{display:block;width:100%;height:auto;object-fit:cover;
+  mix-blend-mode:multiply;filter:saturate(.86) contrast(1.02)}
+.photo .ph .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;
+  gap:.5rem;text-align:center;padding:1rem;font-family:'Caveat',cursive;font-size:1.25rem;color:var(--pencil);line-height:1.15;
+  background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(138,133,120,.10) 9px 11px),var(--paper-deep)}
+.photo .ph .fallback .ic{font-size:2.2rem;opacity:.55}
+.photo.fail .ph img{display:none}
+.photo.fail .ph .fallback{display:flex}
+.photo::before{content:"";position:absolute;top:-15px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:128px;height:32px;background:repeating-linear-gradient(45deg,rgba(245,166,35,.30) 0 9px,rgba(245,166,35,.15) 9px 18px);
+  box-shadow:0 1px 3px rgba(0,0,0,.13);z-index:2}
+.photo figcaption{font-family:'Caveat',cursive;font-weight:600;font-size:1.25rem;color:var(--ink);
+  text-align:center;margin-top:.5rem;line-height:1.1}
+.photo.tealtape::before{background:repeating-linear-gradient(45deg,rgba(26,165,145,.32) 0 9px,rgba(26,165,145,.16) 9px 18px)}
+.photo.l{transform:rotate(-3deg)} .photo.r{transform:rotate(2.2deg)} .photo.s{transform:rotate(-1.4deg)}
+.photo.hover{transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.photo.hover:hover{transform:rotate(0) scale(1.02);box-shadow:5px 14px 32px rgba(43,42,38,.3)}
+
+/* ============ I/INTRO — Hero ============ */
+#intro{padding-top:8rem}
+#intro .grid{display:grid;grid-template-columns:1.35fr .9fr;gap:4vw;align-items:center;width:100%}
+@media(max-width:900px){#intro .grid{grid-template-columns:1fr}}
+#intro h1{font-size:clamp(3.8rem,13vw,11.5rem);margin:.2rem 0 1.2rem}
+#intro h1 .q{display:block;font-family:'Architects Daughter',cursive;font-size:clamp(1rem,2.4vw,1.7rem);
+  font-weight:400;color:var(--pencil);line-height:1.25;margin-bottom:.7rem;transform:rotate(-1.4deg);max-width:22ch}
+#intro .annot{font-family:'Architects Daughter',cursive;color:var(--red);font-size:1.05rem;
+  transform:rotate(-3deg);display:inline-block;margin-top:.6rem}
+#intro .hero-photo{max-width:460px;justify-self:center}
+/* Hero-Toolkit: handgezeichnete Werkzeug-Chips (3-Jahre-KI-Spur) */
+.toolkit{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .55rem;margin-top:1.6rem;max-width:46ch}
+.toolkit .tk-lab{font-family:'Caveat',cursive;font-weight:700;font-size:1.3rem;color:var(--red);margin-right:.2rem}
+.toolkit .tk{font-family:'Architects Daughter',cursive;font-size:.92rem;color:var(--ink);background:var(--card);
+  border:2px solid var(--ink);border-radius:999px;padding:.26rem .72rem;box-shadow:1px 2px 0 rgba(43,42,38,.12);
+  transform:rotate(-1.6deg);transition:transform .2s}
+.toolkit .tk:nth-child(even){transform:rotate(1.5deg)}
+.toolkit .tk:hover{transform:translateY(-2px) rotate(0)}
+.toolkit .tk.teal{border-color:var(--teal);color:#0c6f5f}
+/* ---------- HERO: Bootcamp-Badge, geschichtete Buehne, Siegel, Credibility ---------- */
+.bc-badge{display:inline-block;border:2px solid var(--teal);border-radius:14px;background:rgba(26,165,145,.07);
+  padding:.5rem .95rem;color:var(--ink);font-size:1rem;line-height:1.4}
+.bc-badge .bc-star{color:var(--red)}
+.bc-badge .bc-sub{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.05em;color:var(--pencil)}
+.hero-cred{font-family:'Architects Daughter',cursive;font-size:1.02rem;color:var(--pencil);margin-top:1rem;max-width:48ch}
+.hero-cred b{color:var(--ink)}
+.hero-stage{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:1/1.16;margin:0 auto}
+.hero-stage .photo{position:absolute;margin:0}
+.hero-stage .hero-port{width:64%;left:1%;top:3%;transform:rotate(-3.5deg);z-index:3}
+.hero-stage .hero-sketch{width:52%;right:0;bottom:0;transform:rotate(3.2deg);z-index:2}
+.hero-stage .photo figcaption{font-size:1.15rem}
+.bc-seal{position:absolute;left:-7%;bottom:7%;width:128px;height:128px;z-index:4;display:grid;place-items:center;transform:rotate(-9deg)}
+.bc-seal svg{position:absolute;inset:0;width:100%;height:100%}
+.bc-seal svg circle{fill:none;stroke:var(--red);stroke-width:2.6}
+.bc-seal svg circle:first-child{fill:var(--card)}
+.bc-seal-txt{position:relative;font-family:'Caveat',cursive;font-weight:700;text-align:center;line-height:.9;font-size:1.15rem;color:var(--red)}
+.bc-seal-txt b{display:block;font-size:1.5rem;color:var(--ink);margin-top:.1rem}
+@media(max-width:900px){.hero-stage{width:min(100%,380px);margin-top:1.2rem}}
+@media(max-width:480px){.bc-seal{width:98px;height:98px;left:-2%}.bc-seal-txt{font-size:.95rem}.bc-seal-txt b{font-size:1.18rem}.toolkit .tk{font-size:.84rem}}
+/* ---------- Gezeichnete Section-Hintergruende (nur die Tinte bleibt via multiply) ---------- */
+.sec-bg{position:absolute;pointer-events:none;z-index:0;opacity:.17;mix-blend-mode:multiply;
+  filter:saturate(.92);transition:opacity .8s var(--ease)}
+.sec-bg.r{right:-3vw;bottom:-2%;width:min(48%,560px)}
+.sec-bg.l{left:-3vw;top:6%;width:min(46%,520px)}
+.sec-bg.full{inset:0;width:100%;height:100%;object-fit:cover;opacity:.1}
+.sec-bg.soft{opacity:.12}
+section > .wrap, section > *:not(.sec-bg):not(.washi):not(.coffee):not(.doodle){position:relative;z-index:1}
+@media(max-width:680px){.sec-bg.r,.sec-bg.l{width:min(70%,360px);opacity:.12}}
+/* ============ HERO · cinematic (Design-Fanout) — scoped #intro / .hx- ============ */
+#intro.hx-hero{position:relative;min-height:100svh;width:100vw;margin-left:calc(50% - 50vw);max-width:none;
+  overflow:hidden;background:var(--paper);display:flex;align-items:center;isolation:isolate;--hx-edge:clamp(20px,5vw,84px)}
+#intro .hx-hero__scene{position:absolute;inset:0;left:50%;right:auto;width:min(82%,1180px);transform:translateX(-50%);z-index:0;pointer-events:none}
+#intro .hx-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;
+  mix-blend-mode:multiply;opacity:0;transform:scale(1.04);
+  -webkit-mask-image:radial-gradient(82% 82% at 50% 47%, #000 50%, rgba(0,0,0,.38) 76%, transparent 100%);
+  mask-image:radial-gradient(82% 82% at 50% 47%, #000 50%, rgba(0,0,0,.38) 76%, transparent 100%);
+  animation:hx-img-in 1.5s var(--ease) .15s forwards}
+#intro .hx-hero__halo{position:absolute;left:-30%;top:50%;width:80%;height:80%;transform:translateY(-50%);z-index:1;
+  background:radial-gradient(closest-side, rgba(251,247,238,.92) 0%, rgba(251,247,238,.55) 45%, transparent 78%)}
+#intro .hx-hero__inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:clamp(28px,6vh,72px) var(--hx-edge)}
+#intro .hx-hero__col{max-width:min(58ch,620px)}
+#intro .hx-badge{display:flex;flex-direction:column;gap:2px;margin-bottom:clamp(18px,4vh,34px);opacity:0;animation:hx-up .8s var(--ease) .25s forwards}
+#intro .hx-badge__line{font-family:'Architects Daughter',cursive;font-size:clamp(.82rem,1.5vw,1rem);color:var(--teal);letter-spacing:.01em}
+#intro .hx-badge__sub{font-family:'JetBrains Mono',monospace;font-size:clamp(.58rem,1.1vw,.72rem);letter-spacing:.16em;color:var(--pencil)}
+#intro .hx-head{position:relative;margin:0 0 clamp(22px,4vh,38px);line-height:.86}
+#intro .hx-head__pre{display:block;font-family:'Caveat',cursive;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.6rem);
+  color:var(--red);transform:rotate(-1.5deg);transform-origin:left;margin-bottom:.18em;opacity:0;animation:hx-up .8s var(--ease) .4s forwards}
+#intro .hx-head__big{display:block;font-family:'Caveat',cursive;font-weight:700;font-size:clamp(4.6rem,15.5vw,11rem);
+  color:var(--ink);letter-spacing:-.01em;text-shadow:0 1px 0 rgba(251,247,238,.7), 0 6px 26px rgba(251,247,238,.6);
+  clip-path:inset(0 100% 0 0);animation:hx-reveal 1.05s var(--ease) .55s forwards}
+#intro .hx-head__rule{display:block;width:0;height:5px;margin-top:.12em;border-radius:4px;background:var(--red);
+  transform:rotate(-.8deg);transform-origin:left;animation:hx-rule 1s var(--ease) 1.3s forwards}
+#intro .hx-punch{margin:0 0 clamp(24px,4.5vh,40px);font-family:'Architects Daughter',cursive;font-size:clamp(1.02rem,2vw,1.42rem);
+  line-height:1.5;color:var(--ink);max-width:48ch;opacity:0;animation:hx-up .85s var(--ease) 1.05s forwards}
+#intro .hx-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:clamp(8px,1.4vw,14px)}
+#intro .hx-chip{font-family:'JetBrains Mono',monospace;font-size:clamp(.72rem,1.4vw,.92rem);letter-spacing:.02em;color:var(--ink);
+  background:var(--card);border:1.5px solid var(--washi);border-radius:999px;padding:.42em .95em;box-shadow:2px 3px 0 rgba(43,42,38,.07);
+  opacity:0;transform:translateY(10px) rotate(-1deg);animation:hx-chip-in .6s var(--ease) forwards}
+#intro .hx-chip:nth-child(1){animation-delay:1.25s}
+#intro .hx-chip:nth-child(2){animation-delay:1.37s;transform:translateY(10px) rotate(1.2deg)}
+#intro .hx-chip:nth-child(3){animation-delay:1.49s;transform:translateY(10px) rotate(-.6deg)}
+#intro .hx-chip:nth-child(4){animation-delay:1.61s;transform:translateY(10px) rotate(1deg);color:var(--teal);border-color:var(--teal)}
+#intro .hx-scroll{position:absolute;left:var(--hx-edge);bottom:clamp(18px,3.4vh,32px);z-index:3;display:flex;align-items:center;gap:.55em;
+  font-family:'Architects Daughter',cursive;font-size:clamp(.78rem,1.4vw,.95rem);color:var(--pencil);opacity:0;animation:hx-up .8s var(--ease) 1.8s forwards}
+#intro .hx-scroll__arrow{font-size:1.25em;color:var(--teal);animation:hx-bounce 1.9s ease-in-out 2.4s infinite}
+@keyframes hx-img-in{from{opacity:0;transform:scale(1.04)}to{opacity:.78;transform:scale(1)}}
+@keyframes hx-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hx-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes hx-rule{from{width:0}to{width:min(46%,260px)}}
+@keyframes hx-chip-in{to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes hx-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media (max-width:860px){
+  #intro.hx-hero{align-items:flex-start;min-height:100svh}
+  #intro .hx-hero__scene{width:118%;inset:-4% -18% auto auto;height:54%}
+  #intro .hx-hero__img{object-position:center top;opacity:0;animation:hx-img-in-m 1.5s var(--ease) .15s forwards;
+    -webkit-mask-image:linear-gradient(to bottom, #000 40%, rgba(0,0,0,.25) 78%, transparent 100%),radial-gradient(130% 110% at 62% 30%, #000 60%, transparent 100%);
+    mask-image:linear-gradient(to bottom, #000 40%, rgba(0,0,0,.25) 78%, transparent 100%),radial-gradient(130% 110% at 62% 30%, #000 60%, transparent 100%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  #intro .hx-hero__halo{left:-10%;top:auto;bottom:8%;width:120%;height:60%;transform:none;
+    background:radial-gradient(closest-side, rgba(251,247,238,.95) 0%, rgba(251,247,238,.7) 50%, transparent 82%)}
+  #intro .hx-hero__inner{padding-top:clamp(180px,42vh,340px)}
+  #intro .hx-head__big{font-size:clamp(4rem,21vw,7rem)}
+}
+@keyframes hx-img-in-m{from{opacity:0;transform:scale(1.05)}to{opacity:.74;transform:scale(1)}}
+@media (max-width:430px){#intro .hx-chips{gap:7px}#intro .hx-chip{font-size:.7rem;padding:.4em .8em}}
+@media (prefers-reduced-motion:reduce){
+  #intro .hx-hero__img{opacity:.78 !important;transform:none !important;animation:none !important}
+  #intro .hx-badge,#intro .hx-head__pre,#intro .hx-punch,#intro .hx-scroll{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro .hx-head__big{clip-path:none !important;animation:none !important}
+  #intro .hx-head__rule{width:min(46%,260px) !important;animation:none !important}
+  #intro .hx-chip{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro .hx-scroll__arrow{animation:none !important}
+}
+/* ---------- Intro-Story (fliesst nahtlos aus dem Hero) ---------- */
+#intro-story{padding-top:2.5rem}
+#intro-story .is-grid{display:grid;grid-template-columns:1.4fr .75fr;gap:4vw;align-items:center;width:100%}
+@media(max-width:860px){#intro-story .is-grid{grid-template-columns:1fr}#intro-story .photo{justify-self:start!important;margin-top:1.5rem!important}}
+.scroll-cue{position:absolute;bottom:2.2rem;left:6vw;font-family:'Architects Daughter',cursive;
+  font-size:1rem;color:var(--pencil);display:flex;align-items:center;gap:.6rem;z-index:4}
+.scroll-cue .arrow{display:inline-block;animation:bob 1.8s var(--ease) infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* ============ SPARK (20:34) ============ */
+#spark{align-items:center;text-align:center}
+#spark .sparkgrid{display:grid;grid-template-columns:1fr;gap:1.6rem;justify-items:center;max-width:900px;margin:0 auto}
+#spark .cap{font-family:'Architects Daughter',cursive;font-size:1.1rem;color:var(--pencil);transform:rotate(-1deg)}
+#spark .time{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(6rem,24vw,19rem);line-height:1;color:var(--ink);
+  position:relative;display:inline-block;padding:0 .12em}
+/* GELBER TEXTMARKER — die einzige Stelle der ganzen Seite */
+#spark .time .hi{position:absolute;left:-2%;top:30%;right:-2%;bottom:14%;z-index:-1;
+  background:var(--yellow);opacity:.78;border-radius:6px;transform:rotate(-1.4deg) scaleX(0);
+  transform-origin:left center;filter:saturate(1.1);transition:transform 1s var(--ease) .2s}
+#spark .time.drawn .hi{transform:rotate(-1.4deg) scaleX(1)}
+#spark .line{font-family:'Shantell Sans',cursive;font-style:italic;font-weight:500;
+  font-size:clamp(1.3rem,3.6vw,2.3rem);max-width:800px;margin:0 auto;line-height:1.4;color:var(--ink)}
+#spark .line strong{font-weight:700;background:linear-gradient(transparent 58%, rgba(26,165,145,.4) 58%)}
+#spark .aha-photo{max-width:300px;margin-top:.4rem}
+
+/* ============ THESIS ============ */
+#thesis .thesisgrid{display:grid;grid-template-columns:1.5fr .8fr;gap:4vw;align-items:center;width:100%}
+@media(max-width:900px){#thesis .thesisgrid{grid-template-columns:1fr}}
+#thesis p#thesisText{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.6rem,8vw,6rem);line-height:1.06;max-width:1100px}
+#thesis .w{color:rgba(43,42,38,.2);transition:color .45s var(--ease)}
+#thesis .w.on{color:var(--ink)}
+#thesis .w.red.on{color:var(--red)}
+#thesis .w.teal.on{color:var(--ink);background:linear-gradient(transparent 60%, rgba(26,165,145,.4) 60%)}
+#thesis .term-photo{max-width:330px;justify-self:center}
+
+/* ============ JOURNEY (Roadmap) ============ */
+#journey .head{font-size:clamp(2.6rem,7vw,5rem);margin-bottom:.5rem}
+#journey .sub{font-family:'Architects Daughter',cursive;color:var(--pencil);margin-bottom:2.4rem;font-size:1.05rem}
+#journey .course-photo{max-width:840px;margin:0 auto 2.8rem;display:block}
+.roadmap{position:relative;max-width:960px;margin:0 auto;width:100%}
+.roadmap .path-svg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.roadmap .path-svg path{fill:none;stroke:var(--teal);stroke-width:3.5;stroke-linecap:round;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.stops{position:relative;z-index:1;display:flex;flex-direction:column;gap:2.2rem}
+.stop{position:relative;padding-left:4.2rem}
+.stop .dot{position:absolute;left:8px;top:2px;width:34px;height:34px}
+.stop .dot svg{width:100%;height:100%;overflow:visible}
+.stop .mod{font-family:'Architects Daughter',cursive;color:var(--teal);font-size:.98rem;letter-spacing:.02em}
+.stop h4{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.05;color:var(--ink);margin:.05rem 0}
+.stop p{color:var(--ink);font-weight:400;font-size:1rem;max-width:52ch;margin-top:.15rem}
+.stop .when{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--pencil);margin-top:.25rem}
+.stop .st{font-family:'Architects Daughter',cursive;font-size:.78rem;margin-left:.5rem;padding:.05rem .5rem;border-radius:12px}
+.stop .st.done{color:#0c6f5f;border:1.5px solid var(--teal);background:rgba(26,165,145,.1)}
+.stop .st.run{color:#9a3340;border:1.5px solid var(--red);background:rgba(233,75,93,.08)}
+.stop .st.open{color:#6a655a;border:1.5px dashed var(--pencil)}
+.stop.cur .mod{color:var(--red)}
+.stop.cur::after{content:"DU BIST HIER";position:absolute;font-family:'Architects Daughter',cursive;
+  color:var(--red);font-size:.85rem;left:4.4rem;top:-1.25rem;transform:rotate(-4deg)}
+
+/* ============ NUMBERS (Karteikarten) ============ */
+#numbers .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2.2rem;margin-top:.6rem}
+.card{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--wobble);
+  padding:1.6rem 1.4rem;box-shadow:4px 5px 0 rgba(43,42,38,.12);position:relative}
+.card:nth-child(2n){border-radius:var(--wobble2);transform:rotate(1.2deg)}
+.card:nth-child(3n){transform:rotate(-1.4deg)}
+.card .n{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(3.4rem,8vw,6rem);line-height:1;color:var(--red)}
+.card:nth-child(2) .n,.card:nth-child(4) .n{color:var(--teal)}
+.card .l{font-family:'Architects Daughter',cursive;color:var(--pencil);font-size:.95rem;margin-top:.4rem;line-height:1.3}
+.card .clip{position:absolute;top:-10px;right:14px;width:18px;height:34px;border:3px solid var(--pencil);
+  border-bottom:none;border-radius:8px 8px 0 0;opacity:.6}
+#numbers .numfoot{display:grid;grid-template-columns:1.4fr .7fr;gap:3vw;align-items:center;margin-top:2.6rem}
+@media(max-width:900px){#numbers .numfoot{grid-template-columns:1fr}}
+#numbers .trainers{color:var(--ink);font-size:1.1rem;max-width:680px;line-height:1.7;font-weight:400}
+#numbers .trainers b{font-weight:700;background:linear-gradient(transparent 58%, rgba(26,165,145,.36) 58%)}
+#numbers .mind-photo{max-width:300px;justify-self:center}
+
+/* ============ BAR -> BYTES ============ */
+#bar h2{font-size:clamp(3.4rem,10vw,7rem);line-height:.92;margin-bottom:1.6rem}
+#bar h2 em{font-style:normal;color:var(--teal);position:relative}
+#bar .cols{display:grid;grid-template-columns:1.25fr .75fr;gap:4vw;max-width:1040px;align-items:start}
+@media(max-width:780px){#bar .cols{grid-template-columns:1fr}}
+#bar .cols p{color:var(--ink);font-weight:400;line-height:1.7;font-size:1.08rem}
+#bar .cols p+p{margin-top:1.1rem}
+#bar .cols p strong{font-weight:700;background:linear-gradient(transparent 58%, rgba(26,165,145,.4) 58%)}
+#bar .arc{font-family:'Caveat',cursive;font-weight:600;font-size:clamp(1.5rem,3.4vw,2.1rem);
+  color:var(--ink);line-height:1.35;text-align:center;background:var(--paper);
+  border:2.5px dashed var(--pencil);border-radius:var(--wobble);padding:1.6rem 1rem;transform:rotate(1.5deg)}
+#bar .arc .step{display:block}
+#bar .arc .down{color:var(--red);font-size:1.6rem;line-height:1}
+#bar .arc b{color:var(--teal)}
+
+/* ============ PITCH ============ */
+#pitch .big{font-size:clamp(2.8rem,7.5vw,6rem);line-height:1.02;max-width:1020px;margin-bottom:1.3rem}
+#pitch .big u{text-decoration:none}
+#pitch .role{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
+#pitch .role span{font-family:'Architects Daughter',cursive;font-size:.98rem;color:var(--ink);
+  border:2.5px solid var(--teal);padding:.5rem 1.1rem;border-radius:var(--wobble);background:var(--paper);
+  box-shadow:2px 3px 0 rgba(26,165,145,.22)}
+#pitch .role span:nth-child(2){transform:rotate(-1.5deg)}
+#pitch .role span:nth-child(3){transform:rotate(1.2deg)}
+
+/* ============ TRANSITION (Story -> Studio) ============ */
+#transition{align-items:center;text-align:center}
+#transition .tline{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.4rem,7vw,4.6rem);
+  line-height:1.02;max-width:18ch;margin:0 auto 2.6rem}
+#transition .tline em{font-style:normal;color:var(--red)}
+#transition .bridge-photo{max-width:980px;width:100%;margin:0 auto}
+#transition .bridge-photo .ph{aspect-ratio:auto}
+#transition .tnote{font-family:'Architects Daughter',cursive;color:var(--pencil);margin-top:1.8rem;font-size:1.05rem}
+#transition .tnote .arr{color:var(--red);display:inline-block;animation:bob 1.8s var(--ease) infinite}
+
+/* ============ STUDIO HERO ============ */
+#studio-hero{padding-top:6rem}
+#studio-hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center;width:100%}
+@media(max-width:980px){#studio-hero .grid{grid-template-columns:1fr;gap:2.4rem}}
+#studio-hero h1{font-size:clamp(3.4rem,12vw,7.4rem);line-height:.92}
+#studio-hero h1 .ag{color:var(--teal)}
+#studio-hero .sub{font-size:clamp(1.1rem,2.2vw,1.45rem);max-width:600px;margin-top:1.5rem;line-height:1.5}
+#studio-hero .sub b{font-weight:700}
+#studio-hero .margin-note{font-family:'Caveat',cursive;font-size:1.4rem;color:var(--red);
+  transform:rotate(-4deg);max-width:260px;margin-top:1.3rem}
+#studio-hero .studio-photo{max-width:480px;justify-self:center}
+
+/* ============ AUSGANGSLAGE — verstreute Zettel ============ */
+.scatter{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;margin-top:2.6rem;max-width:980px}
+.scrap{background:var(--card);border:1.5px solid rgba(43,42,38,.22);border-radius:3px;padding:1.1rem 1.2rem;
+  font-family:'Architects Daughter',cursive;font-size:1rem;color:var(--ink);
+  box-shadow:2px 4px 0 rgba(43,42,38,.10);position:relative}
+.scrap:nth-child(1){transform:rotate(-2.5deg)}
+.scrap:nth-child(2){transform:rotate(1.8deg)}
+.scrap:nth-child(3){transform:rotate(-1.2deg)}
+.scrap:nth-child(4){transform:rotate(2.2deg)}
+.scrap .strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--pencil)}
+.scene-quote{margin-top:2.4rem;font-family:'Caveat',cursive;font-size:clamp(1.5rem,3.4vw,2.2rem);color:var(--ink);
+  max-width:780px;line-height:1.15;position:relative;padding-left:1.4rem}
+.scene-quote::before{content:"\201E";position:absolute;left:-.2rem;top:-.4rem;font-size:2.6em;color:var(--red);opacity:.5;line-height:1}
+
+/* ============ MECHANISMUS — Voice ============ */
+.split{display:grid;grid-template-columns:1fr;gap:2.6rem;align-items:center;margin-top:2.4rem}
+@media(min-width:920px){.split{grid-template-columns:1.05fr .95fr;gap:3.4rem}.split.rev-cols{grid-template-columns:.95fr 1.05fr}}
+.split .txtcol{min-width:0}
+.bubble{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:24px 24px 24px 6px;
+  padding:1.5rem 1.7rem;font-family:'Caveat',cursive;font-size:1.5rem;line-height:1.12;
+  box-shadow:3px 5px 0 rgba(43,42,38,.12);max-width:480px}
+.bubble::after{content:"";position:absolute;left:18px;bottom:-16px;width:26px;height:18px;
+  background:var(--card);border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  border-radius:0 0 0 18px;transform:skewX(-12deg)}
+.bubble .tiny{display:block;font-family:'Architects Daughter',cursive;font-size:.62em;color:var(--teal);
+  letter-spacing:.06em;margin-top:.6rem}
+.waves{width:100%;height:auto;overflow:visible;margin-top:1.6rem}
+.waves path{fill:none;stroke:var(--teal);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:var(--wl,500);stroke-dashoffset:var(--wl,500);transition:stroke-dashoffset 1.4s var(--ease)}
+.waves.in path{stroke-dashoffset:0}
+.waves .w2{stroke:var(--ink);opacity:.55}
+.waves .w3{stroke:var(--teal);opacity:.7}
+.waves.in.pulsing path{animation:wpulse 2.6s ease-in-out 1.4s infinite}
+@keyframes wpulse{0%,100%{opacity:1}50%{opacity:.45}}
+.waves.in.pulsing .w2{animation-delay:1.6s}
+.waves.in.pulsing .w3{animation-delay:1.8s}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.8rem}
+@media(max-width:520px){.dual{grid-template-columns:1fr}}
+.dual .mini{background:var(--card);border:1.5px solid rgba(43,42,38,.2);border-radius:5px;padding:1rem 1.1rem;
+  box-shadow:2px 4px 0 rgba(43,42,38,.09);transform:rotate(-1deg)}
+.dual .mini:nth-child(2){transform:rotate(1.2deg)}
+.dual .mini b{font-family:'Caveat',cursive;font-size:1.5rem;display:block;line-height:1;margin-bottom:.3rem}
+.dual .mini span{font-family:'Architects Daughter',cursive;font-size:.86rem;color:var(--pencil)}
+.dual .mini.teal b{color:var(--teal)}
+.dual .mini.red b{color:var(--red)}
+.order3{margin-top:1.6rem;font-family:'Caveat',cursive;font-size:1.6rem;color:var(--ink);display:flex;
+  flex-wrap:wrap;align-items:center;gap:.4rem}
+.order3 span{color:var(--teal)}.order3 .arr{color:var(--pencil)}
+
+/* ============ PIPELINE — 8 Agenten ============ */
+.pipe-wrap{margin-top:3rem;position:relative}
+.pipe-scene{position:relative;width:100%}
+#flowLines{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible;pointer-events:none}
+#flowLines path{fill:none;stroke:var(--pencil);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:6 9}
+#flowLines path.draw{stroke:var(--red);stroke-dasharray:var(--fl,1200);stroke-dashoffset:var(--fl,1200);
+  transition:stroke-dashoffset 1s var(--ease)}
+#flowLines.in path.draw{stroke-dashoffset:0}
+#flowLines.in path.s1{transition-delay:0s}
+#flowLines.in path.s2{transition-delay:.7s}
+#flowLines.in path.s3{transition-delay:1.4s}
+#flowLines marker path{stroke:none;fill:var(--red)}
+.agents-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:2.4rem 2rem}
+@media(max-width:980px){.agents-grid{grid-template-columns:repeat(2,1fr);gap:2.2rem 1.6rem}}
+@media(max-width:560px){.agents-grid{grid-template-columns:1fr;gap:1.8rem}}
+.abox{position:relative;background:var(--card);padding:1.3rem 1.3rem 1.35rem;border-radius:11px;
+  border:2.4px solid var(--ink);
+  box-shadow:2px 5px 0 rgba(43,42,38,.10);min-height:182px;display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.abox:hover{transform:translateY(-5px) rotate(-.6deg);box-shadow:3px 10px 18px rgba(43,42,38,.16)}
+.abox .frame{display:none}
+.abox .frame path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.abox > *{position:relative;z-index:1}
+.abox .anum{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.05rem;color:var(--red);letter-spacing:.04em}
+.abox h4{font-family:'Caveat',cursive;font-weight:700;font-size:1.8rem;line-height:.96;margin:.15rem 0 .45rem}
+.abox .arole{font-family:'Architects Daughter',cursive;font-size:.92rem;color:var(--pencil);line-height:1.25;flex:1}
+.badge{align-self:flex-start;margin-top:.7rem;font-family:'Architects Daughter',cursive;font-size:.82rem;
+  padding:.18rem .65rem;border-radius:14px;display:inline-flex;align-items:center;gap:.4rem;letter-spacing:.02em;
+  transform:scale(0);transition:transform .45s var(--ease)}
+.abox.in .badge{transform:scale(1)}
+.badge.live{color:#0c6f5f;border:2px solid var(--teal);background:rgba(26,165,145,.10)}
+.badge.live .ck{font-weight:700}
+.badge.build{color:#9a3340;border:2px solid var(--red);background:
+  repeating-linear-gradient(45deg,transparent 0 4px,rgba(233,75,93,.16) 4px 6px),rgba(255,252,244,.6)}
+.badge.plan{color:#6a655a;border:2px dashed var(--pencil);background:transparent}
+.abox.build{background:repeating-linear-gradient(45deg,transparent 0 7px,rgba(138,133,120,.07) 7px 8px),var(--card);border-color:var(--red)}
+.abox.plan{background:rgba(255,252,244,.5);border-style:dashed;border-color:var(--pencil)}
+.abox.live{box-shadow:2px 5px 0 rgba(26,165,145,.16);border-color:var(--teal)}
+.pipe-anno{position:absolute;font-family:'Caveat',cursive;color:var(--red);font-size:1.4rem;line-height:1.05;
+  z-index:2;pointer-events:none;transform:rotate(-7deg)}
+.pipe-anno.start{left:-1%;top:-8%}
+.pipe-anno.end{right:0;bottom:-9%;color:var(--teal);transform:rotate(5deg)}
+@media(max-width:980px){.pipe-anno{position:static;display:block;transform:rotate(-2deg);margin:1.2rem 0;font-size:1.35rem}}
+.pipe-sum{margin-top:3.4rem;text-align:center}
+.pipe-sum .big{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2rem,6vw,3.4rem);line-height:1}
+.pipe-sum .big em{font-style:normal;color:var(--teal)}
+.pipe-sum .flow{margin-top:1.1rem;font-family:'JetBrains Mono',monospace;font-size:clamp(.72rem,1.6vw,.95rem);
+  color:var(--pencil);line-height:1.7;max-width:900px;margin-left:auto;margin-right:auto;word-spacing:.05em}
+.pipe-sum .flow .out{color:var(--red);font-weight:700}
+/* Agentisches Architektur-Diagramm — Knoten + Linien in EINEM SVG-Koordinatensystem */
+.agent-diagram{margin:1.8rem auto .4rem;max-width:1000px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+#agentFlow{display:block;width:100%;min-width:720px;height:auto}
+#agentFlow .gn rect{fill:var(--card);stroke:var(--ink);stroke-width:2.4;filter:url(#rough)}
+#agentFlow .gn.orch rect{stroke:var(--red);stroke-width:3.4;fill:#FFF6F2}
+#agentFlow .gn.swarm rect{fill:#FBFAF3}
+#agentFlow .gn.out rect{stroke-dasharray:8 6}
+#agentFlow text{font-family:'Architects Daughter',cursive;fill:var(--ink)}
+#agentFlow .nt{font-family:'JetBrains Mono',monospace;font-size:13px;fill:var(--pencil);letter-spacing:.12em}
+#agentFlow .nh{font-family:'Caveat',cursive;font-weight:700;font-size:28px}
+#agentFlow .nh2{font-family:'Caveat',cursive;font-weight:700;font-size:24px;fill:var(--red)}
+#agentFlow .nl{font-size:16px;fill:var(--pencil)}
+#agentFlow .nb{font-family:'JetBrains Mono',monospace;font-size:12.5px;fill:var(--red)}
+#agentFlow .al{font-size:16px;fill:var(--ink)}
+#agentFlow .tg{font-family:'JetBrains Mono',monospace;font-size:12px;fill:var(--pencil)}
+#agentFlow .dt.teal{fill:var(--teal)} #agentFlow .dt.red{fill:var(--red)} #agentFlow .dt.pl{fill:var(--pencil)}
+#agentFlow .flw{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;filter:url(#rough)}
+#agentFlow .flw.loop{stroke:var(--red);stroke-dasharray:7 7}
+#agentFlow .flw-lab text{font-family:'Architects Daughter',cursive;font-size:15px;fill:var(--pencil)}
+#agentFlow .flw-lab .loop-lab{fill:#9a3340}
+/* Zeichnen-Animation, wenn das Diagramm in den Blick scrollt */
+#agentFlow .gn{opacity:0;transition:opacity .6s var(--ease)}
+#agentFlow .flw:not(.loop){stroke-dasharray:520;stroke-dashoffset:520;transition:stroke-dashoffset .9s var(--ease)}
+#agentFlow .flw.loop{opacity:0;transition:opacity .7s var(--ease)}
+#agentFlow .flw-lab{opacity:0;transition:opacity .6s var(--ease)}
+#agentFlow.in .gn{opacity:1}
+#agentFlow.in .gn.n2{transition-delay:.12s} #agentFlow.in .gn.n3{transition-delay:.26s}
+#agentFlow.in .gn.n4{transition-delay:.46s} #agentFlow.in .gn.n5{transition-delay:.58s}
+#agentFlow.in .flw:not(.loop){stroke-dashoffset:0}
+#agentFlow.in .flw.f2{transition-delay:.22s} #agentFlow.in .flw.f3{transition-delay:.42s} #agentFlow.in .flw.f4{transition-delay:.56s}
+#agentFlow.in .flw.loop{opacity:1;transition-delay:.85s}
+#agentFlow.in .flw-lab{opacity:1;transition-delay:.6s}
+@media(prefers-reduced-motion:reduce){#agentFlow .gn,#agentFlow .flw.loop,#agentFlow .flw-lab{opacity:1!important}#agentFlow .flw:not(.loop){stroke-dashoffset:0!important}}
+
+/* ============ BANNER ============ */
+.banner{text-align:center;padding:13vh 6vw;min-height:auto}
+.banner h2{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.8rem,9vw,6rem);line-height:.95}
+.banner h2 em{font-style:normal;color:var(--red)}
+.banner .bsub{margin-top:1rem;color:var(--pencil);max-width:600px;margin-left:auto;margin-right:auto;font-family:'Caveat',cursive;font-size:1.5rem}
+
+/* ============ ERGEBNIS — Abteilungs-Karten ============ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:2.8rem 2rem;margin-top:3rem}
+.abteilung{position:relative;background:var(--card);border-radius:4px;padding:1.7rem 1.5rem 1.5rem;
+  box-shadow:2px 6px 14px rgba(43,42,38,.12);transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+  background-image:linear-gradient(rgba(43,42,38,.05) 1px,transparent 1px);background-size:100% 30px;background-position:0 60px}
+.abteilung:nth-child(odd){transform:rotate(-1.6deg)}
+.abteilung:nth-child(even){transform:rotate(1.4deg)}
+.abteilung:hover{transform:translateY(-10px) rotate(0deg) scale(1.02);box-shadow:5px 16px 34px rgba(43,42,38,.22)}
+.abteilung .tape{position:absolute;top:-14px;left:50%;width:96px;height:30px;transform:translateX(-50%) rotate(-3deg);
+  background:repeating-linear-gradient(45deg,var(--washi) 0 8px,#bcdcd4 8px 16px);opacity:.85;
+  box-shadow:0 1px 4px rgba(43,42,38,.12);border-left:1px dashed rgba(255,255,255,.5);border-right:1px dashed rgba(255,255,255,.5)}
+.abteilung:nth-child(even) .tape{background:repeating-linear-gradient(45deg,#f3d9a6 0 8px,#eecb8a 8px 16px);transform:translateX(-50%) rotate(4deg)}
+.abteilung .gk{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.04em;color:var(--pencil);margin:.7rem 0 .55rem;text-transform:uppercase}
+.abteilung h4{font-family:'Caveat',cursive;font-weight:700;font-size:2rem;line-height:.98;margin-bottom:.5rem}
+.abteilung p{font-size:.98rem;line-height:1.5;color:var(--ink)}
+.abteilung .fmt{margin-top:.9rem;display:inline-block;font-family:'Architects Daughter',cursive;font-size:.85rem;
+  padding:.22rem .7rem;border-radius:16px}
+.abteilung .fmt.teal{color:#0c6f5f;border:2px solid var(--teal);background:rgba(26,165,145,.1)}
+.abteilung .fmt.red{color:#9a3340;border:2px solid var(--red);background:rgba(233,75,93,.08)}
+.abteilung .fmt.yellow{color:#8a5b00;border:2px solid var(--yellow);background:rgba(245,166,35,.12)}
+.abteilung .fmt.pencil{color:#6a655a;border:2px dashed var(--pencil)}
+
+/* ============ MENSCH ============ */
+.human{display:grid;grid-template-columns:1fr;gap:2.4rem;align-items:center;width:100%}
+@media(min-width:860px){.human{grid-template-columns:auto 1fr;gap:3rem}}
+.human .portrait{position:relative;width:clamp(180px,30vw,280px);justify-self:center}
+.human .htext h2{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.4rem,6vw,4rem);line-height:.98}
+.human .htext h2 em{font-style:normal;color:var(--teal)}
+.human .htext p{font-size:1.1rem;max-width:560px;margin-top:.8rem;line-height:1.55}
+.human .htext .facts{margin-top:1.2rem;font-family:'Architects Daughter',cursive;font-size:1rem;color:var(--ink);
+  border-left:3px solid var(--teal);padding-left:1rem;max-width:560px;line-height:1.5}
+
+/* ============ FINALE / CTA ============ */
+#finale{align-items:center;text-align:center}
+.cta{position:relative;background:var(--card);border-radius:6px;padding:3.2rem 2rem;text-align:center;
+  box-shadow:3px 8px 0 rgba(43,42,38,.10);margin:0 auto;max-width:780px;overflow:visible;width:100%}
+.cta .frame{position:absolute;inset:-6px;z-index:0;overflow:visible;pointer-events:none}
+.cta .frame path{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.cta > *{position:relative;z-index:1}
+.cta .polaroid{display:inline-block;background:#fff;padding:13px 13px 50px;box-shadow:6px 10px 26px rgba(43,42,38,.28);
+  transform:rotate(-4deg);position:relative;margin-bottom:2.2rem;border-radius:3px}
+.cta .polaroid .ph{position:relative;width:clamp(190px,38vw,260px);height:clamp(190px,38vw,260px);overflow:hidden;background:var(--paper-deep)}
+.cta .polaroid img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.92)}
+.cta .polaroid .nofoto{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;
+  font-family:'Caveat',cursive;color:var(--pencil);background:var(--paper-deep);padding:1rem;line-height:1.2}
+.cta .polaroid.fail img{display:none}
+.cta .polaroid.fail .nofoto{display:flex}
+.cta .polaroid::before{content:"";position:absolute;top:-15px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:140px;height:32px;background:repeating-linear-gradient(45deg,rgba(26,165,145,.32) 0 9px,rgba(26,165,145,.16) 9px 18px);
+  box-shadow:0 1px 3px rgba(0,0,0,.14);z-index:2}
+.cta .polaroid .pcap{position:absolute;bottom:14px;left:0;right:0;font-family:'Caveat',cursive;font-weight:600;font-size:1.4rem;color:var(--ink)}
+.cta .eyebrow-c{font-family:'Architects Daughter',cursive;color:var(--teal);font-size:1.05rem;margin-bottom:.6rem;display:block}
+.cta h2{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(3rem,9vw,6rem);line-height:.95;margin-bottom:.9rem}
+.cta h2 em{font-style:normal;color:var(--teal)}
+.cta .sub{color:var(--ink);font-weight:400;max-width:600px;margin:0 auto 1rem;line-height:1.6;font-size:1.08rem}
+.cta .sub .hl-teal{font-weight:700}
+.cta .mail{display:inline-block;margin-top:1.2rem;font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,2.6vw,1.4rem);
+  font-weight:500;color:#fff;background:var(--red);padding:.95rem 1.9rem;border-radius:30px;text-decoration:none;
+  box-shadow:2px 4px 0 rgba(43,42,38,.2);position:relative;will-change:transform;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.cta .mail:hover{box-shadow:4px 7px 0 rgba(43,42,38,.22)}
+.cta .roles{margin-top:1.7rem;display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center}
+.cta .roles span{font-family:'Architects Daughter',cursive;font-size:.9rem;color:var(--teal);
+  border:2px solid var(--teal);border-radius:18px;padding:.32rem .85rem;background:rgba(26,165,145,.07)}
+.cta .star{position:absolute;font-family:'Caveat',cursive;color:var(--yellow);font-size:2rem;pointer-events:none}
+.cta .meta{margin-top:2rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--pencil)}
+
+/* zarter Footer-Doodle Trenner */
+.divider{display:block;margin:2.6rem auto 0;width:200px;height:24px;opacity:.6}
+.divider path{fill:none;stroke:var(--pencil);stroke-width:2;stroke-linecap:round}
+.foot{text-align:center;padding:4vh 6vw 7vh;font-family:'Architects Daughter',cursive;color:var(--pencil);font-size:.9rem}
+.foot .sig{font-family:'Caveat',cursive;font-size:1.6rem;color:var(--ink)}
+
+/* ====== prefers-reduced-motion: ALLE Bewegungen aus ====== */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .doodle{opacity:.82!important;animation:none!important}
+  .float,.float.f2{animation:none!important}
+  .scroll-cue .arrow,#transition .tnote .arr,.topbar .mid::before{animation:none!important}
+  #routeLayer #routeLine{stroke-dashoffset:0!important}
+  .uline svg path,.circle-word svg path{stroke-dashoffset:0!important;transition:none!important}
+  .roadmap .path-svg path{stroke-dashoffset:0!important}
+  .route-mark{opacity:.92!important;transform:translate(-50%,-50%) scale(1) rotate(-7deg)!important;transition:none!important}
+  #spark .time .hi{transform:rotate(-1.4deg) scaleX(1)!important;transition:none!important}
+  .waves path{stroke-dashoffset:0!important;transition:none!important}
+  .waves.in.pulsing path{animation:none!important}
+  #flowLines path.draw{stroke-dashoffset:0!important;transition:none!important}
+  .badge{transform:none!important;transition:none!important}
+  .mail{transition:none!important}
+}
+
+/* ===== #agents-3d (3D-8-Agenten-System · Workflow) ===== */
+/* ============================================================
+   #agents-3d — alle Styles gescopet, Prefix a3-
+   Claude-Style: Ivory-Hintergrund + Terracotta-Akzent + Teal=live
+============================================================ */
+#agents-3d{
+  --a3-ivory:#FDF8F0; --a3-paper:#F3EEE3; --a3-ink:#211F1C; --a3-slate:#736F66;
+  --a3-terra:#D97757; --a3-terra-deep:#BF5F3F; --a3-teal:#0D9488; --a3-line:#E2DCCD;
+  position:relative; width:100%; background:transparent; color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif; overflow:hidden;
+}
+#agents-3d *{box-sizing:border-box; margin:0; padding:0;}
+#agents-3d .a3-canvas-wrap{position:relative; width:100%; height:min(62vh,560px); background:var(--a3-ivory); border:3px solid var(--ink); border-radius:16px; box-shadow:6px 14px 34px rgba(43,42,38,.22); overflow:hidden;}
+#agents-3d .a3-stage{position:relative; max-width:1040px; margin:1.6rem auto 0;}
+#agents-3d .a3-cap{font-family:'Architects Daughter',cursive; font-size:.96rem; color:var(--pencil); text-align:center; margin-top:.9rem;}
+/* touch-action:none → sauberes Touch-Drag-Orbit, kein Scroll-Konflikt auf Mobile */
+#agents-3d .a3-scene{position:absolute; inset:0; cursor:grab; touch-action:none;}
+#agents-3d .a3-scene:active{cursor:grabbing;}
+#agents-3d .a3-scene canvas{display:block; width:100%; height:100%;}
+
+/* sanfte Vignette für Tiefe */
+#agents-3d .a3-canvas-wrap::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
+  background:radial-gradient(ellipse at 50% 46%, transparent 56%, rgba(33,31,28,.06) 100%);
+}
+
+/* ---------- HUD ---------- */
+#agents-3d .a3-hud{position:absolute; z-index:5;}
+#agents-3d .a3-title{display:none;}
+#agents-3d .a3-eyebrow{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11px;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--a3-terra); display:block; margin-bottom:12px;}
+#agents-3d .a3-title h2{font-size:clamp(26px,3.4vw,38px); font-weight:600; line-height:1.1; letter-spacing:-.015em;}
+#agents-3d .a3-title h2 em{font-style:italic; font-weight:400; color:var(--a3-terra-deep);}
+#agents-3d .a3-sub{margin-top:14px; font-size:14.5px; line-height:1.6; color:var(--a3-slate); max-width:380px;}
+#agents-3d .a3-sub b{color:var(--a3-ink); font-weight:600;}
+
+/* ---------- Legende ---------- */
+#agents-3d .a3-legend{bottom:30px; left:38px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; max-width:620px;}
+#agents-3d .a3-chip{display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:11px; padding:7px 13px; border:1px solid var(--a3-line); border-radius:99px;
+  background:rgba(255,255,255,.82); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); color:var(--a3-ink);}
+#agents-3d .a3-chip .a3-n{color:var(--a3-slate); font-weight:600;}
+#agents-3d .a3-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+#agents-3d .a3-dot-live{background:var(--a3-teal); box-shadow:0 0 0 3px rgba(13,148,136,.18);}
+#agents-3d .a3-dot-build{background:var(--a3-terra); opacity:.62;}
+#agents-3d .a3-dot-plan{background:transparent; border:1.5px dashed var(--a3-slate);}
+#agents-3d .a3-legend-hint{flex-basis:100%; font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:10px; color:var(--a3-slate); letter-spacing:.06em; margin-top:3px;}
+
+/* ---------- Zoom-Buttons ---------- */
+#agents-3d .a3-zoom{right:34px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:9px;}
+#agents-3d .a3-zbtn{width:46px; height:46px; border-radius:50%; border:1px solid var(--a3-line);
+  background:rgba(255,255,255,.86); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); cursor:pointer;
+  font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:21px; color:var(--a3-ink);
+  display:flex; align-items:center; justify-content:center; transition:all .18s;
+  box-shadow:0 4px 14px rgba(33,31,28,.08); user-select:none; -webkit-tap-highlight-color:transparent;}
+#agents-3d .a3-zbtn:hover{border-color:var(--a3-terra); color:var(--a3-terra-deep); transform:scale(1.08);}
+#agents-3d .a3-zbtn:active{transform:scale(.95);}
+#agents-3d .a3-zbtn:focus-visible{outline:2px solid var(--a3-terra); outline-offset:2px;}
+#agents-3d .a3-zbtn.a3-fit{font-size:16px;}
+#agents-3d .a3-zbtn.a3-on{background:var(--a3-terra); border-color:var(--a3-terra); color:#fff;}
+
+/* ---------- Tooltip ---------- */
+#agents-3d .a3-tip{position:absolute; z-index:8; pointer-events:none; display:none; max-width:280px;
+  background:rgba(255,255,255,.97); border:1px solid var(--a3-line); border-left:3px solid var(--a3-terra);
+  border-radius:8px; padding:10px 13px; box-shadow:0 12px 32px rgba(33,31,28,.14);}
+#agents-3d .a3-tip-name{display:block; font-size:15px; font-weight:600; line-height:1.25;}
+#agents-3d .a3-tip-file{display:block; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px;
+  letter-spacing:.04em; color:var(--a3-terra-deep); margin-top:4px;}
+
+/* ---------- Info-Karte ---------- */
+#agents-3d .a3-card{position:absolute; top:0; right:0; height:100%; width:370px; z-index:7;
+  transform:translateX(106%); transition:transform .42s cubic-bezier(.2,.8,.2,1);
+  background:rgba(253,248,240,.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-left:1px solid var(--a3-line); padding:84px 32px 32px; overflow-y:auto;}
+#agents-3d .a3-card.a3-open{transform:translateX(0);}
+#agents-3d .a3-card-close{position:absolute; top:30px; right:28px; width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--a3-line); background:#fff; cursor:pointer; font-size:17px; color:var(--a3-slate); line-height:1;}
+#agents-3d .a3-card-close:hover{border-color:var(--a3-terra); color:var(--a3-terra-deep);}
+#agents-3d .a3-badge{display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#fff; padding:5px 12px; border-radius:99px; margin-bottom:16px;}
+#agents-3d .a3-badge i{width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.9);}
+#agents-3d .a3-badge.a3-b-plan{color:var(--a3-ink); background:transparent !important; border:1.5px dashed var(--a3-slate);}
+#agents-3d .a3-badge.a3-b-plan i{background:var(--a3-slate);}
+#agents-3d .a3-card h3{font-size:25px; font-weight:600; line-height:1.16; letter-spacing:-.01em; margin-bottom:6px;}
+#agents-3d .a3-card .a3-file{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:12.5px;
+  color:var(--a3-terra-deep); margin-bottom:16px; word-break:break-all;}
+#agents-3d .a3-card .a3-task{font-size:15.5px; line-height:1.6; color:#3c3a36; font-style:italic; margin-bottom:22px;}
+#agents-3d .a3-card .a3-sec{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--a3-slate); border-bottom:1px solid var(--a3-line); padding-bottom:8px; margin-bottom:12px;}
+#agents-3d .a3-card .a3-meta{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:12px; color:var(--a3-slate); line-height:2;}
+#agents-3d .a3-card .a3-meta b{color:var(--a3-ink); font-weight:600;}
+
+/* ---------- statisches Fallback ---------- */
+#agents-3d .a3-fallback{display:none; position:absolute; inset:0; z-index:4; padding:120px 40px 60px;
+  flex-wrap:wrap; align-items:center; justify-content:center; gap:18px; background:var(--a3-ivory);}
+#agents-3d[data-reduced-motion="true"] .a3-fallback{display:flex;}
+#agents-3d[data-reduced-motion="true"] .a3-scene{display:none;}
+#agents-3d[data-reduced-motion="true"] .a3-zoom{display:none;}
+#agents-3d[data-reduced-motion="true"] .a3-tip{display:none;}
+#agents-3d .a3-fb-col{display:flex; flex-direction:column; gap:10px; max-width:240px;}
+#agents-3d .a3-fb-agents{max-width:300px;}
+#agents-3d .a3-fb-tag{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--a3-terra); margin-bottom:4px;}
+#agents-3d .a3-fb-node{font-size:14px; padding:10px 14px; border-radius:10px; border:1px solid var(--a3-line);
+  background:#fff; box-shadow:0 3px 10px rgba(33,31,28,.05);}
+#agents-3d .a3-fb-orch{font-weight:600; border-color:var(--a3-terra); background:#fff5ef;}
+#agents-3d .a3-fb-live{border-left:3px solid var(--a3-teal);}
+#agents-3d .a3-fb-build{border-left:3px solid var(--a3-terra); opacity:.78;}
+#agents-3d .a3-fb-plan{border-left:3px dashed var(--a3-slate); opacity:.7;}
+#agents-3d .a3-fb-flow{font-size:26px; color:var(--a3-terra); align-self:center;}
+
+@media (max-width:760px){
+  #agents-3d .a3-canvas-wrap{height:min(58vh,440px);}
+  #agents-3d .a3-title{left:22px; top:24px; max-width:74%;}
+  #agents-3d .a3-legend{left:22px;}
+  #agents-3d .a3-card{width:100%;}
+  #agents-3d .a3-zoom{right:18px;}
+  #agents-3d .a3-fallback{padding:90px 22px 40px;}
+}
+@media (prefers-reduced-motion: reduce){
+  #agents-3d .a3-scene{display:none;}
+  #agents-3d .a3-zoom{display:none;}
+  #agents-3d .a3-tip{display:none;}
+  #agents-3d .a3-fallback{display:flex;}
+}
+
+/* ===== App-Teaser + Design-Showcase ===== */
+#app-teaser .mini{display:flex;flex-direction:column;gap:.2rem;transition:transform .2s}
+#app-teaser a.mini:hover{transform:translateY(-3px)}
+#app-teaser a.mini b{font-family:'Caveat',cursive;font-size:1.5rem;line-height:1;color:var(--ink)}
+#app-teaser a.mini.teal b{color:var(--teal)} #app-teaser a.mini.red b{color:var(--red)}
+.screens{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2.2rem 1.8rem;margin-top:2.8rem}
+.screen{margin:0;background:#fff;padding:11px 11px 0;border-radius:3px;box-shadow:3px 8px 22px rgba(43,42,38,.16);
+  transform:rotate(-1.6deg);transition:transform .35s var(--ease),box-shadow .35s var(--ease);opacity:0}
+.screen.in{opacity:1}
+.screens .screen:nth-child(even){transform:rotate(1.5deg)}
+.screens .screen:nth-child(3n){transform:rotate(-.8deg)}
+.screen:hover{transform:rotate(0) scale(1.035);box-shadow:5px 16px 38px rgba(43,42,38,.26);z-index:2;position:relative}
+.screen img{display:block;width:100%;height:auto;border:1px solid rgba(43,42,38,.10)}
+.screen figcaption{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.02em;color:var(--pencil);
+  padding:.65rem .2rem .7rem;text-align:center}
+@media(max-width:560px){.screens{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<div class="scroll-bar"></div>
+<div class="paper-edge" aria-hidden="true"></div>
+
+<div class="topbar">
+  <span class="left"><b>Alex Heyers</b> · Vibe Coding Bootcamp</span>
+  <span class="mid"><span>Eine Reise im Skizzenbuch · 86 Tage</span></span>
+  <span class="right">Kohorte 05/26 · Mosbach</span>
+</div>
+
+<!-- SVG-Filter fuer „Strichzittern" (handgezeichnete Linien) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="4.5"/></filter>
+  <filter id="rough-strong"><feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="3" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="3.5"/></filter>
+</svg>
+
+<!-- ====== EIN durchgehender Pfad ueber die GANZE Seite ====== -->
+<svg id="routeLayer" preserveAspectRatio="none" aria-hidden="true">
+  <path id="routeInk"></path>
+  <path id="routeBase"></path>
+  <path id="routeLine"></path>
+  <circle id="routeNib" r="6" cx="0" cy="0"></circle>
+</svg>
+
+<div class="wrap">
+
+<!-- ============================================================
+     TEIL I — DIE STORY (86 Tage)
+     ============================================================ -->
+
+<!-- ============ INTRO · Hero ============ -->
+<!-- ============ INTRO · Hero (cinematic · Design-Fanout) ============ -->
+<section id="intro" class="hx-hero" aria-label="Vibe Coding Bootcamp — Intro">
+  <div class="hx-hero__scene" aria-hidden="true">
+    <img class="hx-hero__img" src="assets/bilder/sketch-bg/sk_hero_scene.jpg" alt="" />
+    <span class="hx-hero__halo"></span>
+  </div>
+
+  <div class="hx-hero__inner">
+    <div class="hx-hero__col">
+      <div class="hx-badge">
+        <span class="hx-badge__line">✦ Vibe Coding Bootcamp · Digitale Leute School</span>
+        <span class="hx-badge__sub">KOHORTE 05/26 · START 07.05.2026 · SESSION 01</span>
+      </div>
+
+      <h1 class="hx-head">
+        <span class="hx-head__pre">Wer von euch kann schon coden?</span>
+        <span class="hx-head__big">Ich bau das.</span>
+        <span class="hx-head__rule" aria-hidden="true"></span>
+      </h1>
+
+      <p class="hx-punch">Vibe Coding heißt nicht, jede Zeile tippen zu können. Es heißt, klar genug zu wissen, was du willst, dass eine Maschine es baut. 86 Tage lang übe ich genau das — und zeige, wie's läuft.</p>
+
+      <ul class="hx-chips" aria-label="Eckdaten">
+        <li class="hx-chip">3 Jahre KI</li>
+        <li class="hx-chip">636 Unterrichtseinheiten</li>
+        <li class="hx-chip">26 Live-Sessions</li>
+        <li class="hx-chip">86 Tage</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hx-scroll" aria-hidden="true">
+    <span class="hx-scroll__arrow">↓</span>
+    <span class="hx-scroll__txt">Scroll — eine Reise im Skizzenbuch</span>
+  </div>
+</section>
+
+<!-- ============ INTRO-STORY · Wer hier schreibt ============ -->
+<section id="intro-story">
+  <div class="is-grid">
+    <div>
+      <div class="kicker reveal">Wer hier schreibt</div>
+      <p class="lede reveal">Diese Seite ist mein Skizzenbuch — wie aus Worten lauffähige Software wird. Ich tippe nicht jede Zeile selbst; ich sage klar, was entstehen soll, und prüfe, bis es stimmt. Seit drei Jahren probiere ich das mit ChatGPT, Lovable, Supabase, Claude Code. <strong>Das Bootcamp macht aus dem Ausprobieren ein Handwerk.</strong></p>
+      <p class="lede reveal" style="margin-top:1rem">Die erste Session war neu und ziemlich motivierend — sauber aufgesetzt, klar strukturiert, kein Leerlauf. <strong>Man merkt: hier wird das Handwerk ernst genommen.</strong> Sauber aufgesetzt, keine Show.</p>
+      <div class="toolkit reveal" aria-label="Mein KI-Werkzeugkasten der letzten drei Jahre">
+        <span class="tk-lab">3 Jahre Werkzeugkasten:</span>
+        <span class="tk">ChatGPT</span><span class="tk">Custom-GPTs</span><span class="tk">Manus</span>
+        <span class="tk">Lovable</span><span class="tk">Supabase</span><span class="tk teal">Claude Code</span>
+      </div>
+    </div>
+    <figure class="photo r portrait hover reveal" style="max-width:330px;justify-self:center;margin:0">
+      <div class="ph" style="aspect-ratio:4/5">
+        <img src="assets/bilder/sketch-portraits/sketch_portrait_hero.jpg" alt="Sketch-Porträt Alex Heyers" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">✎</span>Alex Heyers</div>
+      </div>
+      <figcaption>Alex · Vibe Coder</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ MORNING DRILL · Anfangs-Skizze ============ -->
+<section id="drill" class="short" style="padding-top:1rem;padding-bottom:1rem;align-items:center">
+  <figure class="photo r s hover reveal" style="max-width:360px;margin:0 auto">
+    <div class="ph" style="aspect-ratio:1/1">
+      <img src="assets/bilder/sketch-86/sk_morning_drill.jpg" alt="Skizze: Bootcamp-Drill bei Sonnenaufgang" loading="lazy" decoding="async" data-img>
+      <div class="fallback"><span class="ic">☀</span>Tag 1</div>
+    </div>
+    <figcaption>Tag 1: aufstehen, antreten, anfangen</figcaption>
+  </figure>
+  <div class="sticky reveal float" style="margin:2.2rem auto 0;transform:rotate(-3deg)">Notiz an mich:<br>Bootcamp heißt — jeden Tag in den Ring steigen und anfangen.</div>
+</section>
+
+<!-- ============ SPARK · 20:34 (gelber Marker, einmalig) ============ -->
+<section id="spark">
+  <span class="washi" style="top:12%;left:50%;transform:translateX(-50%) rotate(-6deg)"></span>
+  <div class="doodle" data-r="-14deg" style="top:18%;left:12vw;font-size:2.2rem;--r:-14deg">&#10042;</div>
+  <div class="sparkgrid">
+    <div class="cap reveal">Tag 1 · 07. Mai · 18:07 Uhr</div>
+    <div class="time reveal"><span class="hi"></span>Ich nicht.</div>
+    <p class="line reveal">Erste Session, die Vorstellungsrunde. „Wer von euch kann coden?" — die Finger gehen hoch. Meiner nicht. Zwanzig Jahre Tresen, null Zeile Code. <strong>Genau da fing es an.</strong></p>
+    <figure class="photo s aha-photo hover reveal">
+      <div class="ph" style="aspect-ratio:4/3">
+        <img src="assets/bilder/sketch-86/sk_aha.jpg" alt="Skizze: Tag 1 im Bootcamp" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">✋</span>Tag 1</div>
+      </div>
+      <figcaption>Tag 1: alle konnten coden. Ich nicht.</figcaption>
+    </figure>
+    <div class="sticky reveal float f2" style="margin-top:1.4rem;transform:rotate(2deg)">Notiz an mich:<br>„noch nicht können" ist ein Startpunkt, kein Urteil.</div>
+  </div>
+</section>
+
+<!-- ============ THESIS ============ -->
+<section id="thesis">
+  <div class="doodle" data-r="8deg" style="top:13%;right:10vw;font-size:2.6rem;--r:8deg;color:var(--teal)">&#10033;</div>
+  <div class="thesisgrid">
+    <div>
+      <div class="eyebrow reveal">Die Erkenntnis</div>
+      <p id="thesisText">Es geht nicht ums Tippen. Es geht ums Denken. Klarheit ist der Skill — nicht Syntax.</p>
+    </div>
+    <figure class="photo r term-photo tealtape hover reveal">
+      <div class="ph" style="aspect-ratio:1/1">
+        <img src="assets/bilder/sketch-86/sk_terminal_focus.jpg" alt="Skizze: Hände auf der Tastatur, Terminal im Fokus" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">⌨</span>Fokus</div>
+      </div>
+      <figcaption>Denken zuerst, tippen danach</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ JOURNEY · Roadmap ============ -->
+<section id="journey">
+  <div class="eyebrow reveal">86 Tage · 6 Module · 26 Live-Sessions</div>
+  <div class="head reveal">Vom ersten Prompt<br>bis zum eigenen Agenten.</div>
+  <div class="sub reveal">— eine handgezeichnete Route durchs Bootcamp —</div>
+
+  <figure class="photo s course-photo hover reveal">
+    <div class="ph" style="aspect-ratio:16/9">
+      <img src="assets/bilder/sketch-86/sk_obstacle_course.jpg" alt="Skizze: Parcours mit sechs Stationen bis zum Laptop-Podest" loading="lazy" decoding="async" data-img>
+      <div class="fallback"><span class="ic">🏁</span>6 Stationen, 1 Ziel</div>
+    </div>
+    <figcaption>6 Stationen, 1 Ziel: das Laptop-Podest</figcaption>
+  </figure>
+
+  <div class="roadmap">
+    <svg class="path-svg" id="roadPath" viewBox="0 0 120 760" preserveAspectRatio="none" aria-hidden="true">
+      <path id="roadLine" d="M 26 18 C 70 70, 10 130, 26 190 C 50 250, 12 310, 26 370 C 60 430, 14 490, 26 550 C 50 610, 16 670, 26 742"/>
+    </svg>
+    <div class="stops">
+      <div class="stop reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="none" stroke="#1AA591" stroke-width="3" filter="url(#rough-strong)"/></svg></span>
+        <div class="mod">Modul 1 · Creative Foundations <span class="st done">erledigt</span></div>
+        <h4>Erstmal verstehen, was möglich ist.</h4>
+        <div class="when">07.–19.05.2026 · S02–S05</div>
+      </div>
+      <div class="stop reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="none" stroke="#1AA591" stroke-width="3" filter="url(#rough-strong)"/></svg></span>
+        <div class="mod">Modul 2 · Technical Foundations <span class="st done">erledigt</span></div>
+        <h4>Die Werkzeuge greifbar machen.</h4>
+        <div class="when">21.05.–01.06.2026 · S06–S09</div>
+      </div>
+      <div class="stop cur reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="14" fill="none" stroke="#E94B5D" stroke-width="3.5" filter="url(#rough-strong)"/><circle cx="17" cy="17" r="6" fill="#E94B5D"/></svg></span>
+        <div class="mod">Modul 3 · Prompt Engineering <span class="st run">läuft</span></div>
+        <h4>Klarheit in Sprache gießen.</h4>
+        <p>Hier bin ich gerade. Genau mein Hebel: erst klar denken, dann präzise sagen — der Kern vom Vibe Coding.</p>
+        <div class="when">03.–18.06.2026 · S10–S14</div>
+      </div>
+      <div class="stop reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="none" stroke="#1AA591" stroke-width="3" filter="url(#rough-strong)"/></svg></span>
+        <div class="mod">Modul 4 · System Flow &amp; Automation <span class="st open">offen</span></div>
+        <h4>Heimspiel — n8n kenne ich schon.</h4>
+        <p>Mein Vorsprung aus 20 Jahren Prozessdenken — hier zahlt er sich aus.</p>
+        <div class="when">23.06.–02.07.2026 · S15–S18</div>
+      </div>
+      <div class="stop reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="none" stroke="#1AA591" stroke-width="3" filter="url(#rough-strong)"/></svg></span>
+        <div class="mod">Modul 5 · Agentic AI Engineering <span class="st open">offen</span></div>
+        <h4>Echtes Neuland: Agenten, die handeln.</h4>
+        <div class="when">07.–21.07.2026 · S19–S23</div>
+      </div>
+      <div class="stop reveal">
+        <span class="dot"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="none" stroke="#1AA591" stroke-width="3" filter="url(#rough-strong)"/></svg></span>
+        <div class="mod">Modul 6 · Career Coaching &amp; Abschluss <span class="st open">offen</span></div>
+        <h4>Aus Können wird Position.</h4>
+        <div class="when">23.–30.07.2026 · S24–S26</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS · Karteikarten ============ -->
+<section id="numbers">
+  <div class="doodle" data-r="16deg" style="top:10%;right:8vw;font-size:2rem;--r:16deg">!!</div>
+  <div class="eyebrow reveal">Kein Wochenendkurs</div>
+  <div class="grid">
+    <div class="card reveal"><span class="clip"></span><div class="n" data-count="636">0</div><div class="l">Unterrichtseinheiten</div></div>
+    <div class="card reveal"><span class="clip"></span><div class="n" data-count="26">0</div><div class="l">Live-Sessions mit Trainern</div></div>
+    <div class="card reveal"><span class="clip"></span><div class="n" data-count="86">0</div><div class="l">Tage am Stück</div></div>
+    <div class="card reveal"><span class="clip"></span><div class="n" data-count="6">0</div><div class="l">Module · 12 Wochen</div></div>
+  </div>
+  <div class="numfoot">
+    <p class="trainers reveal">Trainer von <b>Zalando, XING, SumUp und OTTO.</b> Inklusive Ticket für den DL Summit — Deutschlands führende Tech-Konferenz.</p>
+    <figure class="photo r mind-photo hover reveal">
+      <div class="ph" style="aspect-ratio:1/1">
+        <img src="assets/bilder/sketch-86/sk_mind_body.jpg" alt="Skizze: Hantel, Laptop und Gehirn — halb Muskel, halb Schaltkreis" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">🧠</span>Körper &amp; Kopf</div>
+      </div>
+      <figcaption>Körper trainiert, Kopf trainiert</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ BAR -> BYTES ============ -->
+<section id="bar">
+  <span class="washi" style="top:8%;left:6vw;transform:rotate(-8deg)"></span>
+  <div class="coffee" style="bottom:10%;right:7vw"></div>
+  <div class="doodle" data-r="-9deg" style="top:12%;left:4vw;font-size:2.4rem;--r:-9deg">🍸</div>
+  <div class="doodle" data-r="7deg" style="top:19%;right:7vw;font-size:1.45rem;--r:7deg;color:var(--teal)">⛵ Malta → Nordkap</div>
+  <div class="doodle" data-r="-5deg" style="bottom:22%;left:3vw;font-size:1.4rem;--r:-5deg">5 Bars eröffnet ✦</div>
+  <h2 class="reveal">From Bar<br>to <em>Bytes.</em></h2>
+  <div class="cols">
+    <div class="reveal">
+      <p>Von Malta bis zum Nordkap, von der Kölsch-Kneipe bis zum VIP-Service: zwanzig Jahre habe ich Bars am Laufen gehalten. Fünf Eröffnungen begleitet, spektakuläre Abende, wahnsinnige internationale Gäste, Events, die man nicht vergisst. Wer das durchhat, denkt danach in Abläufen — nicht in Lehrbuchkapiteln.</p>
+      <p>Geblieben ist genau diese Brille: in Engpässen denken, den einen Schritt finden, der hakt. Die setze ich beim Coden wieder auf — erst verstehen, wo's klemmt, dann bauen. Das Werkzeug ist neu, die Herangehensweise <strong>nicht</strong>. Nur abends mixe ich keine Cocktails mehr.</p>
+    </div>
+    <div class="arc reveal">
+      <span class="step">Gastronomie</span>
+      <span class="down">↓</span>
+      <span class="step">Digital</span>
+      <span class="down">↓</span>
+      <span class="step">Automation &amp; <b>KI</b></span>
+      <span class="down">↓</span>
+      <span class="step">Vibe Coder</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PITCH ============ -->
+<section id="pitch">
+  <div class="doodle" data-r="-12deg" style="top:14%;right:11vw;font-size:2.4rem;--r:-12deg;color:var(--teal)">→</div>
+  <div class="eyebrow reveal">Was ich jetzt suche</div>
+  <div class="big reveal">Ich baue die Brücke zwischen <u class="circle-word">Tech und Gast</u> — als Mensch, der beide Sprachen spricht.</div>
+  <p class="lede reveal">Solutions Engineer oder Customer Success Manager bei einer Hospitality-SaaS im DACH-Raum. Jemand, der Kunden nicht nur betreut, sondern ihre Prozesse versteht und mit n8n, Automation und AI-Agents wirklich löst.</p>
+  <div class="role reveal"><span>Solutions Engineer</span><span>Customer Success</span><span>Hospitality-SaaS · DACH</span></div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 180 3, 360 13, 540 7 C 720 2, 860 12, 996 6"/></svg>
+
+<!-- ============================================================
+     UEBERGANG — Story -> Werk
+     ============================================================ -->
+<section id="transition">
+  <div class="tline reveal">Zeig mir, was daraus <em>entstanden</em> ist.</div>
+  <figure class="photo s bridge-photo hover reveal">
+    <div class="ph" style="aspect-ratio:21/9">
+      <img src="assets/bilder/sketch-86/sk_bridge.jpg" alt="Skizze als Panorama in drei Akten: Training, dann Laptop, dann Hotel-Lobby" loading="lazy" decoding="async" data-img>
+      <div class="fallback"><span class="ic">→</span>Training · Code · Lobby</div>
+    </div>
+    <figcaption>Vom Training über den Code in die Hotel-Lobby</figcaption>
+  </figure>
+  <div class="tnote reveal">86 Tage Lernen — und ein Werk am Ende <span class="arr">↓</span></div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============================================================
+     TEIL II — DAS WERK (AI-Adoption Studio)
+     ============================================================ -->
+
+<!-- ============ STUDIO HERO ============ -->
+<section id="studio-hero">
+  <svg class="coffee" style="top:9%;right:5vw;width:120px;height:auto;border:none;box-shadow:none;background:none" viewBox="0 0 160 150" aria-hidden="true">
+    <ellipse cx="80" cy="80" rx="62" ry="56" fill="none" stroke="#8a6a3a" stroke-width="7" opacity=".34"/>
+    <ellipse cx="80" cy="80" rx="55" ry="49" fill="#8a6a3a" opacity=".07"/>
+    <path d="M30 64 q12 -22 40 -24" fill="none" stroke="#8a6a3a" stroke-width="3" opacity=".26"/>
+  </svg>
+  <div class="grid">
+    <div>
+      <div class="eyebrow red reveal">Multi-Agent-System · Hospitality</div>
+      <h1 class="reveal d1">AI-Adoption<br><span class="ag">Studio.</span></h1>
+      <p class="sub reveal d2">Du redest über deinen Betrieb. <b>Acht Agenten</b> machen daraus einen Fahrplan — <span class="mark">Abteilung für Abteilung</span>. Scroll los.</p>
+      <div class="margin-note reveal d3">das hier ist auch eine Bewerbung →</div>
+    </div>
+    <figure class="photo r studio-photo hover reveal d2">
+      <div class="ph" style="aspect-ratio:3/2">
+        <img src="assets/bilder/sketch-studio/st_hero.jpg" alt="Skizze: Hotel-Rezeption, in der ein Gespräch zu einem Struktur-Flowchart wird" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">✎</span>Gespräch → Struktur</div>
+      </div>
+      <figcaption>Gespräch wird Fahrplan</figcaption>
+    </figure>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 180 3, 360 13, 540 7 C 720 2, 860 12, 996 6"/></svg>
+
+<!-- ============ 00 · AUSGANGSLAGE ============ -->
+<section id="ausgangslage">
+  <div class="kicker reveal"><span class="num">00</span>Die Ausgangslage</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Das Wissen ist da.<br><em style="color:var(--red);font-style:normal">Nur nicht nutzbar.</em></h2>
+  <p class="lead reveal d2">Schichtübergaben, Tabellen, Bauchgefühl. Jede Abteilung weiß viel — und keiner kommt drumherum, es jemandem zu erzählen.</p>
+  <div class="scatter">
+    <div class="scrap reveal d1">Schichtübergabe<br>steht im Kopf vom Spätdienst</div>
+    <div class="scrap reveal d2">Excel #4<br>„finale_version_NEU"</div>
+    <div class="scrap reveal d3">Lieferscheine<br>im Ordner ganz hinten</div>
+    <div class="scrap reveal d4"><span class="strike">großes Tool-Projekt</span><br>nie fertig geworden</div>
+  </div>
+  <p class="scene-quote reveal d2">Jede Abteilung weiß viel, nur nutzbar ist es nicht."</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============ MECHANISMUS — Voice ============ -->
+<section id="mechanismus">
+  <div class="kicker reveal">Der Mechanismus</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Einfach <em style="color:var(--red);font-style:normal">reden.</em></h2>
+  <p class="lead reveal d2">Statt Felder auszufüllen, erzählst du. Ein Voice-Agent hört zu — und macht aus dem Gespräch Struktur.</p>
+  <div class="split">
+    <div class="txtcol">
+      <div class="bubble reveal d1">„Bei uns läuft die Reservierung über drei Postfächer und morgens sortiert das jemand von Hand …"
+        <span class="tiny">— gesprochen, nicht getippt</span>
+      </div>
+      <p class="lead reveal d2" style="margin-top:1.6rem">Reden statt ausfüllen: die einzige Schnittstelle, die jede Abteilung schon kann — vom Empfang bis zur Küche.</p>
+      <svg class="waves reveal d2" id="voiceWaves" viewBox="0 0 360 110" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path style="--wl:520" d="M6 55 q 18 -42 36 0 t 36 0 t 36 -38 t 36 38 t 36 -26 t 36 26 t 36 -34 t 36 34 t 30 0"/>
+        <path class="w2" style="--wl:520" d="M6 55 q 18 30 36 0 t 36 0 t 36 24 t 36 -24 t 36 16 t 36 -16 t 36 22 t 36 -22 t 30 0"/>
+        <path class="w3" style="--wl:300" d="M70 55 q 20 -50 40 0 t 40 0 t 40 -44 t 40 44"/>
+      </svg>
+    </div>
+    <div>
+      <figure class="photo l hover reveal d2" style="max-width:100%">
+        <div class="ph" style="aspect-ratio:1/1">
+          <img src="assets/bilder/sketch-studio/st_voice.jpg" alt="Skizze: Sprechprofil, das über Schallwellen zu geordneten Zeilen wird" loading="lazy" decoding="async" data-img>
+          <div class="fallback"><span class="ic">〜</span>Stimme → Zeilen</div>
+        </div>
+        <figcaption>Zuhören · Mitlesen · Ordnen</figcaption>
+      </figure>
+      <div class="dual">
+        <div class="mini teal reveal d3"><b>Voice-Agent</b><span>hört dir zu</span></div>
+        <div class="mini red reveal d4"><b>Analyse-Agent</b><span>liest mit</span></div>
+      </div>
+      <p class="lead reveal d4" style="margin-top:1.4rem;font-size:1.05rem">Ein Voice-Agent hört dir zu, ein Analyse-Agent liest deine Unterlagen mit. Aus beidem entsteht im Hintergrund eine saubere Datenbasis — ganz ohne dass du ein Formularfeld triffst.</p>
+      <div class="order3 reveal d4"><span>Zuhören.</span><span class="arr">→</span><span>Mitlesen.</span><span class="arr">→</span><span>Ordnen.</span></div>
+    </div>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 4, 400 12, 580 6 C 760 13, 870 4, 996 8"/></svg>
+
+<!-- ============ 03 · PIPELINE — 8 Agenten ============ -->
+<section id="pipeline">
+  <div class="kicker reveal"><span class="num">03</span>Die Pipeline</div>
+  <div class="scene-label reveal d1">Szene · Web-Research</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Bevor jemand <em style="color:var(--red);font-style:normal">redet.</em></h2>
+  <p class="lead reveal d2">Er googelt nicht wild herum — er sammelt Lage, Wettbewerb und Saison zum Haus und legt sie als Briefing ab, damit niemand das Gespräch bei null beginnt.</p>
+
+  <div class="split rev-cols" style="margin-top:2.2rem">
+    <figure class="photo l hover reveal d2" style="max-width:100%">
+      <div class="ph" style="aspect-ratio:3/2">
+        <img src="assets/bilder/sketch-studio/st_agents.jpg" alt="Skizze: acht Roboter-Assistenten als Staffel-Team, die einen Ordner weiterreichen" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">🤖</span>8 Agenten · Staffel</div>
+      </div>
+      <figcaption>8 Agenten, eine Staffel</figcaption>
+    </figure>
+    <div class="txtcol">
+      <p class="lead reveal d2">Aus dem Gespräch wird ein Briefing — und das wandert durch acht Stationen. Jede macht eine Sache richtig, dann reicht sie weiter wie einen Ordner im Staffellauf.</p>
+    </div>
+  </div>
+
+  <div class="pipe-wrap">
+    <div class="agent-diagram reveal d2">
+      <svg id="agentFlow" viewBox="0 0 1180 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Agentische Architektur: Intake, Orchestrator, sieben Spezialisten-Agenten, Reporter, Output">
+        <defs>
+          <marker id="aArr" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0 1 L7 4.5 L0 8 Z" fill="#2B2A26"/></marker>
+          <marker id="aArrR" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0 1 L7 4.5 L0 8 Z" fill="#E94B5D"/></marker>
+        </defs>
+        <g class="flows">
+          <path class="flw f1" d="M196 226 H 244" marker-end="url(#aArr)"/>
+          <path class="flw f2" d="M462 226 H 512" marker-end="url(#aArr)"/>
+          <path class="flw f3" d="M822 226 H 872" marker-end="url(#aArr)"/>
+          <path class="flw f4" d="M1012 226 H 1042" marker-end="url(#aArr)"/>
+          <path class="flw f5 loop" d="M944 286 C 944 432, 356 432, 356 296" marker-end="url(#aArrR)"/>
+        </g>
+        <g class="flw-lab">
+          <text x="488" y="212" text-anchor="middle">verteilt</text>
+          <text x="848" y="212" text-anchor="middle">sammelt</text>
+          <text class="loop-lab" x="650" y="451" text-anchor="middle">bewerten · nachbessern ↺</text>
+        </g>
+        <g class="gn n1">
+          <rect x="40" y="168" width="156" height="116" rx="16"/>
+          <text class="nt" x="118" y="198" text-anchor="middle">INTAKE</text>
+          <text class="nl" x="118" y="231" text-anchor="middle">🎙 Voice-Agent</text>
+          <text class="nl" x="118" y="261" text-anchor="middle">📄 Dokumente</text>
+        </g>
+        <g class="gn n2 orch">
+          <rect x="250" y="158" width="212" height="136" rx="18"/>
+          <text class="nh" x="356" y="201" text-anchor="middle">🧠 Orchestrator</text>
+          <text class="nl" x="356" y="231" text-anchor="middle">verteilt · bewertet</text>
+          <text class="nb" x="356" y="262" text-anchor="middle">Claude Agent SDK</text>
+        </g>
+        <g class="gn n3 swarm">
+          <rect x="520" y="60" width="302" height="332" rx="18"/>
+          <text class="nh2" x="671" y="95" text-anchor="middle">7 Spezialisten-Agenten</text>
+          <g class="ag"><circle cx="552" cy="137" r="5" class="dt teal"/><text class="al" x="568" y="142">Web-Research</text><text class="tg" x="806" y="142" text-anchor="end">web</text></g>
+          <g class="ag"><circle cx="552" cy="175" r="5" class="dt teal"/><text class="al" x="568" y="180">Dokumenten-Analyst</text><text class="tg" x="806" y="180" text-anchor="end">PDF</text></g>
+          <g class="ag"><circle cx="552" cy="213" r="5" class="dt teal"/><text class="al" x="568" y="218">Prozess-Auditor</text><text class="tg" x="806" y="218" text-anchor="end">analyse</text></g>
+          <g class="ag"><circle cx="552" cy="251" r="5" class="dt red"/><text class="al" x="568" y="256">Use-Case-Generator</text><text class="tg" x="806" y="256" text-anchor="end">reason</text></g>
+          <g class="ag"><circle cx="552" cy="289" r="5" class="dt red"/><text class="al" x="568" y="294">Tool-Empfehlung</text><text class="tg" x="806" y="294" text-anchor="end">web · MCP</text></g>
+          <g class="ag"><circle cx="552" cy="327" r="5" class="dt pl"/><text class="al" x="568" y="332">Wirtschaftlichkeit</text><text class="tg" x="806" y="332" text-anchor="end">rechnet</text></g>
+          <g class="ag"><circle cx="552" cy="365" r="5" class="dt pl"/><text class="al" x="568" y="370">Compliance-Check</text><text class="tg" x="806" y="370" text-anchor="end">DSGVO</text></g>
+        </g>
+        <g class="gn n4">
+          <rect x="872" y="168" width="140" height="116" rx="16"/>
+          <text class="nh" x="942" y="219" text-anchor="middle">📋 Reporter</text>
+          <text class="nl" x="942" y="249" text-anchor="middle">fasst zusammen</text>
+        </g>
+        <g class="gn n5 out">
+          <rect x="1042" y="178" width="118" height="96" rx="14"/>
+          <text class="nl" x="1101" y="215" text-anchor="middle">PDF · Excel</text>
+          <text class="nl" x="1101" y="241" text-anchor="middle">· Markdown</text>
+        </g>
+      </svg>
+    </div>
+    <p class="lead reveal d3" style="text-align:center;max-width:66ch;margin:1.5rem auto 0">Ein <b>Orchestrator</b> verteilt die Arbeit an spezialisierte Sub-Agenten — jeder läuft im <b>Claude Agent SDK</b> mit eigenen Werkzeugen (Web, Dateien, MCP). Der Reporter fasst alles zusammen; passt etwas nicht, schickt der Orchestrator die Runde nochmal los. <span style="color:var(--teal)">Teal = läuft</span>, <span style="color:#9a3340">Rot = im Bau</span>, <span style="color:var(--pencil)">grau = geplant</span>.</p>
+    <div class="pipe-scene">
+      <div class="agents-grid">
+        <article class="abox live reveal d1">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4 6 C 30 3, 70 8, 96 5 C 98 30, 95 65, 96 94 C 65 97, 35 92, 5 95 C 3 65, 7 35, 4 6 Z"/></svg>
+          <span class="anum">01</span>
+          <h4>Web-Research</h4>
+          <p class="arole">Er googelt nicht wild herum — er sammelt Lage, Wettbewerb und Saison zum Haus und legt sie als Briefing ab, damit niemand das Gespräch bei null beginnt.</p>
+          <span class="badge live"><span class="ck">✓</span> live</span>
+        </article>
+        <article class="abox live reveal d2">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5 5 C 32 8, 68 3, 95 6 C 93 32, 98 66, 95 95 C 66 92, 34 97, 5 94 C 8 66, 2 34, 5 5 Z"/></svg>
+          <span class="anum">02</span>
+          <h4>Dokumenten-Analyst</h4>
+          <p class="arole">Du wirfst ihm den PDF-Stapel hin, den sonst keiner liest. Er zieht Zahlen und Aussagen sauber heraus, sodass danach jeder sieht, was wirklich im Papier steht.</p>
+          <span class="badge live"><span class="ck">✓</span> live</span>
+        </article>
+        <article class="abox live reveal d3">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4 7 C 33 4, 67 9, 96 5 C 94 33, 97 67, 95 96 C 65 93, 35 98, 6 94 C 9 65, 3 35, 4 7 Z"/></svg>
+          <span class="anum">03</span>
+          <h4>Prozess-Auditor</h4>
+          <p class="arole">Er geht den Betrieb Station für Station durch und markiert die Stellen, an denen Arbeit doppelt passiert oder liegen bleibt — die unbequemen, aber ehrlichen.</p>
+          <span class="badge live"><span class="ck">✓</span> live</span>
+        </article>
+        <article class="abox build reveal d4">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5 6 C 30 9, 70 4, 95 7 C 92 30, 96 70, 94 95 C 67 92, 33 96, 6 93 C 8 67, 4 33, 5 6 Z"/></svg>
+          <span class="anum">04</span>
+          <h4>Use-Case-Generator</h4>
+          <span class="badge build">✎ im Bau</span>
+          <p class="arole">Statt einer Wunschliste, die keiner abarbeitet, schlägt er wenige Use-Cases vor, die zum Haus passen — und sagt offen, womit man am besten anfängt.</p>
+        </article>
+        <article class="abox build reveal d1">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4 5 C 32 7, 68 4, 96 6 C 94 32, 97 68, 95 95 C 66 93, 34 97, 5 95 C 7 67, 3 33, 4 5 Z"/></svg>
+          <span class="anum">05</span>
+          <h4>Tool-Empfehlung</h4>
+          <span class="badge build">✎ im Bau</span>
+          <p class="arole">Er nennt für jede Stelle ein konkretes Tool und prüft vorher, ob es DSGVO-tauglich ist — damit man nicht erst nach dem Kauf merkt, dass es nicht eingesetzt werden darf.</p>
+        </article>
+        <article class="abox plan reveal d2">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5 7 C 33 5, 67 8, 95 5 C 93 33, 96 67, 94 96 C 65 94, 35 97, 6 95 C 9 65, 3 35, 5 7 Z"/></svg>
+          <span class="anum">06</span>
+          <h4>Wirtschaftlichkeit</h4>
+          <span class="badge plan">⋯ geplant</span>
+          <p class="arole">Er stellt Aufwand und Nutzen pro Vorschlag nüchtern gegenüber, damit am Ende eine Entscheidung steht statt eines Bauchgefühls — auch wenn das Ergebnis 'lohnt sich nicht' heißt.</p>
+        </article>
+        <article class="abox plan reveal d3">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M4 6 C 31 8, 69 3, 96 6 C 93 31, 97 69, 95 94 C 66 96, 34 92, 5 95 C 8 69, 2 31, 4 6 Z"/></svg>
+          <span class="anum">07</span>
+          <h4>Compliance-Check</h4>
+          <span class="badge plan">⋯ geplant</span>
+          <p class="arole">Er hält fest, welche Daten wohin fließen und was DSGVO und AI-Act dazu sagen — schriftlich, damit es bei Nachfragen kein Schulterzucken gibt.</p>
+        </article>
+        <article class="abox build reveal d4">
+          <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M5 5 C 30 8, 70 3, 95 6 C 92 30, 96 70, 94 95 C 67 93, 33 97, 6 94 C 8 67, 4 33, 5 5 Z"/></svg>
+          <span class="anum">08</span>
+          <h4>Reporter</h4>
+          <span class="badge build">✎ im Bau</span>
+          <p class="arole">Am Ende klebt er alles zusammen, was die anderen Agenten gefunden haben, und gibt es so aus, dass man es ausdrucken und in die Runde legen kann — PDF, Excel oder Markdown.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-sum reveal d2">
+    <div class="big">8 Agenten. <em>Ein Report.</em></div>
+    <p class="flow mono">Research · Dokumente · Prozesse · Use-Cases · Tools · Wirtschaftlichkeit · Compliance · Reporter <span class="out">→ PDF · Excel · MD</span></p>
+  </div>
+</section>
+
+<!-- ============================================================
+     AI-ADOPTION-STUDIO · 8-Agenten-Orchestrator (3D)
+     Selbst-enthaltener Block · alle IDs/Klassen mit a3-/#agents-3d gescopet
+     Three.js via vorhandener importmap (three@0.160 + three/addons/)
+============================================================ -->
+<section id="agents-3d" data-reduced-motion="false">
+  <div class="kicker reveal"><span class="num">07</span>Das Herzstück, live</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.4rem,6vw,4rem)">Aus Skizze wird <em style="color:var(--red);font-style:normal">System.</em></h2>
+  <p class="lead reveal d2">Dieselben acht Agenten — jetzt als lebendes 3D-Werkstattfenster. Zieh dran, dreh es, klick einen Knoten.</p>
+  <div class="a3-stage reveal d2">
+    <span class="washi" style="position:absolute;top:-13px;left:9%;transform:rotate(-5deg);z-index:6"></span>
+    <div class="a3-canvas-wrap">
+    <div class="a3-scene" id="a3-scene"></div>
+
+    <!-- statisches Fallback bei prefers-reduced-motion / WebGL-Fehler -->
+    <div class="a3-fallback" id="a3-fallback" aria-hidden="true">
+      <div class="a3-fb-col">
+        <span class="a3-fb-tag">Eingang</span>
+        <div class="a3-fb-node a3-fb-build">Ada &middot; Voice-Intake</div>
+        <div class="a3-fb-node a3-fb-live">Dokumenten-Upload</div>
+      </div>
+      <div class="a3-fb-flow">&rarr;</div>
+      <div class="a3-fb-col">
+        <span class="a3-fb-tag">Dirigent</span>
+        <div class="a3-fb-node a3-fb-orch">orchestrator.py</div>
+      </div>
+      <div class="a3-fb-flow">&rarr;</div>
+      <div class="a3-fb-col a3-fb-agents">
+        <span class="a3-fb-tag">8 Fach-Agenten &rarr; Reporter</span>
+        <div class="a3-fb-node a3-fb-live">Web-Research</div>
+        <div class="a3-fb-node a3-fb-live">Dokumenten-Analyst</div>
+        <div class="a3-fb-node a3-fb-live">Prozess-Auditor</div>
+        <div class="a3-fb-node a3-fb-build">Use-Case-Generator</div>
+        <div class="a3-fb-node a3-fb-build">Tool-Empfehlung</div>
+        <div class="a3-fb-node a3-fb-build">ROI / Wirtschaftlichkeit</div>
+        <div class="a3-fb-node a3-fb-plan">Compliance-Check</div>
+        <div class="a3-fb-node a3-fb-build">Reporter &rarr; Report</div>
+      </div>
+    </div>
+
+    <!-- HUD: Headline + Legende -->
+    <div class="a3-hud a3-title">
+      <span class="a3-eyebrow">AI-Adoption-Studio &middot; Multi-Agent-Engine</span>
+      <h2>Mehrere Spezialisten.<br><em>Ein Ablauf.</em></h2>
+      <p class="a3-sub">Voice &amp; Dokumente flie&szlig;en links rein &mdash; der <b>Orchestrator</b> reicht Kontext an acht Fach-Agenten &mdash; der <b>Reporter</b> b&uuml;ndelt alles zur Executive Summary.</p>
+    </div>
+
+    <!-- Status-Legende (ehrlich) -->
+    <div class="a3-hud a3-legend">
+      <span class="a3-chip"><i class="a3-dot a3-dot-live"></i>live <b class="a3-n">3</b></span>
+      <span class="a3-chip"><i class="a3-dot a3-dot-build"></i>im Bau <b class="a3-n">4</b></span>
+      <span class="a3-chip"><i class="a3-dot a3-dot-plan"></i>geplant <b class="a3-n">1</b></span>
+      <span class="a3-legend-hint">Ziehen = drehen &middot; +/&minus; = zoomen &middot; Klick auf Knoten = Details</span>
+    </div>
+
+    <!-- Zoom-Steuerung (Buttons statt Wheel-Hijack) -->
+    <div class="a3-hud a3-zoom">
+      <button type="button" class="a3-zbtn" id="a3-z-in"  title="Reinzoomen (+)" aria-label="Reinzoomen">+</button>
+      <button type="button" class="a3-zbtn" id="a3-z-out" title="Rauszoomen (&minus;)" aria-label="Rauszoomen">&minus;</button>
+      <button type="button" class="a3-zbtn a3-fit" id="a3-z-fit" title="Alles im Blick (0)" aria-label="Ansicht zur&uuml;cksetzen">&#9678;</button>
+      <button type="button" class="a3-zbtn a3-fit" id="a3-z-rot" title="Auto-Rotation" aria-label="Auto-Rotation" aria-pressed="false">&#8635;</button>
+    </div>
+
+    <!-- Tooltip (folgt der Maus) -->
+    <div class="a3-tip" id="a3-tip"><span class="a3-tip-name"></span><span class="a3-tip-file"></span></div>
+
+    <!-- Info-Karte (HTML-Overlay) -->
+    <div class="a3-card" id="a3-card" role="dialog" aria-modal="false" aria-hidden="true">
+      <button type="button" class="a3-card-close" id="a3-card-close" aria-label="Schlie&szlig;en">&times;</button>
+      <div class="a3-card-body" id="a3-card-body"></div>
+    </div>
+  </div>
+  <div class="a3-cap">live · ziehen zum drehen · +/− zoomen · Klick auf einen Knoten = Details</div>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 4, 400 12, 580 6 C 760 13, 870 4, 996 8"/></svg>
+
+<!-- ============ BANNER ============ -->
+<section class="banner" id="banner-1">
+  <h2 class="reveal">Aus Rauschen wird<br><em>Reihenfolge.</em></h2>
+  <p class="bsub reveal d1">Drei Use-Cases, ein Report, ein klarer nächster Schritt. Kein Foliensatz — etwas, mit dem das Haus arbeiten kann.</p>
+</section>
+
+<!-- ============ 04 · ERGEBNIS — Abteilungs-Karten ============ -->
+<section id="ergebnis">
+  <div class="kicker reveal"><span class="num">04</span>Das Ergebnis</div>
+  <div class="scene-label reveal d1">Szene · Empfang &amp; Reservierung</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Ein Fahrplan pro <em style="color:var(--red);font-style:normal">Abteilung.</em></h2>
+  <p class="lead reveal d2">Kein Foliensatz für die Schublade. Pro Bereich eine ehrliche Empfehlung — was sich lohnt, was wartet, was du sein lassen kannst.</p>
+
+  <div class="cards">
+    <article class="abteilung reveal d1">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Empfang &amp; Reservierung · 01</div>
+      <h4>Anfragen vorsortieren, nicht ersetzen</h4>
+      <p>Standard-Mails und -Anfragen landen vorstrukturiert beim Team. Der Mensch entscheidet, die Maschine räumt vor.</p>
+      <span class="fmt teal">hoher Hebel</span>
+    </article>
+    <article class="abteilung reveal d2">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">F&amp;B &amp; Küche · 02</div>
+      <h4>Erst messen, dann automatisieren</h4>
+      <p>Wareneinsatz und Bestellungen sind selten so sauber, wie man denkt. Hier zuerst Klarheit, dann Tools.</p>
+      <span class="fmt yellow">Daten zuerst</span>
+    </article>
+    <article class="abteilung reveal d3">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Housekeeping · 03</div>
+      <h4>Kleiner Anfang, schneller Effekt</h4>
+      <p>Schichtplanung und Statusmeldungen lassen sich ohne großes Projekt entlasten — der ehrlichste Quick Win.</p>
+      <span class="fmt teal">Quick Win</span>
+    </article>
+    <article class="abteilung reveal d1">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Revenue &amp; Pricing · 04</div>
+      <h4>Spannend — aber mit Vorsicht</h4>
+      <p>Hier locken die größten Versprechen und die größten Fehlkäufe. Empfehlung: testen im Kleinen, nicht kaufen im Großen.</p>
+      <span class="fmt red">mit Vorsicht</span>
+    </article>
+    <article class="abteilung reveal d2">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Marketing &amp; Gäste-Kommunikation · 05</div>
+      <h4>Wo KI heute schon trägt</h4>
+      <p>Content, Antworten, Wiederkehr-Ansprache — der Bereich, in dem der Einstieg am leichtesten gelingt.</p>
+      <span class="fmt pencil">reif</span>
+    </article>
+  </div>
+
+  <div class="split" style="margin-top:3.4rem">
+    <figure class="photo l hover reveal d1" style="max-width:100%">
+      <div class="ph" style="aspect-ratio:1/1">
+        <img src="assets/bilder/sketch-studio/st_kitchen.jpg" alt="Skizze: Hotelküche mit einer Tablet-Checkliste auf der Arbeitsfläche" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">🍳</span>Küche · Checkliste</div>
+      </div>
+      <figcaption>Erst messen, dann automatisieren</figcaption>
+    </figure>
+    <figure class="photo r hover reveal d2" style="max-width:100%">
+      <div class="ph" style="aspect-ratio:1/1">
+        <img src="assets/bilder/sketch-studio/st_report.jpg" alt="Skizze: ein fertiger Fahrplan wird über den Tisch übergeben" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">📄</span>Fahrplan übergeben</div>
+      </div>
+      <figcaption>Aus Rauschen wird Reihenfolge</figcaption>
+    </figure>
+  </div>
+
+  <p class="scene-quote reveal d2">Drei Use-Cases, ein Report, ein klarer nächster Schritt. Kein Foliensatz — etwas, mit dem das Haus arbeiten kann."</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 13, 400 3, 580 8 C 760 13, 870 5, 996 9"/></svg>
+
+<!-- ============ 05 · AUTONOMIE — Delivery-Loop ============ -->
+<section id="autonomie">
+  <div class="kicker reveal"><span class="num">05</span>Die neueste Entwicklung</div>
+  <div class="scene-label reveal d1">Szene · 9. Juni, nachts</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Jetzt baut es sich <em style="color:var(--red);font-style:normal">selbst.</em></h2>
+  <p class="lead reveal d2">Ein Klick in der Morgenmail — und ein Agent in der Cloud übernimmt die nächste Aufgabe von allein: klont das Repo, schreibt Code, prüft sich selbst und legt einen fertigen Pull-Request hin. Kein Terminal, kein Rechner an.</p>
+
+  <div class="order3 reveal d2" style="flex-wrap:wrap;justify-content:flex-start">
+    <span>Linear</span><span class="arr">→</span><span>Mail</span><span class="arr">→</span><span>1 Klick</span><span class="arr">→</span><span>Agent</span><span class="arr">→</span><span>Pull-Request</span><span class="arr">→</span><span>Linear</span>
+  </div>
+
+  <div class="split rev-cols" style="margin-top:2.6rem">
+    <div class="txtcol">
+      <p class="lead reveal d2"><strong>Leitprinzip: Linear baut, Notion denkt.</strong> Die Umsetzung lebt in Linear — Issues, Milestones, Status. Strategie und Wissen in Notion. Linear meldet nach oben, nie umgekehrt.</p>
+      <div class="dual">
+        <div class="mini teal reveal d3"><b>Ein Klick</b><span>aus der Morgenmail, mehr nicht</span></div>
+        <div class="mini red reveal d4"><b>Fertiger PR</b><span>kommt zurück — du reviewst, du mergst</span></div>
+      </div>
+      <p class="lead reveal d4" style="margin-top:1.4rem">Und jeder Bau-Schritt wird mitgeschrieben — als Build-Log, das direkt zum LinkedIn-Post wird. Schau mir beim Bauen zu.</p>
+    </div>
+    <div class="sticky reveal float" style="margin:0 auto;transform:rotate(-2deg)">Smoke-Test bestanden:<br>der Agent baute Pull-Request&nbsp;#1 von selbst und setzte ALE-43 auf „In Review".</div>
+  </div>
+
+  <p class="scene-quote reveal d2">Vom Linear-Issue bis zum fertigen Pull-Request — vollautonom, rund um die Uhr."</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 4, 400 12, 580 6 C 760 13, 870 4, 996 8"/></svg>
+
+<!-- ============ 06 · GALAXIE — Systemkarte ============ -->
+<section id="galaxie">
+  <div class="kicker reveal"><span class="num">06</span>Das ganze System</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Alles, was zusammen<em style="color:var(--red);font-style:normal">gewachsen</em> ist.</h2>
+  <p class="lead reveal d2">Es gab keinen Plan von oben. Ich habe Stück für Stück gebaut: hier ein Skill, da eine Automation. Irgendwann fingen die Teile an, sich gegenseitig zu brauchen. Das ist der Stand, den du hier siehst — als lebende Karte. Zieh dran, zoom rein.</p>
+  <div class="galaxy-frame reveal d2" style="position:relative;margin-top:2.4rem;border:2.5px solid var(--ink);border-radius:10px;overflow:hidden;background:#FAF9F5;box-shadow:5px 12px 28px rgba(43,42,38,.18)">
+    <iframe src="https://claude-system-galaxie.vercel.app" title="Animierte Systemkarte — Alex × Claude" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="width:100%;height:clamp(460px,70vh,760px);border:0;display:block"></iframe>
+    <a class="galaxy-tap" href="https://claude-system-galaxie.vercel.app" target="_blank" rel="noopener"><span>↗ Galaxie in groß öffnen</span></a>
+  </div>
+  <div class="scene-label reveal d2" style="margin-top:1rem">live · ziehen zum drehen, scrollen zum zoomen, klick auf einen knoten</div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 4, 400 12, 580 6 C 760 13, 870 4, 996 8"/></svg>
+
+<!-- ============ 07 · MASCHINENRAUM — Managed Agents + Stack ============ -->
+<section id="maschinenraum">
+  <div class="kicker reveal"><span class="num">07</span>Der Maschinenraum</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Wer hier <em style="color:var(--red);font-style:normal">baut</em>.</h2>
+  <p class="lead reveal d2">Die eigentliche Arbeit macht ein Agent in der Cloud — er liest, schreibt, testet und committet, ohne dass mein Rechner laufen muss. Ich gebe das Ziel und die Konfiguration vor, den Rest erledigt die Maschine.</p>
+
+  <div class="split rev-cols" style="margin-top:2.4rem">
+    <div class="txtcol">
+      <p class="lead reveal d2">Bei <strong>Managed Agents</strong> ist es dasselbe SDK, nur von Anthropic gehostet. Jeder Lauf passiert in einem isolierten Cloud-Container — eine eigene Werkstatt pro Aufgabe. Skalierung, der Lebenszyklus der Container und das Kompaktieren des Kontexts laufen auf Anthropics Seite. Keine Maschine, die ich selbst betreiben muss.</p>
+      <p class="lead reveal d3" style="margin-top:1.2rem">Das Prinzip ist <em style="color:var(--red);font-style:normal">Outcome</em> statt Befehl: Ich beschreibe ein bewertbares Ziel, ein Grader prüft jeden Durchlauf und schickt ihn zurück, bis das Ergebnis passt. Schutzschienen inklusive — nur Branch und Pull Request, eingeschränktes Netz, keine Secrets im Container.</p>
+      <div class="dual">
+        <div class="mini teal reveal d3"><b>Sicher gebaut</b><span>nur Branch &amp; PR, nie der Hauptzweig</span></div>
+        <div class="mini red reveal d4"><b>Eng eingezäunt</b><span>nur GitHub &amp; Pakete, keine Secrets im Container</span></div>
+      </div>
+    </div>
+    <div class="sticky reveal float" style="margin:0 auto;transform:rotate(2deg)">Kein nachgebautes Tutorial, sondern ein System, das tatsächlich läuft.<br>Das wollte ich sehen.</div>
+  </div>
+
+  <div class="kicker reveal d2" style="margin-top:3rem">Der Stack · jedes Werkzeug eine klare Rolle</div>
+  <div class="dual reveal d2" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-top:1.2rem">
+    <div class="mini teal"><b>Linear</b><span>Roadmap &amp; Umsetzung</span></div>
+    <div class="mini red"><b>Notion</b><span>Strategie &amp; Wissen</span></div>
+    <div class="mini teal"><b>AgentMail</b><span>Briefing &amp; Auslöser</span></div>
+    <div class="mini red"><b>n8n · VPS</b><span>Cron &amp; Webhook, 24/7</span></div>
+    <div class="mini teal"><b>Managed Agents</b><span>die Ausführung</span></div>
+    <div class="mini red"><b>GitHub</b><span>Code · Branches · PRs</span></div>
+    <div class="mini teal"><b>Supabase</b><span>Auth · DB · Storage</span></div>
+    <div class="mini red"><b>Next.js · FastAPI</b><span>Frontend &amp; Pipeline</span></div>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============ 08 · AGENT SDK — das Fundament ============ -->
+<section id="agent-sdk">
+  <div class="kicker reveal"><span class="num">08</span>Das Fundament</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Dasselbe Werkzeug, das <em style="color:var(--red);font-style:normal">Claude Code</em> antreibt.</h2>
+  <p class="lead reveal d2">Das <strong>Claude Agent SDK</strong> ist Anthropics Framework, um eigene Agenten zu bauen — in Python oder TypeScript. Darunter läuft derselbe Agenten-Loop wie in Claude Code, nur programmierbar statt im Terminal. Ich gebe dem Agenten eigene Werkzeuge an die Hand — Bash, Dateizugriff, Web — dazu MCP-Server, Subagenten und klare Rechte in einer Sandbox.</p>
+
+  <div class="dual reveal d2" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.6rem">
+    <div class="mini teal"><b>Eigene Werkzeuge</b><span>Bash, Dateien, Web — plus MCP-Server andocken</span></div>
+    <div class="mini red"><b>Sessions &amp; Memory</b><span>mehrstufige Läufe, automatische Kontext-Kompaktierung</span></div>
+    <div class="mini teal"><b>Subagenten</b><span>ein Koordinator, der weitere Agenten ruft</span></div>
+    <div class="mini red"><b>Rechte &amp; Sandbox</b><span>granulare Permissions, keine Secrets im Container</span></div>
+  </div>
+
+  <p class="lead reveal d3" style="margin-top:1.6rem">Drei Dinge, ein Zusammenhang: <b>Claude Code</b> ist das Werkzeug, mit dem ich täglich arbeite. Das <b>Agent SDK</b> ist der programmierbare Unterbau darunter. <b>Managed Agents</b> sind dasselbe SDK — nur von Anthropic gehostet, im eigenen Cloud-Container. Genau diese Kette steckt im Studio.</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C 220 13, 400 3, 580 8 C 760 13, 870 5, 996 9"/></svg>
+
+<!-- ============ 09 · VISION — 3 Ebenen, 2 Horizonte ============ -->
+<section id="vision">
+  <div class="kicker reveal"><span class="num">09</span>Wohin das führt</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Auditieren ist erst <em style="color:var(--red);font-style:normal">Schritt eins.</em></h2>
+  <p class="lead reveal d2">„Das Programm ist mit dem KI-Auditing nicht vorbei — danach fängt das Ganze erst richtig an." Strategische KI-Adoption heißt: verstehen, designen, bauen. Branchenagnostisch gedacht — das Hotel ist nur der erste Anwendungsfall.</p>
+
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:2.6rem">
+    <article class="abteilung reveal d1">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Ebene 01</div>
+      <h4>Verstehen</h4>
+      <p>Voice-Agent und Dokumenten-Analyse erfassen die ganze Ist-Infrastruktur und die Bedürfnisse eines Betriebs.</p>
+      <span class="fmt teal">heute live</span>
+    </article>
+    <article class="abteilung reveal d2">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Ebene 02</div>
+      <h4>Designen</h4>
+      <p>Aus den Bedürfnissen wird die komplette Ziel-Systemlandschaft abgeleitet: welche Tools, wie verbunden, welche Automationen.</p>
+      <span class="fmt red">als Nächstes</span>
+    </article>
+    <article class="abteilung reveal d3">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Ebene 03</div>
+      <h4>Bauen &amp; Orchestrieren</h4>
+      <p>Die entworfenen Systeme tatsächlich aufbauen und alle Tools miteinander verbinden — hier liegt der eigentliche Wert.</p>
+      <span class="fmt red">als Nächstes</span>
+    </article>
+  </div>
+
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(258px,1fr));margin-top:2.8rem">
+    <article class="abteilung reveal d1">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Horizont 1 · bis Final-Pitch 21.07.2026</div>
+      <h4>Portfolio-Demo</h4>
+      <p>Lauffähig ist Ebene 1: ein klickbarer Audit-Flow. Ebene 2 und 3 stehen als Prototyp daneben, noch nicht fertig.</p>
+      <span class="fmt teal">jetzt</span>
+    </article>
+    <article class="abteilung reveal d2">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="gk mono">Horizont 2 · danach</div>
+      <h4>Echtes SaaS-Produkt</h4>
+      <p>Multi-Tenant, zahlende Häuser, Billing, Production-Hardening — die volle Tiefe von Ebene 2 und 3.</p>
+      <span class="fmt red">danach</span>
+    </article>
+  </div>
+
+  <p class="scene-quote reveal d2">Geplant über beide Horizonte: 76 Stories, 40 Aufgaben, ein kritischer Pfad — der Bauplan steht."</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============ APP-TEASER ============ -->
+<section id="app-teaser">
+  <div class="kicker reveal"><span class="num">10</span>Selbst ausprobieren</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">Keine Präsentation. <em style="color:var(--red);font-style:normal">Das läuft.</em></h2>
+  <p class="lead reveal d2">Das Studio ist live deployed — Frontend erreichbar, 12 Routen, HTTP 200. Schau dir die Agenten an oder geh direkt rein.</p>
+  <div class="dual reveal d2" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:1.6rem">
+    <a class="mini teal" href="https://myflowmotion.cloud" target="_blank" rel="noopener"><b>Zum Studio →</b><span>myflowmotion.cloud</span></a>
+    <a class="mini red" href="https://myflowmotion.cloud/agents" target="_blank" rel="noopener"><b>Agenten ansehen →</b><span>/agents</span></a>
+    <a class="mini" href="https://github.com/alexheyers/ai-adoption-studio" target="_blank" rel="noopener"><b>Code →</b><span>github.com/alexheyers</span></a>
+  </div>
+  <p class="lead reveal d3" style="margin-top:1.3rem">Voice-Intake mit Ada und der volle Report-Flow: <strong>kommt bald</strong> — Building in Public, Final-Pitch 21.07.2026.</p>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============ DESIGN-SHOWCASE ============ -->
+<section id="design-showcase">
+  <div class="kicker reveal"><span class="num">11</span>So sieht es aus</div>
+  <h2 class="title reveal d1" style="font-size:clamp(2.6rem,7vw,4.6rem)">12 Routen. Echtes <em style="color:var(--red);font-style:normal">Frontend.</em></h2>
+  <p class="lead reveal d2">Kein Mockup — gebaute Oberflächen aus dem Studio. Next.js · FastAPI · Supabase, live auf dem VPS.</p>
+  <div class="screens">
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/pitch.jpg" alt="Studio Hero / Pitch" loading="lazy" decoding="async"><figcaption>Hero · „AI-Adoption Studio"</figcaption></figure>
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/agents.jpg" alt="8 Agenten Orchestrator-Flow" loading="lazy" decoding="async"><figcaption>8 Agenten · Orchestrator-Flow</figcaption></figure>
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/voice.jpg" alt="Voice-Interview mit Ada" loading="lazy" decoding="async"><figcaption>Voice-Interview mit Ada</figcaption></figure>
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/onboarding.jpg" alt="3-Step Onboarding" loading="lazy" decoding="async"><figcaption>3-Step-Onboarding</figcaption></figure>
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/customer-journey.jpg" alt="Customer Journey" loading="lazy" decoding="async"><figcaption>9-Phasen Customer Journey</figcaption></figure>
+    <figure class="screen reveal"><img src="assets/bilder/studio-screens/dashboard.jpg" alt="Live Dashboard" loading="lazy" decoding="async"><figcaption>Live-Dashboard</figcaption></figure>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============ MENSCH ============ -->
+<section id="mensch">
+  <div class="human">
+    <figure class="photo l portrait hover reveal" style="margin:0">
+      <div class="ph" style="aspect-ratio:4/5">
+        <img src="assets/bilder/sketch-bg/sk_alex_caricature.jpg" alt="Karikatur Alex Heyers am Laptop" loading="lazy" decoding="async" data-img>
+        <div class="fallback"><span class="ic">✎</span>Alex Heyers<br>— 20 Jahre Gastgeber —</div>
+      </div>
+      <figcaption>Alex Heyers</figcaption>
+    </figure>
+    <div class="htext">
+      <div class="kicker reveal">Der Mensch dahinter</div>
+      <h2 class="reveal d1">Warum ich das <em>baue.</em></h2>
+      <p class="reveal d2">Mich packt der Weg: aus einem klaren Gedanken etwas Echtes formen, das vorher nicht da war. Coden ist dabei kein Selbstzweck, sondern die kürzeste Strecke von der Idee zum Laufen. Zwanzig Jahre habe ich Betriebe am Laufen gehalten — dieselbe Denke, nur mit anderem Werkzeug.</p>
+      <p class="reveal d3">Mit 45, Vater seit 2025, nochmal tief eintauchen? Klar — Neugier hat kein Verfallsdatum. Und ehrlich: Bauen macht süchtig. <strong>Wenn dich dieser Weg auch reizt: Lass uns reden.</strong></p>
+    </div>
+  </div>
+</section>
+
+<svg class="rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 7 C 200 12, 380 2, 560 9 C 740 14, 870 4, 996 9"/></svg>
+
+<!-- ============================================================
+     FINALE (gemeinsames Ende)
+     ============================================================ -->
+<section id="finale">
+  <div class="cta reveal">
+    <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M3 5 C 30 2, 70 7, 97 4 C 99 30, 96 70, 97 96 C 70 99, 30 94, 3 97 C 1 70, 5 30, 3 5 Z"/></svg>
+    <span class="star" style="top:-8px;left:8%;transform:rotate(-12deg)">✶</span>
+    <span class="star" style="bottom:6px;right:10%;font-size:1.4rem;transform:rotate(14deg)">✦</span>
+
+    <div class="polaroid">
+      <div class="ph">
+        <img src="assets/bilder/sketch-portraits/sketch_portrait_cta.jpg" alt="Sketch-Porträt Alex Heyers" loading="lazy" decoding="async" data-img>
+        <div class="nofoto">Alex Heyers<br>Tag 86</div>
+      </div>
+      <span class="pcap">Alex · From Bar to Bytes</span>
+    </div>
+    <span class="eyebrow-c">Diese Seite ist auch eine Bewerbung</span>
+    <h2>Lass uns <em>reden.</em></h2>
+    <p class="sub">86 Tage, ein Satz: <span class="hl-teal">Ich bau das.</span> Angefangen beim Gastgewerbe, weil ich die Abläufe dort kenne — aber das Prinzip (zuhören, verstehen, das passende System bauen) trägt überall.</p>
+    <p class="sub">Ob Hotel, Handwerk, Kanzlei oder Agentur — wenn dich der Weg interessiert oder du jemanden suchst, der ihn geht: schreib mir. Antwort meist in 24 Stunden.</p>
+    <a href="mailto:a.heyers@gmail.com" class="mail" data-mag>a.heyers@gmail.com →</a>
+    <div class="roles">
+      <span>Solutions Engineer</span>
+      <span>Implementation Consultant</span>
+      <span>Customer Success</span>
+      <span>Hospitality-SaaS</span>
+      <span>DACH</span>
+    </div>
+    <svg class="divider" viewBox="0 0 200 24"><path d="M4 12 q 12 -10 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0" filter="url(#rough)"/></svg>
+    <div class="meta">Alex Heyers · Vibe Coding Bootcamp · Kohorte 05/26 · Mosbach</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="sig">— Alex Heyers</div>
+  <div>Eine Reise im Skizzenbuch · 86 Tage &amp; AI-Adoption Studio · Vibe Coding 2026</div>
+</footer>
+
+</div><!-- /.wrap -->
+
+<script>
+/* ============================================================
+   Sketch-Edition · alle Bewegungen rAF/IO-gedrosselt.
+   reduced-motion: hartes Fallback (Endzustand sofort).
+   ============================================================ */
+(function(){
+  "use strict";
+  var RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var root = document.documentElement;
+  var sbar = document.querySelector('.scroll-bar');
+
+  /* ---------- Bild-Fallback: kaputtes Bild -> skizzenhafter Ersatz ---------- */
+  document.querySelectorAll('[data-img]').forEach(function(img){
+    var fig = img.closest('.photo') || img.closest('.polaroid');
+    function fail(){ if(fig) fig.classList.add('fail'); reflowSoon(); }
+    if(img.complete && img.naturalWidth===0) fail();
+    img.addEventListener('error', fail);
+    img.addEventListener('load', reflowSoon);
+  });
+
+  /* ---------- DER durchgehende Pfad ueber die GANZE Seite ---------- */
+  var routeLine = document.getElementById('routeLine');
+  var routeInk  = document.getElementById('routeInk');
+  var routeBase = document.getElementById('routeBase');
+  var routeNib  = document.getElementById('routeNib');
+  var routeLayer= document.getElementById('routeLayer');
+  var routeLen  = 0;
+  var marks = [];
+  /* Story-Sektionen (Teal) und Studio-Sektionen (Rot) — fuer Pfad-Farbwechsel */
+  var STORY_IDS  = ['intro','intro-story','drill','spark','thesis','journey','numbers','bar','pitch'];
+  var STUDIO_IDS = ['transition','studio-hero','ausgangslage','mechanismus','pipeline','agents-3d','banner-1','ergebnis','autonomie','galaxie','maschinenraum','agent-sdk','vision','app-teaser','design-showcase','mensch','finale'];
+  var ANCHORS = STORY_IDS.concat(STUDIO_IDS);
+  var storyCount = STORY_IDS.length; /* fuer Farb-Schwelle entlang des Pfades */
+  /* Reise-Stempel: Icon + Kurz-Label je Station (Sektionen ohne Eintrag bekommen keinen Marker) */
+  var ROUTE_ICONS = {
+    intro:['⚑','Start'], spark:['✋','Ich nicht'], thesis:['🧠','Klarheit'],
+    journey:['🗺️','86 Tage'], numbers:['📊','636 UE'], bar:['🍸','Bar → Bytes'], pitch:['🌉','die Brücke'],
+    'studio-hero':['🏨','das Studio'], ausgangslage:['🗂️','das Chaos'], mechanismus:['🎙️','einfach reden'],
+    pipeline:['🤖','8 Agenten'], ergebnis:['📋','der Fahrplan'], autonomie:['🔁','baut sich selbst'],
+    galaxie:['🌌','das System'], maschinenraum:['🛠️','Managed Agents'], 'agent-sdk':['🧩','Agent SDK'],
+    vision:['🧭','wohin es geht'], mensch:['🙋','der Mensch'], finale:['🏁','lass uns reden']
+  };
+
+  function buildRoute(){
+    if(!routeLayer||!routeLine) return;
+    var W = root.clientWidth, H = document.body.scrollHeight;
+    routeLayer.setAttribute('viewBox','0 0 '+W+' '+H);
+    routeLayer.style.height = H+'px';
+    var leftX  = Math.max(30, W*0.065);
+    var rightX = Math.min(W-30, W*0.935);
+    /* auf schmalen Screens den Pfad naeher an den Rand legen */
+    if(W < 680){ leftX = Math.max(16, W*0.05); rightX = Math.min(W-16, W*0.95); }
+    var pts = [[W*0.5, 28]];
+    var used = []; /* merken, ob ein Anker zu Story oder Studio gehoert */
+    used.push('story');
+    for(var i=0;i<ANCHORS.length;i++){
+      var el = document.getElementById(ANCHORS[i]);
+      if(!el) continue;
+      var r = el.getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      var y = top + r.height*0.5;
+      var x = (i%2===0) ? leftX : rightX;
+      pts.push([x,y]);
+      used.push(i < storyCount ? 'story' : 'studio');
+    }
+    if(pts.length < 2){ routeLine.setAttribute('d',''); return; }
+    /* glatte, leicht „wackelige" Kurve (Catmull-Rom -> Bezier) */
+    var d = 'M '+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
+    for(var j=0;j<pts.length-1;j++){
+      var p0=pts[j-1]||pts[j], p1=pts[j], p2=pts[j+1], p3=pts[j+2]||pts[j+1];
+      var c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+      var c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+      d += ' C '+c1x.toFixed(1)+' '+c1y.toFixed(1)+', '+c2x.toFixed(1)+' '+c2y.toFixed(1)+', '+p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+    }
+    routeLine.setAttribute('d', d);
+    if(routeInk) routeInk.setAttribute('d', d);
+    if(routeBase) routeBase.setAttribute('d', d);
+    routeLen = routeLine.getTotalLength();
+    routeLine.style.setProperty('--rlen', routeLen);
+
+    /* Farb-Schwelle: an welcher Pfad-Laenge wechselt Teal -> Rot?
+       Studio beginnt am ersten Studio-Punkt; dessen Index in pts: storyCount+1 (Start-Punkt eingeschoben). */
+    var switchIdx = storyCount + 1;
+    var switchAt = routeLen; /* Default: nie wechseln, falls Studio fehlt */
+    if(switchIdx < pts.length){
+      /* Laenge bis zu diesem Anker grob ueber Punkt-Position bestimmen */
+      var target = pts[switchIdx];
+      switchAt = nearestLengthTo(target[0], target[1]);
+    }
+    routeLine.dataset.switchAt = switchAt;
+
+    /* Reise-Stempel an jeder echten Station platzieren (Icon je Sektion) */
+    marks.forEach(function(m){ m.el.remove(); }); marks = [];
+    for(var ai=0; ai<ANCHORS.length; ai++){
+      var ic = ROUTE_ICONS[ANCHORS[ai]];
+      if(!ic) continue;
+      var pp = pts[ai+1]; if(!pp) continue;            /* pts[0] ist der Start-Punkt, danach je Anker */
+      var side = (ai%2===0) ? 'rm-left' : 'rm-right';   /* Label zur Seiten-Mitte hin */
+      var studioCls = (ai >= storyCount) ? 'studio ' : '';
+      var el = document.createElement('div');
+      el.className = 'route-mark ' + studioCls + side;
+      el.innerHTML = '<div class="rm-pin">'+ic[0]+'</div><div class="rm-lab">'+ic[1]+'</div>';
+      el.style.left = pp[0].toFixed(1)+'px';
+      el.style.top  = pp[1].toFixed(1)+'px';
+      document.body.appendChild(el);
+      marks.push({el:el, at:nearestLengthTo(pp[0], pp[1])});
+    }
+  }
+
+  /* grobe, aber guenstige Suche der Pfad-Laenge nahe einer y-Position */
+  function nearestLengthTo(x,y){
+    if(!routeLen) return 0;
+    var best=0, bestD=Infinity, steps=64;
+    for(var s=0;s<=steps;s++){
+      var L = routeLen*(s/steps);
+      var p = routeLine.getPointAtLength(L);
+      var dy = p.y - y; /* y dominiert (Pfad laeuft vertikal) */
+      var dd = dy*dy;
+      if(dd<bestD){ bestD=dd; best=L; }
+    }
+    return best;
+  }
+
+  function drawRoute(){
+    if(!routeLine || !routeLen) return;
+    var max = root.scrollHeight - root.clientHeight;
+    var prog = max>0 ? root.scrollTop/max : 0;       /* Division durch 0 abgesichert */
+    var drawn = routeLen*Math.min(1, prog*1.04);
+    if(!RM){
+      routeLine.style.strokeDashoffset = (routeLen - drawn).toFixed(1);
+      /* Stiftspitze wandert mit */
+      if(routeNib){
+        var pt = routeLine.getPointAtLength(Math.min(drawn, routeLen));
+        routeNib.setAttribute('cx', pt.x); routeNib.setAttribute('cy', pt.y);
+        var switchAt = parseFloat(routeLine.dataset.switchAt || routeLen);
+        routeNib.setAttribute('fill', drawn >= switchAt ? '#E94B5D' : '#1AA591');
+        routeNib.classList.toggle('on', drawn > 6 && drawn < routeLen-2);
+      }
+    } else {
+      routeLine.style.strokeDashoffset = '0';
+    }
+    /* Marker aufleuchten, sobald die Linie sie erreicht hat */
+    for(var i=0;i<marks.length;i++){
+      var lit = RM || drawn >= marks[i].at - 4;
+      marks[i].el.classList.toggle('lit', lit);
+    }
+  }
+
+  /* ---------- Roadmap-Linie (Journey) ---------- */
+  var roadLine = document.getElementById('roadLine');
+  var roadPath = document.getElementById('roadPath');
+  var roadLen = 0;
+  if(roadLine){ roadLen = roadLine.getTotalLength(); roadLine.style.setProperty('--len', roadLen); }
+
+  /* ---------- Scroll-Bar + Roadmap + Route in einem rAF ---------- */
+  var ticking = false;
+  function update(){
+    ticking = false;
+    var max = root.scrollHeight - root.clientHeight;
+    var prog = max>0 ? root.scrollTop/max : 0;
+    if(sbar) sbar.style.width = (prog*100).toFixed(2)+'%';
+    if(roadLine && roadPath){
+      if(RM){ roadLine.style.strokeDashoffset = '0'; }
+      else {
+        var rr = roadPath.getBoundingClientRect();
+        var denom = rr.height*0.9;
+        var vis = denom>0 ? Math.min(1, Math.max(0, (window.innerHeight*0.85 - rr.top)/denom)) : 1;
+        roadLine.style.strokeDashoffset = (roadLen*(1-vis)).toFixed(1);
+      }
+    }
+    drawRoute();
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
+  addEventListener('scroll', onScroll, {passive:true});
+
+  /* ---------- Reveals + Doodle-Wackeln + Badge-Pop ---------- */
+  if(RM){
+    document.querySelectorAll('.reveal, .abox, .waves').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('.doodle').forEach(function(el){ el.classList.add('pop'); });
+    var f0 = document.getElementById('flowLines'); if(f0) f0.classList.add('in');
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -6% 0px'});
+    document.querySelectorAll('.reveal, .abox').forEach(function(el){ io.observe(el); });
+
+    var dio = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('pop'); dio.unobserve(en.target); }
+      });
+    }, {threshold:.4});
+    document.querySelectorAll('.doodle').forEach(function(el){ dio.observe(el); });
+
+    /* Voice-Schallwellen: zeichnen + danach pulsieren */
+    var waves = document.getElementById('voiceWaves');
+    if(waves){
+      var wio = new IntersectionObserver(function(es){
+        es.forEach(function(en){ if(en.isIntersecting){
+          en.target.classList.add('in');
+          setTimeout(function(){ waves.classList.add('pulsing'); }, 1500);
+          wio.unobserve(en.target);
+        }});
+      }, {threshold:.4});
+      wio.observe(waves);
+    }
+    /* Pipeline-Verbindungspfeile: zeichnen sich nacheinander (CSS-Delays) */
+    var flow = document.getElementById('flowLines');
+    if(flow){
+      var fio = new IntersectionObserver(function(es){
+        es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); fio.unobserve(en.target); }});
+      }, {threshold:.2});
+      fio.observe(flow);
+    }
+    /* Agentisches Architektur-Diagramm: Knoten + Linien zeichnen sich beim Reinscrollen */
+    var aflow = document.getElementById('agentFlow');
+    if(aflow){
+      var afio = new IntersectionObserver(function(es){
+        es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); afio.unobserve(en.target); }});
+      }, {threshold:.25});
+      afio.observe(aflow);
+    }
+  }
+
+  /* ---------- Marker-Unterstreichungen (selbst-zeichnend) ---------- */
+  function makeUnderline(sel){
+    document.querySelectorAll(sel).forEach(function(el){
+      if(el.querySelector('svg')) return;
+      el.classList.add('uline'); /* WICHTIG: CSS-Klasse aufs Element, sonst greifen die .uline-Styles nicht */
+      var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('viewBox','0 0 100 12'); svg.setAttribute('preserveAspectRatio','none');
+      var p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d','M2 7 q 18 -6 34 -1 t 30 1 t 32 -2');
+      p.setAttribute('filter','url(#rough)');
+      svg.appendChild(p); el.appendChild(svg);
+      var len = p.getTotalLength(); p.style.setProperty('--ul', len);
+      if(RM){ el.classList.add('drawn'); return; }
+      var o = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ el.classList.add('drawn'); o.disconnect(); }});}, {threshold:.6});
+      o.observe(el);
+    });
+  }
+  /* ---------- eingekreises Wort (selbst-zeichnend) ---------- */
+  function makeCircle(sel){
+    document.querySelectorAll(sel).forEach(function(el){
+      if(el.querySelector('svg')) return;
+      var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('viewBox','0 0 120 60'); svg.setAttribute('preserveAspectRatio','none');
+      var p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d','M14 32 C 10 8, 110 6, 112 30 C 114 54, 18 58, 8 34 C 6 26, 14 24, 22 24');
+      p.setAttribute('filter','url(#rough)');
+      svg.appendChild(p); el.appendChild(svg);
+      var len = p.getTotalLength(); p.style.setProperty('--cl', len);
+      if(RM){ el.classList.add('drawn'); return; }
+      var o = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ el.classList.add('drawn'); o.disconnect(); }});}, {threshold:.55});
+      o.observe(el);
+    });
+  }
+  makeUnderline('#bar h2 em');
+  makeUnderline('#finale h2 em');
+  makeUnderline('#mensch h2 em');
+  makeUnderline('#ausgangslage h2 em');
+  makeUnderline('#mechanismus h2 em');
+  makeUnderline('#ergebnis h2 em');
+  makeUnderline('#autonomie h2 em');
+  makeUnderline('#galaxie h2 em');
+  makeUnderline('#maschinenraum h2 em');
+  makeUnderline('#agent-sdk h2 em');
+  makeUnderline('#vision h2 em');
+  makeCircle('#pitch .circle-word');
+
+  /* ---------- Gezeichnete Sektions-Icons (Teil II) ---------- */
+  var SEC_ICONS = {ausgangslage:'🗂️',mechanismus:'🎙️',pipeline:'🤖',ergebnis:'📋',autonomie:'🔁',galaxie:'🌌',maschinenraum:'🛠️','agent-sdk':'🧩',vision:'🧭'};
+  Object.keys(SEC_ICONS).forEach(function(id,i){
+    var s = document.getElementById(id); if(!s) return;
+    var d = document.createElement('div');
+    d.className = 'doodle section-ic' + (RM ? ' pop' : '');
+    d.style.setProperty('--r', (i%2 ? 6 : -7) + 'deg');
+    d.style.cssText += ';top:6.5%;right:5vw;font-size:2.1rem;z-index:2';
+    d.textContent = SEC_ICONS[id];
+    s.appendChild(d);
+    if(!RM){
+      var o = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('pop'); o.unobserve(e.target); } }); }, {threshold:.3});
+      o.observe(d);
+    }
+  });
+
+  /* ---------- 20:34 — gelber Marker (scaleX) ---------- */
+  (function(){
+    var t = document.querySelector('#spark .time'); if(!t) return;
+    if(RM){ t.classList.add('drawn'); return; }
+    var o = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ t.classList.add('drawn'); o.disconnect(); }});}, {threshold:.55});
+    o.observe(t);
+  })();
+
+  /* ---------- Thesis: Woerter „glimmen" beim Scroll auf ---------- */
+  (function(){
+    var p = document.getElementById('thesisText'); if(!p) return;
+    var plain = p.textContent.trim(); p.innerHTML='';
+    plain.split(' ').forEach(function(wd){
+      var s = document.createElement('span'); var cls='w';
+      var clean = wd.replace(/[^A-Za-zÄÖÜäöü]/g,'');
+      if(clean==='Klarheit') cls='w teal';
+      if(wd==='Syntax.'||wd==='Denken.') cls='w red';
+      s.className = cls; s.textContent = wd+' '; p.appendChild(s);
+    });
+    if(RM){ p.querySelectorAll('.w').forEach(function(w){ w.classList.add('on'); }); return; }
+    var words = [].slice.call(p.querySelectorAll('.w'));
+    var t2 = false;
+    function lite(){
+      t2 = false;
+      var trig = innerHeight*.8, bot = innerHeight*.3;
+      words.forEach(function(w){ var r=w.getBoundingClientRect(); w.classList.toggle('on', r.top<trig && r.bottom>bot); });
+    }
+    addEventListener('scroll', function(){ if(!t2){ t2=true; requestAnimationFrame(lite); } }, {passive:true});
+    lite();
+  })();
+
+  /* ---------- Count-Up Karteikarten ---------- */
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var target = +el.dataset.count;
+    if(RM){ el.textContent = target; return; }
+    var o = new IntersectionObserver(function(es){ es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var dur=1100, t0=performance.now();
+      (function step(now){
+        var k = Math.min(1,(now-t0)/dur);
+        var eased = 1-Math.pow(1-k,3);
+        el.textContent = Math.round(target*eased);
+        if(k<1) requestAnimationFrame(step); else el.textContent = target;
+      })(t0);
+      o.unobserve(el);
+    });}, {threshold:.6});
+    o.observe(el);
+  });
+
+  /* ---------- Magnetischer CTA-Button (zarter Wackel) ---------- */
+  document.querySelectorAll('[data-mag]').forEach(function(b){
+    if(RM) return;
+    if(matchMedia('(hover:none)').matches) return;
+    b.addEventListener('mouseenter', function(){ b.style.transition='transform .07s linear, box-shadow .2s var(--ease)'; });
+    b.addEventListener('mousemove', function(e){
+      var r=b.getBoundingClientRect();
+      b.style.transform = 'translate('+((e.clientX-r.left-r.width/2)*.18).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*.22).toFixed(1)+'px) rotate(-1deg)';
+    });
+    b.addEventListener('mouseleave', function(){ b.style.transition='transform .25s var(--ease), box-shadow .2s var(--ease)'; b.style.transform=''; });
+  });
+
+  /* ---------- Polaroid-Tilt (transition kurz auf .07s waehrend mousemove) ---------- */
+  if(!RM && !matchMedia('(hover:none)').matches){
+    document.querySelectorAll('.photo.hover').forEach(function(card){
+      var baseT = '';
+      card.addEventListener('mousemove', function(ev){
+        var r = card.getBoundingClientRect();
+        var dx = (ev.clientX-(r.left+r.width/2))/(r.width/2);
+        var dy = (ev.clientY-(r.top+r.height/2))/(r.height/2);
+        card.style.transition = 'transform .07s linear, box-shadow .4s var(--ease)';
+        card.style.transform = 'rotate(0deg) scale(1.02) rotateY('+(dx*5).toFixed(2)+'deg) rotateX('+(-dy*5).toFixed(2)+'deg)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transition=''; card.style.transform=baseT; });
+    });
+  }
+
+  /* ---------- Init + Resize (Route neu vermessen, gedrosselt) ---------- */
+  var rt = null;
+  function rebuild(){ buildRoute(); update(); }
+  function reflowSoon(){ clearTimeout(rt); rt = setTimeout(rebuild, 130); }
+  function onResize(){
+    if(roadLine){ roadLen = roadLine.getTotalLength(); roadLine.style.setProperty('--len', roadLen); }
+    clearTimeout(rt); rt = setTimeout(rebuild, 160);
+  }
+  addEventListener('resize', onResize);
+
+  function bootstrap(){ buildRoute(); update(); }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ setTimeout(bootstrap, 80); });
+  }
+  addEventListener('load', function(){ setTimeout(bootstrap, 160); setTimeout(bootstrap, 600); });
+  bootstrap();
+})();
+</script>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+/* ============================================================
+   #agents-3d — 8-Agenten-Orchestrator als Three.js-Galaxie (0.160)
+   Drag-Orbit · +/- Zoom-Buttons · Glas-Bubbles · Sprite-Labels
+   · Idle-Auto-Rotate · Tooltip + Info-Karte · flyTo-Tween
+   · Lazy-Init via IntersectionObserver · Pause+Dispose bei Unsichtbarkeit
+   · reduced-motion / WebGL-Fail → CSS-Fallback
+   Komplett in einer IIFE gekapselt → keine globalen Variablen.
+============================================================ */
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+(() => {
+'use strict';
+
+const SECTION = document.getElementById('agents-3d');
+if (!SECTION) return;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reduced-motion → statisches Fallback, kein WebGL */
+if (REDUCED) { SECTION.setAttribute('data-reduced-motion','true'); return; }
+
+/* ------------------------------------------------------------
+   DATEN — echte Dateinamen + 1-Satz-Aufgaben + ehrlicher Status
+   status: 'live' (teal, pulsiert) · 'build' (terra, gedimmt/flackert) · 'plan' (outline/gestrichelt)
+------------------------------------------------------------ */
+const ST = {
+  live:  {label:'live',    color:'#0D9488', badge:'#0D9488'},
+  build: {label:'im Bau',  color:'#D97757', badge:'#BF5F3F'},
+  plan:  {label:'geplant', color:'#A7A095', badge:'#736F66'},
+};
+
+/* col: -1 Eingang · 0 Orchestrator · 1 Agenten · 2 Output */
+const NODES = [
+  // ---- EINGANG (links) ----
+  {id:'ada',   l:'Voice-Agent „Ada“', file:'ElevenLabs · WebRTC', status:'live', col:-1, row:-1, sz:1.05,
+   task:'Geführtes Voice-Intake — Discovery-Gespräch über die Firma, live transkribiert.'},
+  {id:'upload',l:'Dokumenten-Upload', file:'Intake · Datei-Eingang', status:'live', col:-1, row:1, sz:1.05,
+   task:'Nimmt hochgeladene Reports & Exporte entgegen und reicht sie an die Analyse weiter.'},
+
+  // ---- ORCHESTRATOR (Mitte, groß) ----
+  {id:'orch',  l:'Orchestrator', file:'orchestrator.py', status:'live', col:0, row:0, sz:2.0,
+   task:'Steuert die Reihenfolge, reicht jedem Agenten den passenden Kontext und sammelt alle Ergebnisse ein.'},
+
+  // ---- 8 FACH-AGENTEN (rechts, gefächert) ----
+  {id:'a01', l:'Web-Research',        file:'web_research.py',       status:'live',  col:1, row:-3.4, sz:1.0,
+   task:'Recherchiert die Firma und Region-Benchmarks im Web.'},
+  {id:'a02', l:'Dokumenten-Analyst',  file:'document_analyst.py',   status:'live',  col:1, row:-2.4, sz:1.0,
+   task:'Liest die Uploads und zieht KPIs heraus — ADR, RevPAR, Occupancy.'},
+  {id:'a03', l:'Prozess-Auditor',     file:'process_auditor.py',    status:'live',  col:1, row:-1.4, sz:1.0,
+   task:'Findet die 5–7 zeitfressendsten Prozesse über 15 Domänen.'},
+  {id:'a04', l:'Use-Case-Generator',  file:'use_case_generator.py', status:'build', col:1, row:-0.4, sz:1.0,
+   task:'Generiert 5–8 KI-Use-Cases mit Impact-Effort-Bewertung.'},
+  {id:'a05', l:'Tool-Empfehlung',     file:'tool_recommender.py',   status:'build', col:1, row:0.6,  sz:1.0,
+   task:'Empfiehlt konkrete Tools pro Use-Case — DSGVO-konform, EU-Hosting.'},
+  {id:'a06', l:'ROI / Wirtschaftlichkeit', file:'roi_calculator.py',status:'build', col:1, row:1.6,  sz:1.0,
+   task:'Rechnet den Business-Case durch — Payback in Monaten.'},
+  {id:'a07', l:'Compliance-Check',    file:'compliance_checker.py', status:'plan',  col:1, row:2.6,  sz:1.0,
+   task:'Prüft DSGVO + EU-AI-Act und klassifiziert das Risiko.'},
+
+  // ---- REPORTER + OUTPUT (rechts hinten) ----
+  {id:'a08', l:'Reporter',  file:'reporter.py', status:'build', col:2, row:-0.6, sz:1.35,
+   task:'Verdichtet alles zur Executive Summary und aggregiert den FullReport.'},
+  {id:'out', l:'Report',    file:'PDF · Excel · MD', status:'build', col:2, row:1.4, sz:1.1,
+   task:'Der fertige Bericht — Executive Summary plus vollständiger Anhang als PDF, Excel und Markdown.'},
+];
+
+/* Datenstrom-Kanten: Eingang → Orchestrator → Agenten → Reporter → Output */
+const EDGES = [
+  ['ada','orch'], ['upload','orch'],
+  ['orch','a01'], ['orch','a02'], ['orch','a03'], ['orch','a04'],
+  ['orch','a05'], ['orch','a06'], ['orch','a07'],
+  ['a01','a08'], ['a02','a08'], ['a03','a08'], ['a04','a08'],
+  ['a05','a08'], ['a06','a08'], ['a07','a08'],
+  ['a08','out'],
+];
+
+/* ---- Welt-Positionen aus col/row (dreispaltiger Flow, leicht 3D-gestaffelt) ---- */
+const COLX = {'-1':-58, '0':-14, '1':34, '2':74};
+const ROWY = 8.4;
+/* deterministische PRNG nur für Layout (NICHT im Render-Loop verwenden!) */
+const layoutRand = (s => () => { s = (s*1103515245 + 12345) & 0x7fffffff; return s/0x7fffffff; })(2026);
+NODES.forEach(n => {
+  const z = n.col===1 ? (n.row*2.1) : (layoutRand()-.5)*6;   // Agenten fächern in der Tiefe auf
+  n.pos = new THREE.Vector3(COLX[n.col], n.row*ROWY, z + (n.col===0?0:(layoutRand()-.5)*4));
+});
+
+/* ============================================================
+   THREE.JS-SETUP (lazy — erst bei Sichtbarkeit)
+============================================================ */
+let started = false;
+let teardown = null;          // dispose-Funktion, falls Init gelaufen ist
+
+function start(){
+  if (started) return;
+  started = true;
+
+  const host = document.getElementById('a3-scene');
+  if (!host) return;
+  const W = () => host.clientWidth  || 1;
+  const H = () => host.clientHeight || 1;
+
+  /* ---- Renderer zuerst: bei WebGL-Fehler sofort Fallback ---- */
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({antialias:true, alpha:false, powerPreference:'high-performance'});
+  } catch(e){
+    SECTION.setAttribute('data-reduced-motion','true');
+    return;
+  }
+  if (!renderer.getContext()){ SECTION.setAttribute('data-reduced-motion','true'); return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.setSize(W(), H());
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#FDF8F0');
+  scene.fog = new THREE.Fog('#FDF8F0', 180, 360);
+
+  const camera = new THREE.PerspectiveCamera(46, W()/H(), .1, 600);
+  const FIT_POS = new THREE.Vector3(2, 18, 132);
+  camera.position.copy(FIT_POS);
+
+  /* ---- PMREM-Environment (0.160-API) ---- */
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const envRT = pmrem.fromScene(new RoomEnvironment(), .04);
+  scene.environment = envRT.texture;
+
+  const sun = new THREE.DirectionalLight('#FFF6EA', 2.3);
+  sun.position.set(40, 70, 70);
+  const ambient = new THREE.AmbientLight('#FDF8F0', .55);
+  scene.add(sun, ambient);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = .09;
+  controls.enableZoom = false;                 // Wheel-Hijack aus → Zoom nur per Button
+  controls.minDistance = 14; controls.maxDistance = 260;
+  controls.autoRotate = false; controls.autoRotateSpeed = .45;
+  controls.target.set(2, 0, 0);
+
+  /* Sammler für sauberes dispose() */
+  const disposables = [];   // {dispose()} (Geometrien, Materialien, Texturen)
+  const track = o => { if(o) disposables.push(o); return o; };
+
+  /* ---------- Texturen ---------- */
+  function glyphTexture(node){
+    const c=document.createElement('canvas'); c.width=c.height=256; const x=c.getContext('2d');
+    const g=x.createRadialGradient(128,128,18,128,128,118);
+    g.addColorStop(0,'rgba(255,255,255,.96)'); g.addColorStop(1,'rgba(255,255,255,0)');
+    x.fillStyle=g; x.fillRect(0,0,256,256);
+    x.fillStyle = ST[node.status].color;
+    x.textAlign='center'; x.textBaseline='middle';
+    /* geometrische Glyphen statt OS-abhängiger Emoji (konsistentes Rendering) */
+    if(node.id==='orch'){ x.font='700 150px Georgia'; x.fillText('◆',128,140); }
+    else if(node.id==='out'){ x.font='700 140px Georgia'; x.fillText('▣',128,140); }
+    else if(node.id==='a08'){ x.font='700 150px Georgia'; x.fillText('∑',128,140); }
+    else if(node.id==='ada'){ x.font='700 138px Georgia'; x.fillText('◉',128,138); }
+    else if(node.id==='upload'){ x.font='700 150px Georgia'; x.fillText('↑',128,138); }
+    else {
+      x.font='700 132px Georgia';
+      const ch = (node.l.replace(/[^A-Za-zÄÖÜ0-9]/g,'').charAt(0) || '·').toUpperCase();
+      x.fillText(ch,128,142);
+    }
+    const t=new THREE.CanvasTexture(c); t.anisotropy=8; t.colorSpace=THREE.SRGBColorSpace; t.needsUpdate=true;
+    return track(t);
+  }
+
+  function labelTexture(node){
+    const c=document.createElement('canvas'); c.width=720; c.height=210; const x=c.getContext('2d');
+    x.fillStyle='#211F1C'; x.font='600 46px Georgia'; x.textAlign='center'; x.textBaseline='top';
+    // 2-Zeilen-Wrap
+    const words=node.l.split(' '); let line='', lines=[];
+    for(const w of words){ if(x.measureText(line+w).width>660 && line){lines.push(line.trim());line=w+' ';} else line+=w+' '; }
+    lines.push(line.trim());
+    lines.slice(0,2).forEach((l,i)=>x.fillText(l,360,12+i*52));
+    // Datei-Mono in Terracotta
+    x.fillStyle=ST[node.status].badge; x.font='500 30px "IBM Plex Mono", monospace';
+    x.fillText(node.file, 360, 118 + (lines.length>1?40:0));
+    const t=new THREE.CanvasTexture(c); t.anisotropy=8; t.colorSpace=THREE.SRGBColorSpace; t.needsUpdate=true;
+    return track(t);
+  }
+
+  function bubbleMat(node){
+    const s = ST[node.status];
+    const plan = node.status==='plan';
+    return track(new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(s.color).lerp(new THREE.Color('#FFFFFF'), plan? .68 : .5),
+      metalness:0, roughness: plan? .2 : .05,
+      transparent:true, opacity: plan? .16 : .4,
+      clearcoat:1, clearcoatRoughness:.07,
+      iridescence: plan? .1 : .42, iridescenceIOR:1.32,
+      envMapIntensity:1.15, depthWrite:false,
+    }));
+  }
+
+  function dotTexture(color){
+    const c=document.createElement('canvas'); c.width=c.height=96; const x=c.getContext('2d');
+    x.fillStyle='#fff'; x.beginPath(); x.arc(48,48,30,0,Math.PI*2); x.fill();
+    x.fillStyle=color; x.beginPath(); x.arc(48,48,21,0,Math.PI*2); x.fill();
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.needsUpdate=true;
+    return track(t);
+  }
+
+  /* ---------- Knoten als Glas-Bubbles ---------- */
+  const sphereGeo = track(new THREE.SphereGeometry(1, 44, 30));
+  const ringGeo   = track(new THREE.TorusGeometry(1, .03, 8, 64)); // wird pro Plan-Knoten skaliert
+  const nodeMap = {}, nodeObjs = [], pickMeshes = [];
+
+  NODES.forEach((n,i)=>{
+    const grp = new THREE.Group(); grp.position.copy(n.pos);
+    const r = 4.2*n.sz;
+
+    const mat = bubbleMat(n);
+    const sph = new THREE.Mesh(sphereGeo, mat);
+    sph.scale.setScalar(r); sph.renderOrder=4; sph.userData={node:n};
+    grp.add(sph);
+
+    let ring = null;
+    if(n.status==='plan'){
+      const ringMat = track(new THREE.MeshBasicMaterial({color:'#A7A095', transparent:true, opacity:.55}));
+      ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.scale.setScalar(r*1.05);
+      grp.add(ring);
+    }
+
+    const iMat = track(new THREE.SpriteMaterial({map:glyphTexture(n), transparent:true, depthWrite:false}));
+    const ico = new THREE.Sprite(iMat); ico.scale.setScalar(r*1.15); ico.renderOrder=3; grp.add(ico);
+
+    const lMat = track(new THREE.SpriteMaterial({map:labelTexture(n), transparent:true, depthWrite:false}));
+    const lbl = new THREE.Sprite(lMat);
+    lbl.scale.set(r*2.5, r*2.5*(210/720), 1);
+    lbl.position.y = -(r+2.0); lbl.renderOrder=3; grp.add(lbl);
+
+    grp.scale.setScalar(.001);
+    scene.add(grp);
+    nodeMap[n.id]=grp;
+    nodeObjs.push({grp, sph, mat, iMat, lMat, ring, node:n, reveal:i*60,
+      baseOp: n.status==='plan'?.16:.4, lblBase:1});
+    pickMeshes.push(sph);
+  });
+
+  /* ---------- Spalten-Beschriftung als Sprites ---------- */
+  function colLabel(text, cx, cy){
+    const c=document.createElement('canvas'); c.width=900; c.height=130; const ctx=c.getContext('2d');
+    ctx.font='italic 500 56px Georgia'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(115,111,102,.85)'; ctx.fillText(text,450,60);
+    ctx.strokeStyle='rgba(191,95,63,.5)'; ctx.lineWidth=3;
+    const w=ctx.measureText(text).width;
+    ctx.beginPath(); ctx.moveTo(450-w/2,105); ctx.lineTo(450+w/2,105); ctx.stroke();
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.needsUpdate=true; track(t);
+    const m=track(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false,opacity:.92}));
+    const s=new THREE.Sprite(m);
+    s.scale.set(34,4.9,1); s.position.set(cx,cy,0); s.renderOrder=2; scene.add(s);
+  }
+  colLabel('Eingang',           COLX['-1'], 22);
+  colLabel('Orchestrator',      COLX['0'],  20);
+  colLabel('8 Fach-Agenten',    COLX['1'],  34);
+  colLabel('Reporter → Report', COLX['2'],  22);
+
+  /* ---------- Kanten als Bezier-Kurven + Datenstrom-Pulse ---------- */
+  const edgeObjs = [];
+  EDGES.forEach(([a,b])=>{
+    const A=nodeMap[a], B=nodeMap[b]; if(!A||!B) return;
+    const p1=A.position.clone(), p2=B.position.clone();
+    const mid=p1.clone().add(p2).multiplyScalar(.5);
+    mid.z += 8 + Math.abs(p2.y-p1.y)*.18;                  // sanfter Bogen Richtung Betrachter
+    const curve=new THREE.QuadraticBezierCurve3(p1, mid, p2);
+    const geo=track(new THREE.BufferGeometry().setFromPoints(curve.getPoints(40)));
+    const dimmed = NODES.find(n=>n.id===b)?.status==='plan';
+    const mat=track(new THREE.LineBasicMaterial({color:'#C9A98F', transparent:true, opacity:dimmed?.08:.2}));
+    const line=new THREE.Line(geo,mat); line.renderOrder=1; scene.add(line);
+    edgeObjs.push({line, mat, curve, a, b, base:dimmed?.08:.2});
+  });
+
+  // kontinuierliche Partikel, die den Datenstrom zeigen (geteilte Textur, eigene Materialien)
+  const pulseTex = dotTexture('#D97757');
+  const pulses=[];
+  for(let i=0;i<70;i++){
+    const m=track(new THREE.SpriteMaterial({map:pulseTex, transparent:true, opacity:.9, depthWrite:false}));
+    const s=new THREE.Sprite(m); s.scale.set(1.5,1.5,1); s.renderOrder=3; scene.add(s);
+    pulses.push({s, m, e:Math.floor(layoutRand()*Math.max(1,edgeObjs.length)), t:layoutRand(), v:.14+layoutRand()*.26});
+  }
+
+  /* ---------- Papier-Staub ---------- */
+  {
+    const N=240, pos=new Float32Array(N*3);
+    for(let i=0;i<N;i++){ pos[i*3]=(layoutRand()-.5)*200; pos[i*3+1]=(layoutRand()-.5)*120; pos[i*3+2]=(layoutRand()-.5)*120; }
+    const g=track(new THREE.BufferGeometry()); g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+    const pm=track(new THREE.PointsMaterial({color:'#D8D0C2',size:.8,transparent:true,opacity:.55}));
+    scene.add(new THREE.Points(g,pm));
+  }
+
+  /* ============================================================
+     INTERAKTION
+  ============================================================ */
+  const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2(-2,-2);
+  const tip=document.getElementById('a3-tip');
+  const tipName=tip.querySelector('.a3-tip-name'), tipFile=tip.querySelector('.a3-tip-file');
+  const card=document.getElementById('a3-card'), cardBody=document.getElementById('a3-card-body');
+  const cardClose=document.getElementById('a3-card-close');
+  let hovered=null, selected=null;
+  const camTween={active:false, pos:new THREE.Vector3(), look:new THREE.Vector3()};
+  let zoomTarget=null;
+
+  function localXY(e){ const r=host.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top, r}; }
+
+  function onPointerMove(e){
+    const {x,y,r}=localXY(e);
+    mouse.x=(x/r.width)*2-1; mouse.y=-(y/r.height)*2+1;
+    tip.style.left=(x+18)+'px'; tip.style.top=(y+14)+'px';
+  }
+  host.addEventListener('pointermove', onPointerMove);
+
+  function onClick(e){
+    const {x,y,r}=localXY(e);
+    mouse.x=(x/r.width)*2-1; mouse.y=-(y/r.height)*2+1;
+    ray.setFromCamera(mouse, camera);
+    const hit=ray.intersectObjects(pickMeshes,false)[0]?.object;
+    if(hit?.userData.node) selectNode(hit.userData.node);
+    else deselect();
+  }
+  host.addEventListener('click', onClick);
+
+  const stage = n => n.col===-1?'Eingang' : n.col===0?'Orchestrierung' : n.col===1?'Fach-Agent' : 'Reporting / Output';
+  const roleLine = n => n.col===1 ? 'Erhält Kontext vom <b>Orchestrator</b>, liefert an den <b>Reporter</b>.'
+    : n.col===0 ? 'Reicht Kontext an <b>8 Agenten</b>, sammelt Ergebnisse.'
+    : n.col===-1 ? 'Speist Rohdaten in den <b>Orchestrator</b>.'
+    : 'Verdichtet alle Agenten-Resultate zum <b>FullReport</b>.';
+
+  function selectNode(n){
+    selected=n.id; const s=ST[n.status];
+    const badgeCls = n.status==='plan' ? 'a3-badge a3-b-plan' : 'a3-badge';
+    const bg = n.status==='plan' ? '' : `style="background:${s.badge}"`;
+    cardBody.innerHTML = `
+      <span class="${badgeCls}" ${bg}><i></i>${s.label.toUpperCase()}</span>
+      <h3>${n.l}</h3>
+      <div class="a3-file">${n.file}</div>
+      <p class="a3-task">${n.task}</p>
+      <div class="a3-sec">Rolle im Ablauf</div>
+      <div class="a3-meta">
+        Stufe: <b>${stage(n)}</b><br>
+        Status: <b>${s.label}</b><br>
+        ${roleLine(n)}
+      </div>`;
+    card.classList.add('a3-open');
+    card.setAttribute('aria-hidden','false');
+    flyTo(nodeMap[n.id].position);
+    highlight();
+  }
+  function deselect(){
+    selected=null;
+    card.classList.remove('a3-open');
+    card.setAttribute('aria-hidden','true');
+    highlight();
+  }
+  cardClose.addEventListener('click', deselect);
+
+  function highlight(){
+    edgeObjs.forEach(e=>{
+      const touch = selected && (e.a===selected||e.b===selected);
+      e.mat.opacity = selected ? (touch? .72 : .035) : e.base;
+      e.mat.color.set(touch? '#BF5F3F' : '#C9A98F');
+    });
+    nodeObjs.forEach(o=>{
+      const id=o.node.id;
+      const on = !selected || id===selected ||
+        EDGES.some(([a,b])=>(a===selected&&b===id)||(b===selected&&a===id));
+      o.mat.opacity  = on? o.baseOp : .05;
+      o.iMat.opacity = on? 1 : .12;
+      o.lblBase      = on? 1 : .12;
+    });
+  }
+
+  function flyTo(target){
+    const dir=camera.position.clone().sub(controls.target).normalize();
+    camTween.pos.copy(target.clone().add(dir.multiplyScalar(42)));
+    camTween.look.copy(target); camTween.active=true;
+  }
+  const onControlsStart = ()=>{ camTween.active=false; zoomTarget=null; };
+  controls.addEventListener('start', onControlsStart);
+
+  /* ---------- Zoom-Buttons + Tasten (kein Wheel-Hijack) ---------- */
+  function zoomStep(f){
+    const d=camera.position.distanceTo(controls.target);
+    zoomTarget=THREE.MathUtils.clamp(d*f, controls.minDistance+1, controls.maxDistance);
+    camTween.active=false;
+  }
+  const btnIn=document.getElementById('a3-z-in');
+  const btnOut=document.getElementById('a3-z-out');
+  const btnFit=document.getElementById('a3-z-fit');
+  const rotBtn=document.getElementById('a3-z-rot');
+  const onIn  = ()=>zoomStep(.62);
+  const onOut = ()=>zoomStep(1.6);
+  const onFit = ()=>{ deselect(); zoomTarget=null; camTween.pos.copy(FIT_POS); camTween.look.set(2,0,0); camTween.active=true; };
+  const onRot = ()=>{
+    controls.autoRotate=!controls.autoRotate;
+    rotBtn.classList.toggle('a3-on', controls.autoRotate);
+    rotBtn.setAttribute('aria-pressed', String(controls.autoRotate));
+    idleT=0;
+  };
+  btnIn.addEventListener('click', onIn);
+  btnOut.addEventListener('click', onOut);
+  btnFit.addEventListener('click', onFit);
+  rotBtn.addEventListener('click', onRot);
+
+  // Tastatur nur wenn Sektion im Blick
+  function onKey(e){
+    if(!inView) return;
+    if(e.key==='+'||e.key==='=') zoomStep(.62);
+    else if(e.key==='-'||e.key==='_') zoomStep(1.6);
+    else if(e.key==='0') onFit();
+  }
+  addEventListener('keydown', onKey);
+
+  /* ---------- Idle-Auto-Rotate ---------- */
+  let idleT=0;
+  const idleEvents=['pointerdown','pointermove','wheel'];
+  const onIdleReset=()=>{ idleT=0; if(!rotBtn.classList.contains('a3-on')) controls.autoRotate=false; };
+  idleEvents.forEach(ev=>host.addEventListener(ev,onIdleReset,{passive:true}));
+
+  /* ---------- Resize (ResizeObserver auf Host statt window-resize) ---------- */
+  const onResize=()=>{
+    const w=W(), h=H(); if(!w||!h) return;
+    camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h);
+  };
+  const ro=new ResizeObserver(onResize); ro.observe(host);
+
+  /* ============================================================
+     RENDER-LOOP
+  ============================================================ */
+  const clock=new THREE.Clock(); let elapsed=0;
+  const easeOut=t=>1-Math.pow(1-t,3);
+  let raf=null, running=false, inView=false;
+
+  function loop(){
+    raf=requestAnimationFrame(loop);
+    const dt=Math.min(clock.getDelta(), .05); elapsed+=dt*1000;
+
+    // Intro-Pop + Status-Animation (live=pulsiert, im Bau=flackert, geplant=ruhig)
+    nodeObjs.forEach(o=>{
+      const t=Math.max(0,Math.min(1,(elapsed-o.reveal)/620));
+      const hov=(hovered===o.sph)?1.14:1;
+      o.grp.scale.setScalar(Math.max(.001, easeOut(t)*hov));
+
+      const st=o.node.status;
+      const dimmed = o.lblBase===.12;
+      if(st==='live'){
+        const p=.5+.5*Math.sin(elapsed*.004 + o.node.pos.y*.3);
+        o.mat.opacity = dimmed? .05 : (.34+p*.16);
+      } else if(st==='build'){
+        // Math.random() statt Layout-PRNG → verbraucht Layout-Seed nicht
+        const flick = (Math.random()>.985? 2.2 : 1);
+        const f=.78+.22*Math.sin(elapsed*.013 + o.node.pos.y)*flick;
+        o.mat.opacity = dimmed? .05 : THREE.MathUtils.clamp(.30*f,.12,.46);
+      } else {
+        o.mat.opacity = dimmed? .05 : o.baseOp;
+      }
+      o.lMat.opacity = o.lblBase;
+      if(o.ring){ o.ring.rotation.z += dt*.4; o.ring.rotation.x += dt*.2; }
+    });
+
+    // Datenstrom-Partikel
+    pulses.forEach(p=>{
+      p.t += dt*p.v;
+      if(p.t>1){ p.t=0; p.e=Math.floor(Math.random()*Math.max(1,edgeObjs.length)); }
+      const e=edgeObjs[p.e]; if(!e){ p.s.visible=false; return; }
+      p.s.visible = e.mat.opacity>.06;
+      if(p.s.visible){ p.s.position.copy(e.curve.getPoint(Math.min(p.t,1))); p.m.opacity=Math.sin(p.t*Math.PI)*.85; }
+    });
+
+    // Idle → sanftes Auto-Rotate
+    idleT += dt;
+    if(idleT>3.2 && !controls.autoRotate && !rotBtn.classList.contains('a3-on')) controls.autoRotate=true;
+
+    // Stufen-Zoom
+    if(zoomTarget!==null){
+      const dir=camera.position.clone().sub(controls.target); const d=dir.length();
+      const nd=THREE.MathUtils.lerp(d, zoomTarget, .14);
+      camera.position.copy(controls.target).add(dir.normalize().multiplyScalar(nd));
+      if(Math.abs(nd-zoomTarget)<.3) zoomTarget=null;
+    }
+    // Kamera-Tween
+    if(camTween.active){
+      camera.position.lerp(camTween.pos, .055);
+      controls.target.lerp(camTween.look, .07);
+      if(camera.position.distanceTo(camTween.pos)<.4) camTween.active=false;
+    }
+
+    // Hover-Raycast → Tooltip
+    ray.setFromCamera(mouse, camera);
+    const h=ray.intersectObjects(pickMeshes,false)[0]?.object || null;
+    if(h!==hovered){
+      hovered=h; host.style.cursor=h?'pointer':'';
+      if(h?.userData.node){
+        const n=h.userData.node;
+        tipName.textContent=n.l;
+        tipFile.textContent=`${n.file} · ${ST[n.status].label}`;
+        tip.style.display='block';
+      } else tip.style.display='none';
+    }
+
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  function setRunning(on){
+    inView=on;
+    if(on && !running){ running=true; clock.getDelta(); loop(); }
+    else if(!on && running){ running=false; if(raf) cancelAnimationFrame(raf); raf=null; }
+  }
+
+  /* Loop nur laufen lassen, solange die Sektion sichtbar ist (Performance) */
+  const runObserver=new IntersectionObserver(es=>{
+    es.forEach(en=> setRunning(en.isIntersecting));
+  }, {threshold:.05});
+  runObserver.observe(SECTION);
+
+  highlight();
+  setRunning(true);
+
+  /* ============================================================
+     TEARDOWN — vollständiges dispose (z.B. bei SPA-Navigation/pagehide)
+  ============================================================ */
+  teardown = function(){
+    setRunning(false);
+    runObserver.disconnect();
+    ro.disconnect();
+    host.removeEventListener('pointermove', onPointerMove);
+    host.removeEventListener('click', onClick);
+    idleEvents.forEach(ev=>host.removeEventListener(ev,onIdleReset));
+    removeEventListener('keydown', onKey);
+    controls.removeEventListener('start', onControlsStart);
+    cardClose.removeEventListener('click', deselect);
+    btnIn.removeEventListener('click', onIn);
+    btnOut.removeEventListener('click', onOut);
+    btnFit.removeEventListener('click', onFit);
+    rotBtn.removeEventListener('click', onRot);
+    controls.dispose();
+    disposables.forEach(o=>{ try{ o.dispose(); }catch(_){} });
+    envRT.texture.dispose(); pmrem.dispose();
+    renderer.dispose();
+    if(renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+  };
+  // dispose bei Seitenverlassen, damit der WebGL-Context sauber freigegeben wird
+  addEventListener('pagehide', teardown, {once:true});
+}
+
+/* ------------------------------------------------------------
+   LAZY-INIT: Three.js erst aufsetzen, wenn die Sektion sichtbar wird
+------------------------------------------------------------ */
+const initObserver = new IntersectionObserver((entries, obs)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){ start(); obs.disconnect(); }
+  });
+}, {rootMargin:'200px', threshold:0});
+initObserver.observe(SECTION);
+
+})();
+</script>
+</body>
+</html>

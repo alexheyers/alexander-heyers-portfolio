@@ -67,7 +67,8 @@ body::after{content:""; position:fixed; inset:0; z-index:9990; pointer-events:no
 /* ============ HERO ============ */
 .hero{height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
 .hero .bg{position:absolute;inset:-8% 0;z-index:0;will-change:transform}
-.hero .bg img{filter:saturate(1.05) contrast(1.04)}
+.hero .bg img{filter:saturate(1.08) contrast(1.05);animation:ken 28s ease-in-out infinite alternate}
+@keyframes ken{from{transform:scale(1.02)}to{transform:scale(1.13)}}
 .hero .scrim{position:absolute;inset:0;z-index:1;background:
   linear-gradient(180deg,rgba(8,18,38,.55) 0%,rgba(8,18,38,.15) 32%,rgba(8,18,38,.45) 62%,rgba(8,18,38,.94) 100%)}
 .hero .vig{position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 70% 30%,transparent 40%,rgba(8,18,38,.5) 100%)}
