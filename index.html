@@ -6,7 +6,7 @@
 <title>Alex Heyers — Zwischen Tresen und Terminal</title>
 <meta name="description" content="20 Jahre Hospitality-Operations, 3 Jahre KI. Ich übersetze Geschäfts-Bedürfnisse in funktionierende Systeme und dirigiere KI auf Agentur-Niveau. Verfügbar ab 01.08.2026, Remote DACH.">
 <meta property="og:title" content="Alex Heyers — Zwischen Tresen und Terminal">
-<meta property="og:image" content="/assets/img/og.jpg">
+<meta property="og:image" content="/assets/img/gen/signature-1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700;1,900&family=Lato:wght@300;400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='26' fill='%231AA591'/><circle cx='44' cy='22' r='9' fill='%23E94B5D'/></svg>">
@@ -78,9 +78,14 @@ h2.h em{font-style:italic;color:var(--teal)}
 .reframe{margin-top:2.6rem;font-family:var(--disp);font-style:italic;font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--iv-82);max-width:42ch}
 .reframe b{font-style:normal;color:var(--brass)}
 .hinge{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center}
-.hinge .q{font-family:var(--disp);font-weight:700;font-style:italic;font-size:clamp(1.9rem,5.5vw,4.4rem);line-height:1.1;max-width:17ch;margin-inline:auto;color:#fff}
-.hinge .q .hl{color:var(--teal)}
-.hinge .src{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--iv-55);margin-top:2.2rem}
+.hinge-img{position:relative;min-height:94vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hinge-img .hbg{position:absolute;inset:0;z-index:0}
+.hinge-img .hbg img{filter:saturate(1.06) contrast(1.03)}
+.hinge-img .hscrim{position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 50% 48%,rgba(6,11,24,.4),rgba(6,11,24,.88))}
+.hin-inner{position:relative;z-index:2;width:min(1240px,92vw)}
+.hinge .q,.hinge-img .q{font-family:var(--disp);font-weight:700;font-style:italic;font-size:clamp(1.9rem,5.5vw,4.4rem);line-height:1.1;max-width:17ch;margin-inline:auto;color:#fff}
+.hinge .q .hl,.hinge-img .q .hl{color:var(--teal)}
+.hinge .src,.hinge-img .src{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--iv-55);margin-top:2.2rem}
 .tl-wrap{margin-top:2.6rem;display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
 @media(max-width:860px){.tl-wrap{grid-template-columns:1fr;gap:1.6rem}}
 .pull{font-family:var(--disp);font-weight:700;font-style:italic;font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1.16;color:#fff}
@@ -188,8 +193,10 @@ h2.h em{font-style:italic;color:var(--teal)}
   </div>
 </section>
 
-<section class="hinge wrap">
-  <div>
+<section class="hinge-img">
+  <div class="hbg"><img src="/assets/img/gen/signature-1.jpg" alt="Vom Tresen zum Terminal — warmes Bar-Licht zerfließt in kühle Datenströme"></div>
+  <div class="hscrim"></div>
+  <div class="hin-inner">
     <p class="q rev">„Service als <span class="hl">Choreografie</span>, jede Sekunde ein <span class="hl">Workflow</span>."</p>
     <div class="src rev" style="--d:.2s">— derselbe Skill. Nur heißt er heute n8n, Voice-Agent, Deployment.</div>
   </div>
