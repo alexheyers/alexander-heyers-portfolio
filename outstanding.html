@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Heyers — Partikel-Morph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
+body{background:#05080f;color:#F2EFE8;font-family:'JetBrains Mono',monospace;overflow-x:hidden;cursor:crosshair}
+#c{position:fixed;inset:0;z-index:1;display:block}
+.space{height:620vh;position:relative;z-index:0}
+.hud{position:fixed;inset:0;z-index:2;pointer-events:none}
+.cap{position:absolute;left:50%;bottom:9vh;transform:translateX(-50%);text-align:center;width:90vw;transition:opacity .5s}
+.cap .big{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.6rem,4vw,3rem);color:#fff;line-height:1.05}
+.cap .big em{font-style:italic;color:#3fd0b8}
+.cap .sub{margin-top:.7rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(242,239,232,.6)}
+.top{position:fixed;top:1.3rem;left:0;right:0;z-index:3;display:flex;justify-content:space-between;padding:0 clamp(1.2rem,4vw,3rem);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,239,232,.7);mix-blend-mode:difference;pointer-events:none}
+.prog{position:fixed;right:1.3rem;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:.6rem}
+.prog i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.25;transition:opacity .3s,transform .3s;mix-blend-mode:difference}
+.prog i.on{opacity:1;transform:scale(1.7)}
+.cue{position:fixed;left:50%;bottom:2.2vh;transform:translateX(-50%);z-index:3;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,239,232,.45)}
+.scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 50%,rgba(5,8,15,.6) 100%)}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="scrim"></div>
+<div class="top"><span>Alex Heyers · Zwischen Tresen und Terminal</span><span>Scroll ↓</span></div>
+<div class="prog"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<div class="hud">
+  <div class="cap" id="cap"><div class="big" id="capBig">Zwischen Tresen <em>und</em> Terminal</div><div class="sub" id="capSub">scroll — und sieh, was entsteht</div></div>
+</div>
+<div class="cue">Scroll</div>
+<div class="space"></div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+const N=16000;
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(55,1,.1,200);cam.position.z=34;
+function size(){const w=innerWidth,h=innerHeight;renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+addEventListener('resize',size);
+
+// ---- samplers ----
+function sampleText(text,size){
+  const W=560,H=240,c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d');x.fillStyle='#fff';x.font='900 '+size+'px "Playfair Display",serif';x.textAlign='center';x.textBaseline='middle';
+  x.fillText(text,W/2,H/2);
+  const d=x.getImageData(0,0,W,H).data,pts=[];
+  for(let y=0;y<H;y+=2)for(let px=0;px<W;px+=2){if(d[(y*W+px)*4+3]>128)pts.push([(px-W/2)*0.052,-(y-H/2)*0.052,(Math.random()-.5)*1.2]);}
+  return pts;
+}
+function sampleSphere(){const pts=[];for(let i=0;i<N;i++){const u=Math.random(),v=Math.random(),th=2*Math.PI*u,ph=Math.acos(2*v-1),r=15*Math.cbrt(Math.random());pts.push([r*Math.sin(ph)*Math.cos(th),r*Math.sin(ph)*Math.sin(th),r*Math.cos(ph)]);}return pts;}
+function sampleImage(img){
+  const W=150,ratio=img.height/img.width,H=Math.round(W*ratio),c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d');x.drawImage(img,0,0,W,H);const d=x.getImageData(0,0,W,H).data,pts=[];
+  for(let y=0;y<H;y++)for(let px=0;px<W;px++){const i=(y*W+px)*4,lum=(d[i]+d[i+1]+d[i+2])/3;if(lum<30)continue;if((px+y)%2)continue;
+    pts.push([(px-W/2)*0.13,-(y-H/2)*0.13,(lum-128)*0.02]);}
+  return pts;
+}
+function toN(pts){const o=new Float32Array(N*3);if(!pts.length){return o;}for(let i=0;i<N;i++){const s=pts[(i*97)%pts.length];o[i*3]=s[0];o[i*3+1]=s[1];o[i*3+2]=s[2];}return o;}
+
+const stages=[]; // filled after image loads
+const captions=[
+  {big:'Zwischen Tresen <em>und</em> Terminal',sub:'scroll — und sieh, was entsteht'},
+  {big:'Der <em>Tresen</em>',sub:'20 Jahre Operations · 6 Eröffnungen'},
+  {big:'Das <em>Terminal</em>',sub:'n8n · Voice-Agents · Full-Stack'},
+  {big:'Der <em>Mensch</em> dahinter',sub:'kein Entwickler — ein Dirigent'},
+  {big:'<em>Alex Heyers</em>',sub:'verfügbar ab 01.08.2026 · Remote DACH'},
+];
+
+const geo=new THREE.BufferGeometry();
+const cur=new Float32Array(N*3),col=new Float32Array(N*3),rnd=new Float32Array(N);
+for(let i=0;i<N;i++){cur[i*3]=(Math.random()-.5)*120;cur[i*3+1]=(Math.random()-.5)*120;cur[i*3+2]=(Math.random()-.5)*90;rnd[i]=Math.random()*6.28;}
+geo.setAttribute('position',new THREE.BufferAttribute(cur,3));
+geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+const mat=new THREE.PointsMaterial({size:.14,vertexColors:true,transparent:true,opacity:.92,depthWrite:false});
+const pts=new THREE.Points(geo,mat);scene.add(pts);
+
+const brass=[0.878,0.635,0.235],teal=[0.247,0.815,0.72],ivory=[0.95,0.94,0.91],pink=[0.914,0.294,0.365];
+function lerp(a,b,t){return a+(b-a)*t;}
+function setColors(p){const seg=p*(stages.length-1),i=Math.floor(seg),portraitMix=Math.max(0,1-Math.abs(seg-3));
+  for(let k=0;k<N;k++){const t=p, c0=lerp(brass[0],teal[0],t),c1=lerp(brass[1],teal[1],t),c2=lerp(brass[2],teal[2],t);
+    const tw=.7+.3*Math.sin(rnd[k]*3.1);
+    col[k*3]=lerp(c0,ivory[0],portraitMix*.5)*tw;col[k*3+1]=lerp(c1,ivory[1],portraitMix*.5)*tw;col[k*3+2]=lerp(c2,ivory[2],portraitMix*.5)*tw;}
+  geo.attributes.color.needsUpdate=true;
+}
+
+let scroll=0,tScroll=0,mx=0,my=0,tmx=0,tmy=0,ready=false,lastSeg=-1;
+addEventListener('scroll',()=>{const max=document.body.scrollHeight-innerHeight;tScroll=Math.min(scrollY/Math.max(max,1),1);},{passive:true});
+addEventListener('mousemove',e=>{tmx=e.clientX/innerWidth-.5;tmy=e.clientY/innerHeight-.5;});
+const capEl=document.getElementById('cap'),capBig=document.getElementById('capBig'),capSub=document.getElementById('capSub'),dots=[...document.querySelectorAll('.prog i')];
+
+function build(img){
+  stages.push(toN(sampleSphere()));
+  stages.push(toN(sampleText('TRESEN',150)));
+  stages.push(toN(sampleText('TERMINAL',120)));
+  stages.push(toN(img?sampleImage(img):sampleText('ALEX',150)));
+  stages.push(toN(sampleText('ALEX HEYERS',86)));
+  ready=true;size();render();
+}
+const img=new Image();img.crossOrigin='anonymous';
+img.onload=()=>build(img);
+img.onerror=()=>build(null);
+img.src='/assets/img/portrait.jpg';
+
+function render(){
+  requestAnimationFrame(render);
+  scroll+=(tScroll-scroll)*.06;mx+=(tmx-mx)*.05;my+=(tmy-my)*.05;
+  if(ready){
+    const seg=scroll*(stages.length-1),i=Math.min(Math.floor(seg),stages.length-2),t=seg-i,tt=t*t*(3-2*t);
+    const A=stages[i],B=stages[i+1],a=geo.attributes.position.array;
+    for(let k=0;k<N;k++){const k3=k*3;
+      const tx=lerp(A[k3],B[k3],tt),ty=lerp(A[k3+1],B[k3+1],tt),tz=lerp(A[k3+2],B[k3+2],tt);
+      const dr=Math.sin(performance.now?0:0); // placeholder
+      a[k3]+=(tx-a[k3])*.07;a[k3+1]+=(ty-a[k3+1])*.07;a[k3+2]+=(tz-a[k3+2])*.07;
+    }
+    geo.attributes.position.needsUpdate=true;setColors(scroll);
+    const segi=Math.round(scroll*(stages.length-1));
+    if(segi!==lastSeg){lastSeg=segi;const c=captions[segi]||captions[0];capBig.innerHTML=c.big;capSub.textContent=c.sub;dots.forEach((d,j)=>d.classList.toggle('on',j===segi));}
+  }
+  pts.rotation.y=mx*.5;pts.rotation.x=my*.3;
+  renderer.render(scene,cam);
+}
+</script>
+</body>
+</html>
