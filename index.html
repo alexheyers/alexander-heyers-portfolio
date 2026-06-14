@@ -54,6 +54,9 @@ section{position:relative;z-index:2}
 h1{font-family:var(--disp);font-weight:600;font-size:clamp(3rem,7.5vw,6.4rem);line-height:.98;letter-spacing:-.02em;margin:1.3rem 0 0}
 h1 em{font-style:italic;font-weight:500;color:var(--coral)}
 h1 .t2{display:block}
+h1.kin .ln{display:block;overflow:hidden;padding-bottom:.06em}
+h1.kin .w{display:inline-block;transform:translateY(116%);transition:transform 1.05s var(--ezl) calc(var(--i,0)*.09s)}
+h1.kin.in .w{transform:none}
 .lead{font-size:clamp(1.05rem,1.4vw,1.22rem);color:var(--ink-60);max-width:42ch;margin-top:1.5rem;font-weight:400}
 .lead b{color:var(--ink);font-weight:500}
 .meta{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.5rem}
@@ -132,6 +135,8 @@ h2 em{font-style:italic;color:var(--coral)}
 .pc.feat .ph{aspect-ratio:16/8}
 .pc .ph img{filter:saturate(1.03);transition:transform 1s var(--ezl)}
 .pc:hover .ph img{transform:scale(1.05)}
+.pc .ph::after{content:"Ansehen ↗";position:absolute;inset:0;display:flex;align-items:flex-end;padding:1rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:linear-gradient(0deg,rgba(24,22,18,.55),transparent 55%);opacity:0;transition:opacity .4s}
+.pc:hover .ph::after{opacity:1}
 .pc .live{position:absolute;top:.6rem;right:.7rem;font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(31,158,140,.85);padding:.25rem .55rem;border-radius:20px}
 .pc .c{padding:.9rem .8rem .6rem}
 .pc .tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
@@ -186,7 +191,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 .marq .set{font-family:var(--disp);font-style:italic;font-size:clamp(1.3rem,2.6vw,2rem);color:var(--ink);display:inline-block}
 .marq b{color:var(--coral);font-style:normal;margin:0 1.1rem}
 @keyframes marq{to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none}*{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -207,7 +212,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   <div class="wrap hgrid">
     <div>
       <div class="kick rv">Solutions Engineer · CSM · AI-Automation</div>
-      <h1 class="rv" style="--d:.08s">Zwischen Tresen<span class="t2"><em>und</em> Terminal</span></h1>
+      <h1 class="kin"><span class="ln"><span class="w" style="--i:0">Zwischen</span> <span class="w" style="--i:1">Tresen</span></span><span class="ln"><span class="w" style="--i:2"><em>und</em></span> <span class="w" style="--i:3">Terminal</span></span></h1>
       <p class="lead rv" style="--d:.18s">Ich denke in Systemen, nicht in Syntax. 20 Jahre Operations als Fundament, KI-Orchestrierung als Werkzeug — ich sage präzise, was entstehen soll, und steuere, bis es <b>läuft</b>.</p>
       <div class="meta rv" style="--d:.26s"><span class="pill">20 Jahre Hospitality</span><span class="pill">n8n · Voice-Agents</span><span class="pill">Claude Code · zertifiziert</span><span class="pill">verfügbar 01.08.2026</span></div>
       <div class="ctas rv" style="--d:.34s"><a class="btn solid" href="#belege">Die Belege ansehen →</a><a class="btn glass" href="/fakten.html">Schnellversion</a></div>
@@ -358,7 +363,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <script>
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* preloader */
-function hidePre(){const pre=document.getElementById('pre');if(pre)pre.classList.add('gone');}
+function hidePre(){const pre=document.getElementById('pre');if(pre)pre.classList.add('gone');const h=document.querySelector('h1.kin');if(h)h.classList.add('in');}
 if(reduce){hidePre();}else{addEventListener('load',()=>setTimeout(hidePre,1700));setTimeout(hidePre,3500);}
 /* custom cursor */
 if(matchMedia('(hover:hover)').matches){
