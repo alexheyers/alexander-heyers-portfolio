@@ -145,6 +145,31 @@ h2.sec em{font-style:italic;color:var(--teal)}
 .tl h4{font-family:var(--disp);font-weight:700;font-size:1.3rem;margin:.25rem 0 .35rem}
 .tl p{font-size:.94rem;color:var(--iv-80)}
 
+/* ============ AUTOMATION & AGENTS ============ */
+.auto{position:relative;padding:9rem 0 10rem;overflow:hidden}
+.auto .bg{position:absolute;inset:0;z-index:0}
+.auto .bg img{filter:brightness(.55) saturate(1.15);object-position:center}
+.auto .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,16,30,.84),rgba(8,16,30,.66) 42%,rgba(8,16,30,.93))}
+.auto .inner{position:relative;z-index:2}
+.auto .eyebrow{color:var(--teal)}
+.auto .lead{max-width:58ch;margin-top:1.4rem;color:var(--iv-80);font-size:1.06rem}
+.auto .grid{margin-top:3.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:820px){.auto .grid{grid-template-columns:1fr}}
+.acard{border:1px solid var(--iv-14);border-radius:16px;padding:1.9rem;background:rgba(11,24,48,.46);backdrop-filter:blur(7px);transition:border-color .35s,transform .35s,background .35s}
+.acard:hover{border-color:var(--teal);transform:translateY(-5px);background:rgba(26,165,145,.08)}
+.acard .n{font-family:var(--disp);font-weight:900;font-size:2.8rem;color:var(--teal);line-height:1}
+.acard h3{font-family:var(--disp);font-weight:700;font-size:1.45rem;margin:.5rem 0 .5rem}
+.acard p{font-size:.92rem;color:var(--iv-80)}
+.acard .meta{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--iv-55);margin-top:1rem}
+.screens{margin-top:1.6rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+@media(max-width:620px){.screens{grid-template-columns:1fr 1fr}}
+.screens .sh{aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:1px solid var(--iv-14);opacity:.82;transition:opacity .3s,transform .3s;cursor:none}
+.screens .sh img{filter:brightness(.9)}
+.screens .sh:hover{opacity:1;transform:scale(1.04)}
+.auto .links{margin-top:2.4rem;display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--mono);font-size:.74rem}
+.auto .links a{color:var(--teal);border-bottom:1px solid rgba(26,165,145,.4);padding-bottom:2px;transition:color .25s,border-color .25s}
+.auto .links a:hover{color:#fff;border-color:#fff}
+
 /* ============ PROOF (live screenshots) ============ */
 .proof{padding:10rem 0 11rem}
 .proof .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.4rem}
@@ -224,7 +249,7 @@ h2.sec em{font-style:italic;color:var(--teal)}
     <a class="fast" href="/fakten.html">Schnellversion</a>
   </nav>
 </header>
-<div class="rail" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="rail" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <button class="sound" id="sound" aria-label="Ton"><span class="eq"><span></span><span></span><span></span></span> Ton</button>
 
 <!-- HERO -->
@@ -285,11 +310,34 @@ h2.sec em{font-style:italic;color:var(--teal)}
   </div>
 </section>
 
+<!-- AUTOMATION & AGENTS -->
+<section class="auto" data-sec="4" data-rail="4">
+  <div class="bg"><img src="/assets/img/studio-bg-data.jpg" alt=""></div>
+  <div class="scrim"></div>
+  <div class="inner wrap">
+    <div class="eyebrow rev"><span class="no">03</span> Automation &amp; Agenten</div>
+    <h2 class="sec rev" style="--d:.06s">Workflows, die laufen.<br><em>Agenten, die ich dirigiere.</em></h2>
+    <p class="lead rev" style="--d:.12s">Nicht nur gelernt — produktiv betrieben. Self-hosted n8n auf eigenem VPS, ein Voice-Agent, der echte Gespräche führt, und Multi-Agent-Orchestrierung, mit der diese Seite selbst gebaut wurde.</p>
+    <div class="grid">
+      <div class="acard rev" style="--d:.08s"><div class="n">~36</div><h3>n8n-Workflows</h3><p>Produktiv auf selbst gehosteter Instanz. Dazu ein eigenes Toolkit aus 20+ Python-Scripts — deploy, validate, test, visualize.</p><div class="meta">n8n · self-hosted · Docker / VPS</div></div>
+      <div class="acard rev" style="--d:.16s"><div class="n">Ada</div><h3>Voice-Agent end-to-end</h3><p>ElevenLabs + n8n, geführter Intake mit Consent-Phase. Ein Agent, der zuhört, fragt und protokolliert.</p><div class="meta">ElevenLabs · n8n · Conversational AI</div></div>
+      <div class="acard rev" style="--d:.24s"><div class="n">∞</div><h3>Multi-Agent-Orchestrierung</h3><p>BMAD, Subagenten, Agent-SDK. Ich dirigiere ganze Agenten-Teams — diese Seite und ihre Showcases wurden selbst über orchestrierte Agenten gebaut.</p><div class="meta">Claude Code · BMAD · Agent SDK</div></div>
+    </div>
+    <div class="screens rev" style="--d:.2s">
+      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-web-research.jpg" alt="Workflow"></a>
+      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-dokumenten-analyst.jpg" alt="Agent"></a>
+      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-revenue.jpg" alt="Dashboard"></a>
+      <a class="sh mag" href="/claude-code.html"><img src="/assets/img/scene-mechanismus.jpg" alt="Mechanismus"></a>
+    </div>
+    <div class="links rev" style="--d:.26s"><a href="/automation.html">Automation im Detail →</a><a href="/claude-code.html">Wie ich mit Claude Code baue →</a></div>
+  </div>
+</section>
+
 <!-- PROOF -->
-<section class="proof" data-sec="4" data-rail="4">
+<section class="proof" data-sec="5" data-rail="5">
   <div class="wrap">
     <div class="head">
-      <div><div class="eyebrow rev"><span class="no">03</span> Die Beweis-Wand</div><h2 class="sec rev" style="--d:.06s">Andere behaupten.<br><em>Ich verlinke.</em></h2></div>
+      <div><div class="eyebrow rev"><span class="no">04</span> Die Beweis-Wand</div><h2 class="sec rev" style="--d:.06s">Andere behaupten.<br><em>Ich verlinke.</em></h2></div>
       <p class="claim rev" style="--d:.14s">Jede Karte ist ein echter Screenshot eines Live-Systems. Klicken statt glauben.</p>
     </div>
     <div class="wall">
@@ -305,11 +353,11 @@ h2.sec em{font-style:italic;color:var(--teal)}
 </section>
 
 <!-- STACK -->
-<section class="stack" data-sec="5" data-rail="5">
+<section class="stack" data-sec="5" data-rail="6">
   <div class="bg"><img src="/assets/img/tun-terminal.jpg" alt=""></div>
   <div class="scrim"></div>
   <div class="inner wrap">
-    <div class="eyebrow rev"><span class="no">04</span> Stack &amp; Arbeitsweise</div>
+    <div class="eyebrow rev"><span class="no">05</span> Stack &amp; Arbeitsweise</div>
     <h2 class="sec rev" style="--d:.06s">Mein Werkzeug ist <em>Claude Code</em>.<br>Meine Methode ist Klarheit.</h2>
     <p class="lead rev" style="--d:.12s">Ich nutze KI nicht nur — ich engineere sie: eigene Skills gebaut, Multi-Agent-Orchestrierung, Hooks &amp; Memory, Production auf eigenem VPS. Diese Seite und meine Showcases wurden selbst über orchestrierte Agenten gebaut.</p>
     <div class="chips rev" style="--d:.16s">
@@ -320,7 +368,7 @@ h2.sec em{font-style:italic;color:var(--teal)}
 </section>
 
 <!-- FINALE -->
-<section class="finale" data-sec="6" data-rail="5">
+<section class="finale" data-sec="6" data-rail="6">
   <canvas id="portrait"></canvas>
   <div class="vid"><video autoplay muted loop playsinline><source src="/assets/img/bg-finale.mp4" type="video/mp4"></video></div>
   <div class="scrim"></div>
