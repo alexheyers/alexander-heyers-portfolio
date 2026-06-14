@@ -4,461 +4,2708 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alex Heyers — Zwischen Tresen und Terminal</title>
-<meta name="description" content="20 Jahre Hospitality-Operations, 3 Jahre KI. Ich übersetze Geschäfts-Bedürfnisse in funktionierende Systeme und dirigiere KI auf Agentur-Niveau. Verfügbar ab 01.08.2026, Remote DACH.">
+<meta name="description" content="20 Jahre Hospitality-Operations, 3 Jahre KI. Ich baue Workflows, Voice-Agents und Produkte — und übersetze zwischen Operations und Engineering. Verfügbar ab 01.08.2026, Remote DACH.">
+<link rel="canonical" href="https://www.alexander-heyers.de/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.alexander-heyers.de/">
 <meta property="og:title" content="Alex Heyers — Zwischen Tresen und Terminal">
-<meta property="og:description" content="20 Jahre Hospitality, 3 Jahre KI. Jede Behauptung hat einen klickbaren Beleg.">
-<meta property="og:image" content="/assets/img/og.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700;1,900&family=Lato:wght@300;400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<meta property="og:description" content="20 Jahre Hospitality-Operations, 3 Jahre KI. Jede Behauptung hat einen klickbaren Beleg. Verfügbar ab 01.08.2026, Remote DACH.">
+<meta property="og:image" content="https://www.alexander-heyers.de/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='26' fill='%231AA591'/><circle cx='44' cy='22' r='9' fill='%23E94B5D'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --ivory:#F2EFE8; --ink:#0E2244; --teal:#1AA591; --pink:#E94B5D; --brass:#E6A23C;
-  --ink-72:rgba(14,34,68,.72); --ink-46:rgba(14,34,68,.46); --ink-10:rgba(14,34,68,.10);
-  --iv-80:rgba(242,239,232,.86); --iv-55:rgba(242,239,232,.6); --iv-30:rgba(242,239,232,.34); --iv-14:rgba(242,239,232,.16);
+/* ============================================================
+   LUSION-EDITION v3 — eine Szene, eine Kamerafahrt, neun Stationen
+   ============================================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --ivory:#F2EFE8; --ink:#0E2244; --teal:#1AA591; --pink:#E94B5D;
+  --ink-60:rgba(14,34,68,.74); --ink-30:rgba(14,34,68,.42); --ink-12:rgba(14,34,68,.12);
+  --iv-70:rgba(242,239,232,.84); --iv-30:rgba(242,239,232,.44); --iv-14:rgba(242,239,232,.14);
+  --ezl:cubic-bezier(.35,0,0,1);
   --disp:'Playfair Display',serif; --body:'Lato',sans-serif; --mono:'JetBrains Mono',monospace;
-  --ezl:cubic-bezier(.16,1,.3,1);
 }
-html{scrollbar-width:none} html::-webkit-scrollbar{display:none}
-body{background:var(--ink); color:var(--ivory); font-family:var(--body); font-weight:300; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; cursor:none}
-a{color:inherit; text-decoration:none}
-img{display:block; width:100%; height:100%; object-fit:cover}
-.wrap{width:min(1240px,92vw); margin-inline:auto}
-section{position:relative}
-/* grain */
-body::after{content:""; position:fixed; inset:0; z-index:9990; pointer-events:none; opacity:.06; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html { scrollbar-width:none; }
+html::-webkit-scrollbar { display:none; }
+body { background:var(--ivory); color:var(--ink); font-family:var(--body); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+body.is-locked { overflow:hidden; }
+a { color:inherit; text-decoration:none; }
+img { display:block; width:100%; height:100%; object-fit:cover; }
 
-/* cursor */
-.cur,.cur-dot{position:fixed; top:0; left:0; z-index:9999; pointer-events:none; border-radius:50%; mix-blend-mode:difference}
-.cur{width:36px;height:36px;border:1px solid #fff;transform:translate(-50%,-50%);transition:width .3s var(--ezl),height .3s var(--ezl),background .3s}
-.cur-dot{width:5px;height:5px;background:#fff;transform:translate(-50%,-50%)}
-.cur.big{width:84px;height:84px;background:rgba(255,255,255,.06)}
-@media(hover:none){.cur,.cur-dot{display:none}body{cursor:auto}}
+/* Scroll-Raum: die Seite IST 1050vh hoch, alles Sichtbare ist fixed */
+.scroll-space { height:920vh; }
+#gl { position:fixed; inset:0; z-index:1; display:block; }
+.stage { position:fixed; inset:0; z-index:5; pointer-events:none; }
+.stage .st { position:absolute; inset:0; opacity:0; visibility:hidden; }
+.stage .st.on { visibility:visible; }
+.stage .st > * { pointer-events:auto; }
 
-/* nav */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:space-between;align-items:center;padding:1.3rem clamp(1.2rem,4vw,3rem);font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;mix-blend-mode:difference;color:#fff}
-.nav{display:flex;gap:1.4rem;align-items:center}
-.nav a{position:relative;opacity:.82;transition:opacity .25s}
-.nav a:hover{opacity:1}
-.nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:currentColor;transition:width .3s var(--ezl)}
-.nav a:hover::after{width:100%}
-.nav .fast{border:1px solid currentColor;padding:.42rem .75rem;border-radius:30px;opacity:1}
-.nav .fast::after{display:none}
-@media(max-width:760px){.nav a:not(.fast){display:none}}
+/* Kapitel-HUD unten links — die Journey hat Stationen */
+.chapter { position:fixed; left:clamp(1.2rem,4vw,3.2rem); bottom:1.6rem; z-index:90; font-family:var(--mono); font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:currentColor; opacity:.55; }
+.chapter b { font-weight:400; color:var(--teal); }
+body.static .chapter { display:none; }
 
-.rail{position:fixed;right:clamp(.7rem,1.8vw,1.4rem);top:50%;transform:translateY(-50%);z-index:300;display:flex;flex-direction:column;gap:.7rem}
-.rail i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.3;transition:opacity .35s,transform .35s;mix-blend-mode:difference}
-.rail i.on{opacity:1;transform:scale(1.7)}
-@media(max-width:760px){.rail{display:none}}
+/* Fortschritts-Anzeige rechts */
+.prog { position:fixed; right:1.4rem; top:50%; transform:translateY(-50%); z-index:90; display:flex; flex-direction:column; gap:.55rem; }
+.prog i { width:5px; height:5px; border-radius:50%; background:currentColor; opacity:.25; transition:opacity .3s, transform .3s; }
+.prog i.on { opacity:1; transform:scale(1.5); }
 
-.sound{position:fixed;left:clamp(1.2rem,4vw,3rem);bottom:1.3rem;z-index:300;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;display:flex;gap:.5rem;align-items:center;mix-blend-mode:difference;color:#fff;background:none;border:none;cursor:none}
-.sound .eq{display:flex;gap:2px;align-items:flex-end;height:12px}
-.sound .eq span{width:2px;height:3px;background:currentColor}
-.sound.on .eq span{animation:eq .9s infinite}
-.sound.on .eq span:nth-child(2){animation-delay:.15s}.sound.on .eq span:nth-child(3){animation-delay:.3s}
-@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+/* ============ REVEAL-SYSTEM (Choreografie pro Station) ============ */
+.st .rev { opacity:0; transform:translateY(26px); transition:opacity 1.05s var(--ezl) var(--d,0s), transform 1.05s var(--ezl) var(--d,0s); }
+.st.live .rev { opacity:1; transform:none; }
+body.static .st .rev { opacity:1; transform:none; }
 
-/* reveal */
-.rev{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ezl) var(--d,0s),transform 1.1s var(--ezl) var(--d,0s)}
-.rev.in{opacity:1;transform:none}
+/* ============ LOADER — Vorhang mit großem Zähler (Lusion-Handover) ============ */
+.loader { position:fixed; inset:0; z-index:200; background:var(--ivory); transition:transform 1.1s var(--ezl), visibility 1.1s; will-change:transform; }
+.loader.is-done { transform:translateY(-100.5%); visibility:hidden; }
+.loader__word { position:absolute; top:1.3rem; left:clamp(1.2rem,4vw,3.2rem); font-family:var(--disp); font-weight:900; font-size:1.12rem; }
+.loader__word em { font-style:italic; color:var(--teal); }
+.loader__pct { position:absolute; left:clamp(1.2rem,4vw,3.2rem); bottom:4.2rem; font-family:var(--disp); font-weight:900; font-size:clamp(4.5rem,14vw,11rem); line-height:1; color:var(--ink); font-variant-numeric:tabular-nums; }
+.loader__pct::after { content:"%"; font-size:.32em; vertical-align:.18em; color:var(--teal); margin-left:.06em; }
+.loader__hint { position:absolute; right:clamp(1.2rem,4vw,3.2rem); bottom:4.6rem; font-family:var(--mono); font-size:.62rem; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-30); }
+.loader__bar { position:absolute; left:0; right:0; bottom:2.6rem; height:1px; background:var(--ink-12); overflow:hidden; }
+.loader__bar i { position:absolute; inset:0; background:var(--teal); transform-origin:left; transform:scaleX(0); transition:transform .3s var(--ezl); }
+/* Hero-Entrance wartet auf den Vorhang */
+body:not(.booted) .st-hero.live .kicker,
+body:not(.booted) .st-hero.live .hln__in,
+body:not(.booted) .st-hero.live p,
+body:not(.booted) .st-hero.live .hero-sig,
+body:not(.booted) .st-hero.live .hint { animation-play-state:paused; }
 
-/* ============ HERO ============ */
-.hero{height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
-.hero .bg{position:absolute;inset:-8% 0;z-index:0;will-change:transform}
-.hero .bg img{filter:saturate(1.08) contrast(1.05);animation:ken 28s ease-in-out infinite alternate}
-@keyframes ken{from{transform:scale(1.02)}to{transform:scale(1.13)}}
-.hero .scrim{position:absolute;inset:0;z-index:1;background:
-  linear-gradient(180deg,rgba(8,18,38,.55) 0%,rgba(8,18,38,.15) 32%,rgba(8,18,38,.45) 62%,rgba(8,18,38,.94) 100%)}
-.hero .vig{position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 70% 30%,transparent 40%,rgba(8,18,38,.5) 100%)}
-.hero .inner{position:relative;z-index:2;width:100%;padding-bottom:clamp(3rem,8vh,7rem)}
-.kick{font-family:var(--mono);font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--teal);display:flex;gap:.8rem;align-items:center}
-.kick::before{content:"";width:36px;height:1px;background:var(--teal)}
-h1.tt{font-family:var(--disp);font-weight:900;font-size:clamp(2.9rem,11vw,9.5rem);line-height:.92;letter-spacing:-.025em;margin:1.2rem 0 0;color:#fff;text-shadow:0 12px 50px rgba(0,0,0,.35)}
-h1.tt .l2{display:block;font-style:italic;font-weight:700}
-h1.tt em{color:var(--teal);font-style:italic;font-weight:500}
-.hero .sub{max-width:48ch;font-size:clamp(1.02rem,1.5vw,1.28rem);color:var(--iv-80);margin-top:1.6rem;font-weight:400}
-.hero .meta{margin-top:1.4rem;display:flex;flex-wrap:wrap;gap:.5rem 1.8rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--iv-55)}
-.hero .meta b{color:var(--teal);font-weight:500}
-.ctas{margin-top:2.4rem;display:flex;gap:1rem;flex-wrap:wrap}
-.btn{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:1rem 1.7rem;border-radius:40px;border:1px solid #fff;display:inline-flex;gap:.6rem;align-items:center;transition:transform .3s var(--ezl),background .3s,color .3s,border-color .3s;will-change:transform}
-.btn.solid{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
-.btn.solid:hover{background:var(--teal);border-color:var(--teal);color:#04201b}
-.btn.ghost{color:#fff}.btn.ghost:hover{background:#fff;color:var(--ink)}
-.scrollcue{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:2;font-family:var(--mono);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--iv-55);display:flex;flex-direction:column;align-items:center;gap:.5rem}
-.scrollcue .ln{width:1px;height:34px;background:linear-gradient(var(--iv-55),transparent);animation:cue 2s infinite}
-@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* ============ CURSOR ============ */
+.cursor-dot,.cursor-ring { position:fixed; top:0; left:0; pointer-events:none; z-index:150; border-radius:50%; will-change:transform; }
+.cursor-dot { width:6px; height:6px; background:currentColor; }
+.cursor-ring { width:34px; height:34px; border:1px solid currentColor; opacity:.45; transition:width .3s cubic-bezier(.16,1,.3,1), height .3s cubic-bezier(.16,1,.3,1); }
+body.c-hover .cursor-ring { width:60px; height:60px; }
+@media (hover:none){ .cursor-dot,.cursor-ring{ display:none; } }
 
-/* section head */
-.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);display:inline-flex;gap:.7rem;align-items:center}
-.eyebrow .no{color:var(--iv-30)}
-h2.sec{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,5.5vw,4.4rem);line-height:1.02;letter-spacing:-.015em;margin-top:1rem;max-width:20ch}
-h2.sec em{font-style:italic;color:var(--teal)}
+/* ============ NAV (immer da) ============ */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.3rem clamp(1.2rem,4vw,3.2rem); transition:color .6s; }
+.nav__brand { font-family:var(--disp); font-weight:900; font-size:1.12rem; }
+.nav__brand em { font-style:italic; color:var(--teal); }
+.nav__right { display:flex; align-items:center; gap:.7rem; }
+.nav__snd { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:.55rem .9rem; border-radius:50px; border:1px solid transparent; background:transparent; color:currentColor; opacity:.55; cursor:pointer; transition:opacity .3s, border-color .3s; }
+.nav__snd:hover { opacity:1; border-color:currentColor; }
+.nav__snd[aria-pressed="false"] { text-decoration:line-through; }
+body.static .nav__snd { display:none; }
+.nav__cta { font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; padding:.7rem 1.35rem; border-radius:50px; border:1px solid currentColor; transition:background .3s,color .3s; }
+.nav__cta:hover { background:var(--teal); border-color:var(--teal); color:#fff; }
 
-/* ============ TRESEN (warm, image cards) ============ */
-.tresen{padding:9rem 0 10rem;background:#120f12;position:relative}
-.tresen .eyebrow,.tresen h2.sec em{color:var(--brass)}
-.tresen .eyebrow .no{color:rgba(230,162,60,.4)}
-.tresen .lead{max-width:56ch;margin-top:1.5rem;color:var(--iv-80);font-size:1.08rem}
-.stations{margin-top:3.6rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-@media(max-width:820px){.stations{grid-template-columns:1fr}}
-.station{position:relative;aspect-ratio:3/4;border-radius:16px;overflow:hidden;cursor:none}
-.station img{transition:transform 1.1s var(--ezl);filter:saturate(.92)}
-.station:hover img{transform:scale(1.07)}
-.station .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,15,18,.1) 0%,rgba(18,15,18,.25) 45%,rgba(18,15,18,.92) 100%)}
-.station .tint{position:absolute;inset:0;background:rgba(230,162,60,.14);mix-blend-mode:overlay}
-.station .txt{position:absolute;inset:auto 0 0 0;padding:1.6rem}
-.station .yr{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
-.station h3{font-family:var(--disp);font-weight:700;font-size:1.55rem;margin:.3rem 0 .1rem}
-.station .role{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--iv-55);text-transform:uppercase}
-.station .big{font-family:var(--disp);font-weight:900;font-size:2.4rem;color:#fff;margin-top:.9rem;line-height:1;display:flex;gap:.4rem;align-items:baseline}
-.station .big small{font-family:var(--mono);font-size:.56rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--iv-55)}
-.reframe{margin-top:3rem;font-family:var(--disp);font-style:italic;font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--iv-80);max-width:40ch}
-.reframe b{font-style:normal;color:var(--brass)}
+/* ============ STATION 0: HERO ============ */
+.st-hero { display:flex; flex-direction:column; justify-content:center; padding:0 clamp(1.2rem,4vw,3.2rem); }
+.st-hero .kicker { font-family:var(--mono); font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--teal); margin-bottom:1.6rem; }
+.st-hero h1 { font-family:var(--disp); font-weight:900; font-size:clamp(2.4rem,6.4vw,5.6rem); line-height:1.04; max-width:12ch; }
+.st-hero h1 em { font-style:italic; color:var(--teal); }
+.st-hero p { margin-top:2rem; max-width:40ch; font-weight:300; line-height:1.7; color:var(--ink-60); font-size:clamp(.95rem,1.3vw,1.1rem); }
+.st-hero .hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:.62rem; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-30); }
 
-/* ============ HINGE (full-bleed) ============ */
-.hinge{height:100vh;min-height:560px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-.hinge .bg{position:absolute;inset:-8% 0;z-index:0;will-change:transform}
-.hinge .bg img{filter:saturate(1.1) brightness(.7)}
-.hinge .scrim{position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 50% 50%,rgba(14,34,68,.35),rgba(8,16,30,.86))}
-.hinge .q{position:relative;z-index:2;font-family:var(--disp);font-weight:700;font-style:italic;font-size:clamp(1.9rem,5.5vw,4.4rem);line-height:1.1;max-width:17ch;margin-inline:auto;color:#fff}
-.hinge .q .hl{color:var(--teal)}
-.hinge .src{position:relative;z-index:2;font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--iv-55);margin-top:2.4rem}
+/* ============ STATION 2: PROJEKTE ============ */
+.st-work { padding:0 clamp(1.2rem,4vw,3.2rem); display:flex; flex-direction:column; justify-content:center; }
+.st-work .head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:2.6rem; }
+.st-work h2 { font-family:var(--disp); font-weight:900; font-size:clamp(1.8rem,3.6vw,3rem); }
+.st-work h2 em { font-style:italic; color:var(--teal); }
+.st-work .count { font-family:var(--mono); font-size:.68rem; letter-spacing:.2em; color:var(--ink-30); }
+.work-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.9rem,1.6vw,1.6rem); }
+.card { cursor:pointer; }
+.card__media { position:relative; overflow:hidden; border-radius:6px; aspect-ratio:3/4; background:var(--ink-12); }
+body.gl .card__media img { opacity:0; }
+.card__title { font-family:var(--disp); font-weight:700; font-size:1.05rem; margin-top:.8rem; }
+.card__tags { font-family:var(--mono); font-size:.58rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-30); margin-top:.25rem; }
+@media (max-width:860px){ .work-grid{ grid-template-columns:repeat(2,1fr);} }
 
-/* ============ TRANSFORM (mem fragments) ============ */
-.xform{padding:10rem 0;position:relative;overflow:hidden}
-.xform .frags{position:absolute;inset:0;z-index:0;pointer-events:none}
-.xform .frag{position:absolute;border-radius:12px;overflow:hidden;opacity:.5;box-shadow:0 30px 60px -30px #000;will-change:transform}
-.xform .frag img{filter:saturate(.9) brightness(.8)}
-.xform .f1{width:230px;aspect-ratio:4/3;top:8%;right:4%}
-.xform .f2{width:180px;aspect-ratio:3/4;top:40%;right:18%}
-.xform .f3{width:200px;aspect-ratio:4/3;bottom:8%;right:8%}
-.xform .f4{width:160px;aspect-ratio:1/1;top:62%;right:30%}
-@media(max-width:960px){.xform .frags{opacity:.35}.xform .f2,.xform .f4{display:none}}
-.xform .inner{position:relative;z-index:2}
-.xform .pull{font-family:var(--disp);font-weight:700;font-style:italic;font-size:clamp(1.8rem,4vw,3.1rem);line-height:1.14;max-width:20ch;letter-spacing:-.01em}
-.xform .pull b{font-style:normal;color:var(--teal)}
-.timeline{margin-top:3rem;border-left:1px solid var(--iv-14);padding-left:2rem;display:flex;flex-direction:column;gap:1.9rem;max-width:48ch}
-.tl{position:relative}
-.tl::before{content:"";position:absolute;left:-2rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--ink);border:2px solid var(--teal);transform:translateX(-50%)}
-.tl .yr{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
-.tl h4{font-family:var(--disp);font-weight:700;font-size:1.3rem;margin:.25rem 0 .35rem}
-.tl p{font-size:.94rem;color:var(--iv-80)}
+/* ============ STATION 3: VOID/TUNNEL ============ */
+.st-void { display:flex; align-items:center; justify-content:center; text-align:center; }
+.st-void .line { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:90vw; }
+.st-void .line h2 { font-family:var(--disp); font-weight:900; font-size:clamp(2rem,6vw,5rem); color:var(--ivory); line-height:1.1; }
+.st-void .line h2 em { font-style:italic; color:var(--teal); }
+.st-void .line .mono { font-family:var(--mono); font-size:.66rem; letter-spacing:.3em; text-transform:uppercase; color:var(--iv-30); margin-bottom:1.4rem; }
 
-/* ============ AUTOMATION & AGENTS ============ */
-.auto{position:relative;padding:9rem 0 10rem;overflow:hidden}
-.auto .bg{position:absolute;inset:0;z-index:0}
-.auto .bg img{filter:brightness(.55) saturate(1.15);object-position:center}
-.auto .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,16,30,.84),rgba(8,16,30,.66) 42%,rgba(8,16,30,.93))}
-.auto .inner{position:relative;z-index:2}
-.auto .eyebrow{color:var(--teal)}
-.auto .lead{max-width:58ch;margin-top:1.4rem;color:var(--iv-80);font-size:1.06rem}
-.auto .grid{margin-top:3.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-@media(max-width:820px){.auto .grid{grid-template-columns:1fr}}
-.acard{border:1px solid var(--iv-14);border-radius:16px;padding:1.9rem;background:rgba(11,24,48,.46);backdrop-filter:blur(7px);transition:border-color .35s,transform .35s,background .35s}
-.acard:hover{border-color:var(--teal);transform:translateY(-5px);background:rgba(26,165,145,.08)}
-.acard .n{font-family:var(--disp);font-weight:900;font-size:2.8rem;color:var(--teal);line-height:1}
-.acard h3{font-family:var(--disp);font-weight:700;font-size:1.45rem;margin:.5rem 0 .5rem}
-.acard p{font-size:.92rem;color:var(--iv-80)}
-.acard .meta{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--iv-55);margin-top:1rem}
-.screens{margin-top:1.6rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
-@media(max-width:620px){.screens{grid-template-columns:1fr 1fr}}
-.screens .sh{aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:1px solid var(--iv-14);opacity:.82;transition:opacity .3s,transform .3s;cursor:none}
-.screens .sh img{filter:brightness(.9)}
-.screens .sh:hover{opacity:1;transform:scale(1.04)}
-.auto .links{margin-top:2.4rem;display:flex;gap:1.5rem;flex-wrap:wrap;font-family:var(--mono);font-size:.74rem}
-.auto .links a{color:var(--teal);border-bottom:1px solid rgba(26,165,145,.4);padding-bottom:2px;transition:color .25s,border-color .25s}
-.auto .links a:hover{color:#fff;border-color:#fff}
+/* ============ STATION 3: REISE (86 Tage) ============ */
+.st-reise { padding:5.6rem clamp(1.2rem,4vw,3.2rem) 1.5rem; display:flex; flex-direction:column; justify-content:center; }
+.st-reise .kicker { font-family:var(--mono); font-size:.66rem; letter-spacing:.26em; text-transform:uppercase; color:var(--teal); margin-bottom:.9rem; }
+.st-reise h2 { font-family:var(--disp); font-weight:900; font-size:clamp(1.8rem,3.8vw,3.2rem); line-height:1.08; max-width:20ch; }
+.st-reise h2 em { font-style:italic; color:var(--teal); }
+.route { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(.7rem,1.6vw,1.6rem); margin-top:2.2rem; max-width:1240px; }
+.route-stop { border-top:2px solid var(--ink-12); padding-top:.9rem; position:relative; }
+.route-stop b { font-family:var(--disp); font-weight:900; font-size:1.3rem; color:var(--ink-30); display:block; }
+.route-stop span { display:block; font-weight:400; font-size:.8rem; line-height:1.35; margin-top:.3rem; }
+.route-stop i { display:block; font-style:normal; font-family:var(--mono); font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-30); margin-top:.45rem; }
+.route-stop.done { border-top-color:var(--teal); }
+.route-stop.done b { color:var(--teal); }
+.route-stop.now { border-top-color:var(--pink); }
+.route-stop.now b { color:var(--pink); }
+.route-stop.now i { color:var(--pink); }
+.reise-stats { display:flex; gap:clamp(1.4rem,3.5vw,3.2rem); margin-top:2.4rem; flex-wrap:wrap; }
+.reise-stats b { font-family:var(--disp); font-weight:900; font-size:clamp(1.2rem,2vw,1.7rem); display:block; }
+.reise-stats span { font-family:var(--mono); font-size:.56rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-30); }
+@media (max-width:860px){ .route { grid-template-columns:repeat(2,1fr); } }
 
-/* ============ PROOF (live screenshots) ============ */
-.proof{padding:10rem 0 11rem}
-.proof .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.4rem}
-.proof .head .claim{font-family:var(--disp);font-style:italic;color:var(--iv-55);max-width:24ch;text-align:right;font-size:1.1rem}
-.wall{margin-top:3.4rem;display:grid;grid-template-columns:repeat(6,1fr);gap:1.1rem}
-@media(max-width:820px){.wall{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.wall{grid-template-columns:1fr}}
-.pcard{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#0b1830;border:1px solid var(--iv-14);grid-column:span 2;min-height:300px;cursor:none;transition:transform .5s var(--ezl),border-color .4s,box-shadow .5s}
-.pcard.feat{grid-column:span 4;grid-row:span 2}
-.pcard.tall{grid-row:span 2}
-@media(max-width:820px){.pcard,.pcard.feat,.pcard.tall{grid-column:span 1;grid-row:auto;min-height:300px}}
-.pcard:hover{transform:translateY(-5px);border-color:var(--teal);box-shadow:0 30px 60px -30px rgba(0,0,0,.65)}
-.pcard .shot{position:relative;flex:1;min-height:160px;overflow:hidden}
-.pcard .shot img{height:100%;filter:brightness(1.06) saturate(1.06);transition:transform 1.2s var(--ezl)}
-.pcard:hover .shot img{transform:scale(1.05)}
-.pcard .shot::before{content:"";position:absolute;inset:0 0 auto 0;height:46px;z-index:1;background:linear-gradient(180deg,rgba(6,12,24,.55),transparent)}
-.pcard .dots{position:absolute;top:.85rem;left:1rem;z-index:2;display:flex;gap:5px}
-.pcard .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}
-.pcard .c{padding:1.25rem 1.4rem 1.45rem;background:#0b1830;border-top:1px solid var(--iv-14)}
-.pcard .tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
-.pcard h3{font-family:var(--disp);font-weight:700;font-size:1.4rem;margin:.3rem 0 .25rem;line-height:1.05}
-.pcard.feat h3{font-size:2.1rem}
-.pcard p{font-size:.85rem;color:var(--iv-80);max-width:46ch}
-.pcard .go{margin-top:.85rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);display:flex;gap:.5rem;align-items:center;transition:gap .3s}
-.pcard:hover .go{gap:.9rem}
-.pcard .live{position:absolute;top:.7rem;right:1rem;z-index:2;font-family:var(--mono);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;display:flex;gap:.4rem;align-items:center}
-.pcard .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(26,165,145,.6);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(26,165,145,.6)}70%{box-shadow:0 0 0 9px rgba(26,165,145,0)}100%{box-shadow:0 0 0 0 rgba(26,165,145,0)}}
-.morenote{margin-top:1.6rem;text-align:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--iv-30)}
+/* ============ STATION 6: AGENTEN ============ */
+.st-agents { padding:0 clamp(1.2rem,4vw,3.2rem); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+.st-agents .kicker { font-family:var(--mono); font-size:.66rem; letter-spacing:.26em; text-transform:uppercase; color:var(--teal); margin-bottom:.9rem; }
+.st-agents h2 { font-family:var(--disp); font-weight:900; font-size:clamp(1.8rem,3.8vw,3.2rem); line-height:1.1; max-width:20ch; }
+.st-agents h2 em { font-style:italic; color:var(--teal); }
+.agent-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(.9rem,2vw,2rem); margin-top:2rem; max-width:1240px; }
+.st-agents .agents-lead { margin-top:.9rem; max-width:62ch; font-weight:300; line-height:1.6; color:var(--ink-60); font-size:clamp(.82rem,1.05vw,.94rem); }
+.st-agents .agents-lead b { font-weight:400; color:var(--ink); }
+.agent-card { border-top:1px solid var(--ink-12); padding-top:1.1rem; }
+.agent-card__label { font-family:var(--mono); font-size:.64rem; letter-spacing:.22em; text-transform:uppercase; color:var(--teal); }
+.agent-card__title { font-family:var(--disp); font-weight:700; font-size:1.1rem; margin-top:.45rem; }
+.agent-card__text { font-weight:300; font-size:.84rem; line-height:1.65; color:var(--ink-60); margin-top:.45rem; }
+@media (max-width:860px){ .agent-grid{ grid-template-columns:1fr; gap:1rem; } }
 
-/* ============ STACK (image bg) ============ */
-.stack{padding:9rem 0 10rem;position:relative;overflow:hidden}
-.stack .bg{position:absolute;inset:0;z-index:0}
-.stack .bg img{filter:brightness(.32) saturate(.8)}
-.stack .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(14,34,68,.85),rgba(8,16,30,.92))}
-.stack .inner{position:relative;z-index:2}
-.stack .eyebrow{color:var(--teal)}
-.stack .lead{max-width:52ch;margin-top:1.5rem;color:var(--iv-80)}
-.chips{margin-top:3rem;display:flex;flex-wrap:wrap;gap:.7rem}
-.chip{font-family:var(--mono);font-size:.74rem;padding:.7rem 1.1rem;border:1px solid var(--iv-14);border-radius:30px;color:var(--iv-80);background:rgba(255,255,255,.03);transition:border-color .3s,color .3s,transform .3s}
-.chip:hover{border-color:var(--teal);color:#fff;transform:translateY(-3px)}
-.chip.key{background:var(--teal);border-color:var(--teal);color:#04201b;font-weight:500}
-.deep{margin-top:2.6rem;display:flex;gap:1.4rem;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em}
-.deep a{color:var(--teal);border-bottom:1px solid rgba(26,165,145,.4);padding-bottom:2px;transition:color .25s,border-color .25s}
-.deep a:hover{color:#fff;border-color:#fff}
+/* ============ STATION 8: FINALE ============ */
+.st-end { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.st-end h2 { font-family:var(--disp); font-weight:900; font-size:clamp(2.6rem,8.5vw,7rem); color:var(--ivory); line-height:1.04; }
+.st-end h2 em { font-style:italic; color:var(--pink); }
+.st-end .mail { display:inline-block; margin-top:2.4rem; font-family:var(--mono); font-size:clamp(.85rem,1.5vw,1rem); color:var(--ivory); border-bottom:1px solid var(--teal); padding-bottom:.3rem; transition:color .3s; }
+.st-end .mail:hover { color:var(--pink); border-color:var(--pink); }
+.st-end .foot { position:absolute; bottom:1.6rem; left:0; right:0; display:flex; justify-content:space-between; padding:0 clamp(1.2rem,4vw,3.2rem); font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--iv-30); }
+.st-end .foot b { color:var(--teal); }
+.st-end .end-pitch { margin-top:1.6rem; font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--iv-30); }
+.st-end .end-pitch b { color:var(--ivory); font-weight:400; }
 
-/* ============ FINALE ============ */
-.finale{min-height:108vh;position:relative;display:flex;align-items:center;overflow:hidden;background:#08101e}
-#portrait{position:absolute;inset:0;z-index:1}
-.finale .vid{position:absolute;inset:0;z-index:0;opacity:.4}
-.finale .vid video{width:100%;height:100%;object-fit:cover}
-.finale .scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(8,16,30,.85) 0%,rgba(8,16,30,.4) 60%,rgba(8,16,30,.7) 100%)}
-.finale .inner{position:relative;z-index:3;width:min(1240px,92vw);margin-inline:auto}
-.finale .copy{max-width:34ch}
-.finale .ready{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
-.finale h2{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,7.5vw,6rem);line-height:.96;letter-spacing:-.02em;margin:1.1rem 0}
-.finale h2 em{font-style:italic;color:var(--teal)}
-.finale .avail{font-size:1.05rem;color:var(--iv-80);margin-bottom:2rem}
-.contacts a{font-family:var(--mono);font-size:.86rem;padding:.85rem 0;border-bottom:1px solid var(--iv-14);display:flex;justify-content:space-between;align-items:center;transition:padding .35s,color .3s}
-.contacts a:hover{padding-left:.8rem;color:var(--teal)}
-.contacts a span{color:var(--iv-30)}
-.foot{position:absolute;bottom:1.3rem;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--iv-30)}
+/* ============ PROJEKT-DETAIL (lebendige Unterseite) ============ */
+.detail { position:fixed; inset:0; z-index:120; display:flex; flex-direction:column; padding:clamp(1.2rem,3vw,2.6rem); padding-top:clamp(4.6rem,7vh,6rem); visibility:hidden; pointer-events:none; }
+.detail.is-open { visibility:visible; pointer-events:auto; }
+.detail__scrim { position:absolute; inset:0; background:rgba(14,34,68,0); transition:background .6s; }
+.detail.is-open .detail__scrim { background:rgba(11,22,45,.8); }
+.detail__media { position:relative; flex:1; min-height:0; border-radius:10px; overflow:hidden; background:#0B1A35; box-shadow:0 30px 80px rgba(0,0,0,.45); opacity:0; transform:translateY(22px) scale(.985); transition:opacity .6s cubic-bezier(.16,1,.3,1) .3s, transform .6s cubic-bezier(.16,1,.3,1) .3s; }
+.detail.is-open .detail__media { opacity:1; transform:none; }
+.detail__media iframe { width:100%; height:100%; border:0; display:block; background:#0B1A35; }
+.detail__media .hintbar { position:absolute; top:.7rem; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(242,239,232,.6); background:rgba(11,22,45,.55); padding:.35rem .9rem; border-radius:40px; pointer-events:none; }
+.detail__bar { position:relative; display:flex; gap:clamp(1.2rem,4vw,3rem); align-items:flex-end; justify-content:space-between; padding-top:1.1rem; flex-wrap:wrap; }
+.detail__panel { position:relative; color:var(--ivory); max-width:560px; opacity:0; transform:translateY(24px); transition:opacity .5s cubic-bezier(.16,1,.3,1) .25s, transform .5s cubic-bezier(.16,1,.3,1) .25s; }
+.detail.is-open .detail__panel { opacity:1; transform:translateY(0); }
+.detail__facts { display:flex; gap:clamp(1.2rem,3vw,2.6rem); color:var(--ivory); opacity:0; transform:translateY(24px); transition:opacity .5s cubic-bezier(.16,1,.3,1) .35s, transform .5s cubic-bezier(.16,1,.3,1) .35s; }
+.detail.is-open .detail__facts { opacity:1; transform:translateY(0); }
+.detail__facts b { font-family:var(--disp); font-size:clamp(1rem,1.6vw,1.4rem); display:block; }
+.detail__facts span { font-family:var(--mono); font-size:.56rem; letter-spacing:.18em; text-transform:uppercase; color:var(--iv-30); }
+.detail__tags { font-family:var(--mono); font-size:.64rem; letter-spacing:.2em; text-transform:uppercase; opacity:.75; margin-bottom:.8rem; }
+.detail__title { font-family:var(--disp); font-weight:900; font-size:clamp(1.5rem,3.4vw,2.4rem); line-height:1.05; margin-bottom:.6rem; }
+.detail__text { font-weight:300; line-height:1.65; max-width:58ch; font-size:.88rem; color:var(--iv-70); }
+.detail__close { position:absolute; top:clamp(1.4rem,4vw,3.2rem); right:clamp(1.4rem,4vw,3.2rem); width:50px; height:50px; border-radius:50%; border:1px solid rgba(242,239,232,.5); background:transparent; color:var(--ivory); font-family:var(--mono); font-size:.9rem; cursor:pointer; opacity:0; transition:opacity .4s .4s, background .3s, transform .3s; }
+.detail.is-open .detail__close { opacity:1; }
+.detail__close:hover { background:var(--pink); border-color:var(--pink); transform:rotate(90deg); }
 
-@media(prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}*{animation:none!important}}
+/* ============ STATISCHER FALLBACK (kein WebGL2 / reduced motion) ============ */
+body.static .scroll-space { display:none; }
+body.static #gl, body.static .prog, body.static .loader { display:none; }
+body.static .stage { position:static; pointer-events:auto; }
+body.static .stage .st { position:relative; inset:auto; opacity:1 !important; visibility:visible; transform:none !important; min-height:88vh; padding-top:6rem; padding-bottom:3rem; }
+body.static .st-void, body.static .st-end, body.static .st-belege { background:var(--ink); }
+body.static .st-void .line { position:static; transform:none; opacity:1 !important; }
+body.static .st-void .line + .line { margin-top:3rem; }
+body.static .card__media img { opacity:1; }
+body.static .st-hero .hint { display:none; }
+
+/* === Section-Agent: Station 2 — Ausgewählte Arbeiten (.st-work) === */
+/* ST2 — Karten-Mikrointeraktion */
+.st-work .work-grid{counter-reset:work}
+.st-work .card{counter-increment:work}
+.st-work .card::before{content:counter(work,decimal-leading-zero);display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;color:var(--ink-30);margin-bottom:.5rem;transition:color .35s}
+.st-work .card:hover::before{color:var(--teal)}
+.st-work .card__media{transition:transform .55s cubic-bezier(.16,1,.3,1),box-shadow .55s cubic-bezier(.16,1,.3,1)}
+.st-work .card:hover .card__media{transform:translateY(-6px);box-shadow:0 22px 44px -20px rgba(14,34,68,.38)}
+.st-work .card__title{display:inline-block;padding-bottom:3px;background:linear-gradient(var(--teal),var(--teal)) 0 100%/0% 2px no-repeat;transition:background-size .5s cubic-bezier(.16,1,.3,1)}
+.st-work .card:hover .card__title{background-size:100% 2px}
+.st-work .card__tags{transition:color .35s}
+.st-work .card:hover .card__tags{color:var(--teal)}
+.st-work .count em{font-style:normal;color:var(--teal)}
+
+/* === Section-Agent: Station 3 — Void/Tunnel (.st-void) === */
+/* St.3 · Zeile 2: eigene typografische Stimme */
+.st-void .line[data-line="1"] h2{display:flex;flex-direction:column;align-items:center;gap:1.15rem}
+.st-void .vd-word{font-style:italic;font-size:clamp(2.8rem,8.5vw,7rem);line-height:1;letter-spacing:.015em;padding-left:.015em}
+.st-void .vd-rule{display:block;width:74px;height:1px;background:var(--teal)}
+.st-void .vd-rest{font-family:var(--mono);font-weight:400;font-size:clamp(.68rem,.95vw,.8rem);letter-spacing:.46em;padding-left:.46em;text-transform:uppercase;color:var(--iv-70)}
+.st-void .vd-rest b{font-weight:400;color:var(--teal)}
+.st-void.live .vd-word{animation:vdTrack 2.6s .35s cubic-bezier(.16,1,.3,1) both}
+.st-void.live .vd-rule{animation:vdRule 1.8s 1.05s cubic-bezier(.16,1,.3,1) both}
+.st-void.live .vd-rest{animation:vdRest 1.6s 1.4s ease both}
+@keyframes vdTrack{from{letter-spacing:.34em;padding-left:.34em}to{letter-spacing:.015em;padding-left:.015em}}
+@keyframes vdRule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes vdRest{from{opacity:0;letter-spacing:.72em;padding-left:.72em}to{opacity:1;letter-spacing:.46em;padding-left:.46em}}
+
+/* === Section-Agent: Station 6 — Agenten (.st-agents) === */
+/* ST6: Zahlen aus der Zeile */
+.st-agents h2 .num{font-size:1.3em;line-height:1;letter-spacing:-.02em;vertical-align:-.045em;}
+/* ST6: Nachtschicht-Strich: pink blitzt, teal bleibt */
+.agent-card--night{position:relative;border-top-color:transparent;}
+.agent-card--night::before{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--ink-12);transform-origin:left;}
+.st-agents.live .agent-card--night::before{animation:nightPulse 2.4s cubic-bezier(.16,1,.3,1) .6s both;}
+@keyframes nightPulse{
+0%{transform:scaleX(0);background:var(--pink);box-shadow:0 0 0 rgba(233,75,93,0);}
+30%{transform:scaleX(1);background:var(--pink);box-shadow:0 0 16px rgba(233,75,93,.55);}
+62%{background:var(--pink);box-shadow:0 0 6px rgba(233,75,93,.25);}
+100%{transform:scaleX(1);background:var(--teal);box-shadow:0 0 0 rgba(26,165,145,0);}
+}
+.st-agents.live .agent-card--night .agent-card__label{animation:nightLabel 2.4s cubic-bezier(.16,1,.3,1) .6s both;}
+@keyframes nightLabel{0%,55%{color:var(--pink);}100%{color:var(--teal);}}
+body.static .agent-card--night::before{background:var(--teal);}
+@media (prefers-reduced-motion:reduce){.st-agents.live .agent-card--night::before,.st-agents.live .agent-card--night .agent-card__label{animation:none;}}
+
+/* === Section-Agent: Station 8 Finale (.st-end) === */
+/* ST8 Finale — Conversion-Moment */
+.st-end .mail{margin-top:3.2rem;font-size:clamp(1.15rem,2.6vw,1.85rem);letter-spacing:.02em;display:inline-flex;align-items:baseline;gap:.55em;padding-bottom:.45rem;border-bottom:2px solid var(--teal);transition:color .35s,border-color .35s}
+.st-end .mail__arr{display:inline-block;color:var(--teal);transform:translateX(0);transition:transform .5s cubic-bezier(.16,1,.3,1),color .35s}
+.st-end .mail:hover .mail__arr{transform:translateX(.5em);color:var(--pink)}
+.st-end .foot{bottom:2.6rem;row-gap:.7rem;flex-wrap:wrap}
+@media (max-width:640px){.st-end .foot{flex-direction:column;align-items:center;gap:.45rem;text-align:center}}
+
+/* === Next-Level: st-hero === */
+.st-hero :is(.kicker,p,.hero-sig,.hint){opacity:0}
+.st-hero h1 .hln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.st-hero h1 .hln__in{display:inline-block;transform:translateY(115%)}
+.st-hero .hero-sig{margin-top:1.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em}
+.st-hero .hero-sig em{font-style:normal;color:var(--ink-30)}
+.st-hero.live .kicker{animation:heroFade .9s .45s ease-out both}
+.st-hero.live .hln__in{animation:heroLine 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.58s + var(--l)*.11s)}
+.st-hero.live p{animation:heroFade 1s 1.15s ease-out both}
+.st-hero.live .hero-sig{animation:heroFade 1s 1.35s ease-out both}
+.st-hero.live .hint{animation:heroFade 1.2s 1.7s ease both}
+@keyframes heroLine{from{transform:translateY(115%)}to{transform:none}}
+@keyframes heroFade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.st-hero .hint{display:flex;flex-direction:column;align-items:center;gap:.65rem}
+.st-hero .hint__line{width:1px;height:46px;background:var(--ink-12);position:relative;overflow:hidden}
+.st-hero .hint__line::after{content:"";position:absolute;left:0;top:-55%;width:1px;height:55%;background:var(--teal);animation:heroDrop 1.8s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes heroDrop{to{top:115%}}
+body.static .st-hero :is(.kicker,p,.hero-sig){opacity:1}
+body.static .st-hero .hln__in{transform:none}
+@media (prefers-reduced-motion:reduce){.st-hero *,.st-hero *::after{animation:none!important}.st-hero :is(.kicker,p,.hero-sig,.hint){opacity:1}.st-hero .hln__in{transform:none}}
+
+/* === Next-Level: st-work === */
+/* === ST2 v2: Live-Badge + Tag-Stagger === */
+.st-work .card[data-href] .card__media::after{content:"live";position:absolute;top:.7rem;right:.7rem;z-index:2;font-family:var(--mono);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ivory);background:radial-gradient(circle at .55rem 50%,var(--teal) 0 2px,transparent 2.8px) no-repeat rgba(14,34,68,.6);padding:.34rem .66rem .3rem 1.05rem;border-radius:40px;opacity:0;transform:translateY(4px);transition:opacity .6s cubic-bezier(.16,1,.3,1) .9s,transform .6s cubic-bezier(.16,1,.3,1) .9s}
+.st-work.live .card[data-href] .card__media::after{opacity:1;transform:none;animation:wkLive 2.6s ease-out 1.8s infinite}
+@keyframes wkLive{0%{box-shadow:0 0 0 0 rgba(26,165,145,.4)}70%,100%{box-shadow:0 0 0 8px rgba(26,165,145,0)}}
+.st-work.live .card__tags{animation:wkTag .9s cubic-bezier(.16,1,.3,1) both}
+.st-work.live .card:nth-child(1) .card__tags{animation-delay:.45s}
+.st-work.live .card:nth-child(2) .card__tags{animation-delay:.58s}
+.st-work.live .card:nth-child(3) .card__tags{animation-delay:.71s}
+.st-work.live .card:nth-child(4) .card__tags{animation-delay:.84s}
+@keyframes wkTag{from{opacity:0;transform:translateY(7px);letter-spacing:.34em}to{opacity:1;transform:none;letter-spacing:.16em}}
+body.static .st-work .card[data-href] .card__media::after{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.st-work.live .card__tags,.st-work.live .card[data-href] .card__media::after{animation:none}}
+
+/* === Next-Level: Station 3 — Void Zeile 1 (.st-void .line[data-line === */
+/* === ST3 · Zeile 1 — „Struktur" setzt sich aus Buchstaben zusammen === */
+.st-void .vd-asm{display:inline-block;white-space:nowrap}
+.st-void .vd-asm span{display:inline-block;will-change:transform,filter}
+.st-void.live .vd-asm span{animation:vdAsm 1.15s calc(.4s + var(--i)*.08s) cubic-bezier(.16,1,.3,1) both}
+@keyframes vdAsm{0%{opacity:0;filter:blur(7px);transform:translate(var(--dx),var(--dy)) rotate(var(--dr)) scale(1.12)}55%{opacity:1}100%{opacity:1;filter:blur(0);transform:translate(0,0) rotate(0) scale(1)}}
+.st-void .vd-sub{margin-top:1.35rem;font-family:var(--mono);font-size:clamp(.6rem,.82vw,.72rem);letter-spacing:.32em;padding-left:.32em;text-transform:uppercase;color:var(--iv-30)}
+.st-void .vd-sub b{font-weight:400;color:var(--teal)}
+.st-void.live .line[data-line="0"] .mono{animation:vdKick 1s .1s ease both}
+.st-void.live .vd-sub{animation:vdKick 1.2s 1.5s ease both}
+@keyframes vdKick{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.st-void.live .vd-asm span,.st-void.live .vd-sub,.st-void.live .line[data-line="0"] .mono{animation:none}}
+
+/* === Next-Level: st-agents === */
+/* ST6: Headline-Zahlen rollen hoch (steps, kein JS) */
+.st-agents h2 .num{display:inline-block;}
+.st-agents.live h2 .num{animation:numRoll .9s steps(8,end) .15s both;}
+.st-agents.live h2 .num:nth-of-type(2){animation-delay:.32s;}
+.st-agents.live h2 .num:nth-of-type(3){animation-delay:.5s;}
+@keyframes numRoll{0%{opacity:0;transform:translateY(.55em) scale(.94);filter:blur(6px);}55%{opacity:1;filter:blur(2px);}85%{transform:translateY(-.05em) scale(1.05);filter:blur(0);}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}}
+body.static .st-agents h2 .num{animation:none;}
+/* ST6: Fußzeile — was die Nacht hinterließ */
+.st-agents .agent-foot{margin-top:2.3rem;max-width:960px;width:100%;border-top:1px solid var(--ink-12);padding-top:.9rem;display:flex;flex-wrap:wrap;column-gap:1.7rem;row-gap:.45rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-60);}
+.st-agents .agent-foot span{position:relative;white-space:nowrap;}
+.st-agents .agent-foot span:first-child{color:var(--teal);}
+.st-agents .agent-foot span+span::before{content:"·";position:absolute;left:-1.05rem;color:var(--ink-30);}
+@media (max-width:640px){.st-agents .agent-foot{column-gap:1.2rem;font-size:.58rem;}.st-agents .agent-foot span+span::before{left:-.8rem;}}
+@media (prefers-reduced-motion:reduce){.st-agents.live h2 .num{animation:none;}}
+
+/* === Next-Level: Station 8 Finale (.st-end) === */
+/* === Station 8 Finale — Beweiszeile + Glow + Magnetic === */
+.st-end .end-proof{display:inline-flex;align-items:center;gap:.65em;font-family:var(--mono);font-size:clamp(.62rem,1.1vw,.76rem);letter-spacing:.24em;text-transform:uppercase;color:var(--iv-30);margin-bottom:1.7rem}
+.st-end .end-proof b{color:var(--teal);font-weight:400}
+.st-end .end-proof__dot{flex:none;width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.st-end.live .end-proof__dot{animation:endDot 2.4s ease-out .9s infinite}
+@keyframes endDot{0%{box-shadow:0 0 0 0 rgba(26,165,145,.55)}70%{box-shadow:0 0 0 11px rgba(26,165,145,0)}100%{box-shadow:0 0 0 0 rgba(26,165,145,0)}}
+.st-end.live h2{animation:endGlow 2.3s cubic-bezier(.16,1,.3,1) .4s both}
+@keyframes endGlow{0%{text-shadow:0 0 0 rgba(242,239,232,0)}38%{text-shadow:0 0 36px rgba(242,239,232,.42),0 0 90px rgba(26,165,145,.28)}100%{text-shadow:0 0 16px rgba(242,239,232,.12)}}
+.st-end .mail{transform:scale(1);transition:color .35s,border-color .35s,transform .5s cubic-bezier(.16,1,.3,1)}
+.st-end .mail:hover{transform:scale(1.07)}
+.st-end .mail:active{transform:scale(1.02)}
+@media (prefers-reduced-motion:reduce){.st-end.live h2,.st-end.live .end-proof__dot{animation:none}.st-end .mail:hover{transform:none}}
+
+/* === Next-Level: continuity === */
+/* === Continuity-Director: globaler Feinschliff === */
+:root{--ease:cubic-bezier(.16,1,.3,1)}
+::selection{background:var(--teal);color:var(--ivory)}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px}
+.st-end .mail:focus-visible,.detail__close:focus-visible{outline-color:var(--pink)}
+/* Film-Korn — ein Korn über der ganzen Fahrt, CSS-only */
+body::after{content:"";position:fixed;inset:-100%;z-index:115;pointer-events:none;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23g)'/></svg>") repeat;background-size:160px 160px;opacity:.05;mix-blend-mode:overlay;animation:cdGrain 1.4s steps(2) infinite}
+@keyframes cdGrain{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(-3%,2%,0)}50%{transform:translate3d(2%,-4%,0)}75%{transform:translate3d(-2%,-3%,0)}100%{transform:translate3d(3%,3%,0)}}
+@media (prefers-reduced-motion:reduce){body::after{animation:none}}
+
+/* === Choreo: Station 3 REISE (.st-reise) === */
+.st-reise .route{position:relative}
+.st-reise .route::before{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:var(--ink-12);transform:scaleX(0);transform-origin:left}
+.st-reise.live .route::before,body.static .st-reise .route::before{transform:scaleX(1);transition:transform 1.7s var(--ezl) .25s}
+.st-reise .route-stop{--stopc:var(--ink-12);border-top-color:transparent}
+.st-reise .route-stop.done{--stopc:var(--teal)}
+.st-reise .route-stop.now{--stopc:var(--pink)}
+@keyframes reiseArrive{to{border-top-color:var(--stopc)}}
+.st-reise.live .route-stop,body.static .st-reise .route-stop{animation:reiseArrive .5s var(--ezl) calc(var(--d)*2.9 - .23s) both}
+.st-reise .route-stop.now::after{content:"";position:absolute;left:0;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--pink);opacity:0;transform:scale(.3)}
+.st-reise.live .route-stop.now::after,body.static .st-reise .route-stop.now::after{animation:reiseDot .5s var(--ezl) 1.15s both,reisePulse 2.2s ease-out 1.8s infinite}
+@keyframes reiseDot{to{opacity:1;transform:scale(1)}}
+@keyframes reisePulse{0%{box-shadow:0 0 0 0 #E94B5D66}70%,100%{box-shadow:0 0 0 12px #E94B5D00}}
+.st-reise .reise-stats b{font-size:clamp(1.9rem,3.2vw,2.8rem);line-height:1}
+.st-reise .reise-trainer b{font-size:clamp(.95rem,1.25vw,1.15rem);font-weight:500;font-style:italic;color:var(--ink-60)}
+@media (prefers-reduced-motion:reduce){.st-reise .route::before,.st-reise .route-stop,.st-reise .route-stop.now::after{transition-duration:0s!important;animation-duration:0s!important;animation-delay:0s!important}}
+
+
+/* === AH: Schnellversion-Hinweis (nur statischer Fallback) === */
+body.static .nav{position:relative;background:var(--ivory)}
+.static-note{display:none}
+body.static .static-note{display:block;position:sticky;top:0;z-index:99;background:var(--ink);text-align:center;padding:.7rem 1rem}
+body.static .static-note a{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ivory);text-decoration:none}
+body.static .static-note a:hover{color:var(--teal)}
+
+/* === AH: Nav-Links === */
+.nav__links{display:flex;gap:1.6rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.nav__links a{opacity:.6;transition:opacity .3s,color .3s}
+.nav__links a:hover{opacity:1;color:var(--teal)}
+@media (max-width:860px){.nav__links{display:none}}
+
+/* === AH: Tresen-Bildkarten — Duotone-GL-Planes über DOM-Holdern === */
+.st-tresen .agent-card{cursor:pointer}
+.agent-card__media{position:relative;overflow:hidden;border-radius:6px;aspect-ratio:3/2;background:var(--ink-12);margin-bottom:.85rem}
+body.gl .gl-duo img{opacity:0}
+@media (max-height:820px){.agent-card__media{aspect-ratio:16/9}}
+/* Statischer Fallback: Duotone per CSS-Filter, Hover = Farbe */
+body.static .gl-duo img{opacity:1;filter:grayscale(1);transition:filter .5s}
+body.static .agent-card:hover .gl-duo img{filter:none}
+
+/* === AH: Station 1 Tresen — Studium-Einschub === */
+.einschub{font-family:var(--disp)!important;font-style:italic;font-weight:500;font-size:clamp(.95rem,1.25vw,1.1rem)!important;color:var(--ink-60)}
+.einschub b{font-style:italic;font-weight:500;color:var(--ink)}
+
+/* === AH: Station 4 Belege === */
+.st-belege{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:5rem clamp(1.2rem,4vw,3.2rem) 2rem}
+.st-belege .kicker{font-family:var(--mono);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
+.st-belege h2{font-family:var(--disp);font-weight:900;font-size:clamp(1.9rem,4.4vw,3.6rem);color:var(--ivory);line-height:1.08}
+.st-belege h2 em{font-style:italic;color:var(--teal)}
+.st-belege .belege-lead{margin-top:.8rem;font-weight:300;color:var(--iv-70);font-size:clamp(.85rem,1.1vw,.98rem)}
+.belege-list{list-style:none;margin-top:1.8rem;width:min(860px,100%);text-align:left}
+.belege-list li{display:flex;align-items:baseline;justify-content:space-between;gap:1.6rem;padding:.58rem 0;border-bottom:1px solid var(--iv-14);font-size:clamp(.78rem,1vw,.92rem);font-weight:300;color:var(--iv-70)}
+.belege-list li a{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--teal);white-space:nowrap;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.belege-list li a:hover{color:var(--ivory);border-color:var(--ivory)}
+.belege-list li b{font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--iv-30);white-space:nowrap}
+@media (max-width:640px){.belege-list li{flex-direction:column;gap:.25rem}}
+body.static .st-belege{background:var(--ink)}
+/* Scanner-Zündung: Teal-Linie läuft scroll-gekoppelt durch die Tabelle, Zeilen zünden */
+.belege-list{position:relative}
+.belege-scan{position:absolute;left:-2%;right:-2%;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal) 30%,#bfeee6 50%,var(--teal) 70%,transparent);box-shadow:0 0 22px rgba(26,165,145,.85);opacity:0;pointer-events:none}
+body.gl .belege-list li{opacity:.22;transition:opacity .5s,border-color .5s}
+.belege-list li.lit{opacity:1;border-bottom-color:rgba(26,165,145,.3);animation:rowIgnite .9s ease-out}
+@keyframes rowIgnite{0%{background:rgba(26,165,145,.16)}100%{background:transparent}}
+/* LIVE-Badges: pulsierender Punkt vor jedem klickbaren Beleg */
+.belege-list li a{position:relative;padding-left:1.05em}
+.belege-list li a::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--teal);animation:liveDot 2.2s ease-out infinite}
+@keyframes liveDot{0%{box-shadow:0 0 0 0 rgba(26,165,145,.55)}70%,100%{box-shadow:0 0 0 7px rgba(26,165,145,0)}}
+/* Hover-Live-Preview: echte Screenshots schweben neben der Tabelle herein */
+.belege-prev{position:absolute;right:clamp(.8rem,4.5vw,4rem);top:50%;width:min(23vw,350px);aspect-ratio:16/10;border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-50%) translateX(26px) rotate(2.5deg);transition:opacity .4s var(--ezl),transform .4s var(--ezl);pointer-events:none;box-shadow:0 30px 70px rgba(0,0,0,.55);border:1px solid var(--iv-14)}
+.belege-prev img{width:100%;height:100%;object-fit:cover;filter:grayscale(.85) brightness(.9);transition:filter .55s}
+.st-belege.prev-on .belege-prev{opacity:1;transform:translateY(-50%) translateX(0) rotate(0)}
+.st-belege.prev-on .belege-prev img{filter:none}
+@media (max-width:1100px){.belege-prev{display:none}}
+@media (prefers-reduced-motion:reduce){.belege-list li a::before,.belege-list li.lit{animation:none}}
+
+/* === AH: Skills — lebendige Karten === */
+.st-skills .agent-card{transition:transform .45s var(--ezl)}
+.st-skills .agent-card:hover{transform:translateY(-6px)}
+.st-skills .agent-card__label{position:relative;padding-left:1.05em}
+.st-skills .agent-card__label::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--teal);animation:liveDot 2.2s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.st-skills .agent-card__label::before{animation:none}}
+
+/* === AH: Aktions-Cursor — Ring wird über Klickbarem zur Pille mit Pfeil === */
+.cursor-ring{display:flex;align-items:center;justify-content:center;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s}
+.cursor-ring::after{content:"↗";font-family:var(--mono);font-size:13px;color:var(--ivory);opacity:0;transform:scale(.4) rotate(-30deg);transition:opacity .25s,transform .3s cubic-bezier(.16,1,.3,1)}
+body.c-hover .cursor-ring{background:rgba(26,165,145,.92);border-color:transparent}
+body.c-hover .cursor-ring::after{opacity:1;transform:none}
+
+/* === AH: Finale-Links + Detail-CTA === */
+.end-links{display:flex;gap:1.8rem;margin-top:2rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--iv-70)}
+.end-links a{border-bottom:1px solid var(--iv-30);padding-bottom:.25rem;transition:color .3s,border-color .3s}
+.end-links a:hover{color:var(--teal);border-color:var(--teal)}
+.st-end .foot a{transition:color .3s}
+.st-end .foot a:hover{color:var(--teal)}
+.detail__golink{align-self:center}
+.detail__golink a{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ivory);border:1px solid var(--teal);padding:.7rem 1.4rem;border-radius:50px;transition:background .3s;white-space:nowrap}
+.detail__golink a:hover{background:var(--teal)}
+
+/* ============ FINALE v2 — Portrait-Kino ============ */
+/* Headline liegt IM Panel (Lusion-Medienfenster-Geste) — DOM über dem GL-Portrait */
+.end-stage h2 { position:absolute; left:clamp(1.1rem,3vw,2.4rem); bottom:clamp(1rem,2.8vw,2rem); margin:0; text-align:left; font-size:clamp(1.5rem,3.2vw,2.8rem); line-height:1.06; color:var(--ivory); text-shadow:0 2px 28px rgba(0,0,0,.6); }
+.end-stage h2 em { font-style:italic; color:var(--pink); }
+.st-end .end-proof { margin-bottom:1.4rem; }
+.end-stage { position:relative; width:min(58vw,940px); aspect-ratio:16/8.6; }
+.end-stage__media { position:absolute; inset:0; border-radius:10px; overflow:hidden; }
+body.gl .end-stage__media img { opacity:0; }   /* die GL-Plane übernimmt das Bild */
+.end-stage__tag { position:absolute; top:1rem; right:1.2rem; font-family:var(--mono); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--iv-30); }
+.end-stage__plate { position:absolute; left:50%; bottom:-2.2rem; transform:translateX(-50%); display:flex; gap:.9em; white-space:nowrap; font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--iv-30); }
+.end-stage__plate b { color:var(--ivory); font-weight:400; }
+.st-end .mail { margin-top:4.4rem; }
+@media (max-height:760px){ .end-stage{ width:min(48vw,780px); } }
+@media (max-width:900px){
+  .end-stage { width:92vw; aspect-ratio:4/4.4; }            /* mobil: Hochkant-Crop, Gesicht groß */
+  .st-end .mail { margin-top:clamp(7rem,19vh,10rem); font-size:1.05rem; }  /* Platz für die GL-Typo unterm Panel */
+}
 </style>
 </head>
 <body>
-<div class="cur"></div><div class="cur-dot"></div>
 
-<header class="topbar">
-  <div class="brand"><b style="font-weight:700">Alex Heyers</b></div>
-  <nav class="nav">
-    <a href="#proof">Belege</a>
-    <a href="/projekt/studio.html">Studio</a>
-    <a href="#stack">Stack</a>
-    <a href="#finale">Kontakt</a>
-    <a class="fast" href="/fakten.html">Schnellversion</a>
-  </nav>
-</header>
-<div class="rail" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-<button class="sound" id="sound" aria-label="Ton"><span class="eq"><span></span><span></span><span></span></span> Ton</button>
+<div class="scroll-space" aria-hidden="true"></div>
+<canvas id="gl"></canvas>
 
-<!-- HERO -->
-<section class="hero" data-sec="0" data-rail="0">
-  <div class="bg" id="heroBg"><img src="/assets/img/st1-aida.jpg" alt=""></div>
-  <div class="scrim"></div><div class="vig"></div>
-  <div class="inner wrap">
-    <div class="kick rev">Portfolio · Verfügbar ab 01.08.2026</div>
-    <h1 class="tt"><span class="rev" style="--d:.05s">Zwischen Tresen</span><span class="l2 rev" style="--d:.16s"><em>und</em> Terminal</span></h1>
-    <p class="sub rev" style="--d:.3s">Ich übersetze Geschäfts-Bedürfnisse in funktionierende Systeme — und dirigiere KI so präzise, dass am Ende Agentur-Qualität rauskommt.</p>
-    <div class="meta rev" style="--d:.4s"><span><b>20 Jahre</b> Hospitality-Operations</span><span><b>3 Jahre</b> KI &amp; Automation</span><span><b>Remote</b> DACH / EMEA</span></div>
-    <div class="ctas rev" style="--d:.5s"><a class="btn solid mag" href="#proof">Die Belege ansehen →</a><a class="btn ghost mag" href="/fakten.html">Schnellversion für Eilige</a></div>
+<div class="loader" id="loader">
+  <div class="loader__word">Alex <em>Heyers</em></div>
+  <div class="loader__pct" id="loaderPct">0</div>
+  <div class="loader__hint">Eine Szene · acht Stationen · Tresen → Terminal</div>
+  <div class="loader__bar"><i id="loaderBar"></i></div>
+</div>
+
+<div class="cursor-dot" id="cDot"></div>
+<div class="cursor-ring" id="cRing"></div>
+
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="#">Alex <em>Heyers</em></a>
+  <div class="nav__links">
+    <a href="#" class="nav__jump" data-st="3">Projekte</a>
+    <a href="#" class="nav__jump" data-st="4">Belege</a>
+    <a href="#" class="nav__jump" data-st="7">Kontakt</a>
+    <a href="fakten.html">Schnellversion</a>
   </div>
-  <div class="scrollcue"><span>Scroll</span><span class="ln"></span></div>
-</section>
+  <div class="nav__right">
+    <a class="nav__cta" href="mailto:a.heyers@gmail.com">Lass uns reden</a>
+  </div>
+</nav>
 
-<!-- TRESEN -->
-<section class="tresen" data-sec="1" data-rail="1">
-  <div class="wrap">
-    <div class="eyebrow rev"><span class="no">01</span> Die Tresen-Jahre</div>
-    <h2 class="sec rev" style="--d:.06s">Zwanzig Jahre <em>Operations</em> — unter Hochdruck, in Echtzeit.</h2>
-    <p class="lead rev" style="--d:.12s">Sechs Eröffnungen. Kreuzfahrt, Fünf-Sterne, Sterneküche. Was damals „Service" hieß, war längst Systemdenken: Multi-Outlet-Onboarding, VIP-Daten im Kopf, jede Sekunde getaktet.</p>
-    <div class="stations">
-      <div class="station rev" style="--d:.06s"><img src="/assets/img/st1-aida.jpg" alt="AIDA Cruises Bar"><div class="tint"></div><div class="ov"></div><div class="txt"><div class="yr">2009 &amp; 2012 · AIDA Cruises</div><h3>Barchef</h3><div class="role">5 Bars · Crew aus 10+ Nationen</div><div class="big"><span class="count" data-to="1300">0</span><small>Gäste / Tag</small></div></div></div>
-      <div class="station rev" style="--d:.16s"><img src="/assets/img/st1-harrys.jpg" alt="Harry's New York Bar"><div class="tint"></div><div class="ov"></div><div class="txt"><div class="yr">2010–2012 · Intercontinental Köln</div><h3>Harry's New York Bar</h3><div class="role">VIP-Bar · 5-Sterne</div><div class="big"><span class="count" data-to="30">0</span><small>Bartender geführt</small></div></div></div>
-      <div class="station rev" style="--d:.26s"><img src="/assets/img/st1-ox.jpg" alt="OX Darmstadt"><div class="tint"></div><div class="ov"></div><div class="txt"><div class="yr">2019 · OX Darmstadt</div><h3>Bar-Manager</h3><div class="role">Eröffnung · Sternekoch David Rink</div><div class="big"><span class="count" data-to="6">0</span><small>Eröffnungen gesamt</small></div></div></div>
+<div class="static-note"><a href="fakten.html">Schnellversion: alle Fakten &amp; Belege auf einer Seite →</a></div>
+
+<div class="chapter" id="chapter"><b id="chapNum">01</b> / 08 · <span id="chapName">Hero</span></div>
+<div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<div class="stage" id="stage">
+
+  <!-- 0 · HERO -->
+  <section class="st st-hero" data-st="0">
+    <div class="kicker">Alex Heyers · Hospitality × KI-Orchestrierung · Remote DACH</div>
+    <h1><span class="hln" style="--l:0"><span class="hln__in">Zwischen</span></span><span class="hln" style="--l:1"><span class="hln__in">Tresen und</span></span><span class="hln" style="--l:2"><span class="hln__in"><em>Terminal.</em></span></span></h1>
+    <p>20 Jahre Hospitality-Operations. Seit drei Jahren baue ich mit KI — Workflows, Voice-Agents, ganze Produkte. Verfügbar ab 01.08.2026.</p>
+    <div class="hero-sig">»Andere behaupten. Ich verlinke.« <em>— Alex Heyers</em></div>
+    <div class="hint"><span class="hint__line" aria-hidden="true"></span><span>Scroll — die Fahrt beginnt</span></div>
+  </section>
+
+  <!-- 1 · TRESEN (20 Jahre Operations) -->
+  <section class="st st-agents st-tresen" data-st="1">
+    <div class="kicker">2003–2023 · Zwanzig Jahre Operations</div>
+    <h2>Der Tresen war mein erstes <em>Betriebssystem</em>.</h2>
+    <p class="agents-lead einschub rev" style="--d:.04s">Davor: Grundstudium Neuere und Neueste Geschichte (Universität Karlsruhe, heute KIT) und VWL (Ruprecht-Karls-Universität Heidelberg). <b>Analytisch denken kam vor dem Tresen.</b></p>
+    <div class="agent-grid">
+      <article class="agent-card rev" style="--d:.08s">
+        <div class="agent-card__media gl-duo" data-win="1.08,1.82"><img src="assets/st1-aida.jpg" alt="AIDA Cruises — Bar an Bord"></div>
+        <div class="agent-card__label">AIDA Cruises</div>
+        <div class="agent-card__title">5 Bars · 30 Bartender · 1.300 Gäste/Tag</div>
+        <p class="agent-card__text">Barchef auf See, Crew aus 10+ Nationen. Jede Cruise ein kompletter Team-Neustart — Multi-Outlet-Onboarding auf maximaler Schwierigkeitsstufe.</p>
+      </article>
+      <article class="agent-card agent-card--night rev" style="--d:.22s">
+        <div class="agent-card__media gl-duo" data-win="1.08,1.82"><img src="assets/st1-harrys.jpg" alt="Harry's New York Bar — Intercontinental Köln"></div>
+        <div class="agent-card__label">Harry's New York Bar</div>
+        <div class="agent-card__title">Intercontinental Köln · VIP-Bar</div>
+        <p class="agent-card__text">Stammgast-Management auf 5-Sterne-Niveau, bevor es CRM-Software dafür gab. Jeder Gast ein Datensatz — im Kopf.</p>
+      </article>
+      <article class="agent-card rev" style="--d:.36s">
+        <div class="agent-card__media gl-duo" data-win="1.08,1.82"><img src="assets/st1-ox.jpg" alt="OX Darmstadt — Restauranteröffnung"></div>
+        <div class="agent-card__label">OX Darmstadt</div>
+        <div class="agent-card__title">Eröffnung mit Sternekoch David Rink</div>
+        <p class="agent-card__text">Bar-Manager der Restauranteröffnung. Service als Choreografie — jede Sekunde ein Workflow, lange bevor ich das Wort kannte.</p>
+      </article>
+      <article class="agent-card rev" style="--d:.5s">
+        <div class="agent-card__media gl-duo" data-win="1.08,1.82"><img src="assets/st1-opening.jpg" alt="Eröffnungsnacht — von null auf Betrieb"></div>
+        <div class="agent-card__label">6 Eröffnungen</div>
+        <div class="agent-card__title">Vom Konzept bis zur ersten vollen Schicht</div>
+        <p class="agent-card__text">Sechs Mal von null auf Betrieb: Konzept, Team, Prozesse, Eröffnungsnacht. Operations-Denken ist mein Muskelgedächtnis.</p>
+      </article>
     </div>
-    <p class="reframe rev">Der Tresen war nie nur Service. Er war <b>Orchestrierung unter Druck</b> — die Fähigkeit, die ich heute aufs Terminal übertrage.</p>
-  </div>
-</section>
-
-<!-- HINGE -->
-<section class="hinge" data-sec="2" data-rail="2">
-  <div class="bg" id="hingeBg"><img src="/assets/img/tun-flow.jpg" alt=""></div>
-  <div class="scrim"></div>
-  <div class="wrap">
-    <p class="q rev">„Service als <span class="hl">Choreografie</span>, jede Sekunde ein <span class="hl">Workflow</span>."</p>
-    <div class="src rev" style="--d:.25s">— derselbe Skill. Nur heißt er heute n8n, Voice-Agent, Deployment.</div>
-  </div>
-</section>
-
-<!-- TRANSFORM -->
-<section class="xform" data-sec="3" data-rail="3">
-  <div class="frags">
-    <div class="frag f1" data-sp="0.12"><img src="/assets/img/mem-code.jpg" alt=""></div>
-    <div class="frag f2" data-sp="0.2"><img src="/assets/img/mem-server.jpg" alt=""></div>
-    <div class="frag f3" data-sp="0.08"><img src="/assets/img/mem-nodes.jpg" alt=""></div>
-    <div class="frag f4" data-sp="0.26"><img src="/assets/img/mem-circuit.jpg" alt=""></div>
-  </div>
-  <div class="inner wrap">
-    <div class="eyebrow rev"><span class="no">02</span> Der Wechsel</div>
-    <p class="pull rev" style="--d:.06s">Ich hab nie jeden Drink selbst gemixt — ich hab dirigiert, dass 1.300 am Tag ihren kriegen. <b>Code ist derselbe Job.</b></p>
-    <div class="timeline">
-      <div class="tl rev" style="--d:.1s"><div class="yr">seit 2023</div><h4>Vom Content zur Automation</h4><p>Erst KI-gestützte Content- und Kommunikationsarbeit — dann der Schritt zur echten Orchestrierung: Workflows, Pipelines, Systeme.</p></div>
-      <div class="tl rev" style="--d:.18s"><div class="yr">2026 · Vollzeit</div><h4>Vibe Coding Bootcamp</h4><p>636 Unterrichtseinheiten, Trainer von Zalando, XING, SumUp, OTTO. Alle Belege unten sind in diesem Zeitraum entstanden.</p></div>
-      <div class="tl rev" style="--d:.26s"><div class="yr">heute</div><h4>Kein Entwickler — ein Dirigent</h4><p>Klarheit ist der Skill, nicht Syntax. Ich sage präzise, was ich will, und steuere die Umsetzung bis Agentur-Qualität rauskommt.</p></div>
+    <div class="agent-foot rev" style="--d:.52s">
+      <span>2003–2023</span>
+      <span>Service → Bar → Leitung</span>
+      <span>Malta → Nordkap</span>
+      <span>Atlantic Hotel Heidelberg als letzte Station</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- AUTOMATION & AGENTS -->
-<section class="auto" data-sec="4" data-rail="4">
-  <div class="bg"><img src="/assets/img/studio-bg-data.jpg" alt=""></div>
-  <div class="scrim"></div>
-  <div class="inner wrap">
-    <div class="eyebrow rev"><span class="no">03</span> Automation &amp; Agenten</div>
-    <h2 class="sec rev" style="--d:.06s">Workflows, die laufen.<br><em>Agenten, die ich dirigiere.</em></h2>
-    <p class="lead rev" style="--d:.12s">Nicht nur gelernt — produktiv betrieben. Self-hosted n8n auf eigenem VPS, ein Voice-Agent, der echte Gespräche führt, und Multi-Agent-Orchestrierung, mit der diese Seite selbst gebaut wurde.</p>
-    <div class="grid">
-      <div class="acard rev" style="--d:.08s"><div class="n">~36</div><h3>n8n-Workflows</h3><p>Produktiv auf selbst gehosteter Instanz. Dazu ein eigenes Toolkit aus 20+ Python-Scripts — deploy, validate, test, visualize.</p><div class="meta">n8n · self-hosted · Docker / VPS</div></div>
-      <div class="acard rev" style="--d:.16s"><div class="n">Ada</div><h3>Voice-Agent end-to-end</h3><p>ElevenLabs + n8n, geführter Intake mit Consent-Phase. Ein Agent, der zuhört, fragt und protokolliert.</p><div class="meta">ElevenLabs · n8n · Conversational AI</div></div>
-      <div class="acard rev" style="--d:.24s"><div class="n">∞</div><h3>Multi-Agent-Orchestrierung</h3><p>BMAD, Subagenten, Agent-SDK. Ich dirigiere ganze Agenten-Teams — diese Seite und ihre Showcases wurden selbst über orchestrierte Agenten gebaut.</p><div class="meta">Claude Code · BMAD · Agent SDK</div></div>
+  <!-- 2 · DER WECHSEL (Tunnelflug) -->
+  <section class="st st-void" data-st="2">
+    <div class="line" data-line="0">
+      <div class="mono">Der Wechsel · 2023 → 2026</div>
+      <h2>Drei Jahre KI sind kein <em>Kurs</em>.</h2>
+      <div class="vd-sub"><b>2023</b> erster produktiver KI-Einsatz · <b>2024</b> Gründung, eigener Stack · <b>2026</b> Vollzeit-Bootcamp</div>
     </div>
-    <div class="screens rev" style="--d:.2s">
-      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-web-research.jpg" alt="Workflow"></a>
-      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-dokumenten-analyst.jpg" alt="Agent"></a>
-      <a class="sh mag" href="/automation.html"><img src="/assets/img/term-revenue.jpg" alt="Dashboard"></a>
-      <a class="sh mag" href="/claude-code.html"><img src="/assets/img/scene-mechanismus.jpg" alt="Mechanismus"></a>
+    <div class="line" data-line="1">
+      <div class="mono">Vibe Coding Bootcamp · 636 Unterrichtseinheiten · Trainer von Zalando, XING, SumUp, OTTO</div>
+      <h2><span class="vd-word">Klarheit</span><i class="vd-rule" aria-hidden="true"></i><span class="vd-rest">ist der <b>Skill</b>, nicht Syntax</span></h2>
     </div>
-    <div class="links rev" style="--d:.26s"><a href="/automation.html">Automation im Detail →</a><a href="/claude-code.html">Wie ich mit Claude Code baue →</a></div>
-  </div>
-</section>
+  </section>
 
-<!-- PROOF -->
-<section class="proof" data-sec="5" data-rail="5">
-  <div class="wrap">
+  <!-- 3 · PROJEKTE -->
+  <section class="st st-work" data-st="3">
     <div class="head">
-      <div><div class="eyebrow rev"><span class="no">04</span> Die Beweis-Wand</div><h2 class="sec rev" style="--d:.06s">Andere behaupten.<br><em>Ich verlinke.</em></h2></div>
-      <p class="claim rev" style="--d:.14s">Jede Karte ist ein echter Screenshot eines Live-Systems. Klicken statt glauben.</p>
+      <h2>Vier Projekte. Alle echt, alle <em>klickbar</em>.</h2>
+      <div class="count">04 / 04 · <em>Klick öffnet das Projekt</em></div>
     </div>
-    <div class="wall">
-      <a class="pcard feat mag rev" href="https://myflowmotion.cloud" target="_blank" rel="noopener" style="--d:.04s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/studio.jpg" alt="AI-Adoption-Studio live"></div><div class="c"><div class="tag">Full-Stack · Flaggschiff</div><h3>AI-Adoption-Studio</h3><p>End-to-end orchestriert: Next.js + FastAPI + Supabase, deployt auf eigenem VPS (Docker).</p><span class="go">myflowmotion.cloud →</span></div></a>
-      <a class="pcard tall mag rev" href="https://myflowmotion-lusion.vercel.app" target="_blank" rel="noopener" style="--d:.1s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/lusion.jpg" alt="Lusion-Edition"></div><div class="c"><div class="tag">Three.js · WebGL</div><h3>Lusion-Edition</h3><p>3D-Szenenfahrt auf Award-Niveau.</p><span class="go">Ansehen →</span></div></a>
-      <a class="pcard mag rev" href="https://deinebusinesspage.de" target="_blank" rel="noopener" style="--d:.16s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/dbp.jpg" alt="deinebusinesspage.de"></div><div class="c"><div class="tag">Eigenes Produkt</div><h3>deinebusinesspage.de</h3><span class="go">Ansehen →</span></div></a>
-      <a class="pcard mag rev" href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener" style="--d:.2s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/sketch.jpg" alt="Sketch-Edition"></div><div class="c"><div class="tag">3D · Sketch</div><h3>Sketch-Edition</h3><span class="go">Ansehen →</span></div></a>
-      <a class="pcard mag rev" href="https://livesession-roan.vercel.app" target="_blank" rel="noopener" style="--d:.14s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/livesession.jpg" alt="livesession"></div><div class="c"><div class="tag">Auto-Deploy</div><h3>livesession</h3><span class="go">Vercel →</span></div></a>
-      <a class="pcard mag rev" href="https://alexheyers.github.io/mein-lerntagebuch/" target="_blank" rel="noopener" style="--d:.2s"><div class="shot"><span class="dots"><i></i><i></i><i></i></span><span class="live">Live</span><img src="/assets/img/live/tagebuch.jpg" alt="Lerntagebuch"></div><div class="c"><div class="tag">Building in Public</div><h3>Lerntagebuch</h3><span class="go">Ansehen →</span></div></a>
+    <div class="work-grid" id="workGrid">
+      <article class="card rev" style="--d:.05s" data-title="AI-Adoption-Studio" data-tags="produkt · ai · agents" data-href="https://myflowmotion.cloud" data-facts="Next.js + FastAPI|Stack;Supabase|Datenbank;Eigener VPS|Deploy in Docker" data-text="End-to-End orchestriert: Voice-Intake mit Agentin Ada, sieben Analyse-Agenten, typisierte Ergebnisse plus Pitch-Deck und Report. Next.js, FastAPI, Supabase — deployt auf dem eigenen VPS in Docker. Kein Tutorial-Projekt: ein laufendes System mit echtem Zweck.">
+        <div class="card__media gl-img"><img src="assets/card-studio.jpg" alt="AI-Adoption-Studio"></div>
+        <div class="card__title">AI-Adoption-Studio</div><div class="card__tags">produkt · ai · agents</div>
+      </article>
+      <article class="card rev" style="--d:.15s" data-title="MyFlowMotion Showcases" data-tags="3d · webgl · design" data-href="https://myflowmotion-lusion.vercel.app" data-facts="Three.js|Szene statt Seite;2 Editionen|Lusion + Sketch;0 Templates|alles Eigenbau" data-text="Diese Seite hier ist die dritte ihrer Art: 3D-Szenenfahrten auf Showcase-Niveau — Scroll als Kamerafahrt, eigene Shader, Blender-Assets. Lusion-Edition und Sketch-Edition sind live, beide komplett im Terminal gebaut, mit Claude Code.">
+        <div class="card__media gl-img"><img src="assets/card-flowmotion.jpg" alt="MyFlowMotion Showcases"></div>
+        <div class="card__title">MyFlowMotion Showcases</div><div class="card__tags">3d · webgl · design</div>
+      </article>
+      <article class="card rev" style="--d:.25s" data-title="deinebusinesspage.de" data-tags="produkt · business" data-href="https://deinebusinesspage.de" data-facts="990 / 1.490 €|bepreist;8 Personas|Zielgruppen;Live|seit 31.03." data-text="Ein eigenes Produkt von null: konzipiert, gebaut, bepreist, live. Landingpage-Service für Selbständige — inklusive Angebotsstruktur, Personas und Delivery-Prozess. Unternehmertum als Beleg, nicht als Buzzword.">
+        <div class="card__media gl-img"><img src="assets/card-dbp.jpg" alt="deinebusinesspage.de"></div>
+        <div class="card__title">deinebusinesspage.de</div><div class="card__tags">produkt · business</div>
+      </article>
+      <article class="card rev" style="--d:.35s" data-title="Voice-Agent „Ada“ + n8n-Stack" data-tags="voice · automation" data-facts="ElevenLabs + n8n|Stack;30+|produktive Workflows;Consent|ab Sekunde 1" data-text="Kein Formular, ein Gespräch: Ada führt den Intake — KI-Deklaration und Consent ab Sekunde eins, hypothesengetriebene Fragen statt Abhaken. Dahinter: 30+ produktive n8n-Workflows, self-hosted auf dem eigenen VPS. Live-Demo im Gespräch.">
+        <div class="card__media gl-img"><img src="assets/card-ada.jpg" alt="Voice-Agent Ada"></div>
+        <div class="card__title">Voice-Agent „Ada“ + n8n</div><div class="card__tags">voice · automation</div>
+      </article>
     </div>
-    <p class="morenote rev">+ Automation (~36 n8n-Workflows) · Voice-Agent „Ada" · Effekt-Katalog Tier 1–Ω — <a href="/projekt/studio.html" style="color:var(--teal)">Tiefe ansehen →</a></p>
-  </div>
-</section>
+  </section>
 
-<!-- STACK -->
-<section class="stack" data-sec="5" data-rail="6">
-  <div class="bg"><img src="/assets/img/tun-terminal.jpg" alt=""></div>
-  <div class="scrim"></div>
-  <div class="inner wrap">
-    <div class="eyebrow rev"><span class="no">05</span> Stack &amp; Arbeitsweise</div>
-    <h2 class="sec rev" style="--d:.06s">Mein Werkzeug ist <em>Claude Code</em>.<br>Meine Methode ist Klarheit.</h2>
-    <p class="lead rev" style="--d:.12s">Ich nutze KI nicht nur — ich engineere sie: eigene Skills gebaut, Multi-Agent-Orchestrierung, Hooks &amp; Memory, Production auf eigenem VPS. Diese Seite und meine Showcases wurden selbst über orchestrierte Agenten gebaut.</p>
-    <div class="chips rev" style="--d:.16s">
-      <span class="chip key">Claude Code</span><span class="chip">n8n (self-hosted)</span><span class="chip">Supabase</span><span class="chip">Python</span><span class="chip">Next.js / FastAPI</span><span class="chip">ElevenLabs</span><span class="chip">Git · Vercel</span><span class="chip">Docker · VPS</span><span class="chip">Notion + Linear</span><span class="chip">BMAD</span><span class="chip">MCP</span>
-    </div>
-    <div class="deep rev" style="--d:.2s"><a href="/automation.html">Automation →</a><a href="/claude-code.html">Wie ich mit Claude Code baue →</a><a href="/showcases.html">Showcases →</a></div>
-  </div>
-</section>
+  <!-- 4 · BELEGE (klicken statt glauben) -->
+  <section class="st st-belege" data-st="4">
+    <div class="kicker rev" style="--d:0s">Klicken statt glauben</div>
+    <h2 class="rev" style="--d:.08s">Jede Behauptung hat einen <em>Beleg</em>.</h2>
+    <p class="belege-lead rev" style="--d:.16s">Nicht, was ich gleich lerne — was heute live läuft.</p>
+    <ul class="belege-list">
+      <i class="belege-scan" aria-hidden="true"></i>
+      <li class="rev" style="--d:.22s" data-prev="assets/card-studio.jpg"><span>End-to-End-Produkt: Next.js + FastAPI + Supabase auf eigenem VPS (Docker)</span><a href="https://myflowmotion.cloud" target="_blank" rel="noopener">myflowmotion.cloud&nbsp;↗</a></li>
+      <li class="rev" style="--d:.28s" data-prev="assets/card-dbp.jpg"><span>Eigenes Produkt konzipiert, gebaut, bepreist, live</span><a href="https://deinebusinesspage.de" target="_blank" rel="noopener">deinebusinesspage.de&nbsp;↗</a></li>
+      <li class="rev" style="--d:.34s" data-prev="assets/card-flowmotion.jpg"><span>3D-Szenenfahrt auf Showcase-Niveau (Three.js, eigene Shader)</span><a href="https://myflowmotion-lusion.vercel.app" target="_blank" rel="noopener">Lusion-Edition&nbsp;↗</a></li>
+      <li class="rev" style="--d:.4s" data-prev="assets/prev-sketch.jpg"><span>WebGL-Design-Showcase, zweite Edition</span><a href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener">Sketch-Edition&nbsp;↗</a></li>
+      <li class="rev" style="--d:.46s" data-prev="assets/prev-livesession.jpg"><span>Deployment als Routine: GitHub → Auto-Deploy nach PR-Merge</span><a href="https://livesession-roan.vercel.app" target="_blank" rel="noopener">livesession&nbsp;↗</a></li>
+      <li class="rev" style="--d:.52s" data-prev="assets/prev-tagebuch.jpg"><span>Learning in Public: tägliches technisches Lerntagebuch</span><a href="https://alexheyers.github.io/mein-lerntagebuch/" target="_blank" rel="noopener">Lerntagebuch&nbsp;↗</a></li>
+      <li class="rev" style="--d:.58s" data-prev="assets/portrait.jpg"><span>90-Tage-Serie „From Bar to Bytes“ mit eigener Build-Pipeline</span><a href="https://www.linkedin.com/in/alex-heyers" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
+      <li class="rev" style="--d:.64s" data-prev="assets/tun-flow.jpg"><span>30+ produktive n8n-Workflows, self-hosted (eigener VPS, Docker)</span><b>Live-Demo im Gespräch</b></li>
+      <li class="rev" style="--d:.7s" data-prev="assets/card-ada.jpg"><span>Voice-Agent end-to-end (ElevenLabs + n8n, Consent ab Sekunde 1)</span><b>Live-Demo im Gespräch</b></li>
+    </ul>
+    <div class="belege-prev" id="belegePrev" aria-hidden="true"><img alt=""></div>
+  </section>
 
-<!-- FINALE -->
-<section class="finale" data-sec="6" data-rail="6">
-  <canvas id="portrait"></canvas>
-  <div class="vid"><video autoplay muted loop playsinline><source src="/assets/img/bg-finale.mp4" type="video/mp4"></video></div>
-  <div class="scrim"></div>
-  <div class="inner">
-    <div class="copy">
-      <div class="ready rev">Verfügbar ab 01.08.2026</div>
-      <h2 class="rev" style="--d:.06s">Lass uns <em>bauen.</em></h2>
-      <p class="avail rev" style="--d:.14s">Vollzeit · Remote DACH / EMEA · Solutions Engineering, CSM &amp; AI-Automation.</p>
-      <div class="contacts rev" style="--d:.22s">
-        <a href="mailto:a.heyers@gmail.com">a.heyers@gmail.com <span>Mail →</span></a>
-        <a href="https://linkedin.com/in/alex-heyers" target="_blank" rel="noopener">linkedin.com/in/alex-heyers <span>LinkedIn →</span></a>
-        <a href="https://github.com/alexheyers" target="_blank" rel="noopener">github.com/alexheyers <span>GitHub →</span></a>
+  <!-- 5 · SKILLS -->
+  <section class="st st-agents st-skills" data-st="5">
+    <div class="kicker">Was ich kann — und beweisen kann</div>
+    <h2>Vier Skills. Keine <em>Behauptungen</em>.</h2>
+    <div class="agent-grid">
+      <article class="agent-card rev" style="--d:.08s">
+        <div class="agent-card__label">Domänen-Translation</div>
+        <div class="agent-card__title">Operations ↔ Engineering</div>
+        <p class="agent-card__text">Ich weiß, was um 19:30 Uhr im Service wirklich passiert — und wo eine SaaS-Demo am ersten echten Freitagabend zerbricht. Ich übersetze in beide Richtungen.</p>
+      </article>
+      <article class="agent-card agent-card--night rev" style="--d:.22s">
+        <div class="agent-card__label">Vibe Coding · KI-Orchestrierung</div>
+        <div class="agent-card__title">Idee → Prototyp in Stunden</div>
+        <p class="agent-card__text">Klarheit ist der Skill, nicht Syntax. Claude Code im täglichen Build-Einsatz, eigene Custom Skills — ich briefe Modelle so präzise, dass sie für mich bauen.</p>
+      </article>
+      <article class="agent-card rev" style="--d:.36s">
+        <div class="agent-card__label">Workflow-Automation</div>
+        <div class="agent-card__title">Self-hosted n8n, täglich produktiv</div>
+        <p class="agent-card__text">Eigener VPS, Docker, Pipelines die täglich laufen — E-Mail-Strecken, Daten-Sync, Agenten-Ketten. Ich kenne die Stack-Realität, nicht nur das Slide.</p>
+      </article>
+      <article class="agent-card rev" style="--d:.5s">
+        <div class="agent-card__label">Prompt- &amp; Kontext-Architektur</div>
+        <div class="agent-card__title">Briefen wie ein Solution Architect</div>
+        <p class="agent-card__text">Strukturierte Briefings, dokumentierte Formeln, eigene Skills statt Prompt-Bastelei. Kontext-Design ist der Unterschied zwischen Spielzeug und System.</p>
+      </article>
+    </div>
+    <div class="agent-foot rev" style="--d:.52s">
+      <span>Hinter jeder Zeile</span>
+      <span>eine URL</span>
+      <span>ein Workflow</span>
+      <span>oder eine Story — siehe Belege</span>
+    </div>
+  </section>
+
+  <!-- 6 · STATIONEN (Lebenslauf-Streifen) -->
+  <section class="st st-reise" data-st="6">
+    <div class="kicker rev" style="--d:0s">Der Weg · kompakt</div>
+    <h2 class="rev" style="--d:.08s">Vom Tresen zum <em>Terminal</em> — in sechs Stationen.</h2>
+    <div class="route">
+      <div class="route-stop done rev" style="--d:.2s"><b>Uni</b><span>Grundstudium Geschichte (Karlsruhe) · VWL (Heidelberg)</span><i>Fundament</i></div>
+      <div class="route-stop done rev" style="--d:.3s"><b>2003</b><span>20 Jahre Hospitality · 6 Eröffnungen</span><i>Operations</i></div>
+      <div class="route-stop done rev" style="--d:.4s"><b>2023</b><span>Erster produktiver KI-Einsatz</span><i>Der Wechsel</i></div>
+      <div class="route-stop done rev" style="--d:.5s"><b>2024</b><span>Gründung: CRM, Onboarding-Wizard, Automationen</span><i>Eigener Stack</i></div>
+      <div class="route-stop now rev" style="--d:.6s"><b>2026</b><span>Vibe Coding Bootcamp, Vollzeit</span><i>läuft — hier bin ich</i></div>
+      <div class="route-stop rev" style="--d:.7s"><b>01.08.</b><span>Bereit für die nächste Rolle</span><i>Vollzeit · Remote DACH</i></div>
+    </div>
+    <div class="reise-stats">
+      <div class="rev" style="--d:.85s"><b class="rcount" data-count="20">20</b><span>Jahre Hospitality</span></div>
+      <div class="rev" style="--d:.95s"><b class="rcount" data-count="3">3</b><span>Jahre KI, produktiv</span></div>
+      <div class="rev" style="--d:1.05s"><b class="rcount" data-count="636">636</b><span>Unterrichtseinheiten 2026</span></div>
+      <div class="rev reise-trainer" style="--d:1.15s"><b>Zalando · XING · SumUp · OTTO</b><span>Trainer-Stab des Bootcamps</span></div>
+    </div>
+  </section>
+
+  <!-- 7 · FINALE / CTA — Portrait-Kino -->
+  <section class="st st-end" data-st="7">
+    <p class="end-proof rev"><span class="end-proof__dot" aria-hidden="true"></span>Verfügbar ab <b>01.08.2026</b> · Vollzeit · Remote DACH</p>
+    <figure class="end-stage rev" style="--d:.1s">
+      <div class="end-stage__media" id="endPortrait">
+        <img src="assets/portrait.jpg" alt="Alex Heyers — Porträt vor schwarzem Hintergrund">
       </div>
+      <span class="end-stage__tag">Kein Avatar — das bin ich.</span>
+      <h2 class="rev" style="--d:.16s">Eine Rolle für mich?<br><em>Lass uns reden.</em></h2>
+      <figcaption class="end-stage__plate"><b>Alex Heyers</b><span>Hospitality-Operations × KI-Orchestrierung</span></figcaption>
+    </figure>
+    <a class="mail rev" style="--d:.25s" href="mailto:a.heyers@gmail.com"><span class="mail__txt">a.heyers@gmail.com</span><span class="mail__arr" aria-hidden="true">→</span></a>
+    <div class="end-links rev" style="--d:.38s">
+      <a href="https://www.linkedin.com/in/alex-heyers" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/alexheyers" target="_blank" rel="noopener">GitHub</a>
+      <a href="fakten.html">Schnellversion</a>
     </div>
+    <div class="foot rev" style="--d:.45s">
+      <div>© 2026 <b>Alex Heyers</b> · Mosbach · Remote DACH</div>
+      <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Eigenbau: Three.js, kein Template</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="detail" id="detail">
+  <div class="detail__scrim" id="detailScrim"></div>
+  <button class="detail__close" id="detailClose" aria-label="Schließen">✕</button>
+  <div class="detail__media" id="detailMedia"></div>
+  <div class="detail__bar">
+    <div class="detail__panel">
+      <div class="detail__tags" id="detailTags"></div>
+      <div class="detail__title" id="detailTitle"></div>
+      <p class="detail__text" id="detailText"></p>
+    </div>
+    <div class="detail__facts" id="detailFacts"></div>
   </div>
-  <div class="foot">Alex Heyers · Mosbach · Zwischen Tresen und Terminal</div>
-</section>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script>
+/* CDN-Watchdog: wenn das Modul (jsdelivr-Import) nicht bootet, statische Seite zeigen */
+window.__booted = false;
+setTimeout(function(){
+  if (!window.__booted){
+    document.body.classList.add('static');
+    var l = document.getElementById('loader');
+    if (l) l.classList.add('is-done');
+  }
+}, 5000);
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+} }
+</script>
 <script type="module">
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-gsap.registerPlugin(ScrollTrigger);
-let lenis=null;
-if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,smoothWheel:true});lenis.on('scroll',()=>ScrollTrigger.update());gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();lenis.scrollTo(id,{duration:1.3});}}));}
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+window.__booted = true;
 
-/* cursor */
-const cur=document.querySelector('.cur'),dot=document.querySelector('.cur-dot');
-let cx=innerWidth/2,cy=innerHeight/2,dx=cx,dy=cy;
-addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;});
-(function l(){dx+=(cx-dx)*.18;dy+=(cy-dy)*.18;cur.style.transform=`translate(${dx}px,${dy}px) translate(-50%,-50%)`;requestAnimationFrame(l);})();
-document.querySelectorAll('a,button,.mag,.station,.pcard').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('big'));el.addEventListener('mouseleave',()=>cur.classList.remove('big'));});
-document.querySelectorAll('.mag').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.16}px,${(e.clientY-r.top-r.height/2)*.2}px)`;});el.addEventListener('mouseleave',()=>el.style.transform='');});
+/* ============================================================
+   UTILS + SECOND-ORDER-DYNAMICS (Lusion-Rezept: t3ssel8r-Feder)
+   ============================================================ */
+const lerp = (a,b,t)=>a+(b-a)*t;
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const sat = v=>clamp(v,0,1);
+// Fenster-Funktion: 1 innerhalb [a,b], weiche Flanken der Breite f
+const win = (p,a,b,f=.18)=>sat((p-a)/f)*sat((b-p)/f);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = matchMedia('(hover: none)').matches;
 
-/* reveal */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
-document.querySelectorAll('.rev').forEach(el=>io.observe(el));
-
-/* count up */
-const cuO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,to=+el.dataset.to,dur=1500;let s=null;function t(n){if(s===null)s=n;const p=Math.min((n-s)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('de-DE');if(p<1)requestAnimationFrame(t);}requestAnimationFrame(t);cuO.unobserve(el);}),{threshold:.6});
-document.querySelectorAll('.count').forEach(el=>cuO.observe(el));
-
-/* rail */
-const rails=[...document.querySelectorAll('.rail i')];
-new IntersectionObserver(es=>es.forEach(e=>{if(e.intersectionRatio<.5)return;const r=+e.target.dataset.rail;rails.forEach((x,k)=>x.classList.toggle('on',k===r));}),{threshold:.5}).observe;
-document.querySelectorAll('[data-rail]').forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.intersectionRatio>=.5){const r=+e.target.dataset.rail;rails.forEach((x,k)=>x.classList.toggle('on',k===r));}}),{threshold:.5}).observe(s));
-
-/* parallax (gsap scrub) */
-if(!reduce){
-  gsap.to('#heroBg',{yPercent:18,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-  gsap.to('#hingeBg',{yPercent:14,ease:'none',scrollTrigger:{trigger:'.hinge',start:'top bottom',end:'bottom top',scrub:true}});
-  document.querySelectorAll('.xform .frag').forEach(f=>{const sp=+f.dataset.sp||.1;gsap.to(f,{yPercent:-sp*100,ease:'none',scrollTrigger:{trigger:'.xform',start:'top bottom',end:'bottom top',scrub:true}});});
+class SecondOrder {
+  constructor(f=1.4, z=.9, r=1.6, x0=0){
+    const w = 2*Math.PI*f;
+    this.k1 = z/(Math.PI*f); this.k2 = 1/(w*w); this.k3 = r*z/w;
+    this.x = x0; this.v = 0; this.prevT = x0;
+  }
+  update(dt, target){
+    const td = (target - this.prevT)/Math.max(dt,1e-5); this.prevT = target;
+    const k2s = Math.max(this.k2, dt*dt/2 + dt*this.k1/2, dt*this.k1);
+    this.x += this.v*dt;
+    this.v += (target + this.k3*td - this.x - this.k1*this.v) * dt/k2s;
+    return this.x;
+  }
 }
 
-/* sound */
-let actx,gain,playing=false;const sb=document.getElementById('sound');
-sb.addEventListener('click',()=>{if(!actx){actx=new(AudioContext||webkitAudioContext)();gain=actx.createGain();gain.gain.value=0;gain.connect(actx.destination);[110,164.81,220].forEach((f,i)=>{const o=actx.createOscillator();o.type=i?'sine':'triangle';o.frequency.value=f;const g=actx.createGain();g.gain.value=i?.04:.06;o.connect(g);g.connect(gain);o.start();});}
-  if(!playing){gain.gain.linearRampToValueAtTime(.16,actx.currentTime+1);playing=true;sb.classList.add('on');}else{gain.gain.linearRampToValueAtTime(0,actx.currentTime+.6);playing=false;sb.classList.remove('on');}});
+let vw = innerWidth, vh = innerHeight, dpr = Math.min(devicePixelRatio, 1.8);
 
-/* finale particle portrait (lazy) */
-const fin=document.querySelector('.finale');
-new IntersectionObserver((es,ob)=>es.forEach(e=>{if(!e.isIntersecting)return;ob.disconnect();
-  import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js').then(({default:_d,...THREE})=>buildPortrait(THREE)).catch(()=>{});
-}),{rootMargin:'300px'}).observe(fin);
+/* ============================================================
+   FARBDRAMATURGIE — Stationen [P, Hintergrund, Textfarbe hell?]
+   ============================================================ */
+const IVORY = new THREE.Color('#F2EFE8'), PINK = new THREE.Color('#E94B5D'),
+      INK = new THREE.Color('#0B1A35'), DEEP = new THREE.Color('#060D1D'),
+      LIGHT = new THREE.Color('#F8F6F0'), TEAL = new THREE.Color('#1AA591');
+// Keyframes über Gesamtfortschritt P∈[0,9]
+const BG_KEYS = [
+  [0.0, IVORY], [0.8, IVORY], [1.05, LIGHT], [1.85, LIGHT],
+  [2.1, INK], [2.7, DEEP], [3.05, LIGHT], [3.9, LIGHT],
+  [4.1, INK], [4.9, INK], [5.15, IVORY], [5.9, IVORY],
+  /* Akt-Schnitt: IVORY hält, bis der Stationen-Text draußen ist (6.62),
+     dann Abtauchen in DEEP für den Warp, Ankunft hellt auf INK (Finale-Bühne) */
+  [6.05, IVORY], [6.62, IVORY], [6.92, DEEP], [7.45, DEEP], [7.7, INK], [8.0, INK],
+];
+function bgAt(p, out){
+  for (let i=0;i<BG_KEYS.length-1;i++){
+    const [a,ca]=BG_KEYS[i], [b,cb]=BG_KEYS[i+1];
+    if (p>=a && p<=b){ out.copy(ca).lerp(cb, sat((p-a)/Math.max(b-a,1e-4))); return out; }
+  }
+  out.copy(BG_KEYS[BG_KEYS.length-1][1]); return out;
+}
+const darkAt = p => (win(p,2.0,3.0)>0.5) || (win(p,4.05,5.0)>0.5) || (p>6.85);
 
-function buildPortrait(THREE){
-  const canvas=document.getElementById('portrait');
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=42;
-  function size(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
-  const img=new Image();img.crossOrigin='anonymous';img.src='/assets/alex-heyers-portrait.jpg';
-  img.onload=()=>{
-    const SW=120,ratio=img.height/img.width,SH=Math.round(SW*ratio);
-    const c=document.createElement('canvas');c.width=SW;c.height=SH;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,SW,SH);
-    const d=ctx.getImageData(0,0,SW,SH).data,pos=[],col=[],tar=[],rnd=[],scale=.34;
-    for(let y=0;y<SH;y++)for(let x=0;x<SW;x++){const i=(y*SW+x)*4,lum=(d[i]+d[i+1]+d[i+2])/3;if(lum<26||(x+y)%2)continue;
-      tar.push((x-SW/2)*scale,(SH/2-y)*scale,(lum-128)*.012);pos.push((Math.random()-.5)*120,(Math.random()-.5)*120,(Math.random()-.5)*60);
-      const t=lum/255;col.push(.10+t*.85,.13+t*.78,.18+t*.62);rnd.push(Math.random()*6.28);}
-    const N=tar.length/3,geo=new THREE.BufferGeometry();
-    geo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(pos),3));
-    geo.setAttribute('color',new THREE.BufferAttribute(new Float32Array(col),3));
-    const pts=new THREE.Points(geo,new THREE.PointsMaterial({size:.16,vertexColors:true,transparent:true,opacity:.92,depthWrite:false}));scene.add(pts);
-    let asm=0;const o={v:0};if(window.gsap)gsap.to(o,{v:1,duration:2.6,ease:'power3.inOut',onUpdate:()=>asm=o.v});else asm=1;
-    size();addEventListener('resize',size);let mx=0,my=0;addEventListener('mousemove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;});
-    (function r(t){const a=geo.attributes.position.array;for(let i=0;i<N;i++){const i3=i*3,dr=Math.sin(t*.0006+rnd[i])*(1-asm)*3+Math.sin(t*.0009+rnd[i])*.18*asm;a[i3]+=(tar[i3]-a[i3])*.04;a[i3+1]+=(tar[i3+1]-a[i3+1])*.04;a[i3+2]+=(tar[i3+2]+dr-a[i3+2])*.04;}geo.attributes.position.needsUpdate=true;pts.rotation.y+=((mx*.4)-pts.rotation.y)*.05;pts.rotation.x+=((my*.25)-pts.rotation.x)*.05;renderer.render(scene,cam);requestAnimationFrame(r);})(0);
+/* ============================================================
+   SCROLL — nativer Scroll, federgeglättet → P∈[0,9]
+   ============================================================ */
+const STATIONS = 8;
+let progress = 0;
+const scrollSpring = new SecondOrder(1.6, 1.0, 1.2, 0);
+/* Gewichtete Taktung: schwere Stationen bekommen mehr Scroll-Weg (Lusion-Prinzip) */
+const ST_W = [.75, .95, 1.55, 1.05, .95, .85, .7, 1.2];  // Summe = 8 — beide Tunnel tragen die Fahrt: Wechsel UND der lange Rückblick-Warp vorm Finale
+const ST_CUM = [0];
+for (const w of ST_W) ST_CUM.push(ST_CUM[ST_CUM.length-1] + w);
+function rawP(){
+  const h = document.body.scrollHeight - vh;
+  const u = clamp(scrollY/Math.max(h,1),0,1) * STATIONS;
+  for (let i = 0; i < STATIONS; i++){
+    if (u <= ST_CUM[i+1] || i === STATIONS-1)
+      return i + (u - ST_CUM[i]) / ST_W[i];
+  }
+  return STATIONS;
+}
+/* Belege-Hover-Preview: Zeile berühren → echter Screenshot schwebt herein */
+{
+  const sec = document.querySelector('.st-belege');
+  const prev = document.getElementById('belegePrev');
+  const prevImg = prev ? prev.querySelector('img') : null;
+  if (sec && prevImg) document.querySelectorAll('.belege-list li').forEach(li => {
+    li.classList.remove('rev');   // Scanner übernimmt die Einblendung — raus aus dem .rev-System
+    li.addEventListener('mouseenter', () => {
+      if (!li.dataset.prev) return;
+      prevImg.src = li.dataset.prev;
+      sec.classList.add('prev-on');
+      const r = li.getBoundingClientRect(), sr = sec.getBoundingClientRect();
+      prev.style.top = (r.top - sr.top + r.height / 2) + 'px';
+    });
+    li.addEventListener('mouseleave', () => sec.classList.remove('prev-on'));
+  });
+}
+
+/* Nav-Direktsprung zu Station i (Fahrt) bzw. Anker (statischer Fallback) */
+document.querySelectorAll('.nav__jump').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const i = Number(a.dataset.st);
+    if (document.body.classList.contains('static')){
+      const sec = document.querySelectorAll('.st')[i];
+      if (sec) sec.scrollIntoView({ behavior:'smooth' });
+      return;
+    }
+    const h = document.body.scrollHeight - vh;
+    const u = (ST_CUM[i] + ST_W[i] * .35) / STATIONS;
+    scrollTo({ top: u * h, behavior: 'smooth' });
+  });
+});
+
+/* ============================================================
+   CURSOR + MAUS
+   ============================================================ */
+const mouse = { x:vw/2, y:vh/2, px:vw/2, py:vh/2 };
+let hasMouse = false;
+addEventListener('mousemove', e => { mouse.x=e.clientX; mouse.y=e.clientY; hasMouse = true; });
+if (!isTouch){
+  const dot=document.getElementById('cDot'), ring=document.getElementById('cRing');
+  let rx=vw/2, ry=vh/2;
+  (function cl(){ rx=lerp(rx,mouse.x,.16); ry=lerp(ry,mouse.y,.16);
+    dot.style.transform=`translate(${mouse.x-3}px,${mouse.y-3}px)`;
+    ring.style.transform=`translate(${rx-17}px,${ry-17}px)`;
+    requestAnimationFrame(cl); })();
+  document.querySelectorAll('a,button,.card,.agent-card,.belege-list li').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ document.body.classList.add('c-hover'); Sound.tick(); });
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('c-hover'));
+  });
+}
+
+/* ============================================================
+   WEBGL-AUFBAU
+   ============================================================ */
+/* Detail-Overlay: lebendige Unterseite füllen/leeren (GL- und Static-Pfad) */
+const detailEls = {
+  media: document.getElementById('detailMedia'),
+  facts: document.getElementById('detailFacts'),
+  title: document.getElementById('detailTitle'),
+  tags: document.getElementById('detailTags'),
+  text: document.getElementById('detailText'),
+};
+function fillDetail(src){
+  const d = src.dataset;
+  detailEls.title.textContent = d.title || '';
+  detailEls.tags.textContent = d.tags || '';
+  detailEls.text.textContent = d.text || '';
+  detailEls.facts.innerHTML = (d.facts || '').split(';').filter(Boolean)
+    .map(f => { const [v, l] = f.split('|'); return `<div><b>${v}</b><span>${l}</span></div>`; }).join('')
+    + (d.href ? `<div class="detail__golink"><a href="${d.href}" target="_blank" rel="noopener">Live öffnen ↗</a></div>` : '');
+  if (d.live){
+    detailEls.media.innerHTML = `<iframe src="${d.live}" title="${d.title}"></iframe>` +
+      (d.hint ? `<div class="hintbar">${d.hint}</div>` : '');
+  } else {
+    const img = src.querySelector('img');
+    detailEls.media.innerHTML = img ? `<img src="${img.src}" alt="">` : '';
+  }
+}
+function clearDetailMedia(){ detailEls.media.innerHTML = ''; }
+
+/* ============================================================
+   SOUND-LAYER — komplett synthetisiert (WebAudio, keine Assets)
+   ============================================================ */
+const SOUND_ENABLED = false;   // v1 ohne Sound-Layer (Spec 12.06.) — Code bleibt für später
+const Sound = (() => {
+  let ctx = null, master = null, noise = null, pad = null, padGain = null;
+  let armed = false, muted = false;
+  function ensure(){
+    if (ctx) return true;
+    try {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createGain(); master.gain.value = .5; master.connect(ctx.destination);
+      const len = ctx.sampleRate * 1.2, buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      noise = buf;
+    } catch(e){ return false; }
+    return true;
+  }
+  function on(){ return SOUND_ENABLED && armed && !muted && ensure(); }
+  return {
+    arm(){ if (armed) return; armed = true; ensure(); if (ctx && ctx.state === 'suspended') ctx.resume(); },
+    setMuted(m){ muted = m; if (padGain && ctx) padGain.gain.setTargetAtTime(m ? 0 : this._padLvl || 0, ctx.currentTime, .2); },
+    whoosh(dark){
+      if (!on()) return;
+      const t0 = ctx.currentTime, dur = .5;
+      const src = ctx.createBufferSource(); src.buffer = noise;
+      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+      f.frequency.setValueAtTime(dark ? 240 : 460, t0);
+      f.frequency.exponentialRampToValueAtTime(dark ? 90 : 170, t0 + dur);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(.16, t0 + .05);
+      g.gain.exponentialRampToValueAtTime(.001, t0 + dur);
+      src.connect(f); f.connect(g); g.connect(master);
+      src.start(t0); src.stop(t0 + dur);
+    },
+    tick(){
+      if (!on()) return;
+      const t0 = ctx.currentTime;
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(1750, t0);
+      o.frequency.exponentialRampToValueAtTime(1150, t0 + .05);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(.05, t0);
+      g.gain.exponentialRampToValueAtTime(.0008, t0 + .07);
+      o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + .08);
+    },
+    padLevel(x){
+      this._padLvl = x * .1;
+      if (!on()){ if (padGain) padGain.gain.value = 0; return; }
+      if (!pad){
+        pad = [ctx.createOscillator(), ctx.createOscillator()];
+        pad[0].frequency.value = 108; pad[1].frequency.value = 108.8;
+        pad[0].type = pad[1].type = 'sine';
+        const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320;
+        padGain = ctx.createGain(); padGain.gain.value = 0;
+        pad.forEach(o => { o.connect(lp); o.start(); });
+        lp.connect(padGain); padGain.connect(master);
+      }
+      padGain.gain.setTargetAtTime(this._padLvl, ctx.currentTime, .35);
+    },
   };
+})();
+['pointerdown', 'wheel', 'keydown', 'touchstart'].forEach(ev =>
+  addEventListener(ev, () => Sound.arm(), { once: true, passive: true }));
+const sndBtn = document.getElementById('sndBtn');
+if (sndBtn) sndBtn.addEventListener('click', () => {
+  const nowMuted = sndBtn.getAttribute('aria-pressed') === 'true';
+  sndBtn.setAttribute('aria-pressed', String(!nowMuted));
+  sndBtn.innerHTML = nowMuted ? 'Ton&nbsp;·&nbsp;aus' : 'Ton&nbsp;·&nbsp;an';
+  Sound.setMuted(nowMuted);
+  Sound.arm();
+});
+
+const canvas = document.getElementById('gl');
+let glctx = null;
+try { glctx = canvas.getContext('webgl2',{ antialias:false, alpha:false }); } catch(e){}
+
+const smallScreen = matchMedia('(max-width: 767px)').matches;
+if (!glctx || reduced || smallScreen){
+  document.body.classList.add('static');
+  document.getElementById('loader').classList.add('is-done');
+  /* Detail-Overlay funktioniert auch ohne WebGL */
+  const detailS = document.getElementById('detail');
+  detailS.querySelector('.detail__scrim').style.background = 'rgba(14,34,68,.94)';
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      fillDetail(card);
+      detailS.classList.add('is-open'); document.body.classList.add('is-locked');
+    });
+  });
+  const closeS = ()=>{ detailS.classList.remove('is-open'); document.body.classList.remove('is-locked'); setTimeout(clearDetailMedia, 400); };
+  document.getElementById('detailClose').addEventListener('click',closeS);
+  document.getElementById('detailScrim').addEventListener('click',closeS);
+} else {
+  document.body.classList.add('gl');
+  canvas.addEventListener('webglcontextlost', e => {
+    e.preventDefault();
+    document.body.classList.remove('gl');
+    document.body.classList.add('static');
+  });
+  main(glctx);
 }
+
+function main(glctx){
+const renderer = new THREE.WebGLRenderer({ canvas, context: glctx, antialias:false, alpha:false });
+renderer.setPixelRatio(dpr); renderer.setSize(vw,vh); renderer.autoClear = false;
+
+const scene = new THREE.Scene();
+scene.background = IVORY.clone();
+scene.fog = new THREE.Fog(IVORY.clone(), 30, 90);
+const cam = new THREE.PerspectiveCamera(46, vw/vh, .1, 200);
+cam.position.set(0,0,9);
+const camSpring = { x:new SecondOrder(1.2,.85,1.8), y:new SecondOrder(1.2,.85,1.8) };
+/* Mäander-Flugkurve: zwischen den Stationen schwingt die Kamera seitlich aus
+   wie in einer Kurve — im Lesefenster jeder Station liegt sie wieder ruhig
+   auf Achse (Typo-Planes + Formationen bleiben zentriert; DOM ist ortho, unberührt) */
+const _mnd = { x:0, y:0 }, _mndA = { x:0, y:0 };
+function meander(p, out){
+  const fr = p - Math.floor(p);
+  let tr = 1 - win(fr, .24, .76, .2);        // 1 an den Übergängen (x.0), 0 mitten im Lesefenster
+  tr = tr*tr*(3-2*tr);                       // smoothstep — weiches Ein- und Ausschwingen
+  const g = sat((p - 2.05) / .7)             // Hero/Tresen statisch, erst ab dem Tunnel eindrehen
+          * (1 - sat((p - 6.9) / .35));      // Warp 2 + Finale: Mäander raus — gerader Hyperraum-Schuss
+  out.x = Math.sin(p * 2.1 + .7) * .95 * tr * g;
+  out.y = Math.cos(p * 1.4)      * .5  * tr * g;
+  return out;
+}
+/* Banking + FOV-Atmung: Quer-Geschwindigkeit kippt die Kamera in die Kurve,
+   Scroll-Tempo öffnet den Blickwinkel — die Fahrt wird körperlich */
+const rollSpring = new SecondOrder(1.1, .95, 1.0, 0);
+const fovSpring  = new SecondOrder(1.0, 1.0, 0, 46);
+let mndPX = 0;   // Mäander-x des Vorframes → Quer-Geschwindigkeit
+
+/* Ortho-Overlay für DOM-synchronisierte Bild-Planes */
+const ortho = new THREE.Scene();
+const orthoCam = new THREE.OrthographicCamera(0,vw,0,-vh,-100,100); orthoCam.position.z=10;
+
+/* ---------- Lade-Manager ---------- */
+const manager = new THREE.LoadingManager();
+const pctEl = document.getElementById('loaderPct'), barEl = document.getElementById('loaderBar');
+/* Zähler läuft weich auf den echten Fortschritt zu — kein Springen */
+let loadTarget = 0, loadShown = 0;
+manager.onProgress = (u,l,t)=>{ loadTarget = Math.round(l/t*100); barEl.style.transform=`scaleX(${loadTarget/100})`; };
+const cntTimer = setInterval(()=>{
+  loadShown = Math.min(100, loadShown + Math.max(1, Math.round((loadTarget - loadShown) * .18)));
+  pctEl.textContent = loadShown;
+  if (loadShown >= 100){
+    clearInterval(cntTimer);
+    setTimeout(()=>{
+      document.getElementById('loader').classList.add('is-done');
+      setTimeout(()=>document.body.classList.add('booted'), 320);   // Hero-Entrance startet im Vorhang-Lift
+    }, 280);
+  }
+}, 40);
+manager.onLoad = ()=>{ loadTarget = 100; };
+const texLoader = new THREE.TextureLoader(manager);
+const gltfLoader = new GLTFLoader(manager);
+
+/* ---------- Prozeduraler Porzellan-Matcap (Canvas, 3 Zonen wie Lusion) ---------- */
+function makeMatcap(){
+  const s=512, c=document.createElement('canvas'); c.width=c.height=s;
+  const x=c.getContext('2d');
+  let g=x.createRadialGradient(s*.38,s*.32,s*.04,s*.5,s*.5,s*.62);
+  g.addColorStop(0,'#ffffff'); g.addColorStop(.25,'#f3f1ec'); g.addColorStop(.62,'#cfd2d6');
+  g.addColorStop(.86,'#8d96a6'); g.addColorStop(1,'#5d6a80');
+  x.fillStyle=g; x.fillRect(0,0,s,s);
+  // Spitzlicht
+  g=x.createRadialGradient(s*.34,s*.26,1,s*.34,s*.26,s*.13);
+  g.addColorStop(0,'rgba(255,255,255,.95)'); g.addColorStop(1,'rgba(255,255,255,0)');
+  x.fillStyle=g; x.fillRect(0,0,s,s);
+  // Gegenlicht unten-rechts (Teal-Hauch)
+  g=x.createRadialGradient(s*.72,s*.8,1,s*.72,s*.8,s*.3);
+  g.addColorStop(0,'rgba(60,170,155,.35)'); g.addColorStop(1,'rgba(60,170,155,0)');
+  x.fillStyle=g; x.fillRect(0,0,s,s);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.NoColorSpace; return t;
+}
+const matcap = makeMatcap();
+
+/* ============================================================
+   CLUSTER — Blender-GLBs + CPU-Physik + analytisches Nachbar-Shading
+   (Lusion-Rezept: starre Körper, Weichheit = Kontakt-AO im Shader)
+   ============================================================ */
+const N = 7;
+const bodies = []; // {mesh, pos, vel, quat, angA, radius, color}
+const PALETTE = ['#F2EFE8','#F2EFE8','#1AA591','#0E2244','#F2EFE8','#E94B5D','#F2EFE8'];
+const clusterGroup = new THREE.Group(); scene.add(clusterGroup);
+const clusterAnchor = new THREE.Vector3(2.6, 0, 0);
+
+const clusterVert = `
+  varying vec3 vN; varying vec3 vWP; varying vec3 vVN;
+  void main(){
+    vN = normalize(mat3(modelMatrix) * normal);
+    vVN = normalize(normalMatrix * normal);
+    vec4 wp = modelMatrix * vec4(position,1.0); vWP = wp.xyz;
+    gl_Position = projectionMatrix * viewMatrix * wp;
+  }`;
+const clusterFrag = `
+  uniform sampler2D uMatcap; uniform vec3 uColor; uniform vec4 uNear[${N-1}];
+  uniform vec3 uNearColor[${N-1}]; uniform vec3 uCamPos; uniform float uFade; uniform vec3 uBg;
+  varying vec3 vN; varying vec3 vWP; varying vec3 vVN;
+  // iq: sphere occlusion + sphere intersect
+  float sphOcc(vec3 d, float r2, vec3 n){
+    float l = max(length(d), 1e-4);
+    return clamp(1.0 - max(dot(d/l, n), 0.0) * r2/(l*l), 0.0, 1.0);
+  }
+  float sphInter(vec3 ro, vec3 rd, vec3 ce, float ra){
+    vec3 oc = ro - ce; float b = dot(oc, rd);
+    float c = dot(oc,oc) - ra*ra; float h = b*b - c;
+    if (h < 0.0) return -1.0; return -b - sqrt(h);
+  }
+  void main(){
+    vec3 V = normalize(uCamPos - vWP);
+    vec3 R = reflect(-V, normalize(vN));
+    float ao = 1.0, shadow = 1.0; vec3 gi = vec3(0.0); float reflHit = 0.0; vec3 reflCol = vec3(0.0);
+    vec3 L = normalize(vec3(.5,.8,.4));
+    for (int i=0; i<${N-1}; i++){
+      vec3 d = uNear[i].xyz - vWP; float r = uNear[i].w;
+      float o = sphOcc(d, r*r*0.92, normalize(vN));
+      ao *= o;
+      gi += uNearColor[i] * (1.0-o) * 0.45;
+      // weicher Schatten: Nachbar zwischen Punkt und Licht?
+      float sl = length(cross(d, L)); float along = dot(d, L);
+      if (along > 0.0) shadow *= mix(1.0, smoothstep(r*0.55, r*1.25, sl), 0.85);
+      // Reflexion des Nachbarn
+      float t = sphInter(vWP, R, uNear[i].xyz, r);
+      if (t > 0.02 && reflHit < 0.5){ reflHit = 1.0; reflCol = uNearColor[i]; }
+    }
+    vec2 muv = vVN.xy * 0.5 + 0.5;
+    vec3 mc = texture2D(uMatcap, muv).rgb;
+    vec3 base = uColor * (mc * 0.92 + 0.08);
+    base += gi * (1.0 - ao) * 0.5;
+    float fr = pow(1.0 - abs(dot(normalize(vVN), vec3(0.,0.,1.))), 3.0);
+    base += fr * 0.18;
+    if (reflHit > 0.5) base = mix(base, reflCol * (mc.r*0.8+0.35), 0.22 * (0.3+fr));
+    base *= mix(0.52, 1.0, ao) * mix(0.62, 1.0, shadow);
+    base = mix(uBg, base, uFade);   // Fade gegen Szenen-Hintergrund statt Hard-Pop
+    gl_FragColor = vec4(base, 1.0);
+    gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(0.96)); // sanfter Lift
+  }`;
+
+function clusterMaterial(hex){
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uMatcap:{value:matcap}, uColor:{value:new THREE.Color(hex)},
+      uNear:{value:Array.from({length:N-1},()=>new THREE.Vector4(99,99,99,.001))},
+      uNearColor:{value:Array.from({length:N-1},()=>new THREE.Color('#fff'))},
+      uCamPos:{value:cam.position}, uFade:{value:1}, uBg:{value:scene.fog.color},
+    },
+    vertexShader: clusterVert, fragmentShader: clusterFrag,
+  });
+}
+
+gltfLoader.load('assets/flow-objects.glb', g => {
+  const meshes = {};
+  g.scene.traverse(o => { if (o.isMesh) meshes[o.name] = o; });
+  const kinds = ['flowNode','flowElbow','flowDisc'];
+  for (let i=0;i<N;i++){
+    const src = meshes[kinds[i % 3]] || Object.values(meshes)[0];
+    const geo = src.geometry.clone();
+    geo.computeBoundingSphere();
+    const baseR = geo.boundingSphere.radius;
+    const scale = (0.85 + (i*0.13)%0.5) / baseR;  // Zielradius ~0.85–1.35
+    const mesh = new THREE.Mesh(geo, clusterMaterial(PALETTE[i]));
+    mesh.scale.setScalar(scale);
+    const radius = baseR * scale * 0.82;
+    const a = i/N*Math.PI*2;
+    bodies.push({
+      mesh, radius, color:new THREE.Color(PALETTE[i]),
+      pos:new THREE.Vector3(Math.cos(a)*2.4, Math.sin(a)*2.0, (i%3-1)*1.2),
+      vel:new THREE.Vector3(0,0,0),
+      ang:new THREE.Vector3((Math.random()-.5)*.6,(Math.random()-.5)*.6,(Math.random()-.5)*.6),
+    });
+    clusterGroup.add(mesh);
+  }
+  // Finale-Hero direkt hier erzeugen (kein Polling) — versetzt, damit der CTA frei bleibt
+  const hero = bodies[0].mesh.clone();
+  hero.material = clusterMaterial('#F2EFE8');
+  hero.scale.setScalar(.8); hero.position.set(2.3, -1.15, -96);
+  hero.userData.isFinaleHero = true;
+  stickGroup.add(hero);
+  // Finale-Schwarm in Hero-Formsprache (statt Emoji-Sprites)
+  const kindR = {};
+  for (const k of kinds){
+    meshes[k].geometry.computeBoundingSphere();
+    kindR[k] = meshes[k].geometry.boundingSphere.radius;
+  }
+  const STICK_COLS = ['#F2EFE8','#1AA591','#F2EFE8','#E94B5D','#7FD8C8','#F2EFE8'];
+  for (let i=0;i<16;i++){
+    const k = kinds[i % 3];
+    const m = new THREE.Mesh(meshes[k].geometry,
+      new THREE.MeshMatcapMaterial({ matcap, color: STICK_COLS[i % STICK_COLS.length] }));
+    m.scale.setScalar((.3 + (i%4)*.11) / kindR[k]);
+    const a = i/16*Math.PI*2, r = 2.4 + (i%5)*.78;
+    m.position.set(Math.cos(a)*r, Math.sin(a)*r*.7, -94 - (i%5)*1.6);
+    m.rotation.set((i*1.3)%3.1, (i*2.1)%3.1, 0);
+    m.userData = { a, r, sp: .15 + (i%5)*.07 };
+    stickGroup.add(m);
+  }
+  // Morph-Schwarm befüllen: 3 Sorten × 40 Instanzen, Palette fest pro Instanz
+  for (let ki = 0; ki < 3; ki++){
+    const im = new THREE.InstancedMesh(meshes[kinds[ki]].geometry,
+      new THREE.MeshMatcapMaterial({ matcap, color:'#fff' }), 40);
+    im.userData.baseR = kindR[kinds[ki]];
+    const col = new THREE.Color();
+    for (let i = 0; i < 40; i++){
+      const gi = ki*40 + i;
+      im.setColorAt(i, col.set(gi % 9 === 0 ? '#E94B5D' : ['#1AA591', '#0E2244', '#F2EFE8'][gi % 3]));
+    }
+    if (im.instanceColor) im.instanceColor.needsUpdate = true;
+    im.frustumCulled = false;   // Formationen wandern durch den ganzen Korridor — nie cullen
+    swarmIMs.push(im); swarmGroup.add(im);
+  }
+  swarmReady = true;
+  // Drift-Feld: Flow-Objekte säumen die hintere Kamerastrecke (Spark→Finale)
+  for (let i = 0; i < 14; i++){
+    const k = kinds[i % 3];
+    const dm = new THREE.Mesh(meshes[k].geometry,
+      new THREE.MeshMatcapMaterial({ matcap, color: i % 5 === 0 ? '#1AA591' : (i % 7 === 0 ? '#E94B5D' : '#F2EFE8') }));
+    dm.scale.setScalar((.25 + (i % 4) * .09) / kindR[k]);
+    const side = i % 2 ? 1 : -1;
+    dm.position.set(side * (2.6 + (i % 3) * 1.1), ((i * 7919) % 100) / 100 * 3 - 1.5, -64 - i * 2.1);
+    dm.rotation.set((i * 1.1) % 3.1, (i * 1.9) % 3.1, 0);
+    dm.userData = { sp: .12 + (i % 4) * .05 };
+    driftGroup.add(dm);
+  }
+  // Agenten-Orbit auf dieselbe Formsprache umrüsten
+  agentGroup.clear();
+  const coreA = new THREE.Mesh(meshes.flowDisc.geometry,
+    new THREE.MeshMatcapMaterial({ matcap, color:'#E94B5D' }));
+  coreA.scale.setScalar(.42 / kindR.flowDisc);
+  coreA.userData = {};
+  agentGroup.add(coreA);
+  for (let i=0;i<8;i++){
+    const k = i % 2 ? 'flowElbow' : 'flowNode';
+    const ag = new THREE.Mesh(meshes[k].geometry,
+      new THREE.MeshMatcapMaterial({ matcap, color: i===0 ? '#1AA591' : '#F2EFE8' }));
+    ag.scale.setScalar((.2 + (i%3)*.04) / kindR[k]);
+    ag.rotation.set((i*1.7)%3.1, (i*.9)%3.1, 0);
+    ag.userData = { a: i/8*Math.PI*2, r: .85 + (i%4)*.22, sp: .35 + (i%4)*.09 };
+    agentGroup.add(ag);
+  }
+});
+manager.onError = url => console.warn('Asset fehlgeschlagen:', url);
+
+const _exV = new THREE.Vector3();   // Abgangs-Drall: ein Temp-Vektor, keine Per-Frame-Allokationen
+const rayc = new THREE.Raycaster(); const ndcV = new THREE.Vector2();
+function physStep(dt){
+  if (!bodies.length) return;
+  dt = Math.min(dt, .033);
+  // Maus-Strahl in Welt
+  ndcV.set((mouse.x/vw)*2-1, -(mouse.y/vh)*2+1);
+  rayc.setFromCamera(ndcV, cam);
+  const ro = rayc.ray.origin, rd = rayc.ray.direction;
+  const mvx = (mouse.x-mouse.px)/vw, mvy=(mouse.y-mouse.py)/vh;
+  const mSpeed = Math.min(Math.hypot(mvx,mvy)*60, 3);
+  mouse.px = mouse.x; mouse.py = mouse.y;
+
+  for (const b of bodies){
+    // Zentripetal zur Anker-Position
+    const toC = b.pos.clone().sub(clusterAnchor);
+    b.vel.addScaledVector(toC, -3.2*dt);
+    // Maus-Pushback (Punkt-Gerade-Abstand)
+    const w = b.pos.clone().sub(ro); const proj = w.dot(rd);
+    const closest = ro.clone().addScaledVector(rd, proj);
+    const dm = b.pos.clone().sub(closest); const dist = dm.length();
+    if (dist < b.radius + 1.1){
+      b.vel.addScaledVector(dm.normalize(), (3.5 + mSpeed*6) * dt * (1.2 - dist/(b.radius+1.1)) * 4.0);
+    }
+    b.vel.multiplyScalar(Math.pow(.16, dt));
+    b.pos.addScaledVector(b.vel, dt);
+  }
+  // Paar-Kollision: Separation + Impuls
+  for (let i=0;i<bodies.length;i++) for (let j=i+1;j<bodies.length;j++){
+    const A=bodies[i], B=bodies[j];
+    const d = B.pos.clone().sub(A.pos); const l = d.length(); const minD = A.radius+B.radius;
+    if (l < minD && l > 1e-5){
+      const n = d.divideScalar(l); const overlap = (minD-l);
+      A.pos.addScaledVector(n,-overlap*.5); B.pos.addScaledVector(n,overlap*.5);
+      const va = A.vel.dot(n), vb = B.vel.dot(n);
+      const rest = .35, ma = (va*(1-rest)+vb*(1+rest))/2, mb = (vb*(1-rest)+va*(1+rest))/2;
+      A.vel.addScaledVector(n, ma-va); B.vel.addScaledVector(n, mb-vb);
+      // Abroll-Drall
+      A.ang.addScaledVector(new THREE.Vector3().crossVectors(n, A.vel), .25*dt*60);
+      B.ang.addScaledVector(new THREE.Vector3().crossVectors(n, B.vel), -.25*dt*60);
+    }
+  }
+  for (const b of bodies){
+    b.mesh.position.copy(b.pos);
+    b.mesh.rotation.x += b.ang.x*dt; b.mesh.rotation.y += b.ang.y*dt; b.mesh.rotation.z += b.ang.z*dt;
+    b.ang.multiplyScalar(Math.pow(.5, dt));
+  }
+  // Nachbar-Uniforms (jeder kennt alle anderen)
+  for (let i=0;i<bodies.length;i++){
+    const u = bodies[i].mesh.material.uniforms;
+    let k=0;
+    for (let j=0;j<bodies.length;j++){
+      if (i===j) continue;
+      u.uNear.value[k].set(bodies[j].pos.x, bodies[j].pos.y, bodies[j].pos.z, bodies[j].radius);
+      u.uNearColor.value[k].copy(bodies[j].color);
+      k++;
+    }
+  }
+}
+
+/* ============================================================
+   TUNNEL — instanzierte Greeble-Blöcke + Glow-Kerne (Station 3)
+   ============================================================ */
+const TUN = 170;   // ferne Struktur, kein Klötzchen-Vordergrund — die Bilder tragen den Tunnel
+const tunnelGroup = new THREE.Group(); scene.add(tunnelGroup);
+{
+  const boxGeo = new THREE.BoxGeometry(1,1,1);
+  const tunMat = new THREE.ShaderMaterial({
+    uniforms:{ uFog:{value:scene.fog.color}, uTeal:{value:TEAL}, uTime:{value:0}, uBoost:{value:0}, uFade:{value:1} },
+    vertexShader:`
+      varying vec2 vUv; varying float vZ; varying float vWz;
+      void main(){ vUv=uv;
+        vec4 wp = instanceMatrix * vec4(position,1.0);
+        vWz = wp.z;
+        vec4 mv = modelViewMatrix * wp;
+        vZ = -mv.z; gl_Position = projectionMatrix * mv; }`,
+    fragmentShader:`
+      uniform vec3 uFog; uniform vec3 uTeal; uniform float uTime; uniform float uBoost; uniform float uFade;
+      varying vec2 vUv; varying float vZ; varying float vWz;
+      void main(){
+        vec2 g = abs(fract(vUv*2.0)-0.5);
+        float edge = smoothstep(0.5,0.46,max(g.x,g.y));
+        // Anflug-Glühen: Block lädt sich auf, kurz bevor er an der Kamera vorbeirauscht
+        float near = 1.0 - smoothstep(2.5, 11.0, vZ);
+        near *= near;
+        // Licht-Welle: rollt mit Scroll-Tempo durch den Tunnel, atmet bei Stillstand kaum
+        float wave = 0.5 + 0.5*sin(vWz*0.6 + uTime*2.4);
+        float charge = near*(0.9 + uBoost*2.6) + wave*uBoost*0.55;
+        vec3 core = uTeal*(1.1 + charge*1.3) + vec3(1.0)*near*charge*0.35;  // gedämpfter — Struktur, nicht Neon
+        vec3 dark = vec3(0.02,0.05,0.1) + uTeal*charge*0.15;                // Kanten glimmen leise mit
+        vec3 col = mix(core, dark, edge);
+        float fog = smoothstep(10.0, 60.0, vZ);
+        // uFade: Warp 2 materialisiert aus dem Fog statt hart zu poppen (Tunnel 1 fährt mit 1.0)
+        gl_FragColor = vec4(mix(uFog, mix(col, uFog, fog), uFade), 1.0);
+      }`,
+  });
+  tunnelGroup.userData.mat = tunMat;   // für den Render-Loop erreichbar (tunMat lebt im Block-Scope)
+  const inst = new THREE.InstancedMesh(boxGeo, tunMat, TUN);
+  const m = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3();
+  let si = 0;
+  for (let i=0;i<TUN;i++){
+    /* Dichte-Dramaturgie: vorn locker, zur Mitte hin dicht und ENG, am Ende Befreiung */
+    const t01 = i/TUN;
+    const z = -12 - 25*Math.pow(t01, .72);                 // sparse Einfahrt, dichter Bauch
+    const squeeze = 1 - .1*Math.sin(t01*Math.PI);           // leichte Verengung
+    const ang = (si=si+2.39996), rad = (4.4 + (i*7919 % 100)/100*2.0) * squeeze;   // weit draußen — Hintergrund-Stadt
+    p.set(Math.cos(ang)*rad, Math.sin(ang)*rad, z);
+    q.setFromEuler(new THREE.Euler(0,0,ang));
+    const len = .5 + (i*104729 % 100)/100*2.0;
+    s.set(len, .18 + (i*15485863%100)/100*.35, .22 + (i*32452843%100)/100*.45);
+    m.compose(p,q,s); inst.setMatrixAt(i,m);
+  }
+  inst.instanceMatrix.needsUpdate = true;
+  tunnelGroup.add(inst);
+  // Glow-Kerne entlang der Achse
+  const glowGeo = new THREE.SphereGeometry(.09, 12, 12);
+  const glowMat = new THREE.MeshBasicMaterial({ color:TEAL });
+  const glows = new THREE.InstancedMesh(glowGeo, glowMat, 90);
+  for (let i=0;i<90;i++){
+    const z = -12 - 25*Math.pow(i/90, .72), ang=i*1.7, rad=1.1+(i%5)*.5;
+    m.compose(new THREE.Vector3(Math.cos(ang)*rad, Math.sin(ang)*rad, z), q.identity(), s.set(1,1,1));
+    glows.setMatrixAt(i,m);
+  }
+  glows.instanceMatrix.needsUpdate = true;
+  tunnelGroup.add(glows);
+}
+/* ============================================================
+   ERINNERUNGS-FRAGMENTE — Fotos fliegen als Memories durch den Tunnel
+   (Dramaturgie: erst Hospitality, hinten Tech — der Wechsel in Bildern.
+   Fern: Ink/Teal-Duotone · Vorbeiflug: Fokus-Peak zu voller Farbe)
+   ============================================================ */
+const _texCache = {};
+function loadTex(src){
+  if (_texCache[src]) return _texCache[src];
+  const tx = texLoader.load(src);
+  tx.anisotropy = 4;
+  return _texCache[src] = tx;
+}
+const memGroup = new THREE.Group(); scene.add(memGroup);
+const memPlanes = [];
+/* RÜCKBLICK-WOLKE für den zweiten Warp — die ganze Reise rauscht noch einmal vorbei.
+   Eigene Gruppe (NICHT an tunnel2 — die rollt), eigener Update-Block im Frame. */
+const memGroup2 = new THREE.Group(); scene.add(memGroup2);
+const memPlanes2 = [];
+{
+  /* Zwei Formate: 3:2 für die Asset-Fotos (1536×1024), 1:1 fürs Portrait (1024×1024) */
+  const memGeo   = new THREE.PlaneGeometry(3, 2);
+  const memGeoSq = new THREE.PlaneGeometry(2.4, 2.4);
+  const memVert = `varying vec2 vUv;
+    void main(){ vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }`;
+  const memFrag = `
+    uniform sampler2D uTex; uniform sampler2D uPaint; uniform vec2 uViewport;
+    uniform float uFade; uniform float uFocus; uniform vec3 uInk; uniform vec3 uTeal;
+    uniform vec2 uSize;
+    varying vec2 vUv;
+    float sdRBox(vec2 p, vec2 b, float r){ vec2 q=abs(p)-b+r; return min(max(q.x,q.y),0.)+length(max(q,0.))-r; }
+    void main(){
+      /* runde Ecken + Feder-Kante — formatunabhängig über uSize (3:2 und 1:1) */
+      float d = sdRBox((vUv-.5)*uSize, uSize*.5 - .06, .18);
+      float mask = (1. - smoothstep(-.22, 0., d)) * uFade;
+      if (mask < .004) discard;
+      vec2 suv = gl_FragCoord.xy/uViewport;
+      vec2 flow = (texture2D(uPaint, suv).rg - .5) * 2.;
+      vec3 col = texture2D(uTex, vUv + flow*.025).rgb;
+      float luma = dot(col, vec3(.299,.587,.114));
+      vec3 duo = mix(uInk*.7, uTeal, smoothstep(.05,.95,luma));
+      col = mix(duo, col, uFocus);            // Vorbeiflug: Erinnerung wird farbig
+      col *= .5 + uFocus*.85;                 // fern dunkel, vorn leuchtend (füttert Bloom)
+      gl_FragColor = vec4(col, mask);
+    }`;
+  /* 11 Erinnerungen — Dramaturgie des Wechsels:
+     Hospitality vorn → Übergabe-Kreuz in der Tunnelmitte → Tech hinten → Portrait am Ausgang.
+     hero:1    = großer Vorbeiflug nah an der Flugbahn (eigene, späte Fade-Kurve — springt ins Bild)
+     g:[a,b,f] = eigenes p-Fenster statt globalem warp-Gate (Einfahrt + Portrait liegen außerhalb)
+     sq:1/fr:1 = quadratische Geometrie / frontal (Portrait 1024×1024)
+     KOLLISIONS-RECHNUNG (camZ(p) = 9 − (p−1.9)·42.727, Held dominant bei dist∈[1.5,9], Peak dist≈4.5):
+     Held-Peaks liegen exakt in den Textlücken p<2.02 / 2.48–2.52 / >2.90 —
+     Tapeten halten |x|≥2.6 oder |y|≥1.9 und kreuzen die mittigen DOM-Zeilen nie. */
+  const MEMS = [
+    // — Hospitality (vorn) —
+    { src:'assets/mem-hotel.jpg',    x:-1.5,  y:  .7,  z:  0.6, r: .1,  s:1.3,  hero:1, g:[1.88,2.20,.08] }, // HERO Einfahrt — Peak p≈1.99, vor Zeile 1
+    { src:'assets/st1-aida.jpg',     x:-2.7,  y: 1.5,  z:-14.2, r: .14, s: .85 },
+    { src:'assets/st1-harrys.jpg',   x: 2.8,  y:-1.35, z:-16.8, r:-.12, s: .78 },
+    { src:'assets/st1-ox.jpg',       x: -.85, y: 2.2,  z:-18.4, r: .18, s: .8  },                            // ÜBERKOPF — Höhenstaffelung
+    { src:'assets/mem-craft.jpg',    x:-1.45, y: -.5,  z:-20.6, r: .08, s:1.55, hero:1 },                    // HERO Übergabe links — Peak p≈2.49 (Textlücke)
+    { src:'assets/st1-opening.jpg',  x:  .9,  y:-2.05, z:-21.2, r:-.1,  s: .8  },                            // UNTER der Achse, mitten im Übergabe-Kreuz
+    // — Tech (hinten) —
+    { src:'assets/mem-nodes.jpg',    x: 1.5,  y: .55,  z:-21.8, r:-.08, s:1.25, hero:1 },                    // HERO Übergabe rechts — Peak p≈2.52: Hospitality × Tech kreuzen sich
+    { src:'assets/tun-terminal.jpg', x:-2.9,  y: 1.2,  z:-26.4, r: .12, s: .8  },
+    { src:'assets/mem-server.jpg',   x: 2.7,  y:-1.55, z:-29.2, r:-.14, s: .82 },
+    { src:'assets/tun-flow.jpg',     x:  .7,  y: 2.25, z:-31.8, r:-.08, s: .78 },                            // ÜBERKOPF
+    // — „Und das bin heute ich." — frontal, mittig-nah, kurz vor dem Ausgang —
+    { src:'assets/portrait.jpg',     x:  .45, y:  .1,  z:-42.0, r: 0,   s:1.5,  hero:1, sq:1, fr:1, g:[2.86,3.14,.07] },   // Abstand hält das Gesicht im Rahmen — kein Durchflug ins Sakko
+  ];
+  /* GALERIE-EBENE — der Flug geht durch eine Bildergalerie: zwei WÄNDE aus großen
+     Rahmen links/rechts (versetzt gehängt wie in einer echten Galerie), dazu eine
+     Decken- und eine Boden-Reihe. Kaum Rotation, kaum Flattern — Hängung, kein Konfetti.
+     Die Text-Schutzzone (|x|<2.6 UND |y|<1.9) bleibt frei. */
+  const MEM_POOL = ['mem-hotel','st1-aida','mem-wine','tun-terminal','st1-harrys','mem-nodes',
+    'mem-rooftop','st1-ox','mem-code','mem-craft','tun-flow','mem-coffee',
+    'st1-opening','mem-circuit','mem-deck','mem-server','mem-sketch','mem-cables'];
+  /* BILDER-LANDSCHAFT — keine Wände, kein Grid: vier geschwungene BÄNDER aus
+     Bildern (linkes/rechtes Ufer, Boden-Hügel, Decken-Wolke), die in Wellen
+     an der Flugbahn entlanglaufen. Jedes Bild lehnt sich in die Steigung
+     seiner Welle — der Flug geht DURCH eine Landschaft aus Bildern. */
+  const BANDS = [
+    { x0:-3.15, xA:.55, y0:-.35, yA:1.65, f:.42, ph:0,   s:1.02, sv:.3,  n:26 },  // linkes Ufer
+    { x0: 3.15, xA:.55, y0: .25, yA:1.65, f:.38, ph:2.2, s:1.02, sv:.3,  n:26 },  // rechtes Ufer, gegenphasig
+    { x0:   0,  xA:1.9, y0:-2.55,yA:.55, f:.55, ph:4.1, s:.74,  sv:.22, n:24 },  // Boden-Hügel
+    { x0:  .3,  xA:2.1, y0: 2.6, yA:.5,  f:.5,  ph:1.3, s:.66,  sv:.2,  n:20 },  // Decken-Wolke
+  ];
+  let gi = 0;
+  for (const b of BANDS){
+    for (let k = 0; k < b.n; k++){
+      const z = -12.4 - (k + ((gi*7919) % 100)/300) * (25.5 / b.n);
+      const wy = Math.sin(z * b.f * 1.35 + b.ph);
+      MEMS.push({
+        src: `assets/${MEM_POOL[gi % MEM_POOL.length]}.jpg`,
+        x: b.x0 + Math.sin(z * b.f * .8 + b.ph + 1) * b.xA,
+        y: b.y0 + wy * b.yA,
+        z,
+        r: Math.cos(z * b.f * 1.35 + b.ph) * .14,   // lehnt sich in die Wellen-Steigung
+        s: b.s + ((gi*13) % 10)/10 * b.sv,
+        gal: 1,
+      });
+      gi++;
+    }
+  }
+  MEMS.forEach((md, i)=>{
+    const mat = new THREE.ShaderMaterial({ transparent:true, depthWrite:false,
+      uniforms:{ uTex:{value:loadTex(md.src)}, uPaint:{value:null},
+        uViewport:{value:new THREE.Vector2(vw*dpr,vh*dpr)},
+        uSize:{value: md.sq ? new THREE.Vector2(2.4,2.4) : new THREE.Vector2(3,2)},
+        uFade:{value:0}, uFocus:{value:0}, uInk:{value:INK}, uTeal:{value:TEAL} },
+      vertexShader:memVert, fragmentShader:memFrag });
+    const mesh = new THREE.Mesh(md.sq ? memGeoSq : memGeo, mat);
+    mesh.position.set(md.x, md.y, md.z);
+    const ry0 = md.fr ? 0 : (md.x > 0 ? -.32 : .32);   // zur Achse eingedreht, Portrait frontal
+    mesh.rotation.set(0, ry0, md.r);
+    mesh.scale.setScalar(md.s);
+    mesh.renderOrder = 5;
+    mesh.userData = { y0: md.y, r0: md.r, ph: i*1.7, hero: md.hero||0, g: md.g||null, gal: md.gal||0,
+      ry0, bb: md.sq ? .25 : (md.hero ? .5 : (md.gal ? .3 : 1)),   // Galerie hängt ruhig, Helden träge
+      fd: md.sq ? 4.2 : 4.5, fk: md.sq ? .07 : .06 };   // Fokus-Peak (Distanz + Schärfe) pro Memory
+    memGroup.add(mesh); memPlanes.push(mesh);
+  });
+  /* RÜCKBLICK-GALERIE: der zweite Warp ist derselbe Galerie-Flug im Zeitraffer —
+     18 Wand-Reihen + Decke/Boden um die Kamerabahn -74.5→-83 (z -76…-95). */
+  function mem2Plane(src, x, y, z, r, s, ry){
+    const mat = new THREE.ShaderMaterial({ transparent:true, depthWrite:false,
+      uniforms:{ uTex:{value:loadTex(src)}, uPaint:{value:null},
+        uViewport:{value:new THREE.Vector2(vw*dpr,vh*dpr)},
+        uSize:{value:new THREE.Vector2(3,2)},
+        uFade:{value:0}, uFocus:{value:0}, uInk:{value:INK}, uTeal:{value:TEAL} },
+      vertexShader:memVert, fragmentShader:memFrag });
+    const mesh = new THREE.Mesh(memGeo, mat);
+    mesh.position.set(x, y, z);
+    mesh.rotation.set(0, ry, r);
+    mesh.scale.setScalar(s);
+    mesh.renderOrder = 5;
+    mesh.userData = { y0: y, r0: r, ph: memPlanes2.length*1.3 };
+    memGroup2.add(mesh); memPlanes2.push(mesh);
+  }
+  /* Rückblick als dieselbe Landschaft im Zeitraffer — dichtere Wellen */
+  let g2 = 7;
+  for (const b of BANDS){
+    for (let k = 0; k < b.n * .8; k++){
+      const z = -76.3 - (k + ((g2*7919) % 100)/300) * (18.8 / (b.n * .8));
+      const wy = Math.sin(z * b.f * 1.9 + b.ph);
+      mem2Plane(`assets/${MEM_POOL[g2 % MEM_POOL.length]}.jpg`,
+        b.x0 + Math.sin(z * b.f * 1.1 + b.ph + 1) * b.xA,
+        b.y0 + wy * b.yA,
+        z,
+        Math.cos(z * b.f * 1.9 + b.ph) * .14,
+        b.s * .95 + ((g2*13) % 10)/10 * b.sv,
+        Math.abs(b.x0) > 1 ? (b.x0 > 0 ? -.3 : .3) : 0);
+      g2++;
+    }
+  }
+}
+
+/* Zweiter Void-Warp: derselbe Tunnel, verdreht — aber mit EIGENEM Material,
+   damit er weich ein-/ausblenden kann, ohne Tunnel 1 anzufassen */
+const tunnel2 = tunnelGroup.clone();   // WICHTIG: muss VOR dem STREAKS-/Gates-Block stehen
+tunnel2.position.z = -62; tunnel2.rotation.z = 1.15;
+const tun2Mat = tunnelGroup.userData.mat.clone();
+tun2Mat.uniforms.uFog.value = scene.fog.color;   // clone() kappt die Live-Referenz — wiederherstellen
+tunnel2.children[0].material = tun2Mat;          // [0] = Greeble-Blöcke (InstancedMesh)
+const glow2Mat = tunnel2.children[1].material.clone();   // [1] = Glow-Kerne
+glow2Mat.transparent = true; glow2Mat.opacity = 0;
+tunnel2.children[1].material = glow2Mat;
+tunnel2.userData = { mat: tun2Mat, glowMat: glow2Mat };
+scene.add(tunnel2);
+
+/* ============================================================
+   WARP-STREAKS — Tempo-Linien, die sich mit dem Scroll längen
+   ============================================================ */
+const STREAKS = 190;
+let streakMat;
+{
+  const sGeo = new THREE.PlaneGeometry(1, 1);
+  streakMat = new THREE.ShaderMaterial({
+    uniforms:{ uTeal:{value:TEAL}, uStretch:{value:0}, uVis:{value:0} },
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, side:THREE.DoubleSide,
+    vertexShader:`
+      uniform float uStretch;
+      varying vec2 vUv;
+      void main(){ vUv=uv;
+        vec3 pos = position;
+        pos.x *= 1.0 + uStretch*9.0;   // Streak längt sich mit dem Scroll-Tempo
+        vec4 mv = modelViewMatrix * instanceMatrix * vec4(pos,1.0);
+        gl_Position = projectionMatrix * mv; }`,
+    fragmentShader:`
+      uniform vec3 uTeal; uniform float uStretch; uniform float uVis;
+      varying vec2 vUv;
+      void main(){
+        float along = sin(vUv.x*3.14159);             // weiche Enden
+        float across = 1.0 - abs(vUv.y*2.0-1.0);      // dünner heller Kern
+        float a = along * across*across * uVis * (0.06 + uStretch*0.85);
+        gl_FragColor = vec4(mix(uTeal, vec3(1.0), 0.45), a);
+      }`,
+  });
+  const inst = new THREE.InstancedMesh(sGeo, streakMat, STREAKS);
+  inst.frustumCulled = false;   // Instanzen spannen die ganze Flugstrecke auf
+  const m = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(),
+        s = new THREE.Vector3(), pp = new THREE.Vector3();
+  for (let i=0;i<STREAKS;i++){
+    const ang = i*2.39996, rad = 1.6 + ((i*7919)%100)/100*3.6;
+    const z = -8 - ((i*104729)%100)/100*34;   // verteilt über die ganze Flugstrecke
+    pp.set(Math.cos(ang)*rad, Math.sin(ang)*rad, z);
+    // Längsachse in Flugrichtung, Fläche zur Tunnelachse gedreht (ZYX: erst kippen, dann rollen)
+    q.setFromEuler(e.set(0, Math.PI/2, ang, 'ZYX'));
+    s.set(1.6 + (i%5)*.5, .035 + (i%3)*.02, 1);
+    m.compose(pp,q,s); inst.setMatrixAt(i,m);
+  }
+  inst.instanceMatrix.needsUpdate = true;
+  tunnelGroup.add(inst);   // erbt Sichtbarkeit + Barrel-Roll
+}
+
+/* ============================================================
+   LICHT-TORE — vier Ringe quer zur Flugachse, flammen beim Durchstoß auf
+   ============================================================ */
+const gates = [];
+{
+  const gateGeo = new THREE.TorusGeometry(3.0, .05, 8, 72);
+  for (let i=0;i<7;i++){
+    const gm = new THREE.MeshBasicMaterial({ color:TEAL, transparent:true, opacity:0,
+      blending:THREE.AdditiveBlending, depthWrite:false, fog:false });
+    const ring = new THREE.Mesh(gateGeo, gm);
+    ring.position.z = -13.5 - i*3.6;   // -13.5 … -35.1 — Taktschläge durch den ganzen Tunnel
+    ring.userData.s0 = 1 - .18*Math.sin((i/6)*Math.PI);   // Tore folgen der Tunnel-Verengung
+    ring.scale.setScalar(ring.userData.s0);
+    tunnelGroup.add(ring); gates.push(ring);
+  }
+}
+
+/* ============================================================
+   STICKER-FINALE — Emoji-Sprites schweben (Station 8)
+   ============================================================ */
+const stickGroup = new THREE.Group(); scene.add(stickGroup);
+/* Inhalt kommt aus dem GLB-Callback — gleiche Formsprache wie der Hero-Cluster */
+
+
+/* ============================================================
+   AGENTEN-ORBIT — 8 Agenten kreisen um einen Kern (Station 6)
+   ============================================================ */
+const driftGroup = new THREE.Group();
+scene.add(driftGroup);
+driftGroup.visible = false;   // ersetzt durch den Morph-Schwarm
+
+/* ============================================================
+   MORPH-SCHWARM — ein Akteur, der durch alle Stationen morpht
+   (Lusion-Leitmotiv: eine Form, zwölf Sätze)
+   ============================================================ */
+const swarmGroup = new THREE.Group();
+scene.add(swarmGroup);
+const swarmIMs = [];
+let swarmReady = false;
+const SWARM_N = 120;
+function camZ(p){
+  let cz = 9;
+  if (p > 1.9) cz = 9 - (p-1.9)/1.1 * 47;   // Wechsel: Tunnelflug bis z=-38
+  if (p > 3.0){
+    /* Tempo-Dramaturgie: an den Stationen verweilen, dazwischen sprinten.
+       s + k·sin(2πs)/2π ist streng monoton (k<1) und trifft jede Stationsmitte
+       (x.5) sowie jede Grenze (x.0) exakt auf der alten Linearfahrt —
+       die SWARM_KEYS rufen camZ() an x.5 auf und bleiben damit deckungsgleich. */
+    const s = p - 3.0, k = .58;
+    cz = -38 - (s + k * Math.sin(s * Math.PI * 2) / (Math.PI * 2)) * 10;
+  }
+  return cz;
+}
+/* Formationen: pro Key-P ein Array aus {x,y,z,s} für 120 Instanzen */
+function fmHelix(){      // Tunnel: Doppelhelix entlang der Achse
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const t = i / SWARM_N, ang = t * Math.PI * 7 + (i % 2) * Math.PI;
+    a.push({ x: Math.cos(ang)*2.4, y: Math.sin(ang)*2.4, z: -13 - t*24, s: .16 + (i%3)*.05 });
+  }
+  return a;
+}
+function fmArc(cz){      // Studio: zurückhaltender Rand-Staub — der Inhalt regiert
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const side = i % 2 ? 1 : -1;
+    const vis = i % 5 === 0;   // nur jedes fünfte Teil sichtbar
+    a.push({ x: side * (7.5 + (i % 4) * 1.6), y: (((i*7919)%100)/100 - .35) * 4.2,
+      z: cz - 11 - (i % 6), s: vis ? .09 + (i%3)*.03 : .001 });
+  }
+  return a;
+}
+function fmRing(){       // Galaxie: Orbit-Ring um die Scheibe
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const ang = i/SWARM_N*Math.PI*2;
+    a.push({ x: Math.cos(ang)*7.4, y: -2.6 + Math.sin(ang*3)*.5, z: -56 + Math.sin(ang)*7.4, s: .16 + (i%3)*.05 });
+  }
+  return a;
+}
+function fmSkills(cz){   // Skills: lebender Orbit oben rechts — 4 Satelliten für 4 Skills
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    if (i === 0){
+      a.push({ x: 3.35, y: 1.8, z: cz - 7, s: .42 });                  // Kern — im Frustum (halfW ≈ 4.7 bei dist 7)
+    } else if (i < 5){
+      const ang = (i - 1) / 4 * Math.PI * 2;
+      a.push({ x: 3.35 + Math.cos(ang) * 1.2, y: 1.8 + Math.sin(ang) * .85, z: cz - 7, s: .27 });
+    } else {
+      const side = i % 2 ? 1 : -1, vis = i % 4 === 0;                  // Rand-Staub
+      a.push({ x: side * (7.6 + (i % 4) * 1.4), y: (((i*7919) % 100)/100 - .4) * 4,
+        z: cz - 11 - (i % 6), s: vis ? .1 : .001 });
+    }
+  }
+  return a;
+}
+function fmAgents(cz){   // Agenten: 9er-Ring rechts + Wolke dahinter
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    if (i < 9){
+      const ang = i/9*Math.PI*2;
+      a.push({ x: 3.3 + Math.cos(ang)*1.5, y: .55 + Math.sin(ang)*1.1, z: cz - 6, s: i === 0 ? .42 : .26 });
+    } else {
+      a.push({ x: 3.3 + (((i*7919)%100)/100-.5)*7, y: (((i*104729)%100)/100-.5)*4, z: cz - 9 - (i%7), s: .07 + (i%3)*.03 });
+    }
+  }
+  return a;
+}
+function fmFrozen(cz){   // Belege: erstarrtes Feld — nur an den Rändern, Tabelle bleibt frei
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const sx = (((i*7919)%200)/100-1);
+    a.push({ x: Math.sign(sx||1) * (5.2 + Math.abs(sx)*3.4), y: (((i*104729)%200)/100-1)*3.4,
+      z: cz - 4 - ((i*15485863)%100)/100*10, s: .08 + (i%4)*.04 });
+  }
+  return a;
+}
+function fmColumns(cz){  // Stationen: 6 Meilenstein-Säulen — tief und hinten, Stats bleiben frei
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const c = i % 6, h = Math.floor(i/6) / (SWARM_N/6);
+    a.push({ x: (c-2.5)*3.4, y: -5.2 + h*2.4, z: cz - 12 - (c%2)*.9, s: .12 + (c===2 ? .05 : 0) });
+  }
+  return a;
+}
+function fmBridge(cz){   // Pitch: die Brücke als begehbarer Bogen
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const t = i/SWARM_N, x = (t-.5)*12;
+    a.push({ x: x*1.15, y: -2.9 + Math.sin(t*Math.PI)*2.4, z: cz - 6.5 - Math.sin(t*Math.PI*2)*.7, s: .17 + (i%3)*.04 });
+  }
+  return a;
+}
+function fmHalo(cz){     // About: ruhiger Halo hinter dem Brief
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const ang = i/SWARM_N*Math.PI*2;
+    a.push({ x: Math.cos(ang)*7.2, y: Math.sin(ang)*3.9, z: cz - 7 - (i%4)*.6, s: .14 + (i%3)*.04 });
+  }
+  return a;
+}
+function fmBurst(cz){    // Finale: Feier-Ring — Zentrum bleibt frei für CTA und Typo
+  const a = [];
+  for (let i = 0; i < SWARM_N; i++){
+    const u = ((i*7919)%100)/50-1, v = ((i*104729)%100)/100*Math.PI*2, r = 4.4 + ((i*15485863)%100)/100*2.4;
+    const sq = Math.sqrt(Math.max(0, 1-u*u));
+    a.push({ x: Math.cos(v)*sq*r*1.3, y: u*r*.9, z: cz - 9.5 + Math.sin(v)*sq*r*.5, s: .18 + (i%4)*.06 });
+  }
+  return a;
+}
+const SWARM_KEYS = [
+  { p: 2.4, f: fmHelix() },                 // Wechsel: Doppelhelix im Tunnel
+  { p: 3.5, f: fmArc(camZ(3.5)) },          // Projekte: Rand-Staub
+  { p: 4.5, f: fmFrozen(camZ(4.5)) },       // Belege: erstarrtes Feld
+  { p: 5.5, f: fmSkills(camZ(5.5)) },       // Skills: Orbit oben rechts — Textspalten bleiben frei
+  { p: 6.5, f: fmColumns(camZ(6.5)) },      // Stationen: 6 Säulen
+  { p: 7.6, f: fmBurst(camZ(7.6)) },        // Finale: Burst
+];
+const _sm = new THREE.Matrix4(), _sq = new THREE.Quaternion(), _se = new THREE.Euler(),
+      _spv = new THREE.Vector3(), _ssv = new THREE.Vector3(),
+      _sidq = new THREE.Quaternion();   // Identität — Ausricht-Ziel beim Scroll-Stretch
+function swarmStep(p, t, sStr = 0){
+  swarmGroup.visible = swarmReady && p > 1.95 && p < 8.3;
+  if (!swarmGroup.visible) return;
+  let k = 0;
+  while (k < SWARM_KEYS.length-1 && p > SWARM_KEYS[k+1].p) k++;
+  const A = SWARM_KEYS[k], B = SWARM_KEYS[Math.min(k+1, SWARM_KEYS.length-1)];
+  const mtRaw = B.p === A.p ? 0 : clamp((p - A.p) / (B.p - A.p), 0, 1);
+  const xs = Math.max(1, (vw/vh) / 1.78);   // Ultrawide-Guard
+  /* Finale-Orbit: sobald der Burst steht, kreist er träge um den CTA */
+  const orbW = sat((p - 7.7) / .25);
+  const orbC = camZ(7.6) - 9.5;             // Z-Zentrum des Burst-Rings
+  /* Scroll-Energie → Streckung in Fahrtrichtung (Kamera fährt entlang Z) */
+  const str = sat(sStr * 1.3);
+  for (let ki = 0; ki < 3; ki++){
+    const im = swarmIMs[ki], baseR = im.userData.baseR;
+    for (let i = 0; i < 40; i++){
+      const gi = ki*40 + i;
+      const a = A.f[gi], b = B.f[gi];
+      /* Welle statt Gleichschritt: Phase läuft mit dem Index durch die Formation,
+         goldener Jitter bricht die Reihenfolge organisch auf */
+      const ph = (gi / SWARM_N) * .34 + ((gi * .61803) % 1) * .16;
+      let mi = clamp((mtRaw - ph) / .5, 0, 1);
+      const e = mi - 1;
+      mi = 1 + e*e*(e*1.9 + .9);             // sanftes easeOutBack — ~3% Überschwinger
+      const fly = Math.sin(clamp(mi, 0, 1) * Math.PI);   // 1 = mitten im Flug
+      const wob = Math.sin(t*.7 + gi*1.7)*.14;
+      let x = (a.x + (b.x-a.x)*mi) * xs + wob;
+      const y = a.y + (b.y-a.y)*mi + Math.cos(t*.6 + gi)*.12
+              + fly * ((gi & 1) ? .8 : -.6);             // Bogenflug: abwechselnd oben/unten ausweichen
+      let z = a.z + (b.z-a.z)*mi;
+      /* Orbit: jedes Teilchen rotiert um die Y-Achse durchs Burst-Zentrum,
+         jedes dritte gegenläufig — eingeblendet über orbW */
+      if (orbW > 0){
+        /* Hover-Puls (endPullS): Orbit verengt sich und beschleunigt — orbPhase statt t,
+           damit die Tempoänderung kontinuierlich bleibt (kein Winkelsprung) */
+        const oa = orbPhase * (.16 + (gi % 4) * .055) * ((gi % 3) ? 1 : -1);
+        const ca = Math.cos(oa), sa = Math.sin(oa);
+        const dx = x, dz = z - orbC;
+        const pull = 1 - endPullS * .38;   /* Mail-Hover: der Schwarm sammelt sich um den CTA */
+        x = lerp(dx, (dx*ca - dz*sa) * pull, orbW);
+        z = lerp(orbC + dz, orbC + (dx*sa + dz*ca) * pull, orbW);
+      }
+      const sc = (a.s + (b.s-a.s)*clamp(mi, 0, 1)) / baseR;   // Skala nie überschwingen (b.s kann ~0 sein)
+      _se.set(t*.25 + gi + fly*1.4, t*.3 + gi*2.1 + fly*1.8, 0);   // Extra-Drall im Flug
+      _sq.setFromEuler(_se);
+      if (str > .02) _sq.slerp(_sidq, str * .85);   // bei Tempo: Taumeln zur Fahrtachse ausrichten …
+      _spv.set(x, y, z);
+      _ssv.set(sc, sc, sc * (1 + str * 2.4));        // … und entlang Z zu Speed-Lines strecken
+      _sm.compose(_spv, _sq, _ssv);
+      im.setMatrixAt(i, _sm);
+    }
+    im.instanceMatrix.needsUpdate = true;
+  }
+}
+const agentGroup = new THREE.Group();
+agentGroup.position.set(vw > 860 ? 3.3 : 0, .55, -70);
+scene.add(agentGroup);
+{
+  const aMat = new THREE.MeshMatcapMaterial({ matcap, color:'#F2EFE8' });
+  const core = new THREE.Mesh(new THREE.SphereGeometry(.32, 32, 24),
+    new THREE.MeshMatcapMaterial({ matcap, color:'#E94B5D' }));
+  agentGroup.add(core);
+  for (let i=0;i<8;i++){
+    const ag = new THREE.Mesh(new THREE.SphereGeometry(.14 + (i%3)*.03, 20, 16),
+      i===0 ? new THREE.MeshMatcapMaterial({ matcap, color:'#1AA591' }) : aMat);
+    ag.userData = { a: i/8*Math.PI*2, r: .85 + (i%4)*.22, sp: .35 + (i%4)*.09 };
+    agentGroup.add(ag);
+  }
+}
+
+/* ============================================================
+   BILD-PLANES (Projekte, DOM-synchron) + REEL-PLANES + TRANSMORPH
+   ============================================================ */
+const planeGeo = new THREE.PlaneGeometry(1,1,24,24);
+const planes = [];
+const imgVert = `
+  uniform float uBend; uniform vec4 uFrom; uniform vec4 uTo; uniform float uMorph; uniform vec2 uTilt;
+  varying vec2 vUv;
+  void main(){ vUv = uv;
+    /* Ecken-Stagger: oben-links führt, unten-rechts zieht nach (Lusion-Rezept) */
+    float pw = 1.0 - (pow(uv.x, 1.5) + pow(1.0 - uv.y, 1.5)) * .5;
+    float ts = smoothstep(pw * .3, .7 + pw * .3, uMorph);
+    vec2 fp = vec2(uFrom.x + (position.x + .5) * uFrom.z, -(uFrom.y + (.5 - position.y) * uFrom.w));
+    vec2 tp = vec2(uTo.x   + (position.x + .5) * uTo.z,   -(uTo.y   + (.5 - position.y) * uTo.w));
+    vec2 pp = mix(fp, tp, ts);
+    /* easeOutBack-Drall um die Bildmitte */
+    float rot = (smoothstep(0.0, 1.0, uMorph) - uMorph) * -.35;
+    vec2 c = mix(uFrom.xy + uFrom.zw * .5, uTo.xy + uTo.zw * .5, uMorph);
+    c = vec2(c.x, -c.y);
+    vec2 d = pp - c;
+    pp = c + vec2(d.x * cos(rot) - d.y * sin(rot), d.x * sin(rot) + d.y * cos(rot));
+    /* Maus-Tilt: die Karte kippt der Maus entgegen — perspektivischer Skew */
+    pp += vec2(uTilt.x * (uv.y - .5), uTilt.y * (uv.x - .5)) * min(uFrom.z, uFrom.w) * .14;
+    pp.y += sin(uv.x * 3.14159) * uBend * 40.0;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pp, position.z, 1.0); }`;
+const imgFrag = `
+  uniform sampler2D uTex; uniform sampler2D uPaint; uniform vec2 uViewport;
+  uniform vec2 uUvScale; uniform vec2 uUvOffset; uniform float uHover; uniform float uOpen;
+  varying vec2 vUv;
+  void main(){
+    vec2 suv = gl_FragCoord.xy/uViewport;
+    vec2 flow = (texture2D(uPaint, suv).rg - 0.5) * 2.0;
+    vec2 uv = vUv*uUvScale+uUvOffset;
+    uv += flow * (0.05 + uHover*0.05) * (1.0-uOpen);
+    uv = (uv-.5)*(1.0-uHover*.06-uOpen*.04)+.5;
+    float sh = (uHover*.006+length(flow)*.012)*(1.0-uOpen);
+    float r = texture2D(uTex, uv+vec2(sh,0.)).r;
+    vec2 gb = texture2D(uTex, uv).gb;
+    gl_FragColor = vec4(r, gb.x, gb.y, 1.0);
+  }`;
+function makePlane(holder, src){
+  const mat = new THREE.ShaderMaterial({
+    uniforms:{
+      uTex:{value:null}, uPaint:{value:null},
+      uViewport:{value:new THREE.Vector2(vw*dpr,vh*dpr)},
+      uUvScale:{value:new THREE.Vector2(1,1)}, uUvOffset:{value:new THREE.Vector2(0,0)},
+      uHover:{value:0}, uOpen:{value:0}, uBend:{value:0}, uTilt:{value:new THREE.Vector2(0,0)},
+      uFrom:{value:new THREE.Vector4(0,0,1,1)}, uTo:{value:new THREE.Vector4(0,0,1,1)}, uMorph:{value:0},
+    }, vertexShader:imgVert, fragmentShader:imgFrag,
+  });
+  const tex = texLoader.load(src, t=>{ mat.uniforms.uTex.value=t; fitCover(plane,t); });
+  tex.minFilter = THREE.LinearFilter;
+  const plane = new THREE.Mesh(planeGeo, mat);
+  plane.userData = { holder, hover:0, hoverTarget:0, openT:0, openDir:0, rectFrom:null, tex };
+  ortho.add(plane); planes.push(plane);
+  return plane;
+}
+function fitCover(plane, tex){
+  if (!tex.image) return;
+  const r = plane.userData.holder.getBoundingClientRect();
+  const pa = r.width/Math.max(1,r.height), ia = tex.image.width/tex.image.height;
+  const s = plane.material.uniforms.uUvScale.value, o = plane.material.uniforms.uUvOffset.value;
+  /* focusY: 0 = unterer Bildrand, .5 = mittig (Default), 1 = oberer Bildrand (Gesicht!) */
+  const fy = plane.userData.focusY ?? .5;
+  if (pa>ia){ s.set(1, ia/pa); o.set(0,(1-ia/pa)*fy); } else { s.set(pa/ia,1); o.set((1-pa/ia)/2,0); }
+}
+function syncPlane(plane, rect){
+  const r = rect || plane.userData.holder.getBoundingClientRect();
+  const u = plane.material.uniforms;
+  u.uFrom.value.set(r.left, r.top, Math.max(1,r.width), Math.max(1,r.height));
+  u.uTo.value.copy(u.uFrom.value);
+  u.uMorph.value = 0;
+  plane.scale.set(1,1,1);
+  plane.position.set(0, 0, plane.userData.openT>0 ? 5 : 0);
+}
+/* Morph: Karten-Rect → Vollbild, Ecke voraus */
+function morphPlane(plane, fromRect, ot){
+  const u = plane.material.uniforms;
+  u.uFrom.value.set(fromRect.left, fromRect.top, fromRect.width, fromRect.height);
+  u.uTo.value.set(0, 0, vw, vh);
+  u.uMorph.value = ot;
+  plane.scale.set(1,1,1);
+  plane.position.set(0, 0, 5);
+}
+/* Tilt-Verkabelung: Mausposition in der Karte → Ziel-Tilt der Plane */
+function wireTilt(el, plane){
+  if (isTouch) return;
+  el.addEventListener('mousemove', e=>{
+    const r = el.getBoundingClientRect();
+    plane.userData.tx = (e.clientX - r.left)/Math.max(1,r.width) - .5;
+    plane.userData.ty = (e.clientY - r.top)/Math.max(1,r.height) - .5;
+  });
+  el.addEventListener('mouseleave', ()=>{ plane.userData.tx = 0; plane.userData.ty = 0; });
+}
+document.querySelectorAll('.gl-img').forEach(h=>{
+  const img = h.querySelector('img');
+  const plane = makePlane(h, img.currentSrc || img.src);
+  const [wa, wb] = (h.dataset.win || '3.1,3.85').split(',').map(Number);
+  plane.userData.wa = wa; plane.userData.wb = wb;
+  plane.userData.fly = 1;   // Projekt-Karten fliegen aus der Tiefe ein
+  const card = h.closest('.card');
+  if (card && !isTouch){
+    card.addEventListener('mouseenter',()=>plane.userData.hoverTarget=1);
+    card.addEventListener('mouseleave',()=>plane.userData.hoverTarget=0);
+    wireTilt(card, plane);
+  }
+});
+
+/* ============================================================
+   TRESEN-BILDKARTEN — Duotone (Ink→Teal), Hover reißt zur Farbe auf
+   (Lusion-Rezept: sdRoundedBox-Maske + showRatio-Grow + Tint-Reveal)
+   ============================================================ */
+const duoFrag = `
+  uniform sampler2D uTex; uniform sampler2D uPaint; uniform vec2 uViewport;
+  uniform vec2 uUvScale; uniform vec2 uUvOffset; uniform float uHover; uniform float uOpen;
+  uniform float uShow; uniform float uVis; uniform float uPar; uniform vec2 uWH;
+  uniform float uTime; uniform vec3 uInk; uniform vec3 uTeal;
+  varying vec2 vUv;
+  float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+  float sdRBox(vec2 p, vec2 b, float r){ vec2 q=abs(p)-b+r; return min(max(q.x,q.y),0.)+length(max(q,0.))-r; }
+  void main(){
+    /* Maske wächst mit uShow von 72% auf 100% — Pixel-Einheiten, Radius = CSS 6px */
+    float d = sdRBox((vUv-.5)*uWH, uWH*.5*mix(.72,1.,uShow), 6.);
+    float mask = (1. - smoothstep(-1.2, 1.2, d)) * uVis;
+    if (mask < .004) discard;
+    /* Paint-Smear + Scroll-Parallax: Bild gleitet im Fenster */
+    vec2 suv = gl_FragCoord.xy/uViewport;
+    vec2 flow = (texture2D(uPaint, suv).rg - .5) * 2.;
+    vec2 uv = vUv*uUvScale + uUvOffset;
+    uv = (uv-.5)*.88 + .5;                  // 12% Zoom-Reserve für den Parallax-Weg
+    uv.y += uPar * .055;                    // Holder-Mitte vs. Viewport-Mitte
+    uv += flow * .04;
+    uv = (uv-.5)*(1.-uHover*.05)+.5;        // Hover: sanfter Zoom rein
+    vec3 col = texture2D(uTex, uv).rgb;
+    /* Duotone: Ink in den Tiefen, Teal in den Lichtern (Lusion: max(tint,luma)-Familie) */
+    float luma = dot(col, vec3(.299,.587,.114));
+    vec3 duo = mix(uInk, uTeal, smoothstep(.08,.92,luma));
+    duo = mix(duo, vec3(luma), .22);        // Hauch Grau — edler, weniger Plakat
+    /* Hover reißt radial vom Zentrum zur Farbe auf, Noise-Kante */
+    float n = h21(floor(vUv*vec2(90.,60.)));
+    float rad = length((vUv-.5)*vec2(uWH.x/max(uWH.y,1.),1.));
+    float tear = smoothstep(rad - .18 + n*.14, rad + .05, uHover*1.45);
+    col = mix(duo, col, tear);
+    col = mix(col*1.18 + .04, col, uShow);  // Einblendung: kurzer Licht-Lift
+    gl_FragColor = vec4(col, mask);
+  }`;
+function makeDuoPlane(holder, src){
+  const mat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms:{
+      uTex:{value:null}, uPaint:{value:null},
+      uViewport:{value:new THREE.Vector2(vw*dpr,vh*dpr)},
+      uUvScale:{value:new THREE.Vector2(1,1)}, uUvOffset:{value:new THREE.Vector2(0,0)},
+      uHover:{value:0}, uOpen:{value:0}, uBend:{value:0}, uTilt:{value:new THREE.Vector2(0,0)},
+      uFrom:{value:new THREE.Vector4(0,0,1,1)}, uTo:{value:new THREE.Vector4(0,0,1,1)}, uMorph:{value:0},
+      uShow:{value:0}, uVis:{value:0}, uPar:{value:0}, uWH:{value:new THREE.Vector2(1,1)},
+      uTime:{value:0}, uInk:{value:new THREE.Color('#0E2244')}, uTeal:{value:TEAL},
+    }, vertexShader: imgVert, fragmentShader: duoFrag,   // gleicher Vertex wie die Projekt-Karten
+  });
+  const tex = texLoader.load(src, tx=>{ mat.uniforms.uTex.value=tx; fitCover(plane,tx); });
+  tex.minFilter = THREE.LinearFilter;
+  const plane = new THREE.Mesh(planeGeo, mat);
+  plane.userData = { holder, hover:0, hoverTarget:0, openT:0, openDir:0, rectFrom:null, tex, isDuo:true };
+  ortho.add(plane); planes.push(plane);
+  return plane;
+}
+document.querySelectorAll('.gl-duo').forEach((h,i)=>{
+  const img = h.querySelector('img');
+  const plane = makeDuoPlane(h, img.currentSrc || img.src);
+  const [wa, wb] = (h.dataset.win || '1.08,1.82').split(',').map(Number);
+  plane.userData.wa = wa; plane.userData.wb = wb; plane.userData.idx = i;
+  const card = h.closest('.agent-card');
+  if (card && !isTouch){
+    card.addEventListener('mouseenter',()=>plane.userData.hoverTarget=1);
+    card.addEventListener('mouseleave',()=>plane.userData.hoverTarget=0);
+    wireTilt(card, plane);
+  }
+});
+
+/* Transmorph */
+const detail = document.getElementById('detail');
+let openPlane = null;
+const easeIO = t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+document.querySelectorAll('.card').forEach((card,i)=>{
+  card.addEventListener('click',()=>{
+    const plane = planes[i];
+    if (!plane || openPlane) return;
+    openPlane = plane;
+    plane.userData.rectFrom = plane.userData.holder.getBoundingClientRect();
+    plane.userData.openDir = 1;
+    fillDetail(card);
+    detail.classList.add('is-open'); document.body.classList.add('is-locked');
+  });
+});
+function closeDetail(){
+  if (openPlane) openPlane.userData.openDir = -1;
+  detail.classList.remove('is-open'); document.body.classList.remove('is-locked');
+  setTimeout(clearDetailMedia, 500);
+}
+document.getElementById('detailClose').addEventListener('click',closeDetail);
+document.getElementById('detailScrim').addEventListener('click',closeDetail);
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeDetail(); });
+
+/* ============================================================
+   FINALE-PORTRAIT — das echte Gesicht hinter der Fahrt.
+   Block-Dissolve wie die GL-Typo, Licht-Sweep beim Ankommen,
+   Ränder schmelzen in den Ink-Raum (schwarzer Foto-BG = Bühne)
+   ============================================================ */
+const portFrag = `
+  uniform sampler2D uTex; uniform sampler2D uPaint; uniform vec2 uViewport;
+  uniform vec2 uUvScale; uniform vec2 uUvOffset;
+  uniform float uHover; uniform float uOpen; uniform float uReveal; uniform float uSweep; uniform float uTime;
+  varying vec2 vUv;
+  float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+  void main(){
+    vec2 suv = gl_FragCoord.xy/uViewport;
+    vec2 flow = (texture2D(uPaint, suv).rg - .5) * 2.0;
+    vec2 uv = vUv*uUvScale+uUvOffset;
+    uv += flow * .04;                                 /* Maus-Smear streicht übers Portrait */
+    uv = (uv-.5)*(1.0-uHover*.05)+.5;                 /* Hover: leiser Zoom */
+    /* Aufbau: Block-Dissolve — das Gesicht materialisiert aus Rauschen */
+    float n = h(floor(vUv*vec2(96., 60.)));
+    float rv = smoothstep(n-.18, n+.05, uReveal*1.2);
+    /* RGB-Split nur solange das Bild entsteht */
+    float split = (1.-uReveal)*.014 + length(flow)*.008;
+    float r = texture2D(uTex, uv+vec2(split,0.)).r;
+    vec2 gb = texture2D(uTex, uv-vec2(split*.5,0.)).gb;
+    vec3 col = vec3(r, gb);
+    /* Licht-Sweep: eine Glanzbahn läuft beim Ankommen diagonal durchs Bild */
+    float sw = uSweep*1.7 - .25;
+    col += smoothstep(.20,.0,abs(vUv.x*.8+vUv.y*.45-sw)) * vec3(.42,.40,.36) * step(.001,uSweep) * (1.-uSweep*.7);
+    /* Brand-Licht: Teal von links unten, Pink von rechts oben — leise, das Bloom holt es ab */
+    col += vec3(.10,.65,.57) * .13 * smoothstep(.75,.0,length(vUv-vec2(.02,.08)));
+    col += vec3(.91,.29,.36) * .10 * smoothstep(.80,.0,length(vUv-vec2(.98,.94)));
+    /* Ränder schmelzen in den Ink-Raum — der schwarze Foto-BG wird zur Bühne */
+    vec2 e = smoothstep(vec2(0.), vec2(.10,.14), vUv) * smoothstep(vec2(1.), vec2(.90,.86), vUv);
+    float a = rv * e.x * e.y;
+    if (a < .004) discard;
+    gl_FragColor = vec4(col, a);
+  }`;
+let portPlane = null;
+{
+  const holder = document.getElementById('endPortrait');
+  if (holder){
+    const mat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false,
+      uniforms:{
+        uTex:{value:null}, uPaint:{value:null},
+        uViewport:{value:new THREE.Vector2(vw*dpr,vh*dpr)},
+        uUvScale:{value:new THREE.Vector2(1,1)}, uUvOffset:{value:new THREE.Vector2(0,0)},
+        uHover:{value:0}, uOpen:{value:0}, uBend:{value:0}, uTilt:{value:new THREE.Vector2(0,0)},
+        uFrom:{value:new THREE.Vector4(0,0,1,1)}, uTo:{value:new THREE.Vector4(0,0,1,1)}, uMorph:{value:0},
+        uReveal:{value:0}, uSweep:{value:0}, uTime:{value:0},
+      }, vertexShader: imgVert, fragmentShader: portFrag,
+    });
+    portPlane = new THREE.Mesh(planeGeo, mat);
+    portPlane.renderOrder = 2;
+    portPlane.userData = { holder, hover:0, hoverTarget:0, openT:0, openDir:0, rectFrom:null,
+      wa: 7.5, wb: 8.4, focusY: .94,   /* Crop sitzt auf dem Gesicht, nicht auf dem Sakko */
+      tex: texLoader.load('assets/portrait.jpg', tx=>{ mat.uniforms.uTex.value = tx; fitCover(portPlane, tx); }) };
+    ortho.add(portPlane);
+    planes.push(portPlane);   /* WICHTIG: nach den .gl-img-Planes pushen — Karten-Indizes bleiben stabil */
+    if (!isTouch){
+      holder.addEventListener('mouseenter', ()=> portPlane.userData.hoverTarget = 1);
+      holder.addEventListener('mouseleave', ()=> portPlane.userData.hoverTarget = 0);
+    }
+  }
+}
+
+/* Mail-Hover: der Schwarm spürt die Absicht — Orbit zieht sich zusammen, dreht schneller.
+   orbPhase akkumuliert die Drehung (statt t direkt), damit der Tempowechsel keinen Winkelsprung macht. */
+let endPull = 0, endPullS = 0, orbPhase = 0;
+const endMail = document.querySelector('.st-end .mail');
+if (endMail && !isTouch){
+  endMail.addEventListener('mouseenter', ()=>{ endPull = 1; });
+  endMail.addEventListener('mouseleave', ()=>{ endPull = 0; });
+}
+/* Licht-Aura hinterm Finale — Teal-Kern, Pink-Saum; eine additive Plane, einmalig erzeugt */
+const endGlow = (()=>{
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const x = c.getContext('2d');
+  const g = x.createRadialGradient(128,128,0,128,128,128);
+  g.addColorStop(0,  'rgba(26,165,145,.9)');
+  g.addColorStop(.45,'rgba(233,75,93,.28)');
+  g.addColorStop(1,  'rgba(233,75,93,0)');
+  x.fillStyle = g; x.fillRect(0,0,256,256);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(26,26),
+    new THREE.MeshBasicMaterial({ map:new THREE.CanvasTexture(c), transparent:true, opacity:0,
+      blending:THREE.AdditiveBlending, depthWrite:false, fog:false }));
+  m.position.set(0, -.4, -99.5);   // zwischen Video-Plate (-101) und Typo (-96.6)
+  m.visible = false;
+  scene.add(m); return m;
+})();
+
+/* ============================================================
+   GL-TYPOGRAFIE — Schlüssel-Headlines leben IN der Szene:
+   Paint-Smear, Bloom und Chromatik wirken direkt auf die Buchstaben
+   ============================================================ */
+const typoPlanes = [];
+function makeTypoPlane(segLines, wWorld){
+  const W = 2048, H = 760;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.textBaseline = 'middle';
+  let y0 = H/2 - (segLines.length-1)*150;
+  for (const segs of segLines){
+    let total = 0;
+    for (const sg of segs){ x.font = sg.f; total += x.measureText(sg.t).width; }
+    let cx = W/2 - total/2;
+    x.textAlign = 'left';
+    for (const sg of segs){
+      x.font = sg.f; x.fillStyle = sg.c;
+      x.fillText(sg.t, cx, y0);
+      cx += x.measureText(sg.t).width;
+    }
+    y0 += 300;
+  }
+  const tex = new THREE.CanvasTexture(c); tex.anisotropy = 8;
+  const mat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, depthTest: false,
+    uniforms: { uTex:{value:tex}, uReveal:{value:0}, uTime:{value:0} },
+    vertexShader: `varying vec2 vUv; uniform float uTime; uniform float uReveal;
+      void main(){ vUv = uv; vec3 p = position;
+        p.y += sin(uv.x*6.283 + uTime*.9) * .12 * (1.-uReveal);
+        p.x += sin(uv.y*4.0 + uTime*.7) * .06 * (1.-uReveal);
+        gl_Position = projectionMatrix*modelViewMatrix*vec4(p,1.); }`,
+    fragmentShader: `varying vec2 vUv; uniform sampler2D uTex; uniform float uReveal;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+      void main(){
+        vec4 t = texture2D(uTex, vUv);
+        float n = h(floor(vUv*vec2(110., 34.)));
+        float a = t.a * smoothstep(n - .16, n + .04, uReveal*1.18);
+        if (a < .004) discard;
+        gl_FragColor = vec4(t.rgb, a);
+      }`});
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(wWorld, wWorld*H/W), mat);
+  m.frustumCulled = false; m.renderOrder = 6;
+  scene.add(m); typoPlanes.push(m);
+  return m;
+}
+/* Finale-Headline lebt als DOM IM Portrait-Panel (Ortho-Pass liegt über der Szene —
+   eine Szene-Typo-Plane wäre hinter dem Panel unsichtbar). makeTypoPlane bleibt verfügbar. */
+
+/* ============================================================
+   HINTERGRUND-PLATES — subtile Video-Loops in der Szene
+   (Galaxie: Teal-Bokeh-Tiefe · Finale: Navy-Ink-Atmosphäre)
+   ============================================================ */
+function makeBgPlate(src, z, w, hh){
+  const v = document.createElement('video');
+  v.src = src; v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+  const tex = new THREE.VideoTexture(v);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, hh),
+    new THREE.MeshBasicMaterial({ map:tex, transparent:true, opacity:0,
+      blending:THREE.AdditiveBlending, depthWrite:false, fog:false })
+  );
+  mesh.position.set(0, 0, z);
+  mesh.visible = false;
+  scene.add(mesh);
+  return { v, mesh, playing:false, pending:false };
+}
+const bgEnd = makeBgPlate('assets/bg-finale.mp4', -101, 44, 26);
+function syncBgPlate(bp, o, maxOp){
+  bp.mesh.visible = o > .01;
+  if (!bp.mesh.visible){
+    if (bp.playing){ bp.v.pause(); bp.playing = false; }
+    return;
+  }
+  bp.mesh.material.opacity = o * maxOp;
+  if (!bp.playing && !bp.pending){
+    bp.pending = true;
+    const pr = bp.v.play();
+    if (pr) pr.then(()=>{ bp.playing = true; bp.pending = false; }).catch(()=>{ bp.pending = false; });
+    else bp.pending = false;
+  }
+}
+
+/* ============================================================
+   SCREENPAINT — Quarter-Res-Pingpong (Lusion-Rezept e/f)
+   ============================================================ */
+const PW = ()=>Math.max(160, Math.round(vw/4)), PH = ()=>Math.max(90, Math.round(vh/4));
+const paintOpts = { type:THREE.HalfFloatType, minFilter:THREE.LinearFilter, magFilter:THREE.LinearFilter, depthBuffer:false };
+let paintA = new THREE.WebGLRenderTarget(PW(),PH(),paintOpts);
+let paintB = new THREE.WebGLRenderTarget(PW(),PH(),paintOpts);
+const fsGeo = new THREE.PlaneGeometry(2,2);
+const fsCam = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const paintScene = new THREE.Scene();
+const paintMat = new THREE.ShaderMaterial({
+  uniforms:{
+    uPrev:{value:null}, uFrom:{value:new THREE.Vector2(-9,-9)}, uTo:{value:new THREE.Vector2(-9,-9)},
+    uVel:{value:new THREE.Vector2(0,0)}, uAspect:{value:vw/vh}, uRadius:{value:.085},
+  },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position,1.0); }`,
+  fragmentShader:`
+    uniform sampler2D uPrev; uniform vec2 uFrom; uniform vec2 uTo; uniform vec2 uVel;
+    uniform float uAspect; uniform float uRadius; varying vec2 vUv;
+    float sdSeg(vec2 p, vec2 a, vec2 b){
+      vec2 pa=p-a, ba=b-a; float h=clamp(dot(pa,ba)/max(dot(ba,ba),1e-5),0.,1.);
+      return length(pa-ba*h); }
+    void main(){
+      vec4 prev = texture2D(uPrev, vUv);
+      vec2 v = (prev.xy - 0.5);
+      // Selbst-Advektion: gegen eigene Velocity zurücklesen
+      vec4 adv = texture2D(uPrev, vUv - v*0.012);
+      v = (adv.xy - 0.5) * 0.962;
+      float w = adv.z * 0.945;
+      vec2 p = vUv*vec2(uAspect,1.0);
+      float d = sdSeg(p, uFrom*vec2(uAspect,1.0), uTo*vec2(uAspect,1.0));
+      float stamp = 1.0 - smoothstep(0.0, uRadius, d);
+      v += uVel * stamp * 1.5; w = max(w, stamp);
+      gl_FragColor = vec4(clamp(v+0.5, 0.0, 1.0), w, 1.0);
+    }`,
+});
+paintScene.add(new THREE.Mesh(fsGeo, paintMat));
+/* Paint-Buffer neutral (0.5,0.5,0) initialisieren — sonst Vollbild-Schmieren beim Start */
+const paintInitMat = new THREE.ShaderMaterial({
+  vertexShader:`void main(){ gl_Position=vec4(position,1.0); }`,
+  fragmentShader:`void main(){ gl_FragColor=vec4(0.5,0.5,0.0,1.0); }`,
+});
+const paintInitScene = new THREE.Scene();
+paintInitScene.add(new THREE.Mesh(fsGeo, paintInitMat));
+function initPaint(){
+  renderer.setRenderTarget(paintA); renderer.render(paintInitScene, fsCam);
+  renderer.setRenderTarget(paintB); renderer.render(paintInitScene, fsCam);
+  renderer.setRenderTarget(null);
+}
+initPaint();
+
+/* ============================================================
+   POST-STACK — Szene-RT → Bloom-Mips → Grade(+Paint-Smear) → Screen
+   ============================================================ */
+const sceneRT = new THREE.WebGLRenderTarget(vw*dpr, vh*dpr, { samples: 4 });
+const mip1 = new THREE.WebGLRenderTarget(vw*dpr/2, vh*dpr/2);
+const mip2 = new THREE.WebGLRenderTarget(vw*dpr/4, vh*dpr/4);
+const blurScene = new THREE.Scene();
+const blurMat = new THREE.ShaderMaterial({
+  uniforms:{ uTex:{value:null}, uDir:{value:new THREE.Vector2(1,0)}, uTexel:{value:new THREE.Vector2(1,1)} },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position,1.0); }`,
+  fragmentShader:`
+    uniform sampler2D uTex; uniform vec2 uDir; uniform vec2 uTexel; varying vec2 vUv;
+    void main(){
+      vec4 c = texture2D(uTex, vUv)*0.227;
+      vec2 o1 = uDir*uTexel*1.384, o2 = uDir*uTexel*3.230;
+      c += (texture2D(uTex,vUv+o1)+texture2D(uTex,vUv-o1))*0.316;
+      c += (texture2D(uTex,vUv+o2)+texture2D(uTex,vUv-o2))*0.070;
+      gl_FragColor = c; }`,
+});
+blurScene.add(new THREE.Mesh(fsGeo, blurMat));
+const tmp1 = new THREE.WebGLRenderTarget(vw*dpr/2, vh*dpr/2);
+const tmp2 = new THREE.WebGLRenderTarget(vw*dpr/4, vh*dpr/4);
+
+const gradeScene = new THREE.Scene();
+const gradeMat = new THREE.ShaderMaterial({
+  uniforms:{
+    uTex:{value:null}, uBloom1:{value:null}, uBloom2:{value:null}, uPaint:{value:null},
+    uTime:{value:0}, uVigStr:{value:.55}, uChroma:{value:0}, uBloomAmt:{value:.32},
+    uAspect:{value:vw/vh}, uDark:{value:0}, uSpeed:{value:0}, uFlash:{value:0},
+  },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position,1.0); }`,
+  fragmentShader:`
+    uniform sampler2D uTex; uniform sampler2D uBloom1; uniform sampler2D uBloom2; uniform sampler2D uPaint;
+    uniform float uTime; uniform float uVigStr; uniform float uChroma; uniform float uBloomAmt;
+    uniform float uAspect; uniform float uDark; uniform float uSpeed; uniform float uFlash; varying vec2 vUv;
+    float hash13(vec3 p){ p=fract(p*.1031); p+=dot(p,p.zyx+31.32); return fract((p.x+p.y)*p.z); }
+    void main(){
+      vec4 pd = texture2D(uPaint, vUv);
+      vec2 vel = (pd.xy-0.5)*2.0*pd.z;
+      // Radialrichtung vom Bildzentrum (aspektkorrigiert) — Basis für den Speed-Blur
+      vec2 cd = (vUv-0.5)*vec2(uAspect,1.0);
+      float rr = length(cd);
+      // 9-Tap-Smear: Paint-Velocity + radialer Speed-Blur teilen sich dieselben Taps (0 Extra-Fetches)
+      // uSpeed>0 = Vorwärtsfahrt → Streifen nach außen; rückwärts ziehen sie nach innen
+      vec2 stepv = vel * 0.012 + cd * uSpeed * 0.016;
+      vec3 col = vec3(0.0); vec2 uv = vUv - stepv*4.0;
+      for (int i=0;i<9;i++){ col += texture2D(uTex, uv).rgb; uv += stepv; }
+      col /= 9.0;
+      // RGB-Shimmer auf der Spur
+      col += sin(vec3(0.0,2.1,4.2) + (vel.x+vel.y)*42.0) * 0.035 * pd.z;
+      // chromatische Vignette (Void-Station) — cd/rr oben bereits berechnet
+      if (uChroma > 0.001){
+        vec2 off = cd * rr * 0.018 * uChroma;
+        col.r = mix(col.r, texture2D(uTex, vUv+off).r, uChroma*.8);
+        col.b = mix(col.b, texture2D(uTex, vUv-off).b, uChroma*.8);
+      }
+      // Bloom
+      col += (texture2D(uBloom1,vUv).rgb*0.6 + texture2D(uBloom2,vUv).rgb*0.9) * uBloomAmt;
+      // Licht-Atemzug beim Stationswechsel — weich statt Blitz
+      col = col * (1.0 + uFlash*0.32) + uFlash*0.04;
+      // Grade: leichte Sättigung+Kontrast
+      float l = dot(col, vec3(.2126,.7152,.0722));
+      col = mix(vec3(l), col, 1.06);
+      col = (col - 0.5)*1.035 + 0.5;
+      // Tunnel-Vignette: zieht sich bei Tempo zusammen, reißt beim Blitz kurz auf
+      float spdAbs = abs(uSpeed);
+      float vig = smoothstep(0.62 - spdAbs*0.22, 1.55 - spdAbs*0.25, rr*1.18);
+      col *= 1.0 - vig * max(uVigStr + uDark*0.32 + spdAbs*0.28 - uFlash*0.35, 0.0);
+      // Grain
+      col += (hash13(vec3(gl_FragCoord.xy, uTime*60.0))-0.5) / 160.0;
+      gl_FragColor = vec4(col, 1.0);
+    }`,
+});
+gradeScene.add(new THREE.Mesh(fsGeo, gradeMat));
+
+/* ============================================================
+   DOM-CHOREOGRAFIE — Stationen ein-/ausblenden über P
+   ============================================================ */
+const sts = [...document.querySelectorAll('.st')];
+const voidLines = [...document.querySelectorAll('.st-void .line')];
+const belegeRows = [...document.querySelectorAll('.belege-list li')];
+const belegeScan = document.querySelector('.belege-scan');
+const progDots = [...document.querySelectorAll('.prog i')];
+const reiseCountEls = [...document.querySelectorAll('.st-reise .rcount')];
+/* Finale-Stagger: jedes Element bekommt sein eigenes P-Fenster [a, a+l].
+   Die Elemente verlassen das .rev-System — domStep fährt sie direkt über P
+   (scrub-fähig in beide Richtungen, kein Timing-Versatz beim schnellen Ankommen). */
+const endStagger = [
+  { sel:'.st-end .end-stage',  a:7.55, l:.16 },   // 1. die Bühne (Panel + Tag + Plate)
+  { sel:'.st-end .end-proof',  a:7.72, l:.10 },   // 2. Beweiszeile, wenn das Gesicht steht
+  { sel:'.end-stage h2',       a:7.78, l:.10 },   // 3. Headline im Panel
+  { sel:'.st-end .mail',       a:7.84, l:.10 },   // 4. CTA — synchron zum Burst-Orbit
+  { sel:'.st-end .end-links',  a:7.89, l:.09 },   // 5. Links
+  { sel:'.st-end .foot',       a:7.93, l:.07 },   // 6. Footer — fertig bei 8.0 (= P-Max)
+].flatMap(s => {
+  const el = document.querySelector(s.sel);
+  if (!el) return [];
+  el.classList.remove('rev');     // raus aus dem CSS-Delay-System — P übernimmt
+  el.style.opacity = '0';
+  return [{ el, a: s.a, l: s.l }];
+});
+const chapNumEl = document.getElementById('chapNum'), chapNameEl = document.getElementById('chapName');
+const CHAP_NAMES = ['Hero','Tresen','Der Wechsel','Projekte','Belege','Skills','Stationen','Finale'];
+let chapIdx = -1;
+const navEl = document.getElementById('nav');
+// Sichtfenster pro Station [in, out]
+/* Stationen mit echten ZWISCHENRÄUMEN (~0.25 P): dort lebt nur die Szene —
+   Mäander-Kurve, Schwarm-Morphing, Blenden. Übergang ist ein Moment, kein Schnitt. */
+const WINDOWS = [
+  [ -0.35, 0.85 ],  // 0 Hero
+  [ 1.05, 1.85 ],   // 1 Tresen
+  [ 2.05, 2.92 ],   // 2 Wechsel/Tunnel
+  [ 3.08, 3.85 ],   // 3 Projekte
+  [ 4.08, 4.85 ],   // 4 Belege
+  [ 5.08, 5.85 ],   // 5 Skills
+  [ 6.05, 6.62 ],   // 6 Stationen — Text komplett raus, BEVOR der Warp übernimmt
+  [ 7.55, 8.3 ],    // 7 Finale — Ankunft erst nach dem langen Rückblick-Warp
+];
+function domStep(p, detailOpen, pv = 0){
+  for (let i=0;i<sts.length;i++){
+    const [a,b] = WINDOWS[i];
+    // Weiche Flanken: Inhalt gleitet herein (.45) und hinaus (.32) — nie ein Schnitt
+    let o = sat((p-a)/.45) * sat((b-p)/.32);
+    o = o*o*(3-2*o);   // smoothstep — runde Enden statt linearer Rampen
+    if (detailOpen && i === 3) o = 0;   // Karten-DOM weg, wenn Transmorph offen
+    const el = sts[i];
+    el.style.opacity = o.toFixed(3);
+    el.classList.toggle('on', o > 0.01);
+    el.classList.toggle('live', o > 0.22);
+    const leaving = p > (a+b)/2;
+    const dy = (1 - o) * 26 * (leaving ? -1 : 1);
+    const sc = leaving ? 1 - (1 - o) * .018 : 1;
+    // Velocity-Jelly: Text lehnt sich physisch gegen die Scroll-Richtung (Lusion-Gefühl)
+    el.style.transform = `translateY(${dy.toFixed(1)}px) scale(${sc.toFixed(4)}) skewY(${(pv * -1.15).toFixed(2)}deg)`;
+  }
+  // Wechsel: zwei Zeilen nacheinander (Drei Jahre → Klarheit)
+  const vws = [[2.08, 2.46], [2.52, 2.88]];
+  for (let v = 0; v < voidLines.length && v < 3; v++){
+    const lo = win(p, vws[v][0], vws[v][1], .12);
+    voidLines[v].style.opacity = lo.toFixed(3);
+    voidLines[v].style.transform = `translate(-50%,-50%) scale(${(0.92+lo*.08).toFixed(3)})`;
+  }
+  // Stationen-Zahlen scrubben mit dem Scroll (vor- und rückwärts)
+  if (p > 5.8 && p < 7.2){
+    const rcu = sat((p - 6.05) / .38);   // Zahlen fertig (6.43), bevor der Text geht (6.58)
+    for (const el of reiseCountEls){
+      el.textContent = Math.round(Number(el.dataset.count) * rcu);
+    }
+  }
+  /* Belege: Scanner-Linie verifiziert die Tabelle Zeile für Zeile (scrub-fähig) */
+  if (belegeScan && p > 3.9 && p < 5.1){
+    const sc = sat((p - 4.18) / .42);
+    belegeScan.style.opacity = (sc > .01 && sc < .99) ? 1 : 0;
+    belegeScan.style.top = (sc * 100).toFixed(1) + '%';
+    for (let ri = 0; ri < belegeRows.length; ri++){
+      belegeRows[ri].classList.toggle('lit', (ri + .5) / belegeRows.length <= sc);
+    }
+  }
+  /* Finale-Ankunft: gestaffelt über P — Bühne → Gesicht → Headline → CTA */
+  if (p > 7.3){
+    for (let si = 0; si < endStagger.length; si++){
+      const s = endStagger[si];
+      const e = sat((p - s.a) / s.l);
+      const ee = 1 - (1 - e) * (1 - e);            // easeOutQuad — weiches Andocken
+      s.el.style.opacity = ee.toFixed(3);
+      /* voll angekommen: Inline-Transform freigeben, damit CSS-Hover
+         (Mail-Scale 1.07) wieder greift */
+      s.el.style.transform = ee > .995 ? '' : `translateY(${((1 - ee) * 24).toFixed(1)}px)`;
+    }
+  }
+  // Progress-Punkte + Nav-Farbe
+  const idx = clamp(Math.round(p - .45), 0, 7);
+  if (idx !== chapIdx){
+    // Blitz nur bei echtem Wechsel; Finale-Eintritt blitzt NICHT (die Warp-Blende übernimmt)
+    if (chapIdx >= 0){ Sound.whoosh(darkAt(p)); if (idx !== 7) flashKick = 1; }
+    chapIdx = idx;
+    chapNumEl.textContent = String(idx + 1).padStart(2, '0');
+    chapNameEl.textContent = CHAP_NAMES[idx];
+  }
+  progDots.forEach((d,i)=>d.classList.toggle('on', i===idx));
+  const dark = darkAt(p);
+  document.body.style.color = dark ? 'var(--ivory)' : 'var(--ink)';
+  navEl.style.color = dark ? 'var(--ivory)' : 'var(--ink)';
+  document.getElementById('prog').style.color = dark ? '#F2EFE8' : '#0E2244';
+}
+
+/* ============================================================
+   RENDER-LOOP
+   ============================================================ */
+const clock = new THREE.Clock();
+let prevT = 0, sStr = 0, pPrev = 0, spd = 0, flashKick = 0;
+const bgCol = new THREE.Color();
+let pmFrom = new THREE.Vector2(.5,.5);
+
+function frame(){
+  const t = clock.getElapsedTime();
+  const dt = Math.min(t - prevT, .05); prevT = t;
+  progress += (rawP() - progress) * (1 - Math.exp(-10.5 * dt));   // trägere Feder — die Fahrt gleitet
+  const p = clamp(progress, 0, STATIONS);   // an STATIONS gekoppelt — nie wieder der Klemmen-Bug
+  window.__p = p;
+  const pv = clamp((p - pPrev) / Math.max(dt, .001), -2.5, 2.5);
+  sStr = Math.min(1, sStr + Math.abs(p - pPrev) * 2); sStr *= Math.exp(-10 * dt); pPrev = p;
+  // Signiertes, geglättetes Tempo fürs Post-Stack — Vorzeichen = Fahrtrichtung
+  spd += (clamp(pv * .55, -1.4, 1.4) - spd) * (1 - Math.exp(-9 * dt));
+
+  /* Kamera-Fahrt: z=9 (Hero/Tresen) … Tunnelflug (Wechsel) … Finale bei z≈-88 */
+  const cz = camZ(p);
+  meander(p, _mnd);                               // Position auf der Flugkurve
+  meander(Math.min(p + .45, STATIONS), _mndA);    // Blickpunkt läuft der Kurve voraus
+  cam.position.z = cz;
+  cam.position.x = camSpring.x.update(dt, (mouse.x/vw-.5) * .7 + _mnd.x);
+  cam.position.y = camSpring.y.update(dt, -(mouse.y/vh-.5) * .5 + _mnd.y);
+  cam.lookAt(cam.position.x*.3 + _mndA.x * .65,
+             cam.position.y*.3 + _mndA.y * .65,
+             cz - 10);
+  /* Banking: in die Kurve lehnen — nach lookAt, damit der Roll obenauf liegt */
+  const mvxCam = (_mnd.x - mndPX) / Math.max(dt, 1e-4); mndPX = _mnd.x;
+  cam.rotateZ(rollSpring.update(dt, clamp(-mvxCam * .04 - pv * .012, -.12, .12)));
+  /* FOV-Atmung: schneller Flug = weiter Blick (sanfter — Eleganz statt Effekt) */
+  const fovNow = fovSpring.update(dt, 46 + Math.min(Math.abs(pv), 2.5) * 3.0);
+  if (Math.abs(fovNow - cam.fov) > .01){ cam.fov = fovNow; cam.updateProjectionMatrix(); }
+
+  /* Hintergrund + Fog */
+  bgAt(p, bgCol);
+  scene.background.copy(bgCol); scene.fog.color.copy(bgCol);
+  scene.fog.near = p>1.8 ? 6 : 30; scene.fog.far = p>1.8 ? 46 : 90;
+
+  /* Cluster: im Hero rechts, zum Tresen hin Abgang mit Drall statt reinem Fade */
+  const cw = win(p, -0.3, 1.18, .35);   // Cluster schraubt sich durch den ganzen Zwischenraum hinaus
+  clusterGroup.visible = cw > 0.01;
+  if (clusterGroup.visible){
+    clusterAnchor.set( vw>860 ? 2.6 - win(p,0.55,1.1,.3)*1.2 : 0, win(p,0.55,1.1,.3)*1.0, 0 );
+    /* Abgang: tangentialer Schub + Zug nach vorn — der Cluster schraubt sich
+       an der Kamera vorbei aus dem Bild, während der Fade läuft (Lusion-Drall) */
+    const lv = sat((p - .92) / .38);
+    if (lv > 0){
+      for (const b of bodies){
+        _exV.subVectors(b.pos, clusterAnchor);
+        b.vel.x += -_exV.y * lv * 5.0 * dt;     // Drall gegen den Uhrzeigersinn um den Anker
+        b.vel.y +=  _exV.x * lv * 5.0 * dt;
+        b.vel.z += lv * 7.0 * dt;               // nach vorn, an der Kamera vorbei
+        b.ang.x += lv * dt * 2.4; b.ang.y += lv * dt * 3.2;   // Eigenrotation zieht an
+      }
+    }
+    physStep(dt);
+    bodies.forEach(b=>b.mesh.material.uniforms.uFade.value = cw);
+  }
+  /* Tunnel 1 (Wechsel) */
+  tunnelGroup.visible = p > 1.85 && p < 3.35;
+  if (tunnelGroup.visible){
+    const tm = tunnelGroup.userData.mat.uniforms;
+    tm.uTime.value = t;
+    tm.uBoost.value = Math.min(1, sStr*1.6);
+  }
+  /* Akt 2: der lange Rückblick-Warp — ~0.8 P solo, weiches Ein/Aus über uFade */
+  const warp2 = win(p, 6.74, 7.5, .14);
+  tunnel2.visible = warp2 > .003;
+  if (tunnel2.visible){
+    const tm2 = tunnel2.userData.mat.uniforms;
+    tm2.uTime.value = t;
+    tm2.uBoost.value = Math.min(1, sStr*1.6 + warp2*.7);   // glüht auch ohne Scroll-Tempo
+    tm2.uFade.value = warp2;
+    tunnel2.userData.glowMat.opacity = warp2;
+    tunnel2.rotation.z = 1.15 + sat((p - 6.74)/.76)*.85;   // Gegenroll über die ganze Strecke — scrub-gekoppelt
+  }
+  /* Rückblick-Erinnerungen: die ganze Reise rauscht noch einmal vorbei */
+  memGroup2.visible = warp2 > .003;
+  if (memGroup2.visible){
+    for (let mi = 0; mi < memPlanes2.length; mi++){
+      const mp = memPlanes2[mi], ud = mp.userData, mu = mp.material.uniforms;
+      const dist = cz - mp.position.z;
+      mu.uFade.value = sat((dist - 1.2)/1.8) * sat((30 - dist)/11) * warp2;   // Korridor weit einsehbar
+      mu.uFocus.value = Math.exp(-(dist - 4)*(dist - 4)*.08);
+      mu.uPaint.value = paintA.texture;
+      mp.rotation.z = ud.r0 + Math.sin(t*.4 + ud.ph)*.018;   // Galerie-Hängung: fast still
+      mp.position.y = ud.y0 + Math.sin(t*.55 + ud.ph)*.05;
+    }
+  }
+  /* Warp-Streaks: Länge = Scroll-Tempo, nur im Tunnelfenster sichtbar */
+  const warp = win(p, 1.95, 3.0, .25);
+  streakMat.uniforms.uVis.value = warp;
+  streakMat.uniforms.uStretch.value = warp * Math.min(1.3, sStr*2.2 + Math.abs(pv)*.3);
+  /* Barrel-Roll: der Tunnel dreht sich mit dem Flug um die Achse — scrub-fähig, kein Drift */
+  tunnelGroup.rotation.z = sat((p-1.9)/1.1)*.55 + sStr*.1;
+  /* Licht-Tore: Glocken-Puls genau beim Durchstoß der Kamera */
+  if (tunnelGroup.visible){
+    for (let gi=0; gi<gates.length; gi++){
+      const g = gates[gi], d = cz - g.position.z;
+      const hit = Math.exp(-d*d*.1);                        // 1.0 exakt beim Durchflug
+      g.material.opacity = .10*warp + hit*.9;
+      // Teal → Weiß beim Durchstoß (allokationsfrei)
+      g.material.color.setRGB(.10+.90*hit, .65+.35*hit, .57+.43*hit);
+      g.scale.setScalar(g.userData.s0 * (1 + hit*.25));
+    }
+  }
+  /* Erinnerungs-Fragmente: Fade über Distanz, Fokus-Zündung beim Vorbeiflug.
+     Helden (ud.hero) springen spät ins Bild und drehen sich im Peak zur Kamera auf —
+     echter Vorbeiflug statt Tapete. ud.g ersetzt das warp-Gate für Einfahrt + Portrait
+     (warp ist bei p<2.0 / p>2.9 fast null — dort leben genau diese beiden Momente). */
+  memGroup.visible = p > 1.85 && p < 3.35;
+  if (memGroup.visible){
+    for (let mi = 0; mi < memPlanes.length; mi++){
+      const mp = memPlanes[mi], ud = mp.userData, mu = mp.material.uniforms;
+      const dist = cz - mp.position.z;                        // >0: vor der Kamera
+      const gate = ud.g ? win(p, ud.g[0], ud.g[1], ud.g[2]) : warp;
+      mu.uFade.value = ud.hero
+        ? sat((dist - 1.5)/1.7) * sat((9 - dist)/3.2) * gate   // Held: kurzes, nahes Fenster — springt ins Bild
+        : sat((dist - 1.3)/2.2) * sat(((ud.gal ? 34 : 26) - dist)/(ud.gal ? 12 : 9)) * gate;   // Galerie: der Korridor ist weit einsehbar
+      mu.uFocus.value = Math.exp(-(dist - ud.fd)*(dist - ud.fd)*ud.fk);  // Farb-Zündung am Peak
+      mu.uPaint.value = paintA.texture;
+      mp.rotation.z = ud.r0 + Math.sin(t*.35 + ud.ph)*.05*ud.bb;        // träges Schweben (Helden ruhiger)
+      mp.position.y = ud.y0 + Math.sin(t*.5  + ud.ph)*.14*ud.bb;
+      if (ud.hero) mp.rotation.y = ud.ry0 * (1 - mu.uFocus.value*.65);  // dreht sich im Vorbeiflug zur Kamera auf
+    }
+  }
+  /* Morph-Schwarm: ein Akteur durch alle Stationen (ersetzt Drift + Agenten-Orbit) */
+  agentGroup.visible = false;
+  swarmStep(p, t, sStr);
+  /* Sticker drehen sich langsam */
+  stickGroup.visible = false;   // ersetzt durch Schwarm-Burst
+  if (stickGroup.visible){
+    stickGroup.children.forEach((sp,i)=>{
+      if (sp.userData.isFinaleHero){ sp.rotation.y = t*.5; sp.rotation.x = Math.sin(t*.8)*.18; return; }
+      const u = sp.userData;
+      sp.position.x = Math.cos(u.a + t*u.sp)*u.r;
+      sp.position.y = Math.sin(u.a + t*u.sp)*u.r*.7;
+      sp.rotation.x += dt*u.sp*.5; sp.rotation.y += dt*u.sp*.7;
+    });
+  }
+
+  /* Paint-Sim (stempelt erst, wenn echte Maus-Bewegung da ist — Touch: nur Advektion) */
+  paintMat.uniforms.uPrev.value = paintA.texture;
+  if (hasMouse){
+    const pmTo = new THREE.Vector2(mouse.x/vw, 1-mouse.y/vh);
+    paintMat.uniforms.uFrom.value.copy(pmFrom);
+    paintMat.uniforms.uTo.value.copy(pmTo);
+    paintMat.uniforms.uVel.value.set((pmTo.x-pmFrom.x)*22, (pmTo.y-pmFrom.y)*22);
+    pmFrom.copy(pmTo);
+  } else {
+    paintMat.uniforms.uFrom.value.set(-9,-9);
+    paintMat.uniforms.uTo.value.set(-9,-9);
+    paintMat.uniforms.uVel.value.set(0,0);
+  }
+  renderer.setRenderTarget(paintB); renderer.render(paintScene, fsCam);
+  [paintA, paintB] = [paintB, paintA];
+
+  /* Akt 3, Schicht 3: Video-Atmosphäre erst, wenn das Gesicht steht */
+  syncBgPlate(bgEnd, win(p, 7.62, 8.05, .25), .28);
+  /* Akt 3, Schicht 1: Portrait materialisiert NACH dem langen Warp (scrub-fähig) */
+  if (portPlane){
+    const pu = portPlane.material.uniforms;
+    pu.uReveal.value = sat((p - 7.6) / .22);    /* Gesicht baut sich 7.6–7.82 auf — solo */
+    pu.uSweep.value  = sat((p - 7.82) / .3);    /* Glanzbahn begrüßt die Headline (Stagger 7.78) */
+    pu.uTime.value = t;
+  }
+  /* Finale-Energie: Hover-Feder + Orbit-Tempo + Aura-Atmung */
+  endPullS += (endPull - endPullS) * (1 - Math.exp(-8 * dt));
+  orbPhase += dt * (.85 + endPullS * 1.7);
+  endGlow.visible = p > 7.78;                   /* Aura erst, wenn das Portrait fertig ist */
+  if (endGlow.visible){
+    endGlow.material.opacity = win(p, 7.82, 8.35, .25) * (.18 + endPullS * .12);
+    const gs = 1 + Math.sin(t * .45) * .05 + endPullS * .15;
+    endGlow.scale.set(gs, gs, 1);
+  }
+
+  /* Bild-Planes (sichtbar im Fenster ihrer Station oder bei offenem Transmorph) */
+  planes.forEach(plane=>{
+    plane.visible = win(p, plane.userData.wa, plane.userData.wb, .3) > 0.01 || openPlane === plane;
+    if (!plane.visible) return;
+    const u = plane.material.uniforms;
+    u.uPaint.value = paintA.texture;
+    plane.userData.hover = lerp(plane.userData.hover, plane.userData.hoverTarget, .08);
+    u.uHover.value = plane.userData.hover;
+    /* Maus-Tilt weich nachführen (nur solange gehovert) */
+    const ud = plane.userData;
+    ud.tsx = lerp(ud.tsx || 0, (ud.tx || 0) * ud.hover, .1);
+    ud.tsy = lerp(ud.tsy || 0, (ud.ty || 0) * ud.hover, .1);
+    if (u.uTilt) u.uTilt.value.set(ud.tsx, ud.tsy);
+    if (plane.userData.openDir){
+      plane.userData.openT += plane.userData.openDir * dt * 2.1;
+      if (plane.userData.openT>=1){ plane.userData.openT=1; plane.userData.openDir=0; }
+      if (plane.userData.openT<=0){ plane.userData.openT=0; plane.userData.openDir=0; openPlane=null; }
+    }
+    const ot = easeIO(clamp(plane.userData.openT,0,1));
+    u.uOpen.value = ot; u.uBend.value = Math.sin(ot*Math.PI)*.1;
+    if (ot>0 && plane.userData.rectFrom){
+      const f = plane.userData.openDir<0 ? plane.userData.holder.getBoundingClientRect() : plane.userData.rectFrom;
+      morphPlane(plane, f, ot);
+    } else if (plane.userData.isDuo){
+      /* Tresen-Karte: Rect einmal holen, syncen + Duo-Uniforms füttern */
+      const r = plane.userData.holder.getBoundingClientRect();
+      syncPlane(plane, r);
+      u.uWH.value.set(Math.max(1,r.width), Math.max(1,r.height));
+      u.uPar.value = clamp((r.top + r.height*.5 - vh*.5)/vh, -1, 1);
+      /* Karten poppen nacheinander auf — Stagger über den Karten-Index */
+      u.uShow.value = sat((p - (plane.userData.wa + .02 + plane.userData.idx*.08)) / .26);
+      u.uVis.value = win(p, plane.userData.wa, plane.userData.wb, .1);
+      u.uTime.value = t;
+    } else if (plane.userData.fly){
+      /* Tiefen-Einflug: die Karte kommt klein und tief aus der Flugrichtung,
+         wächst an ihren Platz (scrub-fähig); beim Verlassen hebt sie leicht ab */
+      const r0 = plane.userData.holder.getBoundingClientRect();
+      const e = sat((p - (plane.userData.wa + .03)) / .3);
+      const ee = 1 - (1 - e) * (1 - e);
+      const lv = sat((plane.userData.wb - p) / .2);
+      const s = .78 + .22 * ee;
+      syncPlane(plane, {
+        left:  r0.left + r0.width  * (1 - s) / 2,
+        top:   r0.top  + r0.height * (1 - s) / 2 + (1 - ee) * 170 - (1 - lv) * 80,
+        width: r0.width * s, height: r0.height * s,
+      });
+    } else syncPlane(plane);
+  });
+
+  /* DOM-Choreografie */
+  domStep(p, !!openPlane, pv);
+
+  /* ---- Passes ---- */
+  renderer.setRenderTarget(sceneRT); renderer.setClearColor(bgCol, 1); renderer.clear();
+  renderer.render(scene, cam);
+  renderer.clearDepth();
+  renderer.render(ortho, orthoCam);
+
+  // Bloom-Mips (2 Stufen, je H+V)
+  blurMat.uniforms.uTex.value = sceneRT.texture;
+  blurMat.uniforms.uTexel.value.set(2/(vw*dpr), 2/(vh*dpr));
+  blurMat.uniforms.uDir.value.set(1,0);
+  renderer.setRenderTarget(tmp1); renderer.render(blurScene, fsCam);
+  blurMat.uniforms.uTex.value = tmp1.texture; blurMat.uniforms.uDir.value.set(0,1);
+  renderer.setRenderTarget(mip1); renderer.render(blurScene, fsCam);
+  blurMat.uniforms.uTex.value = mip1.texture;
+  blurMat.uniforms.uTexel.value.set(4/(vw*dpr), 4/(vh*dpr));
+  blurMat.uniforms.uDir.value.set(1,0);
+  renderer.setRenderTarget(tmp2); renderer.render(blurScene, fsCam);
+  blurMat.uniforms.uTex.value = tmp2.texture; blurMat.uniforms.uDir.value.set(0,1);
+  renderer.setRenderTarget(mip2); renderer.render(blurScene, fsCam);
+
+  // Grade + Smear → Screen
+  gradeMat.uniforms.uTex.value = sceneRT.texture;
+  gradeMat.uniforms.uBloom1.value = mip1.texture;
+  gradeMat.uniforms.uBloom2.value = mip2.texture;
+  gradeMat.uniforms.uPaint.value = paintA.texture;
+  gradeMat.uniforms.uTime.value = t;
+  /* GL-Typo: Noise-Dissolve an die Stationsfenster gekoppelt */
+  for (let ti = 0; ti < typoPlanes.length; ti++){
+    const tp = typoPlanes[ti], wnd = tp.userData.win;
+    const o = win(p, wnd[0], wnd[1], wnd[2]);
+    tp.visible = o > .005;
+    tp.material.uniforms.uReveal.value = o;
+    tp.material.uniforms.uTime.value = t;
+  }
+  gradeMat.uniforms.uSpeed.value = reduced ? 0 : spd * sStr + warp2 * .3;   // Warp zieht radiale Speed-Streifen, auch bei langsamem Scrub
+  flashKick *= Math.exp(-4.2 * dt);   // ~240ms Abklingzeit — Atemzug statt Schlag
+  gradeMat.uniforms.uFlash.value = reduced ? 0 : flashKick;
+  /* Übergangs-Puls: in jedem Zwischenraum atmen Chroma + Bloom leicht auf —
+     die Transition wird ein eigener Moment (gleiche Fensterform wie der Mäander) */
+  const frP = p - Math.floor(p);
+  const trA = (p > .6 && p < 7.4) ? (1 - win(frP, .26, .74, .2)) : 0;
+  gradeMat.uniforms.uChroma.value = win(p, 1.95, 3.05, .25) + win(p, 6.74, 7.52, .16)*.6 + sStr*.25 + trA*.12;
+  // Lusion-Blenden: weiches Aufatmen statt Blitz — breiter, leiser
+  const blend = win(p, 2.98, 3.34, .15) * .65 + win(p, 4.88, 5.26, .15) * .55 + win(p, 7.38, 7.68, .14) * .6;
+  gradeMat.uniforms.uBloomAmt.value = (darkAt(p) ? .36 : .13) + blend + trA*.09;
+  gradeMat.uniforms.uDark.value = darkAt(p) ? 1 : 0;
+  renderer.setRenderTarget(null); renderer.clear();
+  renderer.render(gradeScene, fsCam);
+
+  requestAnimationFrame(frame);
+}
+frame();
+
+/* ---------- Resize ---------- */
+addEventListener('resize', ()=>{
+  vw=innerWidth; vh=innerHeight; dpr=Math.min(devicePixelRatio,1.8);
+  renderer.setPixelRatio(dpr); renderer.setSize(vw,vh);
+  cam.aspect=vw/vh; cam.updateProjectionMatrix();
+  orthoCam.left=0; orthoCam.right=vw; orthoCam.top=0; orthoCam.bottom=-vh; orthoCam.updateProjectionMatrix();
+  sceneRT.setSize(vw*dpr,vh*dpr);
+  tmp1.setSize(vw*dpr/2,vh*dpr/2); mip1.setSize(vw*dpr/2,vh*dpr/2);
+  tmp2.setSize(vw*dpr/4,vh*dpr/4); mip2.setSize(vw*dpr/4,vh*dpr/4);
+  paintA.setSize(PW(),PH()); paintB.setSize(PW(),PH());
+  initPaint();
+  paintMat.uniforms.uAspect.value = vw/vh;
+  gradeMat.uniforms.uAspect.value = vw/vh;
+  agentGroup.position.x = vw > 860 ? 3.3 : 0;
+  planes.forEach(pl=>{ pl.material.uniforms.uViewport.value.set(vw*dpr,vh*dpr); fitCover(pl, pl.userData.tex); });
+  memPlanes.forEach(mp=>mp.material.uniforms.uViewport.value.set(vw*dpr,vh*dpr));
+  memPlanes2.forEach(mp=>mp.material.uniforms.uViewport.value.set(vw*dpr,vh*dpr));
+});
+} // main()
 </script>
 </body>
 </html>
