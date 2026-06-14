@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Adoption-Studio — Alexander Heyers</title>
+<meta name="description" content="AI-Adoption-Studio: Next.js + FastAPI + Supabase, in Docker auf eigenem Hostinger-VPS. End-to-end orchestriert, live auf myflowmotion.cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500;1,700&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='26' fill='%231AA591'/><circle cx='44' cy='22' r='9' fill='%23E94B5D'/></svg>">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.lead-pink{color:var(--pink); font-style:italic}
+/* architecture diagram */
+.archi{margin-top:3.2rem; position:relative}
+.layers{display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; position:relative; z-index:2}
+.layer{border:1px solid var(--iv-14); border-radius:14px; padding:1.4rem 1.2rem; background:var(--iv-08); text-align:center; transition:border-color .35s,background .35s,box-shadow .35s}
+.layer .ic{font-family:var(--mono); font-size:.58rem; letter-spacing:.16em; text-transform:uppercase; color:var(--teal)}
+.layer h4{font-family:var(--disp); font-weight:700; font-size:1.15rem; margin:.4rem 0 .3rem}
+.layer p{font-size:.78rem; color:var(--iv-80)}
+.layer.lit{border-color:var(--teal); background:rgba(26,165,145,.08); box-shadow:0 16px 40px -24px rgba(26,165,145,.5)}
+.beam{position:absolute; left:0; right:0; top:42px; height:2px; z-index:1}
+.beam svg{width:100%; height:8px; overflow:visible}
+.beam line{stroke:var(--iv-14); stroke-width:1}
+.beam .dot{fill:var(--teal)}
+@media(max-width:760px){.layers{grid-template-columns:1fr} .beam{display:none}}
+/* docker-style container cards */
+.containers{margin-top:1.2rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem}
+@media(max-width:760px){.containers{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.containers{grid-template-columns:1fr}}
+.cont{border:1px solid var(--iv-14); border-radius:12px; overflow:hidden; background:var(--iv-08); transition:border-color .3s,transform .3s}
+.cont:hover{border-color:var(--teal); transform:translateY(-3px)}
+.cont .bar{display:flex; gap:5px; padding:.6rem .8rem; border-bottom:1px solid var(--iv-14); background:rgba(255,255,255,.02)}
+.cont .bar i{width:8px; height:8px; border-radius:50%; background:var(--iv-44)}
+.cont .body2{padding:1.2rem}
+.cont .meta{font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--teal)}
+.cont h4{font-family:var(--disp); font-weight:700; font-size:1.15rem; margin:.4rem 0 .35rem}
+.cont p{font-size:.82rem; color:var(--iv-80)}
+/* ivory proof block */
+.ivory{background:var(--ivory); color:var(--ink); border-radius:22px; padding:clamp(2rem,5vw,3.5rem); margin-top:1.5rem}
+.ivory .eyebrow{color:var(--teal)} .ivory h2.sec{color:var(--ink)} .ivory .body{color:var(--ink-72)}
+.ivory .pgrid{margin-top:2.4rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem}
+@media(max-width:760px){.ivory .pgrid{grid-template-columns:1fr}}
+.ivory .pg h4{font-family:var(--disp); font-weight:700; font-size:1.2rem; margin-bottom:.4rem}
+.ivory .pg p{font-size:.88rem; color:var(--ink-72)}
+.ivory .pg .num{font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:.6rem}
+</style>
+</head>
+<body>
+<div class="cur"></div><div class="cur-dot"></div>
+
+<header class="topbar">
+  <a class="brand back" href="/">← Alex Heyers</a>
+  <nav class="nav">
+    <a href="/projekt/studio.html" class="active">Studio</a>
+    <a href="/automation.html">Automation</a>
+    <a href="/claude-code.html">Claude Code</a>
+    <a href="/showcases.html">Showcases</a>
+    <a class="fast" href="/fakten.html">Schnellversion</a>
+  </nav>
+</header>
+
+<section class="phero wrap">
+  <div class="kicker rev">Flaggschiff · Full-Stack, end-to-end orchestriert</div>
+  <h1 class="rev" style="--d:.06s">AI-Adoption-Studio: konzipiert, gebaut, <em>deployt</em> — live.</h1>
+  <p class="sub rev" style="--d:.14s">Next.js + FastAPI + Supabase, in Docker auf meinem eigenen Hostinger-VPS. Kein Tutorial-Klon, kein Vercel-Knopf — eine Maschine, die ich selbst zusammengesetzt und ans Netz gebracht habe. Der Beweis steht unter <a href="https://myflowmotion.cloud" target="_blank" rel="noopener" style="color:var(--teal)">myflowmotion.cloud</a>. Klick drauf.</p>
+</section>
+
+<!-- 10-Sekunden-Beweis: container cards -->
+<section class="sblock wrap">
+  <div class="eyebrow rev"><span class="no">01</span> Der 10-Sekunden-Beweis</div>
+  <h2 class="sec rev" style="--d:.06s">Frontend, Backend, Datenbank, Hosting — alles von einer Hand <em>dirigiert</em>.</h2>
+  <p class="body rev" style="--d:.1s">Solutions Engineering heißt: ein Bedürfnis nehmen und daraus ein laufendes System machen, das man auch erklären kann. Genau das steht hier live. Ich bin kein Entwickler — ich bin der, der KI präzise genug dirigiert, dass am Ende ein deploytes Produkt rauskommt. <span class="lead-pink">Klarheit ist der Skill, nicht Syntax.</span></p>
+  <div class="containers rev" style="--d:.14s">
+    <div class="cont" data-layer="0"><div class="bar"><i></i><i></i><i></i></div><div class="body2"><div class="meta">React / Next.js</div><h4>Frontend</h4><p>Die Oberfläche, die ein Recruiter in zehn Sekunden erfasst.</p></div></div>
+    <div class="cont" data-layer="1"><div class="bar"><i></i><i></i><i></i></div><div class="body2"><div class="meta">Python / FastAPI</div><h4>Backend</h4><p>Die Logik, die Anfragen verarbeitet, statt sie nur anzuzeigen.</p></div></div>
+    <div class="cont" data-layer="2"><div class="bar"><i></i><i></i><i></i></div><div class="body2"><div class="meta">Supabase / Postgres</div><h4>Datenbank</h4><p>Als Backend und Datenmodell angewandt, nicht nur durchgelesen.</p></div></div>
+    <div class="cont" data-layer="3"><div class="bar"><i></i><i></i><i></i></div><div class="body2"><div class="meta">Hostinger-VPS / Docker</div><h4>Hosting</h4><p>Eigener VPS, containerisiert. Nicht geliehen, selbst betrieben.</p></div></div>
+  </div>
+</section>
+
+<!-- Architektur: request journey -->
+<section class="sblock wrap">
+  <div class="eyebrow rev"><span class="no">02</span> Architektur</div>
+  <h2 class="sec rev" style="--d:.06s">So hängt es zusammen — und warum jede Schicht eine <em>Entscheidung</em> war.</h2>
+  <p class="body rev" style="--d:.1s">Drei Schichten, ein Deployment. Next.js liefert die UI aus. FastAPI sitzt dahinter und macht die eigentliche Arbeit. Supabase hält die Daten. Das Ganze läuft nicht auf einer Klick-Plattform, sondern in Docker-Containern auf meinem eigenen VPS. Heißt: Ich verstehe, was zwischen Browser und Datenbank passiert, weil ich jede Station selbst aufgesetzt habe.</p>
+  <div class="archi rev" style="--d:.14s">
+    <div class="beam"><svg viewBox="0 0 1000 8" preserveAspectRatio="none">
+      <line x1="0" y1="4" x2="1000" y2="4"/>
+      <circle class="dot" r="4" cy="4"><animate attributeName="cx" values="20;980;20" dur="4.5s" repeatCount="indefinite" keyTimes="0;0.5;1"/></circle>
+    </svg></div>
+    <div class="layers">
+      <div class="layer"><div class="ic">01 · Browser</div><h4>Request</h4><p>Der Nutzer fragt an.</p></div>
+      <div class="layer"><div class="ic">02 · Next.js</div><h4>Frontend</h4><p>Nimmt entgegen, reicht weiter.</p></div>
+      <div class="layer"><div class="ic">03 · FastAPI</div><h4>Logik</h4><p>Verarbeitet die Anfrage.</p></div>
+      <div class="layer"><div class="ic">04 · Supabase</div><h4>Daten</h4><p>Antwortet — zurück nach oben.</p></div>
+    </div>
+  </div>
+  <div class="cards rev" style="--d:.18s">
+    <div class="card"><div class="meta">End-to-End</div><h3>Orchestriert statt zusammengeklickt</h3><p>Drei eigenständige Technologien zu einem laufenden Produkt verdrahtet — die Kern-Disziplin von Implementation und Solutions Engineering.</p></div>
+    <div class="card"><div class="meta">Self-hosted</div><h3>Kein Managed-Komfort</h3><p>Docker auf eigenem VPS heißt: keine Black Box. Ich weiß, wo die Logs liegen und wer mit wem spricht.</p></div>
+    <div class="card"><div class="meta">Supabase</div><h3>Datenmodell statt Datengrab</h3><p>Als durchdachtes Backend angewandt — Datenbank-Grundlagen am echten Produkt, nicht im Sandkasten.</p></div>
+  </div>
+</section>
+
+<!-- Was es beweist: ivory block -->
+<section class="wrap" style="padding:4rem 0">
+  <div class="ivory rev">
+    <div class="eyebrow"><span class="no">03</span> Was es beweist</div>
+    <h2 class="sec">Bedürfnis rein, laufendes System raus. Das ist der ganze Job.</h2>
+    <p class="body">Die meisten Bewerber sagen „ich kann mich einarbeiten". Ich sage: das System läuft schon, klick drauf. Ein End-to-End-Produkt zu orchestrieren — Frontend, Backend, DB, Hosting — ist genau die Fähigkeit, die ein Solutions Engineer oder Implementation Consultant beim Kunden abruft. Ich habe sie nicht behauptet, ich habe sie deployt.</p>
+    <div class="pgrid">
+      <div class="pg"><span class="num">Solutions Engineering</span><p>Bedürfnis übersetzen, System bauen, live schalten, erklären — der komplette Bogen an einem Artefakt.</p></div>
+      <div class="pg"><span class="num">Implementation-Reife</span><p>Wer einen VPS in Docker ans Netz bringt, kann auch eine Kunden-Umgebung aufsetzen.</p></div>
+      <div class="pg"><span class="num">Klarheit als Meta-Skill</span><p>Ich diktiere der KI präzise, was gebaut werden soll. Das Ergebnis hat Agentur-Qualität, weil die Anweisung Agentur-Qualität hatte.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Arbeitsweise -->
+<section class="sblock wrap">
+  <div class="eyebrow rev"><span class="no">04</span> Arbeitsweise</div>
+  <h2 class="sec rev" style="--d:.06s">Geplant wie ein Produktteam, nicht wie ein <em>Bastler</em>.</h2>
+  <p class="body rev" style="--d:.1s">Hinter dem Studio steht keine Wochenend-Laune, sondern strukturierte Anforderungs-Arbeit: BMAD-Planung in Linear, in Stories und Issues zerlegt, dokumentiert während des Bauens. Building in Public ist hier kein Hobby — es ist der Nachweis, dass ich Komplexität ordnen kann, bevor ich sie verdrahte.</p>
+  <div class="cards rev" style="--d:.14s">
+    <div class="card"><div class="meta">76 Stories / 40 Issues</div><h3>BMAD in Linear</h3><p>Das Projekt über fünf Phasen-Milestones strukturiert — Produkt-Denken, nicht Code-Stochern.</p></div>
+    <div class="card"><div class="meta">Notion + Linear</div><h3>Layered SSoT</h3><p>Notion für Wissen, Linear für Umsetzung, mit bewussten Sync-Regeln. Eine Tool-Landschaft, die ich selbst entworfen habe.</p></div>
+    <div class="card"><div class="meta">Building in Public</div><h3>Dokumentierte Iteration</h3><p>Jeder Build-Schritt nachvollziehbar — wer reinschaut, sieht die Entscheidungen, nicht nur das Ergebnis.</p></div>
+  </div>
+</section>
+
+<!-- Im Kontext -->
+<section class="sblock wrap">
+  <div class="eyebrow rev"><span class="no">05</span> Im Kontext</div>
+  <h2 class="sec rev" style="--d:.06s">Das Studio steht nicht allein — es ist das Flaggschiff einer <em>Flotte</em>.</h2>
+  <p class="body rev" style="--d:.1s">Dasselbe Muster — konzipieren, bauen, bepreisen, live schalten — habe ich an mehreren Stellen wiederholt. Wer prüfen will, ob das Glück war oder Methode, folgt den Links.</p>
+  <div class="cards rev" style="--d:.14s">
+    <a class="card mag" href="https://livesession-roan.vercel.app" target="_blank" rel="noopener"><div class="meta">livesession (Vercel)</div><h3>Deployment als Routine</h3><p>GitHub-Pipeline mit Auto-Deploy nach PR-Merge — live schalten ist hier Gewohnheit, kein Event.</p><span class="go">Ansehen →</span></a>
+    <a class="card mag" href="https://deinebusinesspage.de" target="_blank" rel="noopener"><div class="meta">deinebusinesspage.de · 990/1.490 €</div><h3>Eigenes Produkt, bepreist</h3><p>Konzipiert, gebaut, mit Preis versehen, live — der Geschäfts-Beweis neben dem Tech-Beweis.</p><span class="go">Ansehen →</span></a>
+    <a class="card mag" href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener"><div class="meta">Sketch-Edition</div><h3>Showcase-Niveau 3D/WebGL</h3><p>Three.js und WebGL auf Demo-Niveau — die Schicht, die auch Nicht-Techniker stehenbleiben lässt.</p><span class="go">Ansehen →</span></a>
+  </div>
+  <div class="plist rev" style="--d:.18s">
+    <a href="https://myflowmotion.cloud" target="_blank" rel="noopener"><span class="lbl">myflowmotion.cloud — AI-Adoption-Studio, live auf eigenem VPS</span><span class="arr">↗</span></a>
+    <a href="https://livesession-roan.vercel.app" target="_blank" rel="noopener"><span class="lbl">livesession — Auto-Deploy nach PR-Merge</span><span class="arr">↗</span></a>
+    <a href="https://deinebusinesspage.de" target="_blank" rel="noopener"><span class="lbl">deinebusinesspage.de — eigenes Produkt, live &amp; bepreist</span><span class="arr">↗</span></a>
+  </div>
+</section>
+
+<!-- footer CTA -->
+<footer class="pfoot wrap">
+  <div class="ready rev">Verfügbar ab 01.08.2026</div>
+  <h2 class="rev" style="--d:.06s">Lass uns <em>bauen.</em></h2>
+  <div class="contacts rev" style="--d:.12s">
+    <a href="mailto:a.heyers@gmail.com">a.heyers@gmail.com <span>Mail →</span></a>
+    <a href="https://linkedin.com/in/alex-heyers" target="_blank" rel="noopener">linkedin.com/in/alex-heyers <span>LinkedIn →</span></a>
+    <a href="https://github.com/alexheyers" target="_blank" rel="noopener">github.com/alexheyers <span>GitHub →</span></a>
+  </div>
+  <div class="copyline">Alex Heyers · Mosbach · Zwischen Tresen und Terminal</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+/* hover a container card -> light up matching architecture layer */
+const layers=[...document.querySelectorAll('.layer')];
+document.querySelectorAll('.cont').forEach(c=>{
+  const i=+c.dataset.layer;
+  c.addEventListener('mouseenter',()=>layers[i]&&layers[i].classList.add('lit'));
+  c.addEventListener('mouseleave',()=>layers[i]&&layers[i].classList.remove('lit'));
+});
+</script>
+</body>
+</html>
