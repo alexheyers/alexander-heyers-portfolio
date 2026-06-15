@@ -223,6 +223,29 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 /* refraktives Glas-Objekt im Hero */
 .glassobj{position:absolute;inset:0;z-index:0;pointer-events:none;width:100%;height:100%}
 .hero .wrap{position:relative;z-index:2}
+/* Showcase-Galerie */
+.gallery{margin-top:2.8rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem}
+@media(max-width:900px){.gallery{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.gallery{grid-template-columns:1fr}}
+.gcard{background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--glass-bd);border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -24px rgba(35,32,26,.22);transition:transform .5s var(--ezl),box-shadow .5s;display:flex;flex-direction:column}
+.gcard:hover{transform:translateY(-6px);box-shadow:0 34px 60px -28px rgba(35,32,26,.34)}
+.gcard .gph{aspect-ratio:16/10;overflow:hidden;position:relative;background:#15130f}
+.gcard .gph img{transition:transform 1s var(--ezl)}
+.gcard:hover .gph img{transform:scale(1.06)}
+.gcard .gt{position:absolute;top:.7rem;left:.8rem;font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(24,22,18,.6);backdrop-filter:blur(6px);padding:.3rem .6rem;border-radius:20px}
+.gcard .gc{padding:1.1rem 1.2rem 1.3rem;flex:1;display:flex;flex-direction:column}
+.gcard h3{font-family:var(--disp);font-weight:500;font-size:1.22rem;margin-bottom:.3rem}
+.gcard p{font-size:.85rem;color:var(--ink-60);flex:1}
+.gcard .gs{margin-top:.8rem;font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--coral)}
+.gcard .gs.lv::before{content:"● ";color:var(--teal)}
+/* Skill-Breite */
+.skills{margin-top:2.6rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.2rem 2.6rem}
+@media(max-width:760px){.skills{grid-template-columns:1fr}}
+.skill{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid rgba(35,32,26,.1)}
+.skill .sn{font-family:var(--disp);font-weight:600;color:var(--coral);font-size:1.2rem;flex:none;width:2rem;line-height:1.3}
+.skill h4{font-family:var(--disp);font-weight:500;font-size:1.12rem;margin-bottom:.25rem}
+.skill p{font-size:.86rem;color:var(--ink-60)}
+.skill .sp{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-40);margin-top:.4rem}
 @media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}*{animation:none!important}}
 </style>
 </head>
@@ -237,7 +260,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 
 <nav class="nav">
   <span class="brand">Alex Heyers</span>
-  <a class="l" href="#auto">Automation</a><a class="l" href="#belege">Belege</a><a class="l" href="#cert">Zertifikate</a>
+  <a class="l" href="#auto">Automation</a><a class="l" href="#showcases">Werk</a><a class="l" href="#skills">Skills</a><a class="l" href="#cert">Zertifikate</a>
   <a class="cta" href="#kontakt">Lass uns reden ↗</a>
 </nav>
 
@@ -359,10 +382,54 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   </div>
 </section>
 
+<!-- SHOWCASES -->
+<section class="sec" id="showcases">
+  <div class="wrap">
+    <div class="lab rv">05 · Das gebaute Werk</div>
+    <h2 class="rv" style="--d:.06s">Nicht erzählt. <em>Gebaut.</em></h2>
+    <p class="intro rv" style="--d:.1s">Ein Auszug aus dem, was im Bootcamp-Zeitraum entstanden ist — Full-Stack-Produkte, 3D-Showcases, eine Galaxie meines eigenen Systems, ein Effekt-Katalog. Live-Systeme sind klickbar; der Rest liegt im Portfolio.</p>
+    <div class="gallery">
+      <a class="gcard rv" style="--d:.04s" href="https://myflowmotion.cloud" target="_blank" rel="noopener"><div class="gph"><span class="gt">Full-Stack · live</span><img src="/assets/img/live/studio.jpg" alt="AI-Adoption-Studio"></div><div class="gc"><h3>AI-Adoption-Studio</h3><p>End-to-end orchestriert: Next.js + FastAPI + Supabase, deployt auf eigenem VPS in Docker.</p><span class="gs lv">myflowmotion.cloud →</span></div></a>
+      <div class="gcard rv" style="--d:.1s"><div class="gph"><span class="gt">Three.js · System-Viz</span><img src="/assets/img/showcases/system-map.jpg" alt="System-Map"></div><div class="gc"><h3>System-Galaxie</h3><p>Mein gesamtes System als begehbare 3D-Karte: 119 Knoten, 48 n8n-Workflows, MCP-Server, Skills, Hooks — datengetrieben.</p><span class="gs">komplexe Systeme sichtbar machen</span></div></div>
+      <a class="gcard rv" style="--d:.16s" href="https://myflowmotion-lusion.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">WebGL · live</span><img src="/assets/img/live/lusion.jpg" alt="Lusion-Edition"></div><div class="gc"><h3>MyFlowMotion · Lusion</h3><p>3D-Szenenfahrt auf lusion.co-Niveau — echte Tiefe, scroll-getriebene Kamera.</p><span class="gs lv">Ansehen →</span></div></a>
+      <a class="gcard rv" style="--d:.06s" href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">Illustriert · live</span><img src="/assets/img/showcases/sketch-edition.jpg" alt="Sketch-Edition"></div><div class="gc"><h3>Sketch-Edition</h3><p>Handgezeichnetes Skizzenbuch-Scrollytelling — illustriertes Porträt + Agenten-Welt.</p><span class="gs lv">Ansehen →</span></div></a>
+      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">GPGPU · Partikel</span><img src="/assets/img/showcases/86-tage-showcase.jpg" alt="86-Tage-Showcase"></div><div class="gc"><h3>Partikel-Showcase</h3><p>100.000+ Punkte morphen scroll-gesteuert durch Wörter und werden zu einem Gesicht.</p><span class="gs">Frontier-WebGL</span></div></div>
+      <a class="gcard rv" style="--d:.18s" href="https://deinebusinesspage.de" target="_blank" rel="noopener"><div class="gph"><span class="gt">Produkt · live</span><img src="/assets/img/live/dbp.jpg" alt="deinebusinesspage.de"></div><div class="gc"><h3>deinebusinesspage.de</h3><p>Eigenes Produkt — konzipiert, gebaut, bepreist (990/1.490 €), online.</p><span class="gs lv">Ansehen →</span></div></a>
+      <div class="gcard rv" style="--d:.06s"><div class="gph"><span class="gt">Effekt-Bibliothek</span><img src="/assets/img/showcases/design-lab.jpg" alt="Effekt-Katalog"></div><div class="gc"><h3>Effekt-Katalog Tier 1–Ω</h3><p>Kuratierte Bibliothek von CSS-Basis bis GPGPU-Partikel — ich kenne und dirigiere das ganze Design-Vokabular.</p><span class="gs">Design-Direktion</span></div></div>
+      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">Echtes 3D</span><img src="/assets/img/showcases/design-s9.jpg" alt="Tier-Omega 3D"></div><div class="gc"><h3>Tier-Ω · Echtes 3D</h3><p>Glas-Refraktion, Bloom, Raymarching — three.js auf Award-Niveau, in einer Datei.</p><span class="gs">WebGL / GLSL</span></div></div>
+      <div class="gcard rv" style="--d:.18s"><div class="gph"><span class="gt">Design-Fusion</span><img src="/assets/img/showcases/claude-edition.jpg" alt="Claude-Edition"></div><div class="gc"><h3>Claude-Edition</h3><p>Eine Story, drei Design-Sprachen iteriert — Geschmack ist kein Zufall, sondern Methode.</p><span class="gs">Design-Iteration</span></div></div>
+      <div class="gcard rv" style="--d:.06s"><div class="gph"><span class="gt">Partikel-Typo</span><img src="/assets/img/showcases/studio-masterpiece.jpg" alt="Studio-Masterpiece"></div><div class="gc"><h3>Partikel-Headlines</h3><p>Wörter, die sich aus Three.js-Partikeln formen — Kamera-Fit, kein Bleed.</p><span class="gs">three.js · Shader</span></div></div>
+      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">Build-in-Public</span><img src="/assets/img/showcases/making-of.jpg" alt="Making-of"></div><div class="gc"><h3>Making-of</h3><p>Wie aus Forensik und Iteration ein Award-Design wird — der Bau-Prozess als Doku.</p><span class="gs">dokumentierte Iteration</span></div></div>
+      <a class="gcard rv" style="--d:.18s" href="https://alexheyers.github.io/mein-lerntagebuch/" target="_blank" rel="noopener"><div class="gph"><span class="gt">Building in Public · live</span><img src="/assets/img/live/tagebuch.jpg" alt="Lerntagebuch"></div><div class="gc"><h3>Lerntagebuch</h3><p>Tägliches technisches Lerntagebuch, GitHub Pages, Auto-Deploy nach Merge.</p><span class="gs lv">Ansehen →</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="sec" id="skills">
+  <div class="wrap">
+    <div class="lab rv">06 · Was ich baue</div>
+    <h2 class="rv" style="--d:.06s">Vom Bedürfnis zum <em>laufenden System</em> — die ganze Kette.</h2>
+    <p class="intro rv" style="--d:.1s">Kein Entwickler-Titel, sondern Breite: Ich übersetze Geschäfts-Bedürfnisse in Systeme und dirigiere KI, bis Agentur-Qualität rauskommt. Jedes Feld ist am Artefakt belegt.</p>
+    <div class="skills">
+      <div class="skill rv" style="--d:.04s"><div class="sn">01</div><div><h4>Full-Stack-Produkte</h4><p>Frontend, Backend, Datenbank, Hosting end-to-end orchestriert und live geschaltet.</p><div class="sp">Next.js · FastAPI · Supabase · Docker / VPS</div></div></div>
+      <div class="skill rv" style="--d:.08s"><div class="sn">02</div><div><h4>Homepages &amp; Landing Pages</h4><p>Konzipiert, gebaut, bepreist, online — inklusive Brand-System und Conversion-Logik.</p><div class="sp">deinebusinesspage.de · 990/1.490 €</div></div></div>
+      <div class="skill rv" style="--d:.12s"><div class="sn">03</div><div><h4>Datenbanken &amp; CRM</h4><p>Datenmodelle angewandt, nicht nur gelesen — ein CRM „Lead to Payment" aus 4 Datenbanken selbst gebaut.</p><div class="sp">Supabase / Postgres · Leads · Kunden · Angebote · Rechnungen</div></div></div>
+      <div class="skill rv" style="--d:.16s"><div class="sn">04</div><div><h4>n8n-Automation</h4><p>48 Workflows self-hosted (35 aktiv) plus eigenes Engineering-Toolkit aus 20+ Python-Scripts — z.B. Angebots-Nachfass → Telegram-Reminder bei Stille.</p><div class="sp">n8n · self-hosted · eigener VPS</div></div></div>
+      <div class="skill rv" style="--d:.04s"><div class="sn">05</div><div><h4>Voice-Agents</h4><p>Ein Agent, der zuhört, fragt und protokolliert — geführter Intake mit Consent-Phase, end-to-end.</p><div class="sp">ElevenLabs · n8n · Conversational AI</div></div></div>
+      <div class="skill rv" style="--d:.08s"><div class="sn">06</div><div><h4>Multi-Agent &amp; Agent SDK</h4><p>Ich dirigiere ganze Agenten-Teams: BMAD, Subagenten, MCP-Server, das Claude Agent SDK. Diese Seite ist selbst über orchestrierte Agenten entstanden.</p><div class="sp">Claude Code · Agent SDK · MCP</div></div></div>
+      <div class="skill rv" style="--d:.12s"><div class="sn">07</div><div><h4>Browser-Tools &amp; Extensions</h4><p>Werkzeuge, die in fremden Oberflächen arbeiten — z.B. eine Chrome-Extension, die Miro-Boards aus Daten befüllt.</p><div class="sp">Chrome-Extension · Automation</div></div></div>
+      <div class="skill rv" style="--d:.16s"><div class="sn">08</div><div><h4>Design, 3D &amp; WebGL</h4><p>Three.js, Shader, GPGPU-Partikel — von der System-Galaxie bis zum Effekt-Katalog Tier 1–Ω. Awwwards-Geschmack, am Artefakt belegt.</p><div class="sp">three.js · GLSL · GSAP</div></div></div>
+      <div class="skill rv" style="--d:.04s"><div class="sn">09</div><div><h4>Content-Pipelines</h4><p>Content industrialisiert statt Handarbeit: Python-Build-Scripts, KI-Bildgenerierung, eine automatisierte 90-Tage-LinkedIn-Kampagne.</p><div class="sp">Python · gpt-image · Brand-System</div></div></div>
+      <div class="skill rv" style="--d:.08s"><div class="sn">10</div><div><h4>Claude Code Mastery</h4><p>Ich nutze KI nicht nur, ich engineere sie: eigene Skills gebaut, Hooks nach Notion, persistentes Memory, Multi-Harness-Setup — von Anthropic zertifiziert.</p><div class="sp">eigene Skills · Hooks · Memory · Cowork · Terminal</div></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- CERTS -->
 <section class="sec" id="cert">
   <div class="wrap">
-    <div class="lab rv">05 · Offiziell zertifiziert</div>
+    <div class="lab rv">07 · Offiziell zertifiziert</div>
     <h2 class="rv" style="--d:.06s">Nicht behauptet — <em>zertifiziert.</em> Von Anthropic selbst.</h2>
     <p class="intro rv" style="--d:.1s">Die Firma hinter Claude prüft, dass ich produktiv mit Claude Code &amp; Agentic-Tools arbeite. Jedes Zertifikat ist klickbar verifizierbar.</p>
     <div class="cards c3">
