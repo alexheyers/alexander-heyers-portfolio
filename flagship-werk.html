@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flaggschiff — Das Werk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#F4EEE2;--paper2:#EBE2D2;--ink:#211D16;--ink-60:rgba(33,29,22,.62);--ink-40:rgba(33,29,22,.42);--ink-20:rgba(33,29,22,.18);
+  --coral:#C8623B;--coral-deep:#A24A28;--teal:#1F9E8C;--peach:#F0CBA8;
+  --disp:'Fraunces',serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --glass:rgba(255,255,255,.55);--glass-bd:rgba(255,255,255,.65);
+  --ezl:cubic-bezier(.16,1,.3,1);
+}
+html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora b{position:absolute;border-radius:50%;filter:blur(85px);opacity:.4;mix-blend-mode:multiply}
+.aurora .b1{width:46vw;height:46vw;background:radial-gradient(circle,#E89A78,transparent 65%);top:-12vw;left:-8vw}
+.aurora .b2{width:42vw;height:42vw;background:radial-gradient(circle,#7FC7BA,transparent 65%);bottom:-16vw;right:-10vw}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.wrap{width:min(1280px,93vw);margin-inline:auto;position:relative;z-index:3}
+.sec{padding:6.5rem 0 7rem}
+
+.lab{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--coral)}
+.lab::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral)}
+h1{font-family:var(--disp);font-weight:500;font-size:clamp(2.4rem,6.2vw,5.4rem);line-height:.98;letter-spacing:-.02em;margin-top:1rem;max-width:15ch}
+h1 .neg{color:var(--ink-40);font-weight:300}
+h1 em{font-style:italic;font-weight:600;color:var(--coral)}
+.kicker{margin-top:1.6rem;max-width:50ch;font-size:1.12rem;color:var(--ink-60)}
+.kicker b{color:var(--ink);font-weight:500}
+
+/* SCALE BAND */
+.scale{margin-top:3rem;display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;border-top:1px solid var(--ink-20);border-bottom:1px solid var(--ink-20);padding:1.8rem 0}
+@media(max-width:860px){.scale{grid-template-columns:repeat(3,1fr);gap:1.6rem 1rem}}
+@media(max-width:480px){.scale{grid-template-columns:repeat(2,1fr)}}
+.stat .n{font-family:var(--disp);font-weight:600;font-size:clamp(2.1rem,4vw,3.2rem);line-height:1;color:var(--coral);letter-spacing:-.02em}
+.stat .n .suf{color:var(--ink);font-size:.62em;font-weight:500}
+.stat .l{margin-top:.45rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-60);line-height:1.4}
+
+/* WORK WALL */
+.wall{margin-top:3rem;position:relative}
+.wall::before,.wall::after{content:"";position:absolute;top:0;bottom:0;width:9vw;z-index:4;pointer-events:none}
+.wall::before{left:0;background:linear-gradient(90deg,var(--paper),transparent)}
+.wall::after{right:0;background:linear-gradient(270deg,var(--paper),transparent)}
+.row{display:flex;gap:1.1rem;width:max-content;will-change:transform}
+.row.r1{animation:drift1 56s linear infinite}
+.row.r2{margin-top:1.1rem;animation:drift2 64s linear infinite}
+.wall:hover .row{animation-play-state:paused}
+@keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes drift2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.tile{position:relative;flex:none;width:300px;border-radius:16px;overflow:hidden;background:#15130f;border:1px solid var(--glass-bd);box-shadow:0 18px 40px -24px rgba(33,29,22,.4);transition:transform .5s var(--ezl),box-shadow .5s}
+.tile.tall{width:230px}
+.tile:hover{transform:translateY(-7px) scale(1.015);box-shadow:0 30px 60px -26px rgba(33,29,22,.5)}
+.tile .ph{aspect-ratio:16/10;overflow:hidden}
+.tile.tall .ph{aspect-ratio:4/5}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s var(--ezl)}
+.tile:hover img{transform:scale(1.06)}
+.tile .cap{position:absolute;left:0;right:0;bottom:0;padding:1.4rem .9rem .7rem;background:linear-gradient(0deg,rgba(18,16,12,.85),transparent);color:#fff}
+.tile .cap .t{font-family:var(--disp);font-weight:500;font-size:.98rem;line-height:1.1}
+.tile .cap .s{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-top:.2rem}
+
+.foot{margin-top:3rem;display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+.arc{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(1.4rem,2.8vw,2.2rem);line-height:1.2;max-width:24ch}
+.arc b{font-style:normal;color:var(--coral)}
+.note{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40);text-align:right;line-height:1.7}
+.note b{color:var(--teal)}
+@media(prefers-reduced-motion:reduce){.row{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="aurora"><b class="b1"></b><b class="b2"></b></div>
+<div class="grain"></div>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="lab">Das Werk · belegbar, nichts erfunden</div>
+    <h1><span class="neg">Kein Informatik-Studium. Kein Dev-Titel.</span><br><em>Trotzdem ein ganzes System — selbst gebaut.</em></h1>
+    <p class="kicker">Was ein Quereinsteiger in Monaten gebaut hat: <b>über 100 Interfaces, 8 Projekte, ein 8-Agenten-System, ein Voice-Agent, eine eigene Chrome-Extension.</b> Jede Kachel unten ist echt. Klickbar im Detail.</p>
+
+    <div class="scale">
+      <div class="stat"><div class="n"><span class="count" data-to="110">0</span><span class="suf">+</span></div><div class="l">gebaute<br>Interfaces</div></div>
+      <div class="stat"><div class="n"><span class="count" data-to="8">0</span></div><div class="l">echte<br>Projekte</div></div>
+      <div class="stat"><div class="n"><span class="count" data-to="38">0</span></div><div class="l">n8n-Workflows<br>34 aktiv</div></div>
+      <div class="stat"><div class="n"><span class="count" data-to="8">0</span></div><div class="l">Agenten im<br>Studio-System</div></div>
+      <div class="stat"><div class="n"><span class="count" data-to="12">0</span></div><div class="l">eigene<br>KI-Skills</div></div>
+      <div class="stat"><div class="n"><span class="count" data-to="20">0</span><span class="suf">J</span></div><div class="l">Operations<br>als Fundament</div></div>
+    </div>
+
+    <div class="wall">
+      <div class="row r1">
+        <a class="tile"><div class="ph"><img src="/assets/img/live/studio.jpg" alt=""></div><div class="cap"><div class="t">AI-Adoption-Studio</div><div class="s">Next.js · FastAPI · 8 Agenten · live</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/lusion.jpg" alt=""></div><div class="cap"><div class="t">MyFlowMotion · Lusion</div><div class="s">Three.js · Physik · Shader</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/system-map.jpg" alt=""></div><div class="cap"><div class="t">System-Galaxie</div><div class="s">3D-Systemkarte</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/design-s9.jpg" alt=""></div><div class="cap"><div class="t">Tier-Ω · Echtes 3D</div><div class="s">WebGL · GLSL · Bloom</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/dbp.jpg" alt=""></div><div class="cap"><div class="t">deinebusinesspage.de</div><div class="s">eigenes Produkt · 607 Commits</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/86-tage-showcase.jpg" alt=""></div><div class="cap"><div class="t">Partikel-Showcase</div><div class="s">GPGPU · 100k Punkte</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/sketch-edition.jpg" alt=""></div><div class="cap"><div class="t">Sketch-Edition</div><div class="s">illustriert · scrollytelling</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_agents_team.jpg" alt=""></div><div class="cap"><div class="t">Multi-Agent-Team</div><div class="s">BMAD · Subagenten</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/studio.jpg" alt=""></div><div class="cap"><div class="t">AI-Adoption-Studio</div><div class="s">Next.js · FastAPI · 8 Agenten · live</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/lusion.jpg" alt=""></div><div class="cap"><div class="t">MyFlowMotion · Lusion</div><div class="s">Three.js · Physik · Shader</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/system-map.jpg" alt=""></div><div class="cap"><div class="t">System-Galaxie</div><div class="s">3D-Systemkarte</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/design-s9.jpg" alt=""></div><div class="cap"><div class="t">Tier-Ω · Echtes 3D</div><div class="s">WebGL · GLSL · Bloom</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/dbp.jpg" alt=""></div><div class="cap"><div class="t">deinebusinesspage.de</div><div class="s">eigenes Produkt · 607 Commits</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/86-tage-showcase.jpg" alt=""></div><div class="cap"><div class="t">Partikel-Showcase</div><div class="s">GPGPU · 100k Punkte</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/sketch-edition.jpg" alt=""></div><div class="cap"><div class="t">Sketch-Edition</div><div class="s">illustriert · scrollytelling</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_agents_team.jpg" alt=""></div><div class="cap"><div class="t">Multi-Agent-Team</div><div class="s">BMAD · Subagenten</div></div></a>
+      </div>
+      <div class="row r2">
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/design-lab.jpg" alt=""></div><div class="cap"><div class="t">Effekt-Katalog Tier 1–Ω</div><div class="s">Design-Vokabular</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/sketch.jpg" alt=""></div><div class="cap"><div class="t">Sketch-Edition · live</div><div class="s">WebGL</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/studio-masterpiece.jpg" alt=""></div><div class="cap"><div class="t">Partikel-Headlines</div><div class="s">Three.js · Shader</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_code_wall.jpg" alt=""></div><div class="cap"><div class="t">Claude-Code-Workflow</div><div class="s">Terminal · eigene Skills</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/livesession.jpg" alt=""></div><div class="cap"><div class="t">livesession · live</div><div class="s">Auto-Deploy nach Merge</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/claude-edition.jpg" alt=""></div><div class="cap"><div class="t">Claude-Edition</div><div class="s">Design-Iteration</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_network.jpg" alt=""></div><div class="cap"><div class="t">n8n-Automation</div><div class="s">38 Workflows · self-hosted</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/tagebuch.jpg" alt=""></div><div class="cap"><div class="t">Lerntagebuch · live</div><div class="s">Building in Public</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/card-ada.jpg" alt=""></div><div class="cap"><div class="t">Voice-Agent „Ada"</div><div class="s">ElevenLabs · 105 Fragen</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/design-lab.jpg" alt=""></div><div class="cap"><div class="t">Effekt-Katalog Tier 1–Ω</div><div class="s">Design-Vokabular</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/sketch.jpg" alt=""></div><div class="cap"><div class="t">Sketch-Edition · live</div><div class="s">WebGL</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/studio-masterpiece.jpg" alt=""></div><div class="cap"><div class="t">Partikel-Headlines</div><div class="s">Three.js · Shader</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_code_wall.jpg" alt=""></div><div class="cap"><div class="t">Claude-Code-Workflow</div><div class="s">Terminal · eigene Skills</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/livesession.jpg" alt=""></div><div class="cap"><div class="t">livesession · live</div><div class="s">Auto-Deploy nach Merge</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/showcases/claude-edition.jpg" alt=""></div><div class="cap"><div class="t">Claude-Edition</div><div class="s">Design-Iteration</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/sk_network.jpg" alt=""></div><div class="cap"><div class="t">n8n-Automation</div><div class="s">38 Workflows · self-hosted</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/live/tagebuch.jpg" alt=""></div><div class="cap"><div class="t">Lerntagebuch · live</div><div class="s">Building in Public</div></div></a>
+        <a class="tile"><div class="ph"><img src="/assets/img/card-ada.jpg" alt=""></div><div class="cap"><div class="t">Voice-Agent „Ada"</div><div class="s">ElevenLabs · 105 Fragen</div></div></a>
+      </div>
+    </div>
+
+    <div class="foot">
+      <p class="arc">Vom Tresen zum Terminal — <b>alles selbst gebaut. Alles belegbar.</b></p>
+      <p class="note">Quereinsteiger · 2026<br><b>kein erfundenes Detail</b><br>jedes Werk ist echt &amp; live prüfbar</p>
+    </div>
+  </div>
+</section>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cu=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,to=+el.dataset.to,dur=1400;let s=null;
+  function tk(n){if(s===null)s=n;const p=Math.min((n-s)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tk);}
+  if(reduce){el.textContent=to;}else{requestAnimationFrame(tk);}cu.unobserve(el);}),{threshold:.6});
+document.querySelectorAll('.count').forEach(el=>cu.observe(el));
+</script>
+</body>
+</html>

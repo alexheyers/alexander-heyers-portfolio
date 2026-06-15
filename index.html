@@ -289,7 +289,52 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   .nav .brand{font-size:.82rem}
   .nav .cta{font-size:.54rem;padding:.45rem .7rem}
 }
-@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}*{animation:none!important}}
+/* ===== Flaggschiff: Werk-Wand ===== */
+.wkscale{margin-top:2.4rem;display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;border-top:1px solid var(--ink-20);border-bottom:1px solid var(--ink-20);padding:1.7rem 0}
+@media(max-width:860px){.wkscale{grid-template-columns:repeat(3,1fr);gap:1.5rem 1rem}}
+@media(max-width:460px){.wkscale{grid-template-columns:repeat(2,1fr)}}
+.wkstat .n{font-family:var(--disp);font-weight:600;font-size:clamp(2rem,3.8vw,3rem);line-height:1;color:var(--coral);letter-spacing:-.02em}
+.wkstat .n .suf{color:var(--ink);font-size:.6em;font-weight:500}
+.wkstat .l{margin-top:.4rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-60);line-height:1.4}
+.wkwall{margin-top:2.6rem;position:relative}
+.wkwall::before,.wkwall::after{content:"";position:absolute;top:0;bottom:0;width:8vw;z-index:4;pointer-events:none}
+.wkwall::before{left:0;background:linear-gradient(90deg,var(--paper),transparent)}
+.wkwall::after{right:0;background:linear-gradient(270deg,var(--paper),transparent)}
+.wkrow{display:flex;gap:1rem;width:max-content;will-change:transform}
+.wkrow.a{animation:wkd1 64s linear infinite}
+.wkrow.b{margin-top:1rem;animation:wkd2 78s linear infinite}
+.wkwall:hover .wkrow{animation-play-state:paused}
+@keyframes wkd1{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes wkd2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.wktile{position:relative;flex:none;width:288px;border-radius:15px;overflow:hidden;background:#15130f;border:1px solid var(--glass-bd);box-shadow:0 16px 38px -24px rgba(35,32,26,.4);transition:transform .5s var(--ezl),box-shadow .5s}
+.wktile:hover{transform:translateY(-7px) scale(1.015);box-shadow:0 30px 58px -26px rgba(35,32,26,.5)}
+.wktile .ph{aspect-ratio:16/10;overflow:hidden}
+.wktile img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ezl)}
+.wktile:hover img{transform:scale(1.06)}
+.wktile .cap{position:absolute;left:0;right:0;bottom:0;padding:1.3rem .9rem .65rem;background:linear-gradient(0deg,rgba(18,16,12,.85),transparent);color:#fff}
+.wktile .cap .t{font-family:var(--disp);font-weight:500;font-size:.95rem;line-height:1.1}
+.wktile .cap .s{font-family:var(--mono);font-size:.52rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.18rem}
+.wkfoot{margin-top:2.6rem;display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+.wkarc{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.2;max-width:24ch}
+.wkarc b{font-style:normal;color:var(--coral)}
+.wknote{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40);text-align:right;line-height:1.7}
+.wknote b{color:var(--teal)}
+@media(max-width:560px){.wktile{width:220px}}
+/* ===== Flaggschiff: Effekt-Lupe Flow ===== */
+.lflow{margin-top:2.6rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.lnode{position:relative;background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:20px;padding:1.5rem 1.3rem;box-shadow:0 20px 44px -26px rgba(35,32,26,.28);margin:0 .7rem;display:flex;flex-direction:column;gap:.45rem;min-height:186px}
+.lnode .ic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:var(--ink);color:var(--paper)}
+.lnode.warm .ic{background:linear-gradient(135deg,var(--coral),#9c4a2c)}
+.lnode.cool .ic{background:linear-gradient(135deg,var(--teal),#136b5f)}
+.lnode .st{font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-40)}
+.lnode h3{font-family:var(--disp);font-weight:500;font-size:1.18rem;line-height:1.1}
+.lnode p{font-size:.82rem;color:var(--ink-60)}
+.lnode .m{margin-top:auto;font-family:var(--mono);font-size:.56rem;letter-spacing:.04em;color:var(--coral)}
+.lnode.cool .m{color:var(--teal)}
+.lflow .lnode:not(:last-child)::after{content:"";position:absolute;top:2.3rem;right:-.9rem;width:1.8rem;height:2px;background:linear-gradient(90deg,var(--coral),var(--teal));z-index:3;opacity:.5}
+@media(max-width:820px){.lflow{grid-template-columns:1fr 1fr;gap:1.2rem 0}.lnode{margin:0 .5rem}.lflow .lnode::after{display:none}}
+@media(max-width:520px){.lflow{grid-template-columns:1fr}.lnode{margin:0}}
+@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}.wkrow{animation:none!important}*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -309,11 +354,13 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <div class="prog" aria-hidden="true"><i></i></div>
 <nav class="rail" aria-label="Abschnitts-Navigation">
   <a href="#start"><span class="tx">Start</span><span class="tk"></span></a>
+  <a href="#werk"><span class="tx">Das Werk</span><span class="tk"></span></a>
   <a href="#tresen"><span class="tx">Tresen</span><span class="tk"></span></a>
   <a href="#auto"><span class="tx">Automation</span><span class="tk"></span></a>
   <a href="#agenten"><span class="tx">Agenten</span><span class="tk"></span></a>
+  <a href="#lupe"><span class="tx">Effekt-Lupe</span><span class="tk"></span></a>
   <a href="#belege"><span class="tx">Belege</span><span class="tk"></span></a>
-  <a href="#showcases"><span class="tx">Werk</span><span class="tk"></span></a>
+  <a href="#showcases"><span class="tx">Galerie</span><span class="tk"></span></a>
   <a href="#skills"><span class="tx">Skills</span><span class="tk"></span></a>
   <a href="#cert"><span class="tx">Zertifikate</span><span class="tk"></span></a>
   <a href="#kontakt"><span class="tx">Kontakt</span><span class="tk"></span></a>
@@ -342,6 +389,65 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   <span class="set">Claude Code<b>·</b>n8n<b>·</b>Voice-Agents<b>·</b>Full-Stack<b>·</b>Solutions Engineering<b>·</b>Building in Public<b>·</b>MCP<b>·</b>Docker / VPS<b>·</b></span>
   <span class="set">Claude Code<b>·</b>n8n<b>·</b>Voice-Agents<b>·</b>Full-Stack<b>·</b>Solutions Engineering<b>·</b>Building in Public<b>·</b>MCP<b>·</b>Docker / VPS<b>·</b></span>
 </div></div>
+
+<!-- WERK-WAND (Flaggschiff) -->
+<section class="sec" id="werk">
+  <div class="wrap">
+    <div class="lab rv">Das Werk · belegbar, nichts erfunden</div>
+    <h2 class="rv" style="--d:.06s;max-width:24ch"><span style="color:var(--ink-40)">Kein Informatik-Studium. Kein Dev-Titel.</span><br><em>Trotzdem ein ganzes System — selbst gebaut.</em></h2>
+    <p class="intro rv" style="--d:.1s">Was ein Quereinsteiger in Monaten gebaut hat: <b style="color:var(--ink)">über 100 Interfaces, 8 Projekte, ein 8-Agenten-System, ein Voice-Agent, eine eigene Chrome-Extension.</b> Jede Kachel ist echt.</p>
+    <div class="wkscale rv" style="--d:.14s">
+      <div class="wkstat"><div class="n"><span class="count" data-to="110">0</span><span class="suf">+</span></div><div class="l">gebaute<br>Interfaces</div></div>
+      <div class="wkstat"><div class="n"><span class="count" data-to="8">0</span></div><div class="l">echte<br>Projekte</div></div>
+      <div class="wkstat"><div class="n"><span class="count" data-to="38">0</span></div><div class="l">n8n-Workflows<br>34 aktiv</div></div>
+      <div class="wkstat"><div class="n"><span class="count" data-to="8">0</span></div><div class="l">Agenten im<br>Studio-System</div></div>
+      <div class="wkstat"><div class="n"><span class="count" data-to="12">0</span></div><div class="l">eigene<br>KI-Skills</div></div>
+      <div class="wkstat"><div class="n"><span class="count" data-to="20">0</span><span class="suf">J</span></div><div class="l">Operations<br>als Fundament</div></div>
+    </div>
+    <div class="wkwall rv" style="--d:.1s">
+      <div class="wkrow a">
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/studio.jpg" alt="AI-Adoption-Studio"></div><div class="cap"><div class="t">AI-Adoption-Studio</div><div class="s">Next.js · FastAPI · 8 Agenten · live</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/ai-adoption-studio-masterpiece.jpg" alt="Studio Partikel-Hero"></div><div class="cap"><div class="t">Studio · Partikel-Hero</div><div class="s">Three.js · GPGPU</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/lusion.jpg" alt="MyFlowMotion Lusion"></div><div class="cap"><div class="t">MyFlowMotion · Lusion</div><div class="s">Three.js · Physik · Shader</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/system-map.jpg" alt="System-Galaxie"></div><div class="cap"><div class="t">System-Galaxie</div><div class="s">3D-Systemkarte</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/86-tage-memphis.jpg" alt="86-Tage Memphis"></div><div class="cap"><div class="t">86-Tage · Memphis</div><div class="s">Design-Edition</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/dbp.jpg" alt="deinebusinesspage"></div><div class="cap"><div class="t">deinebusinesspage.de</div><div class="s">eigenes Produkt · 607 Commits</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/design-s9.jpg" alt="Tier-Omega 3D"></div><div class="cap"><div class="t">Tier-Ω · Echtes 3D</div><div class="s">WebGL · GLSL · Bloom</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/tresen-terminal.jpg" alt="Tresen Terminal"></div><div class="cap"><div class="t">Zwischen Tresen &amp; Terminal</div><div class="s">Editorial-Scroll</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/studio.jpg" alt=""></div><div class="cap"><div class="t">AI-Adoption-Studio</div><div class="s">Next.js · FastAPI · 8 Agenten · live</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/ai-adoption-studio-masterpiece.jpg" alt=""></div><div class="cap"><div class="t">Studio · Partikel-Hero</div><div class="s">Three.js · GPGPU</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/lusion.jpg" alt=""></div><div class="cap"><div class="t">MyFlowMotion · Lusion</div><div class="s">Three.js · Physik · Shader</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/system-map.jpg" alt=""></div><div class="cap"><div class="t">System-Galaxie</div><div class="s">3D-Systemkarte</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/86-tage-memphis.jpg" alt=""></div><div class="cap"><div class="t">86-Tage · Memphis</div><div class="s">Design-Edition</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/dbp.jpg" alt=""></div><div class="cap"><div class="t">deinebusinesspage.de</div><div class="s">eigenes Produkt · 607 Commits</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/design-s9.jpg" alt=""></div><div class="cap"><div class="t">Tier-Ω · Echtes 3D</div><div class="s">WebGL · GLSL · Bloom</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/tresen-terminal.jpg" alt=""></div><div class="cap"><div class="t">Zwischen Tresen &amp; Terminal</div><div class="s">Editorial-Scroll</div></div></div>
+      </div>
+      <div class="wkrow b">
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/design-lab.jpg" alt="Effekt-Katalog"></div><div class="cap"><div class="t">Effekt-Katalog Tier 1–Ω</div><div class="s">Design-Vokabular</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/claude-edition.jpg" alt="Claude-Edition"></div><div class="cap"><div class="t">Claude-Edition</div><div class="s">Design-Fusion</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/studio-masterpiece.jpg" alt="Partikel-Headlines"></div><div class="cap"><div class="t">Partikel-Headlines</div><div class="s">Three.js · Shader</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/86-tage-claude.jpg" alt="86-Tage Claude"></div><div class="cap"><div class="t">86-Tage · Claude</div><div class="s">Design-Edition</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/livesession.jpg" alt="livesession"></div><div class="cap"><div class="t">livesession · live</div><div class="s">Auto-Deploy nach Merge</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/sk_network.jpg" alt="n8n-Automation"></div><div class="cap"><div class="t">n8n-Automation</div><div class="s">38 Workflows · self-hosted</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/tagebuch.jpg" alt="Lerntagebuch"></div><div class="cap"><div class="t">Lerntagebuch · live</div><div class="s">Building in Public</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/card-ada.jpg" alt="Voice-Agent Ada"></div><div class="cap"><div class="t">Voice-Agent „Ada"</div><div class="s">ElevenLabs · 105 Fragen</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/design-lab.jpg" alt=""></div><div class="cap"><div class="t">Effekt-Katalog Tier 1–Ω</div><div class="s">Design-Vokabular</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/claude-edition.jpg" alt=""></div><div class="cap"><div class="t">Claude-Edition</div><div class="s">Design-Fusion</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/showcases/studio-masterpiece.jpg" alt=""></div><div class="cap"><div class="t">Partikel-Headlines</div><div class="s">Three.js · Shader</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/wall/86-tage-claude.jpg" alt=""></div><div class="cap"><div class="t">86-Tage · Claude</div><div class="s">Design-Edition</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/livesession.jpg" alt=""></div><div class="cap"><div class="t">livesession · live</div><div class="s">Auto-Deploy nach Merge</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/sk_network.jpg" alt=""></div><div class="cap"><div class="t">n8n-Automation</div><div class="s">38 Workflows · self-hosted</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/live/tagebuch.jpg" alt=""></div><div class="cap"><div class="t">Lerntagebuch · live</div><div class="s">Building in Public</div></div></div>
+        <div class="wktile"><div class="ph"><img src="/assets/img/card-ada.jpg" alt=""></div><div class="cap"><div class="t">Voice-Agent „Ada"</div><div class="s">ElevenLabs · 105 Fragen</div></div></div>
+      </div>
+    </div>
+    <div class="wkfoot rv">
+      <p class="wkarc">Vom Tresen zum Terminal — <b>alles selbst gebaut. Alles belegbar.</b></p>
+      <p class="wknote">Quereinsteiger · 2026<br><b>kein erfundenes Detail</b><br>jedes Werk echt &amp; prüfbar</p>
+    </div>
+  </div>
+</section>
 
 <!-- TRESEN -->
 <section class="sec" id="tresen">
@@ -456,6 +562,43 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <span class="ok">✓</span> Ich habe dirigiert. <span class="fl">Nicht jede Zeile getippt — und das ist der Skill.</span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- EFFEKT-LUPE (Flaggschiff) -->
+<section class="sec" id="lupe">
+  <div class="wrap">
+    <div class="lab rv">Flaggschiff · Eigenes Werkzeug</div>
+    <h2 class="rv" style="--d:.06s">Ich nutze KI nicht nur.<br><em>Ich baue ihr Werkzeug.</em></h2>
+    <p class="intro rv" style="--d:.1s">Ein Recruiter fragt zu Recht: <b>kann der wirklich bauen?</b> Meine Antwort ist eine Chrome-Extension, die ich selbst entwickelt habe — die <b>Effekt-Lupe</b>. Sie erfasst auf jeder Website Design, Animation, 3D und Scroll-Verhalten, schickt es über eine eigene lokale Bridge in jedes Projekt, und ein selbstgebauter Claude-Skill baut den Effekt im eigenen Stil nach.</p>
+    <div class="lflow rv" style="--d:.12s">
+      <div class="lnode warm"><div class="ic">🔍</div><div class="st">01 · Erfassen</div><h3>Jede Website</h3><p>Element picken oder Scroll aufnehmen — Tokens, CSS, Keyframes, 3D, Momentum.</p><div class="m">Chrome-Extension · MV3</div></div>
+      <div class="lnode"><div class="ic">⇆</div><div class="st">02 · Brücke</div><h3>Local Bridge</h3><p>Eigener Node-Server, zero-dependency. Findet automatisch alle meine Projekte.</p><div class="m">Node · localhost:7777</div></div>
+      <div class="lnode"><div class="ic">📁</div><div class="st">03 · Ablegen</div><h3>Jedes Projekt</h3><p>Erfassung landet versioniert in <code>.effekt-lupe/captures/</code> — überall.</p><div class="m">Auto-Discovery</div></div>
+      <div class="lnode cool"><div class="ic">✦</div><div class="st">04 · Einbauen</div><h3>Claude baut</h3><p>Eigener Skill <code>/effekt-lupe</code> verwandelt die Erfassung in echte Edits.</p><div class="m">Claude Code · eigener Skill</div></div>
+    </div>
+    <div class="cards" style="grid-template-columns:1.25fr .75fr;margin-top:1.3rem">
+      <div class="term rv" style="--d:.06s">
+        <div class="bar"><i></i><i></i><i></i><span>effekt-lupe — erfasst &amp; sendet</span></div>
+        <div class="body"><span class="pr">➜</span> <span class="cm">lupe</span> erfasse <span class="te">awwwards.com/site</span>
+   <span class="ok">✓</span> 18 Farben · 3 Fonts · 24 CSS-Props
+   <span class="ok">✓</span> Keyframes <span class="dim">(Web Animations API)</span>
+   <span class="ok">✓</span> 3D erkannt: <span class="te">Three.js</span>
+   <span class="ok">✓</span> Scroll-Momentum: <span class="te">620ms</span>
+<span class="pr">➜</span> sende → <span class="fl">jedes Projekt</span> <span class="dim"># Auto-Discovery</span>
+<span class="ok">✓</span> in Claude: <span class="cm">/effekt-lupe</span> → eingebaut</div>
+      </div>
+      <div class="card rv" style="--d:.16s">
+        <div class="n" style="font-size:1.8rem">🔍</div>
+        <h3>Was sie erfasst</h3>
+        <p>Design-Tokens · kuratiertes CSS · echte Keyframes · 3D-/WebGL-Erkennung · Scroll-Momentum. Nicht „Code klauen" — die Bausteine verstehen und im eigenen Stil neu bauen.</p>
+        <div class="m">Tokens · CSS · Animation · 3D · Scroll</div>
+      </div>
+    </div>
+    <div class="chips rv" style="--d:.2s">
+      <span class="chip key">Manifest V3</span><span class="chip">Node-Bridge · zero-dep</span><span class="chip">Auto-Discovery</span><span class="chip">eigener Claude-Skill</span><span class="chip">13 Commits</span><a class="chip" href="https://github.com/alexheyers/effekt-lupe" target="_blank" rel="noopener" style="background:var(--coral);border-color:var(--coral);color:#fff">GitHub: alexheyers/effekt-lupe ↗</a>
+    </div>
+    <p class="rv" style="--d:.24s;margin-top:2.2rem;font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.25;max-width:30ch">Andere installieren Tools. <b style="font-style:normal;color:var(--coral)">Ich baue welche</b> — und verdrahte sie in meinen Workflow.</p>
   </div>
 </section>
 
