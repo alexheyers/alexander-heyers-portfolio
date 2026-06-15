@@ -334,6 +334,26 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 .lflow .lnode:not(:last-child)::after{content:"";position:absolute;top:2.3rem;right:-.9rem;width:1.8rem;height:2px;background:linear-gradient(90deg,var(--coral),var(--teal));z-index:3;opacity:.5}
 @media(max-width:820px){.lflow{grid-template-columns:1fr 1fr;gap:1.2rem 0}.lnode{margin:0 .5rem}.lflow .lnode::after{display:none}}
 @media(max-width:520px){.lflow{grid-template-columns:1fr}.lnode{margin:0}}
+/* ===== Fähigkeiten-Explorer (interaktiv) ===== */
+.capwrap{margin-top:2.8rem;display:grid;grid-template-columns:.92fr 1.08fr;gap:2.4rem;align-items:start}
+@media(max-width:880px){.capwrap{grid-template-columns:1fr;gap:1.4rem}}
+.caplist{display:flex;flex-direction:column}
+.capitem{display:flex;align-items:center;gap:1rem;padding:.95rem .5rem;border-bottom:1px solid var(--ink-20);cursor:pointer;transition:padding-left .35s var(--ezl)}
+.capitem .cn{font-family:var(--mono);font-size:.64rem;color:var(--ink-40);width:1.5rem;flex:none;transition:color .3s}
+.capitem h4{font-family:var(--disp);font-weight:500;font-size:clamp(1.05rem,1.6vw,1.32rem);transition:color .3s;line-height:1.15}
+.capitem .arr{margin-left:auto;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;color:var(--coral);font-family:var(--mono)}
+.capitem:hover,.capitem.active{padding-left:1.1rem}
+.capitem.active h4,.capitem:hover h4,.capitem.active .cn,.capitem:hover .cn{color:var(--coral)}
+.capitem.active .arr,.capitem:hover .arr{opacity:1;transform:none}
+.capitem:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:8px}
+.cappanel{position:sticky;top:5.5rem;background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:22px;padding:.8rem;box-shadow:0 26px 56px -30px rgba(35,32,26,.34)}
+.cappanel .pimg{aspect-ratio:16/11;border-radius:16px;overflow:hidden;background:#15130f}
+.cappanel .pimg img{width:100%;height:100%;object-fit:cover;transition:opacity .4s var(--ezl)}
+.cappanel .pbody{padding:1.2rem 1.1rem .9rem}
+.cappanel h3{font-family:var(--disp);font-weight:500;font-size:1.45rem;margin-bottom:.4rem}
+.cappanel p{font-size:.94rem;color:var(--ink-60);min-height:3.4em}
+.cappanel .pstack{margin-top:1rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--coral)}
+@media(max-width:880px){.cappanel{position:relative;top:0;order:-1}}
 @media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}.wkrow{animation:none!important}*{animation:none!important}}
 </style>
 </head>
@@ -497,7 +517,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
       <div class="term rv" style="--d:.06s">
         <div class="bar"><i></i><i></i><i></i><span>n8n — self-hosted</span></div>
         <div class="body"><span class="pr">➜</span> <span class="cm">n8n</span> list --active
-<span class="te">35</span> Workflows <span class="ok">running</span>
+<span class="te">34</span> Workflows <span class="ok">aktiv</span>
 <span class="dim">+ Toolkit:</span> deploy · validate · test
    visualize · backup <span class="dim">(20+ Scripts)</span>
 <span class="ok">✓</span> Docker · eigener VPS · <span class="fl">24/7</span></div>
@@ -627,7 +647,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
     <p class="intro rv" style="--d:.1s">Ein Auszug aus dem, was im Bootcamp-Zeitraum entstanden ist — Full-Stack-Produkte, 3D-Showcases, eine Galaxie meines eigenen Systems, ein Effekt-Katalog. Live-Systeme sind klickbar; der Rest liegt im Portfolio.</p>
     <div class="gallery">
       <a class="gcard rv" style="--d:.04s" href="https://myflowmotion.cloud" target="_blank" rel="noopener"><div class="gph"><span class="gt">Full-Stack · live</span><img src="/assets/img/live/studio.jpg" alt="AI-Adoption-Studio"></div><div class="gc"><h3>AI-Adoption-Studio</h3><p>End-to-end orchestriert: Next.js + FastAPI + Supabase, deployt auf eigenem VPS in Docker.</p><span class="gs lv">myflowmotion.cloud →</span></div></a>
-      <a class="gcard rv" style="--d:.1s" href="/showcases/system-map/index.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Three.js · System-Viz</span><img src="/assets/img/showcases/system-map.jpg" alt="System-Map"></div><div class="gc"><h3>System-Galaxie</h3><p>Mein gesamtes System als begehbare 3D-Karte: 119 Knoten, 48 n8n-Workflows, MCP-Server, Skills, Hooks — datengetrieben.</p><span class="gs">Begehen →</span></div></a>
+      <a class="gcard rv" style="--d:.1s" href="/showcases/system-map/index.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Three.js · System-Viz</span><img src="/assets/img/showcases/system-map.jpg" alt="System-Map"></div><div class="gc"><h3>System-Galaxie</h3><p>Mein gesamtes System als begehbare 3D-Karte: 119 Knoten, 38 n8n-Workflows, MCP-Server, Skills, Hooks — datengetrieben.</p><span class="gs">Begehen →</span></div></a>
       <a class="gcard rv" style="--d:.16s" href="https://myflowmotion-lusion.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">WebGL · live</span><img src="/assets/img/live/lusion.jpg" alt="Lusion-Edition"></div><div class="gc"><h3>MyFlowMotion · Lusion</h3><p>3D-Szenenfahrt auf lusion.co-Niveau — echte Tiefe, scroll-getriebene Kamera.</p><span class="gs lv">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.06s" href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">Illustriert · live</span><img src="/assets/img/showcases/sketch-edition.jpg" alt="Sketch-Edition"></div><div class="gc"><h3>Sketch-Edition</h3><p>Handgezeichnetes Skizzenbuch-Scrollytelling — illustriertes Porträt + Agenten-Welt.</p><span class="gs lv">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.12s" href="/showcases/86-tage-showcase.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">GPGPU · Partikel</span><img src="/assets/img/showcases/86-tage-showcase.jpg" alt="86-Tage-Showcase"></div><div class="gc"><h3>Partikel-Showcase</h3><p>100.000+ Punkte morphen scroll-gesteuert durch Wörter und werden zu einem Gesicht.</p><span class="gs">Ansehen →</span></div></a>
@@ -647,17 +667,23 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
     <div class="lab rv">07 · Was ich baue</div>
     <h2 class="rv" style="--d:.06s">Vom Bedürfnis zum <em>laufenden System</em> — die ganze Kette.</h2>
     <p class="intro rv" style="--d:.1s">Kein Entwickler-Titel, sondern Breite: Ich übersetze Geschäfts-Bedürfnisse in Systeme und dirigiere KI, bis Agentur-Qualität rauskommt. Jedes Feld ist am Artefakt belegt.</p>
-    <div class="skills">
-      <div class="skill rv" style="--d:.04s"><div class="sn">01</div><div><h4>Full-Stack-Produkte</h4><p>Frontend, Backend, Datenbank, Hosting end-to-end orchestriert und live geschaltet.</p><div class="sp">Next.js · FastAPI · Supabase · Docker / VPS</div></div></div>
-      <div class="skill rv" style="--d:.08s"><div class="sn">02</div><div><h4>Homepages &amp; Landing Pages</h4><p>Konzipiert, gebaut, bepreist, online — inklusive Brand-System und Conversion-Logik.</p><div class="sp">deinebusinesspage.de · 990/1.490 €</div></div></div>
-      <div class="skill rv" style="--d:.12s"><div class="sn">03</div><div><h4>Datenbanken &amp; CRM</h4><p>Datenmodelle angewandt, nicht nur gelesen — ein CRM „Lead to Payment" aus 4 Datenbanken selbst gebaut.</p><div class="sp">Supabase / Postgres · Leads · Kunden · Angebote · Rechnungen</div></div></div>
-      <div class="skill rv" style="--d:.16s"><div class="sn">04</div><div><h4>n8n-Automation</h4><p>48 Workflows self-hosted (35 aktiv) plus eigenes Engineering-Toolkit aus 20+ Python-Scripts — z.B. Angebots-Nachfass → Telegram-Reminder bei Stille.</p><div class="sp">n8n · self-hosted · eigener VPS</div></div></div>
-      <div class="skill rv" style="--d:.04s"><div class="sn">05</div><div><h4>Voice-Agents</h4><p>Ein Agent, der zuhört, fragt und protokolliert — geführter Intake mit Consent-Phase, end-to-end.</p><div class="sp">ElevenLabs · n8n · Conversational AI</div></div></div>
-      <div class="skill rv" style="--d:.08s"><div class="sn">06</div><div><h4>Multi-Agent &amp; Agent SDK</h4><p>Ich dirigiere ganze Agenten-Teams: BMAD, Subagenten, MCP-Server, das Claude Agent SDK. Diese Seite ist selbst über orchestrierte Agenten entstanden.</p><div class="sp">Claude Code · Agent SDK · MCP</div></div></div>
-      <div class="skill rv" style="--d:.12s"><div class="sn">07</div><div><h4>Browser-Tools &amp; Extensions</h4><p>Werkzeuge, die in fremden Oberflächen arbeiten — z.B. eine Chrome-Extension, die Miro-Boards aus Daten befüllt.</p><div class="sp">Chrome-Extension · Automation</div></div></div>
-      <div class="skill rv" style="--d:.16s"><div class="sn">08</div><div><h4>Design, 3D &amp; WebGL</h4><p>Three.js, Shader, GPGPU-Partikel — von der System-Galaxie bis zum Effekt-Katalog Tier 1–Ω. Awwwards-Geschmack, am Artefakt belegt.</p><div class="sp">three.js · GLSL · GSAP</div></div></div>
-      <div class="skill rv" style="--d:.04s"><div class="sn">09</div><div><h4>Content-Pipelines</h4><p>Content industrialisiert statt Handarbeit: Python-Build-Scripts, KI-Bildgenerierung, eine automatisierte 90-Tage-LinkedIn-Kampagne.</p><div class="sp">Python · gpt-image · Brand-System</div></div></div>
-      <div class="skill rv" style="--d:.08s"><div class="sn">10</div><div><h4>Claude Code Mastery</h4><p>Ich nutze KI nicht nur, ich engineere sie: eigene Skills gebaut, Hooks nach Notion, persistentes Memory, Multi-Harness-Setup — von Anthropic zertifiziert.</p><div class="sp">eigene Skills · Hooks · Memory · Cowork · Terminal</div></div></div>
+    <div class="capwrap rv" style="--d:.12s">
+      <div class="caplist">
+        <div class="capitem active" tabindex="0" data-img="/assets/img/live/studio.jpg" data-title="Full-Stack-Produkte" data-desc="Frontend, Backend, Datenbank, Hosting end-to-end orchestriert und live — das AI-Adoption-Studio läuft genau so." data-stack="Next.js · FastAPI · Supabase · Docker / VPS"><span class="cn">01</span><h4>Full-Stack-Produkte</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/live/dbp.jpg" data-title="Homepages &amp; Landing Pages" data-desc="Konzipiert, gebaut, bepreist, online — inklusive Brand-System und Conversion-Logik." data-stack="deinebusinesspage.de · 607 Commits · 990/1.490 €"><span class="cn">02</span><h4>Homepages &amp; Landing Pages</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/sk_database.jpg" data-title="Datenbanken &amp; CRM" data-desc="Ein CRM „Lead to Payment" aus 4 Datenbanken selbst gebaut — Datenmodelle angewandt, nicht nur gelesen." data-stack="Supabase / Postgres · Leads → Rechnung"><span class="cn">03</span><h4>Datenbanken &amp; CRM</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/sk_network.jpg" data-title="n8n-Automation" data-desc="38 Workflows self-hosted (34 aktiv) plus 20+ Python-Scripts als Engineering-Toolkit — z.B. Angebots-Nachfass → Telegram-Reminder bei Stille." data-stack="n8n · self-hosted · eigener VPS"><span class="cn">04</span><h4>n8n-Automation</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/card-ada.jpg" data-title="Voice-Agents" data-desc="Ada hört zu, fragt und protokolliert — geführter Intake mit Consent-Phase, 105 Fragen, end-to-end." data-stack="ElevenLabs · n8n · Conversational AI"><span class="cn">05</span><h4>Voice-Agents</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/sk_agents_team.jpg" data-title="Multi-Agent &amp; Agent SDK" data-desc="Ganze Agenten-Teams dirigiert: BMAD, Subagenten, MCP-Server, das Claude Agent SDK. Diese Seite ist selbst über orchestrierte Agenten entstanden." data-stack="Claude Code · Agent SDK · MCP · BMAD"><span class="cn">06</span><h4>Multi-Agent &amp; Agent SDK</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/sk_interface.jpg" data-title="Browser-Tools &amp; Extensions" data-desc="Werkzeuge, die in fremden Oberflächen arbeiten — meine Effekt-Lupe (Chrome MV3 + Node-Bridge), die Award-Effekte erfasst und ins Projekt baut." data-stack="Chrome-Extension · MV3 · Node-Bridge"><span class="cn">07</span><h4>Browser-Tools &amp; Extensions</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/showcases/design-s9.jpg" data-title="Design, 3D &amp; WebGL" data-desc="Three.js, Shader, GPGPU-Partikel — von der System-Galaxie bis zum Effekt-Katalog Tier 1–Ω. Awwwards-Geschmack, am Artefakt belegt." data-stack="three.js · GLSL · GSAP"><span class="cn">08</span><h4>Design, 3D &amp; WebGL</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/wall/86-tage-memphis.jpg" data-title="Content-Pipelines" data-desc="Content industrialisiert statt Handarbeit: Python-Build-Scripts, KI-Bildgenerierung, eine automatisierte 90-Tage-LinkedIn-Kampagne." data-stack="Python · gpt-image · Brand-System"><span class="cn">09</span><h4>Content-Pipelines</h4><span class="arr">→</span></div>
+        <div class="capitem" tabindex="0" data-img="/assets/img/sk_code_wall.jpg" data-title="Claude Code Mastery" data-desc="Ich nutze KI nicht nur, ich engineere sie: eigene Skills gebaut, Hooks nach Notion, persistentes Memory, Multi-Harness-Setup — von Anthropic zertifiziert." data-stack="eigene Skills · Hooks · Memory · Cowork · Terminal"><span class="cn">10</span><h4>Claude Code Mastery</h4><span class="arr">→</span></div>
+      </div>
+      <div class="cappanel">
+        <div class="pimg"><img id="capImg" src="/assets/img/live/studio.jpg" alt="Artefakt zur Fähigkeit"></div>
+        <div class="pbody"><h3 id="capTitle">Full-Stack-Produkte</h3><p id="capDesc">Frontend, Backend, Datenbank, Hosting end-to-end orchestriert und live — das AI-Adoption-Studio läuft genau so.</p><div class="pstack" id="capStack">Next.js · FastAPI · Supabase · Docker / VPS</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -771,6 +797,17 @@ if(!reduce&&matchMedia('(hover:hover)').matches){
   addEventListener('scroll',onScroll,{passive:true});
   addEventListener('resize',onScroll,{passive:true});
   upd();
+})();
+/* ===== Fähigkeiten-Explorer ===== */
+(function(){
+  const items=document.querySelectorAll('.capitem');
+  const img=document.getElementById('capImg'),ti=document.getElementById('capTitle'),de=document.getElementById('capDesc'),st=document.getElementById('capStack');
+  if(!items.length||!img)return;
+  let cur=0;
+  function set(el,i){if(i===cur)return;cur=i;items.forEach(x=>x.classList.remove('active'));el.classList.add('active');
+    const d=el.dataset;img.style.opacity='0';
+    setTimeout(()=>{img.src=d.img;ti.textContent=d.title;de.textContent=d.desc;st.textContent=d.stack;img.style.opacity='1';},150);}
+  items.forEach((el,i)=>{['mouseenter','click','focus'].forEach(ev=>el.addEventListener(ev,()=>set(el,i)));});
 })();
 </script>
 </body>
