@@ -212,7 +212,14 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 /* handgezeichnete Scribbles */
 .scribble{position:absolute;pointer-events:none;z-index:1;opacity:.5}
 .scribble path{fill:none;stroke:var(--coral);stroke-width:3;stroke-linecap:round;filter:url(#rough)}
-@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}*{animation:none!important}}
+/* Terminal tippt sich selbst */
+.term .body{clip-path:inset(0 0 100% 0);transition:clip-path 1.5s steps(9,end) .25s}
+.term.typed .body{clip-path:inset(0 0 0 0)}
+/* 3D-Tilt + Licht-Glanz auf Glas-Karten */
+.card,.icard,.cert{transform-style:preserve-3d;will-change:transform;position:relative}
+.card::after,.icard::after,.cert::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.55),transparent 62%);opacity:0;transition:opacity .4s;pointer-events:none;mix-blend-mode:overlay}
+.card:hover::after,.icard:hover::after,.cert:hover::after{opacity:.7}
+@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -407,6 +414,16 @@ document.querySelectorAll('.count').forEach(el=>cu.observe(el));
 document.querySelectorAll('img').forEach(im=>im.addEventListener('error',()=>{im.style.opacity='0';if(im.parentNode)im.parentNode.classList.add('imgfail');}));
 if(!reduce&&window.gsap){gsap.utils.toArray('section').forEach(s=>gsap.fromTo(s,{scale:1,opacity:1},{scale:.985,opacity:.82,ease:'none',scrollTrigger:{trigger:s,start:'bottom bottom',end:'bottom top',scrub:true}}));
   gsap.to('.signframe .ph img',{scale:1.12,ease:'none',scrollTrigger:{trigger:'.signframe',start:'top bottom',end:'bottom top',scrub:true}});}
+/* Terminal-Print beim Sichtbarwerden */
+const tio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('typed');tio.unobserve(e.target);}}),{threshold:.25});
+document.querySelectorAll('.term').forEach(el=>tio.observe(el));
+/* 3D-Tilt + Glanz auf Glas-Karten */
+if(!reduce&&matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('.card,.icard,.cert').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;el.style.setProperty('--mx',(px*100)+'%');el.style.setProperty('--my',(py*100)+'%');el.style.transform=`perspective(820px) rotateY(${(px-.5)*8}deg) rotateX(${-(py-.5)*8}deg) translateY(-6px)`;});
+    el.addEventListener('mouseleave',()=>{el.style.transform='';});
+  });
+}
 /* floating motes — Hintergrund-Leben */
 (function(){const cv=document.getElementById('motes');if(!cv||reduce)return;const x=cv.getContext('2d');const dpr=Math.min(devicePixelRatio||1,2);let w,h;function rs(){w=cv.width=innerWidth*dpr;h=cv.height=innerHeight*dpr;}rs();addEventListener('resize',rs);const cols=['200,98,59','31,158,140','224,162,60'];const P=Array.from({length:64},(_,i)=>({x:Math.random()*w,y:Math.random()*h,r:(Math.random()*1.8+.5)*dpr,vx:(Math.random()-.5)*.14*dpr,vy:(Math.random()-.5)*.14*dpr,a:Math.random()*.35+.08,c:cols[i%3]}));const TH=132*dpr;(function loop(){if(document.hidden){return requestAnimationFrame(loop);}x.clearRect(0,0,w,h);for(let i=0;i<P.length;i++){for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.hypot(dx,dy);if(d<TH){x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.strokeStyle='rgba(200,98,59,'+(1-d/TH)*0.07+')';x.lineWidth=dpr*.6;x.stroke();}}}for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;x.beginPath();x.arc(p.x,p.y,p.r,0,6.2832);x.fillStyle='rgba('+p.c+','+p.a+')';x.fill();}requestAnimationFrame(loop);})();})();
 /* Aurora reagiert auf Maus + magnetische Buttons */
