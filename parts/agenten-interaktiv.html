@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wie meine Agenten arbeiten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#F6F1E9;--paper2:#EFE7DB;--ink:#23201A;--ink-60:rgba(35,32,26,.62);--ink-40:rgba(35,32,26,.42);--ink-20:rgba(35,32,26,.2);
+  --coral:#C8623B;--coral-soft:#E08A6A;--teal:#1F9E8C;--peach:#F0CBA8;
+  --term:#181612;--term-fg:#EDE7DC;
+  --disp:'Fraunces',serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --glass:rgba(255,255,255,.5);--glass-bd:rgba(255,255,255,.6);
+  --ezl:cubic-bezier(.16,1,.3,1);
+}
+html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora b{position:absolute;border-radius:50%;filter:blur(80px);opacity:.4;mix-blend-mode:multiply}
+.aurora .b1{width:42vw;height:42vw;background:radial-gradient(circle,#E89A78,transparent 65%);top:-12vw;left:-8vw}
+.aurora .b2{width:40vw;height:40vw;background:radial-gradient(circle,#7FC7BA,transparent 65%);bottom:-16vw;right:-10vw}
+.wrap{width:min(1240px,93vw);margin-inline:auto;position:relative;z-index:2}
+.sec{padding:3.4rem 0 4rem}
+
+.lab{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--coral)}
+.lab::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral)}
+h1{font-family:var(--disp);font-weight:500;font-size:clamp(2rem,4.6vw,3.5rem);line-height:1.03;letter-spacing:-.015em;margin-top:.8rem;max-width:18ch}
+h1 em{font-style:italic;color:var(--coral)}
+.intro{max-width:60ch;margin-top:1.2rem;color:var(--ink-60);font-size:1.04rem}
+.intro b{color:var(--ink);font-weight:500}
+
+/* ===== LOOP STRIP (denkt -> wählt -> führt aus -> prüft) ===== */
+.loop{margin-top:2.6rem;display:flex;flex-wrap:wrap;align-items:stretch;gap:.6rem}
+.loopstep{position:relative;flex:1 1 0;min-width:150px;background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:16px;padding:1rem 1.05rem 1.1rem;box-shadow:0 16px 36px -24px rgba(35,32,26,.26);transition:transform .5s var(--ezl),border-color .5s,box-shadow .5s}
+.loopstep .n{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-40)}
+.loopstep h3{font-family:var(--disp);font-weight:500;font-size:1.18rem;margin-top:.2rem;line-height:1.05}
+.loopstep p{font-size:.78rem;color:var(--ink-60);margin-top:.25rem}
+.loopstep.on{transform:translateY(-6px);border-color:var(--coral);box-shadow:0 22px 44px -22px rgba(200,98,59,.45)}
+.loopstep.on h3{color:var(--coral)}
+.loopstep .arrow{position:absolute;top:50%;right:-.72rem;transform:translateY(-50%);font-family:var(--mono);font-size:.9rem;color:var(--ink-20);z-index:5}
+.loopstep:last-child .arrow{content:none;display:none}
+.loopstep:last-child{flex:1 1 0}
+.loopstep.repeat{flex:0 0 auto;min-width:0;background:transparent;border-style:dashed;border-color:var(--ink-20);box-shadow:none;display:flex;align-items:center;justify-content:center}
+.loopstep.repeat .rr{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--teal);text-align:center}
+
+/* ===== MAIN GRID: ORCHESTRATION + DETAIL ===== */
+.grid{margin-top:2.4rem;display:grid;grid-template-columns:1.32fr .68fr;gap:1.3rem;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+.stage{position:relative;background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:22px;box-shadow:0 24px 50px -28px rgba(35,32,26,.3);overflow:hidden}
+.stage .head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border-bottom:1px solid var(--ink-20);flex-wrap:wrap}
+.stage .head .t{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-40)}
+.stage .head .t b{color:var(--ink);font-weight:600}
+.btnrow{display:flex;gap:.5rem}
+button{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;cursor:pointer;border:1px solid var(--glass-bd);background:var(--glass);color:var(--ink);padding:.5rem .9rem;border-radius:30px;transition:all .4s var(--ezl)}
+button:hover{transform:translateY(-1px)}
+button.play{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button.play:hover{background:var(--coral);border-color:var(--coral)}
+button:disabled{opacity:.4;cursor:default;transform:none}
+
+.canvas-wrap{position:relative;width:100%;aspect-ratio:16/10}
+@media(max-width:520px){.canvas-wrap{aspect-ratio:1/1.05}}
+svg.orch{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+svg.orch .link{stroke:var(--ink-20);stroke-width:1.4;fill:none;transition:stroke .5s,stroke-width .5s}
+svg.orch .link.act{stroke:url(#flowgrad);stroke-width:2.2}
+svg.orch .pulse{fill:var(--coral);opacity:0}
+svg.orch g.node{cursor:pointer}
+svg.orch g.node .ring{fill:#fff;stroke:var(--ink-20);stroke-width:1.4;transition:stroke .5s,stroke-width .5s,fill .5s}
+svg.orch g.node.on .ring{stroke:var(--teal);stroke-width:2.6;fill:#F2FBF9}
+svg.orch g.node.sel .ring{stroke:var(--coral);stroke-width:3}
+svg.orch g.node .ic{font-size:15px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+svg.orch g.node .nm{font-family:'JetBrains Mono',monospace;font-size:8.4px;text-anchor:middle;fill:var(--ink-60);pointer-events:none;letter-spacing:.02em}
+svg.orch g.node.on .nm,svg.orch g.node.sel .nm{fill:var(--ink);font-weight:600}
+svg.orch g.orchN .ring{fill:var(--ink);stroke:var(--ink)}
+svg.orch g.orchN.on .ring{stroke:var(--coral);fill:#2b2620}
+svg.orch g.orchN .ic{fill:var(--paper)}
+svg.orch g.orchN .nm{fill:var(--ink);font-weight:600}
+svg.orch g.checkN .ring{fill:#F2FBF9;stroke:var(--teal)}
+svg.orch g.checkN.on .ring{stroke-width:3;fill:#E4F6F2}
+.hint{position:absolute;left:50%;bottom:.8rem;transform:translateX(-50%);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;color:var(--ink-40);background:rgba(246,241,233,.7);padding:.3rem .7rem;border-radius:20px;pointer-events:none;white-space:nowrap}
+
+/* ===== DETAIL PANEL ===== */
+.side{display:flex;flex-direction:column;gap:1.1rem}
+.panel{background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:20px;padding:1.3rem 1.4rem 1.4rem;box-shadow:0 20px 44px -26px rgba(35,32,26,.24);min-height:218px}
+.panel .pl{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.panel h4{font-family:var(--disp);font-weight:500;font-size:1.5rem;line-height:1.05;margin-top:.35rem;transition:opacity .35s}
+.panel .role{font-size:.92rem;color:var(--ink-60);margin-top:.6rem;transition:opacity .35s}
+.panel .role b{color:var(--ink);font-weight:500}
+.toolrow{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.45rem}
+.tool{font-family:var(--mono);font-size:.62rem;padding:.4rem .75rem;border-radius:20px;background:#fff;border:1px solid var(--ink-20);color:var(--ink-60);display:inline-flex;align-items:center;gap:.4rem}
+.tool i{width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none}
+.tool.n8n i{background:var(--coral)}
+.fade-swap{animation:fadeswap .4s var(--ezl)}
+@keyframes fadeswap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== TERMINAL ===== */
+.term{background:var(--term);border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -28px rgba(35,32,26,.5);border:1px solid rgba(255,255,255,.07)}
+.term .bar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06)}
+.term .bar i{width:11px;height:11px;border-radius:50%}
+.term .bar i:nth-child(1){background:#E0796B}.term .bar i:nth-child(2){background:#E6B45C}.term .bar i:nth-child(3){background:#76C08E}
+.term .bar span{margin-left:.5rem;font-family:var(--mono);font-size:.58rem;color:rgba(237,231,220,.5)}
+.term .body{padding:1rem 1.2rem 1.1rem;font-family:var(--mono);font-size:.74rem;line-height:1.75;color:var(--term-fg);white-space:pre-wrap;min-height:200px}
+.term .pr{color:#76C08E}.term .cm{color:#E6B45C}.term .te{color:#7FC7BA}.term .fl{color:#E0796B}.term .dim{color:rgba(237,231,220,.42)}.term .ok{color:#76C08E}
+.cur{display:inline-block;width:8px;height:1.05em;background:var(--term-fg);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.foot{margin-top:2.4rem;display:grid;grid-template-columns:1fr .9fr;gap:1.3rem;align-items:start}
+@media(max-width:760px){.foot{grid-template-columns:1fr}}
+.kline{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(1.25rem,2.5vw,1.85rem);line-height:1.22;max-width:24ch}
+.kline span{color:var(--coral);font-style:normal;font-weight:600}
+.stackcard{background:var(--ink);color:var(--paper);border-radius:18px;padding:1.3rem 1.4rem 1.4rem}
+.stackcard .sl{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--coral-soft)}
+.stackcard h4{font-family:var(--disp);font-weight:500;font-size:1.3rem;margin-top:.3rem;color:#fff}
+.stackcard p{font-size:.84rem;color:rgba(237,231,220,.7);margin-top:.5rem}
+.stackcard .row{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.stackcard .row span{font-family:var(--mono);font-size:.6rem;padding:.4rem .7rem;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(237,231,220,.85)}
+
+@media (prefers-reduced-motion: reduce){
+  .aurora{display:none}
+  *{animation:none!important;transition:none!important}
+  svg.orch .pulse{display:none}
+  .cur{display:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora"><b class="b1"></b><b class="b2"></b></div>
+
+<section class="sec"><div class="wrap">
+  <div class="lab">Agent-Orchestrierung · Claude Agent SDK</div>
+  <h1>Wie meine Agenten arbeiten — und <em>das Agent-SDK</em></h1>
+  <p class="intro">Ich bin <b>kein Entwickler, ein Dirigent.</b> Ein Agent ist nicht magisch: Es ist ein Modell in einer Schleife. Es <b>denkt</b>, wählt ein Werkzeug, führt es aus, prüft das Ergebnis — und wiederholt das, bis das Ziel erreicht ist. Mein Job ist, diese Schleifen sauber aufzustellen und zusammenzuführen.</p>
+
+  <!-- LOOP STRIP -->
+  <div class="loop" id="loop">
+    <div class="loopstep" data-i="0"><div class="n">01 · Reasoning</div><h3>denkt</h3><p>Modell zerlegt das Ziel und plant den nächsten Schritt.</p><span class="arrow">›</span></div>
+    <div class="loopstep" data-i="1"><div class="n">02 · Tool-Call</div><h3>wählt Werkzeug</h3><p>Greift via Tool-Aufruf zur passenden Fähigkeit.</p><span class="arrow">›</span></div>
+    <div class="loopstep" data-i="2"><div class="n">03 · Action</div><h3>führt aus</h3><p>Werkzeug läuft — Daten holen, schreiben, rechnen.</p><span class="arrow">›</span></div>
+    <div class="loopstep" data-i="3"><div class="n">04 · Reflection</div><h3>prüft</h3><p>Stimmt das Ergebnis? Ziel erreicht — oder weiter?</p><span class="arrow">›</span></div>
+    <div class="loopstep repeat"><div class="rr">↺<br>loop</div></div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+    <div class="stage">
+      <div class="head">
+        <div class="t"><b>AI-Adoption-Studio</b> · Planer › 8 Subagenten › Prüfer (BMAD)</div>
+        <div class="btnrow">
+          <button class="play" id="play">▶ Orchestrierung starten</button>
+          <button id="replay" disabled>↺ neu</button>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <svg class="orch" id="svg" viewBox="0 0 600 375" preserveAspectRatio="xMidYMid meet" aria-label="Agenten-Orchestrierung">
+          <defs>
+            <linearGradient id="flowgrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#C8623B"/><stop offset="1" stop-color="#1F9E8C"/>
+            </linearGradient>
+          </defs>
+          <g id="links"></g>
+          <g id="pulses"></g>
+          <g id="nodes"></g>
+        </svg>
+        <div class="hint">Knoten antippen für Details · oder Orchestrierung starten</div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="panel" id="panel">
+        <div class="pl" id="p-label">Detail-Ansicht</div>
+        <h4 id="p-title">Orchestrator</h4>
+        <div class="role" id="p-role"><b>Ein Planer</b> nimmt das Ziel, verteilt Teilaufgaben an spezialisierte Subagenten und führt deren Ergebnisse am Ende wieder zusammen.</div>
+        <div class="toolrow" id="p-tools">
+          <span class="tool"><i></i>Claude Sonnet</span>
+          <span class="tool"><i></i>FastAPI</span>
+          <span class="tool n8n"><i></i>BMAD-Methode</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span>agent-loop.log — live</span></div>
+        <div class="body" id="termbody"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="kline">Ein Modell in der Schleife. Acht davon im <span>Orchester</span>. Ich gebe den Takt vor.</div>
+    <div class="stackcard">
+      <div class="sl">MCP · der Standard-Stecker</div>
+      <h4>Agenten sprechen über MCP</h4>
+      <p>Das Model Context Protocol ist der einheitliche Stecker zwischen Agent und Werkzeug. Derselbe Agent erreicht so Notion, Linear, Supabase, n8n und den Browser — ohne Spezial-Code je Tool.</p>
+      <div class="row"><span>Notion</span><span>Linear</span><span>Supabase</span><span>n8n</span><span>Browser</span></div>
+    </div>
+  </div>
+
+</div></section>
+
+<script>
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- DATA ---------- */
+const ORCH = {id:'orch', x:300, y:60, r:30, ic:'◆', nm:'Planer', cls:'orchN',
+  label:'Orchestrator', title:'Planer',
+  role:'<b>Ein Planer</b> nimmt das Ziel, verteilt Teilaufgaben an die 8 spezialisierten Subagenten und führt deren Ergebnisse am Ende wieder zusammen.',
+  tools:[['Claude Sonnet',0],['FastAPI',0],['BMAD-Methode',1]]};
+
+const CHECK = {id:'check', x:300, y:330, r:26, ic:'✓', nm:'Prüfer', cls:'checkN',
+  label:'Quality Gate', title:'Prüfer (BMAD)',
+  role:'Der <b>Prüfer</b> validiert die Ergebnisse der Subagenten gegen das Ziel — erst wenn die Qualität stimmt, geht der Report raus.',
+  tools:[['BMAD-Review',1],['Reflection-Loop',0]]};
+
+const AGENTS = [
+  {id:'a1', ic:'🔎', nm:'Process-Auditor', label:'Subagent 01',
+   role:'Nimmt bestehende Prozesse auf, erkennt manuelle Schritte und Brüche im Ablauf.', tools:[['Notion · MCP',0],['Web-Research',0]]},
+  {id:'a2', ic:'💡', nm:'Use-Case-Gen', label:'Subagent 02',
+   role:'Leitet aus den Prozessen konkrete KI-Anwendungsfälle ab und priorisiert sie.', tools:[['Claude Sonnet',0],['Linear · MCP',0]]},
+  {id:'a3', ic:'🧰', nm:'Tool-Empfehlung', label:'Subagent 03',
+   role:'Wählt zu jedem Use-Case das passende Werkzeug — von n8n bis Voice-Agent.', tools:[['n8n-Workflow',1],['Web-Research',0]]},
+  {id:'a4', ic:'📈', nm:'ROI-Rechner', label:'Subagent 04',
+   role:'Rechnet Aufwand, Zeitersparnis und Amortisation je Anwendungsfall durch.', tools:[['Supabase · MCP',0],['Calc-Tool',0]]},
+  {id:'a5', ic:'🛡️', nm:'Compliance-Checker', label:'Subagent 05',
+   role:'Prüft Datenschutz und regulatorische Grenzen, bevor etwas empfohlen wird.', tools:[['Web-Research',0],['Notion · MCP',0]]},
+  {id:'a6', ic:'🗺️', nm:'Roadmap-Gen', label:'Subagent 06',
+   role:'Baut aus priorisierten Use-Cases eine gestaffelte Umsetzungs-Roadmap.', tools:[['Linear · MCP',0],['n8n-Workflow',1]]},
+  {id:'a7', ic:'📝', nm:'Reporter', label:'Subagent 07',
+   role:'Verdichtet alle Befunde zu einem lesbaren, entscheidungsreifen Report.', tools:[['Notion · MCP',0],['Claude Sonnet',0]]},
+  {id:'a8', ic:'🌐', nm:'Web-Research', label:'Subagent 08',
+   role:'Holt Live-Belege, Tool-Daten und Marktkontext aus dem Browser herein.', tools:[['Browser · MCP',0],['Web-Research',0]]},
+];
+// position 8 agents in two arcs around centre
+const cx=300, cy=200, rx=232, ry=118;
+AGENTS.forEach((a,i)=>{
+  const ang = Math.PI*( (i+0.5)/8 ) + Math.PI/2; // spread across a wide arc
+  a.x = cx + Math.cos(ang)*rx;
+  a.y = cy + Math.sin(ang)*ry*0.92;
+  a.r = 26;
+  a.cls='';
+});
+// manual nicer layout: 4 left column-ish, 4 right
+const LX=104, RX=496, ys=[112,176,240,304];
+AGENTS.forEach((a,i)=>{ if(i<4){a.x=LX;a.y=ys[i];} else {a.x=RX;a.y=ys[i-4];} a.r=27; });
+
+const ALL = [ORCH, ...AGENTS, CHECK];
+
+/* ---------- RENDER ---------- */
+const SVG=document.getElementById('svg');
+const gLinks=document.getElementById('links');
+const gPulses=document.getElementById('pulses');
+const gNodes=document.getElementById('nodes');
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+
+// links orch->agent and agent->check
+const links=[];
+AGENTS.forEach(a=>{
+  const l1=el('path',{class:'link',d:`M${ORCH.x},${ORCH.y+ORCH.r} C${ORCH.x},${(ORCH.y+a.y)/2} ${a.x},${(ORCH.y+a.y)/2} ${a.x},${a.y-a.r}`});
+  gLinks.appendChild(l1); links.push({el:l1,agent:a,kind:'down'});
+  const l2=el('path',{class:'link',d:`M${a.x},${a.y+a.r} C${a.x},${(a.y+CHECK.y)/2} ${CHECK.x},${(a.y+CHECK.y)/2} ${CHECK.x},${CHECK.y-CHECK.r}`});
+  gLinks.appendChild(l2); links.push({el:l2,agent:a,kind:'up'});
+});
+
+const nodeEls={};
+ALL.forEach(n=>{
+  const g=el('g',{class:'node '+(n.cls||''),'data-id':n.id});
+  g.appendChild(el('circle',{class:'ring',cx:n.x,cy:n.y,r:n.r}));
+  const ic=el('text',{class:'ic',x:n.x,y:n.y+1}); ic.textContent=n.ic; g.appendChild(ic);
+  const nm=el('text',{class:'nm',x:n.x,y:n.y+n.r+12}); nm.textContent=n.nm; g.appendChild(nm);
+  g.addEventListener('click',()=>{select(n.id);});
+  g.addEventListener('mouseenter',()=>{ if(!running) show(n.id); });
+  gNodes.appendChild(g); nodeEls[n.id]=g;
+});
+
+/* ---------- DETAIL PANEL ---------- */
+const pLabel=document.getElementById('p-label'),pTitle=document.getElementById('p-title'),pRole=document.getElementById('p-role'),pTools=document.getElementById('p-tools');
+let selected='orch';
+function dataById(id){return ALL.find(n=>n.id===id);}
+function show(id){
+  const d=dataById(id); if(!d)return;
+  pLabel.textContent=d.label;
+  pTitle.textContent=d.title||d.nm;
+  pRole.innerHTML=d.role;
+  pTools.innerHTML=d.tools.map(t=>`<span class="tool ${t[1]?'n8n':''}"><i></i>${t[0]}</span>`).join('');
+  const panel=document.getElementById('panel');
+  panel.classList.remove('fade-swap'); void panel.offsetWidth; panel.classList.add('fade-swap');
+}
+function select(id){
+  selected=id;
+  Object.values(nodeEls).forEach(g=>g.classList.remove('sel'));
+  nodeEls[id].classList.add('sel');
+  show(id);
+}
+
+/* ---------- TERMINAL TYPER ---------- */
+const termBody=document.getElementById('termbody');
+const SCRIPT=[
+  {c:'pr',t:'agent ▸ '},{c:'cm',t:'ziel: prozesse eines betriebs auf ki-potenzial prüfen',nl:1},
+  {c:'dim',t:'',nl:1},
+  {c:'te',t:'denkt   '},{c:'',t:'… Ziel zerlegt → 8 Teilaufgaben',nl:1},
+  {c:'cm',t:'wählt   '},{c:'',t:'Werkzeug → '},{c:'fl',t:'mcp.notion.read_pages()',nl:1},
+  {c:'te',t:'führt   '},{c:'',t:'aus … 24 Prozesse erfasst',nl:1},
+  {c:'ok',t:'prüft   ✓ '},{c:'',t:'reicht nicht → noch ein Loop',nl:1},
+  {c:'dim',t:'↺ loop ──────────────',nl:1},
+  {c:'cm',t:'wählt   '},{c:'',t:'Werkzeug → '},{c:'fl',t:'n8n.workflow.run(roi)',nl:1},
+  {c:'te',t:'führt   '},{c:'',t:'aus … 8 Subagenten parallel',nl:1},
+  {c:'ok',t:'prüft   ✓ '},{c:'',t:'BMAD-Gate bestanden',nl:1},
+  {c:'pr',t:'agent ▸ '},{c:'ok',t:'report fertig.',nl:1},
+];
+let typer=null;
+function typeLoop(){
+  if(typer)clearTimeout(typer);
+  termBody.innerHTML='';
+  if(RM){ // static full render
+    termBody.innerHTML=SCRIPT.map(s=>`<span class="${s.c}">${s.t}${s.nl?'\n':''}</span>`).join('');
+    return;
+  }
+  let si=0,ci=0,html='';
+  const cursor='<span class="cur"></span>';
+  function step(){
+    if(si>=SCRIPT.length){ termBody.innerHTML=html+cursor; typer=setTimeout(()=>{typeLoop();},3400); return; }
+    const seg=SCRIPT[si];
+    if(ci===0)html+=`<span class="${seg.c}">`;
+    if(ci<seg.t.length){
+      html+=seg.t[ci]; ci++;
+      termBody.innerHTML=html+'</span>'+cursor;
+      typer=setTimeout(step, 12+Math.random()*22);
+    } else {
+      html+='</span>'+(seg.nl?'\n':'');
+      si++; ci=0;
+      termBody.innerHTML=html+cursor;
+      typer=setTimeout(step, seg.nl?160:30);
+    }
+  }
+  step();
+}
+
+/* ---------- ORCHESTRATION ANIMATION ---------- */
+let running=false;
+const playBtn=document.getElementById('play'),replayBtn=document.getElementById('replay');
+
+function clearStates(){
+  Object.values(nodeEls).forEach(g=>g.classList.remove('on'));
+  links.forEach(l=>l.el.classList.remove('act'));
+}
+function pulseAlong(path,delay,dur,onArrive){
+  if(RM){ if(onArrive)onArrive(); return; }
+  const p=el('circle',{class:'pulse',r:4.2});
+  gPulses.appendChild(p);
+  const len=path.getTotalLength();
+  const start=performance.now()+delay;
+  function fr(now){
+    const t=(now-start)/dur;
+    if(t<0){requestAnimationFrame(fr);return;}
+    if(t>=1){ p.remove(); if(onArrive)onArrive(); return; }
+    const pt=path.getPointAtLength(t*len);
+    p.setAttribute('cx',pt.x); p.setAttribute('cy',pt.y);
+    p.setAttribute('opacity', t<0.12? t/0.12 : t>0.85? (1-t)/0.15 : 1);
+    requestAnimationFrame(fr);
+  }
+  requestAnimationFrame(fr);
+}
+
+let timers=[];
+function run(){
+  if(running)return;
+  running=true; playBtn.disabled=true; replayBtn.disabled=true;
+  clearStates(); timers.forEach(clearTimeout); timers=[];
+  select('orch');
+  nodeEls.orch.classList.add('on');
+
+  if(RM){
+    AGENTS.forEach(a=>{nodeEls[a.id].classList.add('on');});
+    links.forEach(l=>l.el.classList.add('act'));
+    nodeEls.check.classList.add('on');
+    finish(); return;
+  }
+
+  // fan-out: orch -> each agent, staggered
+  AGENTS.forEach((a,i)=>{
+    const link=links.find(l=>l.agent===a && l.kind==='down');
+    timers.push(setTimeout(()=>{
+      link.el.classList.add('act');
+      pulseAlong(link.el,0,720,()=>{ nodeEls[a.id].classList.add('on'); });
+    }, i*230));
+  });
+
+  // converge: each agent -> check, after all activated
+  const fanDone = AGENTS.length*230 + 760;
+  AGENTS.forEach((a,i)=>{
+    const link=links.find(l=>l.agent===a && l.kind==='up');
+    timers.push(setTimeout(()=>{
+      link.el.classList.add('act');
+      pulseAlong(link.el,0,720,()=>{
+        if(i===AGENTS.length-1){ nodeEls.check.classList.add('on'); select('check'); }
+      });
+    }, fanDone + i*150));
+  });
+
+  const total = fanDone + AGENTS.length*150 + 820;
+  timers.push(setTimeout(finish,total));
+}
+function finish(){
+  running=false; playBtn.disabled=false; replayBtn.disabled=false;
+  playBtn.textContent='▶ erneut starten';
+}
+playBtn.addEventListener('click',run);
+replayBtn.addEventListener('click',()=>{
+  running=false; timers.forEach(clearTimeout); timers=[];
+  clearStates(); gPulses.innerHTML=''; select('orch');
+  playBtn.disabled=false; playBtn.textContent='▶ Orchestrierung starten';
+  run();
+});
+
+/* ---------- LOOP STRIP CYCLER ---------- */
+const loopSteps=[...document.querySelectorAll('.loopstep[data-i]')];
+let li=0;
+function cycleLoop(){
+  loopSteps.forEach(s=>s.classList.remove('on'));
+  loopSteps[li].classList.add('on');
+  li=(li+1)%loopSteps.length;
+}
+loopSteps.forEach(s=>s.addEventListener('mouseenter',()=>{ loopSteps.forEach(x=>x.classList.remove('on')); s.classList.add('on'); }));
+
+/* ---------- INIT ---------- */
+select('orch');
+typeLoop();
+if(!RM){ cycleLoop(); setInterval(cycleLoop, 1600); }
+else { loopSteps.forEach(s=>s.classList.add('on')); }
+</script>
+</body>
+</html>

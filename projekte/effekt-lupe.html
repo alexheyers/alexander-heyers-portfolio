@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effekt-Lupe — Alexander Heyers</title>
+<meta name="description" content="Effekt-Lupe: selbst entwickelte Chrome-Extension (Manifest V3, Vanilla JS). Erfasst Web-Effekte auf jeder Seite, schickt sie über eine eigene Node-Bridge in jedes Projekt — und ein Claude-Code-Skill baut sie ein. Ich nutze KI nicht nur, ich baue ihr Werkzeug.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='28' cy='28' r='16' fill='none' stroke='%23C8623B' stroke-width='5'/><line x1='40' y1='40' x2='54' y2='54' stroke='%231F9E8C' stroke-width='6' stroke-linecap='round'/></svg>">
+<style>
+:root{
+  --paper:#F6F1E9;--paper2:#EFE7DB;--ink:#23201A;--ink-60:rgba(35,32,26,.62);--ink-40:rgba(35,32,26,.42);--ink-20:rgba(35,32,26,.2);
+  --coral:#C8623B;--coral-soft:#E08A6A;--teal:#1F9E8C;--peach:#F0CBA8;
+  --term:#181612;--term-fg:#EDE7DC;
+  --disp:'Fraunces',serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --glass:rgba(255,255,255,.5);--glass-bd:rgba(255,255,255,.6);
+  --ezl:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:min(1180px,92vw);margin:0 auto}
+
+/* aurora background */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;filter:blur(60px);opacity:.5}
+.aurora span{position:absolute;border-radius:50%}
+.aurora .b1{width:46vw;height:46vw;background:radial-gradient(circle,#E89A78,transparent 65%);top:-12vw;left:-8vw;animation:drift 22s var(--ezl) infinite alternate}
+.aurora .b2{width:42vw;height:42vw;background:radial-gradient(circle,#7FC7BA,transparent 65%);top:42vh;right:-12vw;animation:drift2 27s var(--ezl) infinite alternate}
+.aurora .b3{width:40vw;height:40vw;background:radial-gradient(circle,#F0C9A0,transparent 65%);bottom:-16vw;left:26vw;animation:drift 31s var(--ezl) infinite alternate}
+@keyframes drift{to{transform:translate(6vw,4vh) scale(1.1)}}
+@keyframes drift2{to{transform:translate(-5vw,-3vh) scale(1.08)}}
+
+/* nav */
+.nav{position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:1.4rem;align-items:center;padding:.7rem 1.4rem;background:var(--glass);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--glass-bd);border-radius:40px;box-shadow:0 10px 30px -12px rgba(35,32,26,.18);max-width:calc(100vw - 1.6rem)}
+.nav .back{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--ink);font-weight:500;white-space:nowrap}
+.nav .back:hover{color:var(--coral)}
+.nav .sep{width:1px;height:16px;background:var(--ink-20)}
+.nav .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40)}
+.nav .gh{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:.45rem .85rem;border-radius:30px;transition:background .3s,transform .3s;white-space:nowrap}
+.nav .gh:hover{background:var(--coral);transform:translateY(-1px)}
+@media(max-width:560px){.nav .tag{display:none}}
+
+/* hero */
+.hero{padding:9rem 0 4rem;position:relative}
+.kick{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);display:flex;gap:.7rem;align-items:center}
+.kick::before{content:"";width:30px;height:1px;background:var(--coral)}
+h1{font-family:var(--disp);font-weight:500;font-size:clamp(2.7rem,8vw,6rem);line-height:.98;letter-spacing:-.02em;margin-top:1.4rem;max-width:16ch}
+h1 em{font-style:italic;font-weight:500;color:var(--coral)}
+h1 .kin{display:inline-block;overflow:hidden;vertical-align:top}
+h1 .kin .w{display:inline-block;transform:translateY(116%);transition:transform 1.05s var(--ezl) calc(var(--i,0)*.07s)}
+body.go h1 .kin .w{transform:translateY(0)}
+.lead{font-size:clamp(1.05rem,1.4vw,1.22rem);color:var(--ink-60);max-width:52ch;margin-top:1.6rem;font-weight:400}
+.lead b{color:var(--ink);font-weight:500}
+.lead .tl{color:var(--teal);font-weight:500}
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem;align-items:center}
+.btn{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.95rem 1.5rem;border-radius:40px;display:inline-flex;gap:.6rem;align-items:center;transition:transform .3s var(--ezl),box-shadow .3s,background .3s,color .3s;cursor:pointer}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--coral);transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(200,98,59,.5)}
+.btn.glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-bd);color:var(--ink)}
+.btn.glass:hover{transform:translateY(-2px);color:var(--coral)}
+.metas{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2.2rem}
+.pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;padding:.5rem .85rem;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-bd);border-radius:30px;color:var(--ink-60)}
+.pill b{color:var(--coral);font-weight:600}
+
+/* section base */
+section.blk{padding:4.2rem 0;position:relative}
+.lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--coral);display:flex;gap:.7rem;align-items:center}
+.lab .no{color:var(--ink-40)}
+h2{font-family:var(--disp);font-weight:500;font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.04;letter-spacing:-.015em;margin-top:1rem;max-width:18ch}
+h2 em{font-style:italic;color:var(--coral)}
+.intro{max-width:58ch;margin-top:1.3rem;color:var(--ink-60);font-size:1.05rem}
+.intro b{color:var(--ink);font-weight:500}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ezl) var(--d,0s),transform 1s var(--ezl) var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+
+/* "was es ist" split */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center;margin-top:2.6rem}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.split .copy p{color:var(--ink-60);margin-top:1rem;max-width:46ch}
+.split .copy p b{color:var(--ink);font-weight:500}
+.shot{background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:22px;padding:.7rem;box-shadow:0 26px 50px -28px rgba(35,32,26,.32);overflow:hidden;transition:transform .6s var(--ezl)}
+.shot:hover{transform:translateY(-4px)}
+.shot img{border-radius:16px;width:100%;height:auto;transition:transform 1.1s var(--ezl)}
+.shot:hover img{transform:scale(1.03)}
+.shot .cap{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40);padding:.7rem .5rem .3rem}
+
+/* FLOW */
+.flow{margin-top:2.8rem;background:var(--glass);backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:26px;padding:clamp(1.4rem,3vw,2.4rem);box-shadow:0 30px 60px -34px rgba(35,32,26,.3)}
+.flow-track{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;position:relative}
+@media(max-width:760px){.flow-track{grid-template-columns:1fr}}
+.beam{position:absolute;left:7%;right:7%;top:46px;height:2px;z-index:0;background:linear-gradient(90deg,var(--coral),var(--teal));opacity:.35;border-radius:2px}
+@media(max-width:760px){.beam{display:none}}
+.spark{position:absolute;top:42px;left:7%;width:10px;height:10px;border-radius:50%;background:var(--coral);box-shadow:0 0 14px 3px rgba(200,98,59,.6);z-index:1;animation:run 5s var(--ezl) infinite}
+@keyframes run{0%{left:7%;background:var(--coral);box-shadow:0 0 14px 3px rgba(200,98,59,.6)}50%{background:#5fb0a4}100%{left:calc(93% - 10px);background:var(--teal);box-shadow:0 0 14px 3px rgba(31,158,140,.6)}}
+.stp{position:relative;z-index:2;background:var(--paper);border:1px solid var(--ink-20);border-radius:18px;padding:1.3rem 1.1rem 1.2rem;cursor:pointer;transition:transform .4s var(--ezl),border-color .4s,box-shadow .4s,background .4s}
+.stp .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;margin:0 auto .9rem;transition:transform .4s var(--ezl)}
+.stp:nth-child(2) .dot,.stp:nth-child(3) .dot{background:var(--coral)}
+.stp:nth-child(4) .dot{background:#5a9c93}
+.stp:nth-child(5) .dot{background:var(--teal)}
+.stp h4{font-family:var(--disp);font-weight:600;font-size:1.15rem;text-align:center}
+.stp .mono{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-40);text-align:center;margin-top:.3rem}
+.stp.active,.stp:hover{transform:translateY(-5px);border-color:var(--coral);background:#fff;box-shadow:0 18px 40px -22px rgba(200,98,59,.45)}
+.stp:nth-child(5).active,.stp:nth-child(5):hover{border-color:var(--teal);box-shadow:0 18px 40px -22px rgba(31,158,140,.45)}
+.stp.active .dot{transform:scale(1.12)}
+.flow-detail{margin-top:1.6rem;background:var(--term);border-radius:16px;overflow:hidden;box-shadow:0 24px 50px -28px rgba(35,32,26,.5)}
+.flow-detail .bar{display:flex;gap:6px;align-items:center;padding:.7rem .95rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.flow-detail .bar i{width:10px;height:10px;border-radius:50%;background:#3a352d}
+.flow-detail .bar .t{margin-left:.6rem;font-family:var(--mono);font-size:.62rem;color:#8a8278;letter-spacing:.04em}
+.flow-detail .body{padding:1.2rem 1.3rem;font-family:var(--mono);font-size:.8rem;line-height:1.9;color:var(--term-fg);min-height:118px}
+.fd-pane{display:none}
+.fd-pane.on{display:block;animation:fade .5s var(--ezl)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cl-g{color:#76C08E}.cl-y{color:#E6B45C}.cl-t{color:#7FC7BA}.cl-a{color:#E0796B}.cl-d{color:#8a8278}
+
+/* captures grid */
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.6rem}
+@media(max-width:820px){.cap-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.cap-grid{grid-template-columns:1fr}}
+.capc{background:var(--glass);backdrop-filter:blur(14px) saturate(1.3);border:1px solid var(--glass-bd);border-radius:18px;padding:1.5rem 1.4rem;transition:transform .45s var(--ezl),box-shadow .45s,border-color .45s;position:relative;overflow:hidden}
+.capc:hover{transform:translateY(-5px);border-color:var(--coral);box-shadow:0 22px 44px -26px rgba(200,98,59,.4)}
+.capc .ic{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.capc h4{font-family:var(--disp);font-weight:600;font-size:1.28rem;margin:.5rem 0 .4rem}
+.capc p{font-size:.88rem;color:var(--ink-60)}
+.capc .demo{height:42px;margin-top:1rem;border-radius:10px;background:var(--paper2);overflow:hidden;position:relative;border:1px solid var(--ink-20)}
+/* mini live demos inside capture cards */
+.d-tokens{display:flex;gap:6px;align-items:center;padding:0 12px;height:100%}
+.d-tokens span{width:20px;height:20px;border-radius:6px;animation:pulseTok 3s var(--ezl) infinite}
+.d-tokens span:nth-child(1){background:var(--coral)}
+.d-tokens span:nth-child(2){background:var(--teal);animation-delay:.3s}
+.d-tokens span:nth-child(3){background:var(--peach);animation-delay:.6s}
+.d-tokens span:nth-child(4){background:var(--ink);animation-delay:.9s}
+.d-tokens i{flex:1;height:8px;border-radius:4px;background:var(--ink-20);font-style:normal}
+@keyframes pulseTok{0%,100%{transform:scale(1)}50%{transform:scale(.78)}}
+.d-key{font-family:var(--mono);font-size:.6rem;color:var(--ink-60);padding:0 12px;height:100%;display:flex;align-items:center;gap:8px}
+.d-key b{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--coral);animation:keyMove 2.4s var(--ezl) infinite;font-style:normal}
+@keyframes keyMove{0%{transform:translateX(0) scale(1)}50%{transform:translateX(120px) scale(1.4);background:var(--teal)}100%{transform:translateX(0) scale(1)}}
+.d-3d{display:grid;place-items:center;height:100%;perspective:200px}
+.d-3d b{width:24px;height:24px;background:linear-gradient(135deg,var(--coral),var(--teal));border-radius:5px;transform-style:preserve-3d;animation:spin3d 4s linear infinite;font-style:normal}
+@keyframes spin3d{from{transform:rotateY(0) rotateX(18deg)}to{transform:rotateY(360deg) rotateX(18deg)}}
+.d-scroll{height:100%;position:relative;overflow:hidden}
+.d-scroll i{position:absolute;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,var(--ink-20) 0 14px,transparent 14px 28px);top:50%;transform:translateY(-50%);animation:momScroll 2.6s var(--ezl) infinite}
+@keyframes momScroll{0%{transform:translate(0,-50%)}70%{transform:translate(-40px,-50%)}100%{transform:translate(-46px,-50%)}}
+
+/* code wall band */
+.band{position:relative;margin-top:2.8rem;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -32px rgba(35,32,26,.4)}
+.band img{width:100%;height:clamp(220px,34vw,360px);object-fit:cover;filter:saturate(.92)}
+.band .ov{position:absolute;inset:0;background:linear-gradient(110deg,rgba(24,22,18,.82),rgba(24,22,18,.18) 70%);display:flex;align-items:flex-end;padding:clamp(1.4rem,3vw,2.4rem)}
+.band .ov .txt{max-width:38ch}
+.band .ov .q{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(1.3rem,2.6vw,2rem);color:#fff;line-height:1.2}
+.band .ov .a{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-soft);margin-top:.9rem}
+
+/* proof grid */
+.proof{background:var(--ink);color:var(--paper);border-radius:26px;padding:clamp(2rem,5vw,3.6rem);margin-top:2.8rem}
+.proof .lab{color:var(--coral-soft)}
+.proof .lab .no{color:rgba(246,241,233,.4)}
+.proof h2{color:var(--paper)}
+.proof h2 em{color:var(--coral-soft)}
+.proof .intro{color:rgba(246,241,233,.7)}
+.proof .intro b{color:var(--paper)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.6rem}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr}}
+.pg{border-top:1px solid rgba(246,241,233,.18);padding-top:1.2rem}
+.pg .num{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-soft);display:block;margin-bottom:.7rem}
+.pg h4{font-family:var(--disp);font-weight:600;font-size:1.35rem;margin-bottom:.5rem}
+.pg p{font-size:.9rem;color:rgba(246,241,233,.68)}
+.proof .kpis{display:flex;gap:2.4rem;flex-wrap:wrap;margin-top:2.6rem;border-top:1px solid rgba(246,241,233,.18);padding-top:1.8rem}
+.proof .kpi .v{font-family:var(--disp);font-weight:600;font-size:2.6rem;color:var(--coral-soft);line-height:1}
+.proof .kpi .l{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,241,233,.55);margin-top:.4rem}
+
+/* footer */
+.foot{padding:5rem 0 4rem}
+.foot .ready{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.foot h2{margin-top:1rem}
+.foot h2 em{color:var(--coral)}
+.contacts{display:flex;flex-direction:column;gap:.4rem;margin-top:2rem;max-width:560px}
+.contacts a{display:flex;justify-content:space-between;align-items:center;padding:1.1rem .2rem;border-bottom:1px solid var(--ink-20);font-family:var(--mono);font-size:.86rem;transition:padding .35s var(--ezl),color .35s}
+.contacts a span{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40)}
+.contacts a:hover{padding-left:1rem;color:var(--coral)}
+.copyline{margin-top:2.4rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;color:var(--ink-40)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important}
+  .rv{opacity:1!important;transform:none!important;transition:none!important}
+  h1 .kin .w{transform:none!important;transition:none!important}
+  .spark{display:none}
+  .shot:hover img,.shot:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+
+<nav class="nav">
+  <a class="back" href="/index.html">← Alex Heyers</a>
+  <span class="sep"></span>
+  <span class="tag">Werkzeug-Bau · Chrome-Extension</span>
+  <a class="gh" href="https://github.com/alexheyers/effekt-lupe" target="_blank" rel="noopener">GitHub ↗</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero wrap">
+  <div class="kick">Eigenes Werkzeug · Manifest V3 · Vanilla JS</div>
+  <h1><span class="kin"><span class="w" style="--i:0">Effekt-</span></span><span class="kin"><span class="w" style="--i:1"><em>Lupe.</em></span></span></h1>
+  <p class="lead">Eine selbst entwickelte <b>Chrome-Extension</b>, die auf jeder Website den Effekt erfasst, der sie besonders macht — und ihn über eine eigene <span class="tl">lokale Bridge</span> in jedes meiner Projekte schickt, wo ein Claude-Code-Skill ihn im eigenen Stil <b>einbaut</b>. Ich nutze KI nicht nur. Ich baue ihr Werkzeug.</p>
+  <div class="cta-row">
+    <a class="btn solid" href="https://github.com/alexheyers/effekt-lupe" target="_blank" rel="noopener">GitHub ansehen →</a>
+    <a class="btn glass" href="#fluss">Der Fluss ↓</a>
+  </div>
+  <div class="metas">
+    <span class="pill"><b>Manifest V3</b> · Vanilla JS</span>
+    <span class="pill"><b>kein</b> Build-Step</span>
+    <span class="pill">zero-dependency Node-Bridge</span>
+    <span class="pill"><b>~13</b> Commits</span>
+  </div>
+</header>
+
+<!-- WAS ES IST -->
+<section class="blk wrap" id="was">
+  <div class="lab rv"><span class="no">01</span> Was es ist</div>
+  <h2 class="rv" style="--d:.06s">Eine Lupe für das <em>Web</em> — und ein Förderband ins Projekt.</h2>
+  <div class="split">
+    <div class="copy rv" style="--d:.1s">
+      <p class="intro">Wenn mir auf einer Seite ein Effekt auffällt — eine Animation, ein Scroll-Verhalten, eine 3D-Szene — drücke ich auf die <b>Effekt-Lupe</b>. Die Extension liest aus, was diesen Effekt ausmacht: Design-Tokens, das relevante CSS, die echten Keyframes, ob WebGL im Spiel ist.</p>
+      <p>Statt das händisch zu rekonstruieren, schickt sie das Erfasste direkt über eine selbstgebaute <b>lokale Node-Bridge</b> in mein offenes Projekt. Dort baut ein eigener Claude-Code-Skill den Effekt nicht 1:1 ab, sondern <b>im Stil des Projekts</b> als echte Code-Edits ein.</p>
+      <p>Kein Build-Tooling, keine Framework-Abhängigkeit: Manifest V3, reines Vanilla JS — ein Stecker, den ich verstehe, weil ich jedes Teil selbst gesetzt habe.</p>
+    </div>
+    <figure class="shot rv" style="--d:.16s">
+      <img src="/assets/img/sk_interface.jpg" alt="Oberfläche der Effekt-Lupe" loading="lazy" onerror="this.closest('.shot').style.display='none'">
+      <figcaption class="cap">// Erfassungs-Oberfläche im Browser</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- DER FLUSS -->
+<section class="blk wrap" id="fluss">
+  <div class="lab rv"><span class="no">02</span> Der Fluss</div>
+  <h2 class="rv" style="--d:.06s">Vier Stationen, ein Förderband — <em>klick</em> dich durch.</h2>
+  <p class="intro rv" style="--d:.1s">Von der fremden Website bis zum eingebauten Effekt im eigenen Projekt. Tippe oder hover über eine Station, um zu sehen, was sie tut.</p>
+
+  <div class="flow rv" style="--d:.14s">
+    <div class="flow-track">
+      <div class="beam"></div>
+      <div class="spark"></div>
+      <button class="stp active" data-pane="p1" aria-pressed="true" aria-label="Schritt 1: Jede Website">
+        <div class="dot">01</div>
+        <h4>Jede Website</h4>
+        <div class="mono">capture</div>
+      </button>
+      <button class="stp" data-pane="p2" aria-pressed="false" aria-label="Schritt 2: Local Bridge">
+        <div class="dot">02</div>
+        <h4>Local Bridge</h4>
+        <div class="mono">transport</div>
+      </button>
+      <button class="stp" data-pane="p3" aria-pressed="false" aria-label="Schritt 3: Jedes Projekt">
+        <div class="dot">03</div>
+        <h4>Jedes Projekt</h4>
+        <div class="mono">discover</div>
+      </button>
+      <button class="stp" data-pane="p4" aria-pressed="false" aria-label="Schritt 4: Claude baut">
+        <div class="dot">04</div>
+        <h4>Claude baut</h4>
+        <div class="mono">/effekt-lupe</div>
+      </button>
+    </div>
+
+    <div class="flow-detail">
+      <div class="bar"><i></i><i></i><i></i><span class="t">effekt-lupe · station-detail</span></div>
+      <div class="body">
+        <div class="fd-pane on" id="p1">
+          <span class="cl-d"># Station 01 — Erfassung im Browser</span><br>
+          <span class="cl-g">lupe&gt;</span> <span class="cl-y">scan</span> <span class="cl-t">--design-tokens --css --keyframes --webgl --scroll</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">Manifest V3 Content-Script liest die Live-Seite</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">echte Web-Animations-API-Keyframes, kein Raten</span>
+        </div>
+        <div class="fd-pane" id="p2">
+          <span class="cl-d"># Station 02 — selbstgebaute Node-Bridge</span><br>
+          <span class="cl-g">bridge&gt;</span> <span class="cl-y">node</span> <span class="cl-t">bridge.js</span> <span class="cl-d"># zero dependencies</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">lauscht lokal, nimmt die Erfassung entgegen</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">Auto-Discovery findet das offene Projekt selbst</span>
+        </div>
+        <div class="fd-pane" id="p3">
+          <span class="cl-d"># Station 03 — Zielprojekt</span><br>
+          <span class="cl-g">bridge&gt;</span> <span class="cl-y">route</span> <span class="cl-t">→ ./aktuelles-projekt</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">die Erfassung landet als Datei im richtigen Repo</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">jedes Projekt, ohne Konfiguration pro Projekt</span>
+        </div>
+        <div class="fd-pane" id="p4">
+          <span class="cl-d"># Station 04 — Claude-Code-Skill</span><br>
+          <span class="cl-g">claude&gt;</span> <span class="cl-y">/effekt-lupe</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">baut den Effekt im Stil des Projekts ein — echte Edits</span><br>
+          <span class="cl-a">✓</span> <span class="cl-t">nicht copy-paste, sondern übersetzt &amp; integriert</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAS SIE ERFASST -->
+<section class="blk wrap" id="erfasst">
+  <div class="lab rv"><span class="no">03</span> Was sie erfasst</div>
+  <h2 class="rv" style="--d:.06s">Nicht ein Screenshot — die <em>Mechanik</em> dahinter.</h2>
+  <p class="intro rv" style="--d:.1s">Ein Bild zeigt, wie etwas aussieht. Die Effekt-Lupe greift, <b>warum</b> es so wirkt — die Werte, die Kurven, die Bewegung.</p>
+  <div class="cap-grid">
+    <div class="capc rv" style="--d:.12s">
+      <div class="ic">design tokens</div>
+      <h4>Design-Tokens</h4>
+      <p>Farben, Radien, Spacing, Typo-Skala — die DNA des Looks, nicht nur sein Aussehen.</p>
+      <div class="demo"><div class="d-tokens"><span></span><span></span><span></span><span></span><i></i></div></div>
+    </div>
+    <div class="capc rv" style="--d:.16s">
+      <div class="ic">css · keyframes</div>
+      <h4>Kuratiertes CSS &amp; echte Keyframes</h4>
+      <p>Nur das relevante CSS, plus die tatsächlichen Animations-Keyframes über die Web-Animations-API.</p>
+      <div class="demo"><div class="d-key"><b></b> <span style="font-style:normal">@keyframes · WAAPI</span></div></div>
+    </div>
+    <div class="capc rv" style="--d:.2s">
+      <div class="ic">webgl · 3d</div>
+      <h4>3D- / WebGL-Erkennung</h4>
+      <p>Erkennt, ob eine Szene auf WebGL läuft — damit der Rebuild die richtige Technik wählt.</p>
+      <div class="demo"><div class="d-3d"><b></b></div></div>
+    </div>
+    <div class="capc rv" style="--d:.24s">
+      <div class="ic">scroll</div>
+      <h4>Scroll-Momentum</h4>
+      <p>Misst das Scroll-Verhalten — Trägheit und Tempo, das, was sich „teuer“ anfühlt.</p>
+      <div class="demo"><div class="d-scroll"><i></i></div></div>
+    </div>
+    <div class="capc rv" style="--d:.28s">
+      <div class="ic">transport</div>
+      <h4>Eigene Node-Bridge</h4>
+      <p>Zero-dependency, Auto-Discovery: schiebt das Erfasste in jedes offene Projekt — ohne Setup pro Projekt.</p>
+      <div class="demo"><div class="d-key"><b style="animation-duration:1.8s"></b> <span style="font-style:normal">localhost → repo</span></div></div>
+    </div>
+    <div class="capc rv" style="--d:.32s">
+      <div class="ic">skill</div>
+      <h4>/effekt-lupe Skill</h4>
+      <p>Ein eigener Claude-Code-Skill baut den Effekt als echte Edits im Stil des Ziels ein — nicht stumpf kopiert.</p>
+      <div class="demo"><div class="d-tokens"><i></i><span style="background:var(--teal)"></span><span style="background:var(--coral)"></span><i></i></div></div>
+    </div>
+  </div>
+
+  <!-- code wall band -->
+  <div class="band rv" style="--d:.16s">
+    <img src="/assets/img/sk_code_wall.jpg" alt="Code-Wand der Effekt-Lupe" loading="lazy" onerror="this.closest('.band').style.display='none'">
+    <div class="ov"><div class="txt">
+      <div class="q">Ein Werkzeug ist erst dann meins, wenn ich jede Schicht selbst gesteckt habe.</div>
+      <div class="a">// Manifest V3 · Vanilla JS · ~13 Commits</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- WAS ES BEWEIST -->
+<section class="blk wrap" id="beweist">
+  <div class="proof rv">
+    <div class="lab"><span class="no">04</span> Was es beweist</div>
+    <h2>Ich nutze KI nicht nur — ich baue ihr <em>Werkzeug.</em></h2>
+    <p class="intro">Die meisten zeigen, dass sie ein KI-Tool bedienen können. Die Effekt-Lupe zeigt etwas anderes: dass ich ein Tool <b>für</b> die KI gebaut habe — Extension, Transport-Bridge und Skill, drei Teile, die zusammen einen Arbeitsablauf automatisieren, den vorher niemand für mich erledigt hat.</p>
+    <div class="pgrid">
+      <div class="pg">
+        <span class="num">Extension-Engineering</span>
+        <h4>Browser-Tiefe</h4>
+        <p>Manifest V3, Content-Scripts, Web-Animations-API, WebGL-Erkennung — gebaut, nicht nur konfiguriert.</p>
+      </div>
+      <div class="pg">
+        <span class="num">Tool-Bau</span>
+        <h4>Eigene Bridge</h4>
+        <p>Eine zero-dependency Node-Bridge mit Auto-Discovery — die Sorte Infrastruktur, die ein Solutions Engineer beim Kunden auch entwirft.</p>
+      </div>
+      <div class="pg">
+        <span class="num">Workflow-Automatisierung</span>
+        <h4>End-to-End-Ablauf</h4>
+        <p>Erfassen → transportieren → einbauen, als ein Fluss. Genau die Denkweise hinter n8n-, Parloa- oder Synthflow-Automationen.</p>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="v">3</div><div class="l">Teile · Extension + Bridge + Skill</div></div>
+      <div class="kpi"><div class="v">~13</div><div class="l">Commits · alexheyers/effekt-lupe</div></div>
+      <div class="kpi"><div class="v">0</div><div class="l">Dependencies in der Bridge</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot wrap">
+  <div class="ready rv">Verfügbar ab 01.08.2026</div>
+  <h2 class="rv" style="--d:.06s">Werkzeuge bauen — auch für <em>euer</em> Team.</h2>
+  <div class="contacts rv" style="--d:.12s">
+    <a href="mailto:a.heyers@gmail.com">a.heyers@gmail.com <span>Mail →</span></a>
+    <a href="https://github.com/alexheyers/effekt-lupe" target="_blank" rel="noopener">github.com/alexheyers/effekt-lupe <span>Repo →</span></a>
+    <a href="https://linkedin.com/in/alex-heyers" target="_blank" rel="noopener">linkedin.com/in/alex-heyers <span>LinkedIn →</span></a>
+    <a href="/index.html">← Zurück zum Portfolio <span>Home →</span></a>
+  </div>
+  <div class="copyline">Alex Heyers · Mosbach · Zwischen Tresen und Terminal</div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // hero line-in
+  requestAnimationFrame(function(){ document.body.classList.add('go'); });
+
+  // scroll reveal
+  var rvs = document.querySelectorAll('.rv');
+  if(reduce){ rvs.forEach(function(e){ e.classList.add('in'); }); }
+  else if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+    rvs.forEach(function(e){ io.observe(e); });
+  } else { rvs.forEach(function(e){ e.classList.add('in'); }); }
+
+  // flow stepper — click/hover to switch detail pane
+  var steps = document.querySelectorAll('.stp');
+  var panes = document.querySelectorAll('.fd-pane');
+  var paused = false, idx = 0;
+  function select(id, btn){
+    steps.forEach(function(s){ s.classList.remove('active'); s.setAttribute('aria-pressed','false'); });
+    panes.forEach(function(p){ p.classList.remove('on'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed','true');
+    var pane = document.getElementById(id);
+    if(pane) pane.classList.add('on');
+  }
+  steps.forEach(function(btn, i){
+    btn.addEventListener('click', function(){ idx = i; select(btn.dataset.pane, btn); });
+    btn.addEventListener('mouseenter', function(){ if(!reduce){ idx = i; select(btn.dataset.pane, btn); } });
+    // keyboard: focusing a station selects it and pauses the carousel
+    btn.addEventListener('focus', function(){ idx = i; paused = true; select(btn.dataset.pane, btn); });
+    btn.addEventListener('blur', function(){ paused = false; });
+  });
+
+  // auto-advance the flow (paused on hover/focus, off when reduced motion)
+  if(!reduce){
+    var track = document.querySelector('.flow-track');
+    if(track){
+      track.addEventListener('mouseenter', function(){ paused = true; });
+      track.addEventListener('mouseleave', function(){ if(!track.contains(document.activeElement)) paused = false; });
+    }
+    setInterval(function(){
+      if(paused || !steps.length) return;
+      idx = (idx + 1) % steps.length;
+      select(steps[idx].dataset.pane, steps[idx]);
+    }, 3200);
+  }
+})();
+</script>
+</body>
+</html>
