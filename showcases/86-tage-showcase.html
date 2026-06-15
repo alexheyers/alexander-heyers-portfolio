@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partikel-Showcase — Alex Heyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Lato:wght@300;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy-deep:#081429;--pink:#E94B5D;--teal:#1AA591;--cream:#FDF8F0;--amber:#F5A623;--slate:#8c96aa;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:clip}
+body{background:var(--navy-deep);color:var(--cream);font-family:'Lato',sans-serif;cursor:none}
+@media(pointer:coarse){body{cursor:auto}}
+::selection{background:var(--pink);color:#fff}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.spacer{height:560vh;position:relative;z-index:1;pointer-events:none}
+
+.scroll-bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;background:linear-gradient(90deg,var(--teal),var(--pink),var(--amber))}
+.cur-dot,.cur-ring{position:fixed;top:0;left:0;z-index:60;pointer-events:none;border-radius:50%;mix-blend-mode:difference;opacity:0;transition:opacity .3s}
+body.on .cur-dot,body.on .cur-ring{opacity:1}
+.cur-dot{width:6px;height:6px;background:var(--cream);transform:translate(-50%,-50%)}
+.cur-ring{width:34px;height:34px;border:1.5px solid var(--cream);transform:translate(-50%,-50%)}
+@media(pointer:coarse){.cur-dot,.cur-ring{display:none}}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;padding:1.4rem 6vw;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);mix-blend-mode:difference}
+.topbar b{color:var(--cream)}
+
+/* scene caption (bottom center) */
+.cap{position:fixed;left:0;right:0;bottom:8vh;z-index:30;text-align:center;pointer-events:none;transition:opacity .5s var(--ease)}
+.cap .idx{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+.cap .t{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.4rem,3.4vw,2.4rem);letter-spacing:-.01em;text-shadow:0 4px 30px rgba(8,20,41,.8)}
+.cap .s{font-weight:300;color:#cdd4e0;margin-top:.4rem;font-size:.95rem;max-width:520px;margin-left:auto;margin-right:auto;text-shadow:0 2px 20px rgba(8,20,41,.9)}
+
+/* hero text overlay (intro, fades out) */
+.hero-ov{position:fixed;left:6vw;top:50%;transform:translateY(-50%);z-index:30;max-width:780px;transition:opacity .6s var(--ease)}
+.hero-ov .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1.2rem}
+.hero-ov h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(3rem,11vw,9rem);line-height:.86;letter-spacing:-.03em;text-shadow:0 8px 50px rgba(8,20,41,.7)}
+.hero-ov h1 em{font-style:italic;color:var(--pink)}
+.hero-ov .q{display:block;font-size:clamp(.95rem,1.8vw,1.4rem);font-weight:400;font-style:italic;color:var(--slate);margin-bottom:.9rem}
+
+/* final CTA overlay */
+.cta-ov{position:fixed;left:0;right:0;top:50%;transform:translateY(-50%);z-index:30;text-align:center;opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.cta-ov.show{opacity:1;pointer-events:auto}
+.cta-ov h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.4rem,8vw,5.5rem);line-height:1;text-shadow:0 6px 40px rgba(8,20,41,.8)}
+.cta-ov h2 em{font-style:italic;color:var(--teal)}
+.cta-ov .mag{margin-top:1.8rem;display:inline-block;padding:1.2rem 2.8rem;border-radius:50px;background:var(--pink);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.88rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;box-shadow:0 18px 50px rgba(233,75,93,.4);will-change:transform}
+
+.scroll-cue{position:fixed;bottom:2.4rem;right:6vw;z-index:30;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--slate);display:flex;align-items:center;gap:.7rem;transition:opacity .5s}
+.scroll-cue .ln{width:1px;height:42px;background:var(--slate);position:relative;overflow:hidden}
+.scroll-cue .ln::after{content:"";position:absolute;top:-42px;left:0;width:100%;height:42px;background:var(--teal);animation:drop 1.9s var(--ease) infinite}
+@keyframes drop{0%{top:-42px}60%,100%{top:42px}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="scroll-bar"></div>
+<div class="cur-dot"></div><div class="cur-ring"></div>
+<div class="topbar"><span><b>Alex Heyers</b> · Partikel-Showcase</span><span>three.js · 130k Punkte · Bloom</span></div>
+
+<div class="hero-ov" id="heroOv">
+  <div class="eyebrow">07. Mai 2026 · Session 01</div>
+  <h1><span class="q">„Wer kann schon coden?"</span>Ich <em>nicht.</em></h1>
+</div>
+
+<div class="cap" id="cap"><div class="idx"></div><div class="t"></div><div class="s"></div></div>
+
+<div class="cta-ov" id="ctaOv">
+  <h2>Lass uns <em>reden.</em></h2>
+  <a href="mailto:a.heyers@gmail.com" class="mag" data-mag data-hover>a.heyers@gmail.com →</a>
+</div>
+
+<div class="scroll-cue" id="cue"><span class="ln"></span> Scroll</div>
+
+<div class="spacer"></div>
+
+<script>
+/* cursor + progress (classic) */
+window.__prog=0;window.__nmx=.5;window.__nmy=.5;
+const dot=document.querySelector('.cur-dot'),ring=document.querySelector('.cur-ring');
+let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+addEventListener('mousemove',e=>{document.body.classList.add('on');mx=e.clientX;my=e.clientY;window.__nmx=e.clientX/innerWidth;window.__nmy=1-e.clientY/innerHeight;dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`});
+(function l(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(l)})();
+const sbar=document.querySelector('.scroll-bar'),rootEl=document.documentElement;
+function onScroll(){const max=rootEl.scrollHeight-rootEl.clientHeight;window.__prog=max>0?rootEl.scrollTop/max:0;sbar.style.width=(window.__prog*100)+'%';}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+document.querySelectorAll('[data-mag]').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.3}px,${(e.clientY-r.top-r.height/2)*.4}px)`});b.addEventListener('mouseleave',()=>b.style.transform='')});
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+const N=130000;
+const cv=document.getElementById('bg');
+const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
+renderer.setClearColor(0x081429,1);
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,200);
+const C={pink:new THREE.Color(0xE94B5D),teal:new THREE.Color(0x1AA591),amber:new THREE.Color(0xF5A623),blue:new THREE.Color(0x5B8DEF),cream:new THREE.Color(0xFDF8F0)};
+
+function blank(){return {pos:new Float32Array(N*3),col:new Float32Array(N*3)};}
+function put(o,i,x,y,z,c){o.pos[i*3]=x;o.pos[i*3+1]=y;o.pos[i*3+2]=z;o.col[i*3]=c.r;o.col[i*3+1]=c.g;o.col[i*3+2]=c.b;}
+function mixC(a,b,t){return a.clone().lerp(b,t);}
+
+function chaos(){const o=blank();for(let i=0;i<N;i++){const r=6+Math.pow(Math.random(),.5)*10,th=Math.random()*6.283,ph=Math.acos(2*Math.random()-1);
+  put(o,i,r*Math.sin(ph)*Math.cos(th),r*Math.cos(ph),r*Math.sin(ph)*Math.sin(th),mixC(C.teal,C.pink,Math.random()).multiplyScalar(.55));}return o;}
+function galaxy(){const o=blank();for(let i=0;i<N;i++){const arm=Math.floor(Math.random()*4),rad=Math.pow(Math.random(),.7)*7,ang=rad*.9+arm*(Math.PI/2)+(Math.random()-.5)*.5;
+  put(o,i,Math.cos(ang)*rad,(Math.random()-.5)*0.7,Math.sin(ang)*rad,mixC(C.teal,C.pink,rad/7));}return o;}
+
+/* sample any 2D drawing routine into N particles on a plane facing camera */
+function sampleCanvas(draw,opts){
+  const c=document.createElement('canvas'),ctx=c.getContext('2d');
+  c.width=opts.w;c.height=opts.h;draw(ctx,c);
+  const d=ctx.getImageData(0,0,c.width,c.height).data,pts=[];
+  for(let y=0;y<c.height;y+=opts.step)for(let x=0;x<c.width;x+=opts.step){
+    const idx=(y*c.width+x)*4;if(d[idx+3]>40 && (d[idx]+d[idx+1]+d[idx+2])/3>opts.lum){
+      pts.push([(x-c.width/2)/opts.sc, -(y-c.height/2)/opts.sc, d[idx]/255,d[idx+1]/255,d[idx+2]/255]);}}
+  const o=blank();const useCol=opts.color;
+  const jit=opts.jit!=null?opts.jit:.045, zjit=opts.zjit!=null?opts.zjit:.45, ex=opts.expose!=null?opts.expose:1.15;
+  for(let i=0;i<N;i++){const s=pts.length?pts[i%pts.length]:[0,0,1,1,1];
+    let r,g,b;
+    if(useCol){const cc=useCol(i,s);r=cc.r;g=cc.g;b=cc.b;}
+    else{r=Math.min(1,s[2]*ex);g=Math.min(1,s[3]*ex);b=Math.min(1,s[4]*ex);}
+    o.pos[i*3]=s[0]+(Math.random()-.5)*jit;o.pos[i*3+1]=s[1]+(Math.random()-.5)*jit;o.pos[i*3+2]=(Math.random()-.5)*zjit;
+    o.col[i*3]=r;o.col[i*3+1]=g;o.col[i*3+2]=b;}
+  return o;
+}
+function textShape(txt,size,ca,cb){
+  return sampleCanvas((ctx,c)=>{ctx.fillStyle='#fff';ctx.font=`900 ${size}px Lato, Arial, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,c.width/2,c.height/2);},
+    {w:1800,h:520,step:2,lum:128,sc:48,color:(i,s)=>mixC(ca,cb,(s[1]+4)/8)});
+}
+function portraitShape(img){
+  const W=210,H=Math.round(W*img.height/img.width);
+  return sampleCanvas((ctx)=>{ctx.drawImage(img,0,0,W,H);},
+    {w:W,h:H,step:1,lum:28,sc:22,jit:0.01,zjit:0.05,expose:0.8});
+}
+
+/* keyframes (text/portrait filled async) */
+const KEYS=[chaos(), textShape('KLARHEIT',240,C.cream,C.teal), textShape('86 TAGE',230,C.amber,C.cream), null /*portrait*/, galaxy()];
+const K=KEYS.length;
+const camZ=[20,13,13,9.5,15];
+
+const CAPS=[
+  {i:'01 · Chaos',t:'Aus dem Nichts.',s:'130.000 Partikel, ungeordnet — der Anfang.'},
+  {i:'02 · Die Erkenntnis',t:'Klarheit ist der Skill.',s:'Sie ordnen sich zum Wort. Nicht Syntax — Klarheit.'},
+  {i:'03 · Die Reise',t:'86 Tage.',s:'636 Einheiten, 26 Sessions, 6 Module.'},
+  {i:'04 · Das bin ich',t:'Aus Punkten wird ein Mensch.',s:'Dein Bild, Partikel für Partikel zusammengezogen.'},
+  {i:'05 · Klarheit erreicht',t:'Und jetzt?',s:'Lass uns reden.'}
+];
+
+const geo=new THREE.BufferGeometry();
+const aA=new THREE.BufferAttribute(KEYS[0].pos.slice(),3),aB=new THREE.BufferAttribute(KEYS[1].pos.slice(),3);
+const cA=new THREE.BufferAttribute(KEYS[0].col.slice(),3),cB=new THREE.BufferAttribute(KEYS[1].col.slice(),3);
+geo.setAttribute('position',new THREE.BufferAttribute(KEYS[0].pos.slice(),3));
+geo.setAttribute('aA',aA);geo.setAttribute('aB',aB);geo.setAttribute('cA',cA);geo.setAttribute('cB',cB);
+
+const mat=new THREE.ShaderMaterial({
+  uniforms:{uMix:{value:0},uSize:{value:1.12*Math.min(devicePixelRatio,1.6)},uGlow:{value:1}},
+  vertexShader:`attribute vec3 aA;attribute vec3 aB;attribute vec3 cA;attribute vec3 cB;uniform float uMix;uniform float uSize;varying vec3 vCol;
+   void main(){vec3 p=mix(aA,aB,uMix);vCol=mix(cA,cB,uMix);vec4 mv=modelViewMatrix*vec4(p,1.);gl_PointSize=uSize*(22.0/-mv.z);gl_Position=projectionMatrix*mv;}`,
+  fragmentShader:`varying vec3 vCol;uniform float uGlow;void main(){vec2 c=gl_PointCoord-.5;float d=dot(c,c);if(d>.25)discard;float a=smoothstep(.25,0.,d);gl_FragColor=vec4(vCol*uGlow,a);}`,
+  transparent:true,blending:THREE.NormalBlending,depthWrite:false,depthTest:false
+});
+const pts=new THREE.Points(geo,mat);pts.frustumCulled=false;scene.add(pts);
+
+let curSeg=-1;
+function setSeg(k,force){if(k===curSeg&&!force)return;curSeg=k;const a=KEYS[k]||KEYS[0],b=KEYS[Math.min(k+1,K-1)]||a;
+  aA.array.set(a.pos);aA.needsUpdate=true;aB.array.set(b.pos);aB.needsUpdate=true;cA.array.set(a.col);cA.needsUpdate=true;cB.array.set(b.col);cB.needsUpdate=true;}
+setSeg(0,true);
+
+/* load portrait (same-origin via local server) → keyframe 3 */
+const img=new Image();
+img.onload=()=>{try{KEYS[3]=portraitShape(img);if(curSeg===2||curSeg===3)setSeg(curSeg,true);}catch(e){console.warn('Portrait-Sampling blockiert (file://?)',e);KEYS[3]=galaxy();}};
+img.onerror=()=>{KEYS[3]=galaxy();};
+img.src='/assets/bilder/alex-heyers-portrait.jpg';
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,cam));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.5,.45,.3);composer.addPass(bloom);
+function size(){renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();}
+size();addEventListener('resize',size);
+
+function smoothstep(a,b,t){t=Math.max(0,Math.min(1,(t-a)/(b-a)));return t*t*(3-2*t);}
+function lerp(a,b,t){return a+(b-a)*t;}
+
+const heroOv=document.getElementById('heroOv'),capEl=document.getElementById('cap'),ctaOv=document.getElementById('ctaOv'),cue=document.getElementById('cue');
+const capIdx=capEl.querySelector('.idx'),capT=capEl.querySelector('.t'),capS=capEl.querySelector('.s');
+let shownCap=-1;
+let camX=0,camY=0;
+
+function loop(){
+  const prog=window.__prog||0;
+  const phase=prog*(K-1), seg=Math.min(K-2,Math.floor(phase)), local=phase-seg;
+  setSeg(seg);
+  const m=smoothstep(.28,.72,local);          // dwell at ends → readable & still
+  mat.uniforms.uMix.value=m;
+  const swing=Math.sin(m*Math.PI);            // 0 at dwell, 1 mid-transition
+  // glow: abstract scenes leuchten (Bloom), Portrait natürlich/akkurat
+  const nearK=Math.round(phase);
+  const glowTarget=(nearK===3)?1.0:1.5;
+  mat.uniforms.uGlow.value+=(glowTarget-mat.uniforms.uGlow.value)*.05;
+  // Bloom bei der Porträt-Szene fast aus → Gesicht zeigt Detail statt Leuchtfleck
+  bloom.strength+=(((nearK===3)?0.08:0.55)-bloom.strength)*.06;
+
+  /* camera choreography: frontal & still at dwell, swings between scenes */
+  const tz=lerp(camZ[seg],camZ[seg+1],m);
+  const tx=swing*5.5*(seg%2?1:-1);
+  const ty=swing*1.8;
+  camX+=(tx-camX)*.06;camY+=(ty-camY)*.06;
+  const px=(window.__nmx-.5), py=(window.__nmy-.5);
+  cam.position.set(camX+px*1.2, camY+py*1.0, tz);
+  cam.lookAt(0,0,0);
+  pts.rotation.y=swing*0.5*(seg%2?-1:1)+px*0.15;   // a little orbit during morph, still at dwell
+  pts.rotation.x=py*0.1;
+
+  /* overlays */
+  heroOv.style.opacity=String(Math.max(0,1-prog*7));
+  cue.style.opacity=String(Math.max(0,1-prog*7));
+  const near=Math.round(phase);
+  const atDwell=(local<.22||local>.78);
+  capEl.style.opacity=String(atDwell&&prog>0.02&&near<4?1:(near===4?0:0.0));
+  if(near!==shownCap&&CAPS[near]){shownCap=near;capIdx.textContent=CAPS[near].i;capT.textContent=CAPS[near].t;capS.textContent=CAPS[near].s;}
+  ctaOv.classList.toggle('show',near>=4&&local>.4);
+
+  composer.render();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

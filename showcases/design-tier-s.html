@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIBE OS — Tier S · Jenseits von Expert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,100..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E2244;--navy-deep:#081429;--pink:#E94B5D;--teal:#1AA591;
+  --cream:#FDF8F0;--slate:#7E8AA0;--amber:#F5A623;--blue:#5B8DEF;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--navy-deep);color:var(--cream);font-family:'Lato',sans-serif;overflow-x:clip}
+::selection{background:var(--pink);color:#fff}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--teal)}
+
+.scroll-bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:9997;background:linear-gradient(90deg,var(--teal),var(--pink),var(--amber))}
+
+/* hero */
+.hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;padding:5rem 6vw 3rem;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)}
+#heroGL{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.85}
+.hero-in{position:relative;z-index:2;max-width:1000px;pointer-events:none}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem}
+.kicker::before{content:"";width:42px;height:1px;background:var(--amber)}
+.hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(3rem,10vw,8.5rem);line-height:.9;letter-spacing:-.02em;margin-bottom:1.2rem;font-variation-settings:"opsz" 144,"wght" 900;text-shadow:0 4px 40px rgba(0,0,0,.5)}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero p{max-width:560px;font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;color:#dfe4ee;font-weight:300;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+
+.divider{padding:4rem 6vw 0}
+.divider .d-tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--amber)}
+
+.demo{padding:3.6rem 6vw;border-top:1px solid rgba(255,255,255,.07)}
+.demo-head{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.demo-head .no{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--amber);font-weight:700}
+.demo-head .lv{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .65rem;border-radius:20px;color:var(--amber);background:rgba(245,166,35,.13)}
+.demo-head h3{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.5rem,3.4vw,2.4rem);letter-spacing:-.01em}
+.demo-head .desc{flex-basis:100%;color:#9aa3b5;font-weight:300;font-size:.98rem;line-height:1.55;max-width:720px}
+.stage{background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:0;min-height:260px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.note{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--slate);margin-top:1rem;line-height:1.5}
+.note b{color:var(--teal)}
+
+/* S1 shader */
+#shaderCv{width:100%;height:340px;display:block}
+.cv-cap{position:absolute;left:1.4rem;bottom:1.2rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:#fff;background:rgba(8,20,41,.5);padding:.5rem .9rem;border-radius:20px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none}
+
+/* S2 gooey */
+.goo-wrap{width:100%;height:340px;position:relative;filter:url(#goo);display:flex;align-items:center;justify-content:center}
+.blob{position:absolute;border-radius:50%;left:50%;top:50%}
+.b1{width:120px;height:120px;background:var(--pink);animation:orb1 6s var(--ease) infinite}
+.b2{width:100px;height:100px;background:var(--teal);animation:orb2 7s var(--ease) infinite}
+.b3{width:90px;height:90px;background:var(--amber);animation:orb3 8s var(--ease) infinite}
+.b4{width:110px;height:110px;background:var(--blue);animation:orb4 9s var(--ease) infinite}
+.bc{width:80px;height:80px;background:var(--cream)}
+@keyframes orb1{0%,100%{transform:translate(-160px,-40px)}50%{transform:translate(-40px,50px)}}
+@keyframes orb2{0%,100%{transform:translate(150px,-50px)}50%{transform:translate(30px,40px)}}
+@keyframes orb3{0%,100%{transform:translate(-90px,60px)}50%{transform:translate(90px,-60px)}}
+@keyframes orb4{0%,100%{transform:translate(120px,60px)}50%{transform:translate(-120px,-50px)}}
+
+/* S3 flow field */
+#flowCv{width:100%;height:340px;display:block;background:var(--navy-deep)}
+
+/* S4 spring */
+#springCv{width:100%;height:300px;display:block;cursor:crosshair}
+
+/* S5 native scroll css */
+@supports (animation-timeline: scroll()){
+  .sd-bar-track{height:6px;width:100%;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden}
+  .sd-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--pink),var(--amber));transform-origin:left;transform:scaleX(0);animation:sdgrow linear both;animation-timeline:scroll(root);}
+  @keyframes sdgrow{to{transform:scaleX(1)}}
+  .sd{opacity:0;transform:translateY(40px) scale(.96);animation:sdrise linear both;animation-timeline:view();animation-range:entry 0% cover 35%;}
+  @keyframes sdrise{to{opacity:1;transform:none}}
+  .sd-supported{display:inline}.sd-unsupported{display:none}
+}
+@supports not (animation-timeline: scroll()){
+  .sd-supported{display:none}.sd-unsupported{display:inline}
+}
+.sd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;width:100%;margin-top:1.4rem}
+.sd{padding:1.6rem;border-radius:14px;background:linear-gradient(150deg,var(--teal),var(--blue));font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:#fff;min-height:110px;display:flex;align-items:flex-end}
+
+/* S6 view transitions */
+.vt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;width:100%}
+@media(max-width:680px){.vt-grid{grid-template-columns:1fr}}
+.vt-card{border-radius:16px;padding:1.6rem;min-height:150px;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.1);overflow:hidden;position:relative}
+.vt-card h4{font-family:'Playfair Display',serif;font-weight:800;font-size:1.4rem}
+.vt-card p{display:none;color:rgba(255,255,255,.85);font-weight:300;margin-top:.6rem;line-height:1.5}
+.vt-card small{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.vt-card.c1{background:linear-gradient(150deg,var(--pink),#a8303e)}
+.vt-card.c2{background:linear-gradient(150deg,var(--teal),#0d6b5d)}
+.vt-card.c3{background:linear-gradient(150deg,var(--blue),#2a4a8c)}
+.vt-card.expanded{grid-column:1/-1;min-height:300px}
+.vt-card.expanded p{display:block}
+.vt-card.expanded h4{font-size:2.4rem}
+
+/* S8 variable font */
+.vf-breathe{font-family:'Fraunces',serif;font-size:clamp(2.6rem,9vw,6.5rem);line-height:1;text-align:center;animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{font-variation-settings:"opsz" 9,"wght" 200}50%{font-variation-settings:"opsz" 144,"wght" 900}}
+.vf-wave{font-family:'Fraunces',serif;font-size:clamp(2rem,7vw,5rem);line-height:1.1;text-align:center;cursor:default}
+.vf-wave span{display:inline-block;font-variation-settings:"wght" 300;transition:font-variation-settings .15s linear,color .15s}
+
+footer{padding:5rem 6vw 6rem;border-top:1px solid rgba(255,255,255,.1);text-align:center}
+footer .big{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem;font-variation-settings:"opsz" 144,"wght" 900}
+footer .meta{font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.1em;color:var(--slate);line-height:1.8}
+footer .offer{margin-top:1.4rem;color:#9aa3b5;font-weight:300}
+footer .offer b{color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="scroll-bar"></div>
+
+<!-- HERO with live shader bg -->
+<header class="hero">
+  <canvas id="heroGL"></canvas>
+  <div class="hero-in">
+    <div class="kicker">Vibe OS · Tier S · Jenseits von Expert</div>
+    <h1>Die <em>Frontier.</em></h1>
+    <p>Hier endet das DOM und es beginnt die GPU. Der Hintergrund über dir ist kein Bild und kein Gradient — es ist ein GLSL-Shader, der pro Pixel auf deiner Grafikkarte gerechnet wird. Beweg die Maus drüber.</p>
+  </div>
+</header>
+
+<div class="divider"><div class="d-tag">7 Frontier-Techniken · 1 Datei · 0 Libraries</div></div>
+
+<!-- S1 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S1</span><h3>WebGL / GLSL Fragment-Shader</h3><p class="desc">Domain-warped Noise (fbm), das pro Pixel auf der GPU läuft — eine flüssige, atmende Farbwelt in deinen Brand-Farben. Der Cursor verzerrt das Feld in Echtzeit. Das ist dieselbe Technik wie der Hero oben.</p></div>
+  <div class="stage"><canvas id="shaderCv"></canvas><span class="cv-cap">GLSL · fbm domain warp · maus-reaktiv</span></div>
+  <div class="note">Reines WebGL, ~40 Zeilen GLSL. <b>Kein three.js, kein Shader-Toy-Import.</b></div></section>
+
+<!-- S2 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S2</span><h3>SVG Gooey Metaballs</h3><p class="desc">Ein <code>feGaussianBlur</code> + <code>feColorMatrix</code>-Filter lässt separate Kreise zähflüssig ineinander verschmelzen und sich wieder trennen — Liquid-Metal-Effekt, komplett ohne GPU-Shader.</p></div>
+  <div class="stage"><div class="goo-wrap"><span class="blob bc"></span><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div></div>
+  <div class="note">Der Trick steckt im <b>SVG-Filter</b>: blur → hartes Alpha-Threshold via Color-Matrix = Verschmelzen.</div></section>
+
+<!-- S3 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S3</span><h3>Generative Flow Field</h3><p class="desc">Hunderte Partikel folgen einem unsichtbaren Strömungsfeld aus Value-Noise und hinterlassen Spuren — jedes Mal anders, lebendig, „Creative Coding". Beweg die Maus, um das Feld zu stören.</p></div>
+  <div class="stage"><canvas id="flowCv"></canvas></div>
+  <div class="note">Canvas2D · Noise-Vektorfeld · Trails durch semi-transparentes Übermalen.</div></section>
+
+<!-- S4 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S4</span><h3>Spring-Physik (statt Easing)</h3><p class="desc">Keine Bezier-Kurve — echte Federmathematik (Steifigkeit + Dämpfung). Eine Kette aus Knoten folgt deinem Cursor mit Trägheit, Überschwingen und Nachwippen. Beweg die Maus über die Fläche.</p></div>
+  <div class="stage"><canvas id="springCv"></canvas></div>
+  <div class="note">Pro Frame: <code>v += (-k·(x−ziel) − d·v); x += v</code>. Das <b>Überschwingen</b> ist Physik, kein Keyframe.</div></section>
+
+<!-- S5 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S5</span><h3>Native Scroll-Driven CSS</h3><p class="desc">Scroll-gekoppelte Animation <b>ganz ohne JavaScript</b> — über <code>animation-timeline: scroll()</code> und <code>view()</code>. Der Balken unten füllt sich mit deinem Seiten-Scroll, die Kacheln steigen beim Eintreten ins Bild ein. Reines CSS.</p></div>
+  <div class="stage" style="flex-direction:column;padding:2.2rem;align-items:stretch;gap:1rem">
+    <div class="sd-bar-track"><div class="sd-bar"></div></div>
+    <div class="sd-grid">
+      <div class="sd">scroll()</div><div class="sd">view()</div><div class="sd">animation-range</div><div class="sd">entry → cover</div>
+    </div>
+  </div>
+  <div class="note"><span class="sd-supported"><b>✓ Dein Browser unterstützt es</b> — der Balken und die Kacheln laufen rein über CSS.</span><span class="sd-unsupported">⚠ Dein Browser kennt <code>animation-timeline</code> noch nicht (Chrome/Edge 115+, Safari TP). Inhalt bleibt statisch sichtbar.</span></div></section>
+
+<!-- S6 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S6</span><h3>View Transitions API</h3><p class="desc">Der „magic move": Klick auf eine Karte — sie morpht nahtlos in ihre Detailansicht und wieder zurück, das Browser-eigene Shared-Element-Transition. Klick die Karten an.</p></div>
+  <div class="stage" style="padding:2.2rem"><div class="vt-grid" id="vtGrid">
+    <div class="vt-card c1" style="view-transition-name:vt1"><small>Klick →</small><h4>Shader</h4><p>GLSL läuft pro Pixel auf der GPU. Pure Awwwards-Liga — Verzerrung, Fluid, Licht, alles in Mathematik gegossen.</p></div>
+    <div class="vt-card c2" style="view-transition-name:vt2"><small>Klick →</small><h4>Gooey</h4><p>SVG-Filter lassen Formen verschmelzen. Liquid Metal ganz ohne 3D-Engine.</p></div>
+    <div class="vt-card c3" style="view-transition-name:vt3"><small>Klick →</small><h4>Flow</h4><p>Partikel im Noise-Feld. Generative Kunst, die sich nie wiederholt.</p></div>
+  </div></div>
+  <div class="note"><code>document.startViewTransition()</code> · Fallback: klappt ohne Morph auf, wenn der Browser die API nicht hat.</div></section>
+
+<!-- S8 -->
+<section class="demo"><div class="demo-head"><span class="lv">Tier S</span><span class="no">S8</span><h3>Variable-Font Kinetik</h3><p class="desc">Eine Schrift, unendlich viele Gewichte. Oben atmet die Headline kontinuierlich zwischen dünn und fett (Achsen <code>wght</code> + <code>opsz</code>). Unten reagiert jeder Buchstabe einzeln auf deinen Cursor — fahr drüber.</p></div>
+  <div class="stage" style="flex-direction:column;padding:3rem 2rem;gap:2.4rem">
+    <div class="vf-breathe">Atmende Typografie</div>
+    <div class="vf-wave" id="vfWave">Fahr mit der Maus über mich</div>
+  </div>
+  <div class="note">Font: <b>Fraunces</b> (variable) · <code>font-variation-settings</code> live animiert, pro Buchstabe per Cursor-Distanz.</div></section>
+
+<footer>
+  <div class="big">Das ist die Frontier.</div>
+  <div class="meta">Vibe OS · Tier S · WebGL · SVG-Filter · Canvas · Spring · Scroll-CSS · View-Transitions · Variable-Fonts</div>
+  <div class="offer">Noch offen, weil extern: <b>S7 Audio-reaktiv</b> (braucht eine Audio-Quelle) und <b>S9 three.js / WebGPU 3D</b> (braucht 1 CDN-Library). Sag Bescheid, dann baue ich auch die.</div>
+</footer>
+
+<!-- gooey filter def -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="12" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo"/><feBlend in="SourceGraphic" in2="goo"/></filter>
+</defs></svg>
+
+<script>
+/* progress bar */
+const root=document.documentElement,bar=document.querySelector('.scroll-bar');
+addEventListener('scroll',()=>{bar.style.width=(root.scrollTop/(root.scrollHeight-root.clientHeight))*100+'%'},{passive:true});
+
+/* ===== shared WebGL shader (hero + S1) ===== */
+const FRAG=`precision highp float;
+uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);
+ return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.02;a*=.5;}return v;}
+void main(){
+ vec2 uv=gl_FragCoord.xy/u_res.xy;uv.x*=u_res.x/u_res.y;
+ vec2 m=u_mouse/u_res.xy;m.x*=u_res.x/u_res.y;
+ float t=u_time*.13;
+ vec2 q=vec2(fbm(uv*2.2+t),fbm(uv*2.2+vec2(5.2,1.3)-t));
+ vec2 r=vec2(fbm(uv*2.2+q+vec2(1.7,9.2)+.15*t),fbm(uv*2.2+q+vec2(8.3,2.8)-.12*t));
+ float d=distance(uv,m);r+=0.22/(d*4.+0.6);
+ float f=fbm(uv*2.2+r*1.4);
+ vec3 navy=vec3(.04,.10,.22),pink=vec3(.914,.294,.365),teal=vec3(.102,.647,.569),amber=vec3(.96,.65,.14);
+ vec3 col=mix(navy,teal,clamp(f*f*2.2,0.,1.));
+ col=mix(col,pink,clamp(length(q)*.9,0.,1.));
+ col=mix(col,amber,clamp(r.x-.35,0.,1.)*.8);
+ col+=.04*hash(uv+t);
+ gl_FragColor=vec4(col,1.);
+}`;
+const VERT=`attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+function makeShader(canvas){
+  const gl=canvas.getContext('webgl');if(!gl)return null;
+  const c=(ty,s)=>{const sh=gl.createShader(ty);gl.shaderSource(sh,s);gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(sh));return sh;};
+  const prog=gl.createProgram();gl.attachShader(prog,c(gl.VERTEX_SHADER,VERT));gl.attachShader(prog,c(gl.FRAGMENT_SHADER,FRAG));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uRes=gl.getUniformLocation(prog,'u_res'),uTime=gl.getUniformLocation(prog,'u_time'),uMouse=gl.getUniformLocation(prog,'u_mouse');
+  const mouse={x:.5,y:.5};
+  function size(){const dpr=Math.min(devicePixelRatio||1,2);canvas.width=canvas.offsetWidth*dpr;canvas.height=canvas.offsetHeight*dpr;gl.viewport(0,0,canvas.width,canvas.height);}
+  canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=(e.clientX-r.left)/r.width*canvas.width;mouse.y=(1-(e.clientY-r.top)/r.height)*canvas.height;});
+  size();addEventListener('resize',size);
+  function frame(t){gl.uniform2f(uRes,canvas.width,canvas.height);gl.uniform1f(uTime,t*.001);gl.uniform2f(uMouse,mouse.x===.5?canvas.width*.5:mouse.x,mouse.y===.5?canvas.height*.5:mouse.y);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);return true;
+}
+makeShader(document.getElementById('heroGL'));
+makeShader(document.getElementById('shaderCv'));
+
+/* ===== S3 flow field ===== */
+(function(){const cv=document.getElementById('flowCv');if(!cv)return;const ctx=cv.getContext('2d');let w,h,parts=[],mouse={x:-999,y:-999},tt=0;
+  function hash(x,y){return fract(Math.sin(x*127.1+y*311.7)*43758.5453);}
+  function fract(n){return n-Math.floor(n);}
+  function vnoise(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi;
+    const u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+    return lerp(lerp(hash(xi,yi),hash(xi+1,yi),u),lerp(hash(xi,yi+1),hash(xi+1,yi+1),u),v);}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function size(){const dpr=Math.min(devicePixelRatio||1,2);w=cv.width=cv.offsetWidth*dpr;h=cv.height=cv.offsetHeight*dpr;
+    parts=[];for(let i=0;i<260;i++)parts.push({x:Math.random()*w,y:Math.random()*h});
+    ctx.fillStyle='#081429';ctx.fillRect(0,0,w,h);}
+  cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();const dpr=w/cv.offsetWidth;mouse.x=(e.clientX-r.left)*dpr;mouse.y=(e.clientY-r.top)*dpr;});
+  cv.addEventListener('mouseleave',()=>{mouse.x=mouse.y=-999;});
+  const cols=['rgba(233,75,93,','rgba(26,165,145,','rgba(245,166,35,','rgba(91,141,239,'];
+  function frame(){tt+=.002;ctx.fillStyle='rgba(8,20,41,.045)';ctx.fillRect(0,0,w,h);
+    for(let i=0;i<parts.length;i++){const p=parts[i];
+      const a=vnoise(p.x*.0016+tt,p.y*.0016)*Math.PI*4;
+      let vx=Math.cos(a),vy=Math.sin(a);
+      const dx=p.x-mouse.x,dy=p.y-mouse.y,dm=Math.hypot(dx,dy);
+      if(dm<140){vx+=dx/dm*1.4;vy+=dy/dm*1.4;}
+      p.px=p.x;p.py=p.y;p.x+=vx*1.3;p.y+=vy*1.3;
+      if(p.x<0||p.x>w||p.y<0||p.y>h){p.x=Math.random()*w;p.y=Math.random()*h;p.px=p.x;p.py=p.y;}
+      ctx.strokeStyle=cols[i%4]+'.5)';ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(p.x,p.y);ctx.stroke();}
+    requestAnimationFrame(frame);}
+  size();frame();addEventListener('resize',size);})();
+
+/* ===== S4 spring chain ===== */
+(function(){const cv=document.getElementById('springCv');if(!cv)return;const ctx=cv.getContext('2d');let w,h;
+  function size(){const dpr=Math.min(devicePixelRatio||1,2);w=cv.width=cv.offsetWidth*dpr;h=cv.height=cv.offsetHeight*dpr;}
+  size();addEventListener('resize',size);
+  const N=14,nodes=[];for(let i=0;i<N;i++)nodes.push({x:w/2,y:h/2,vx:0,vy:0});
+  const target={x:0,y:0,set:false};
+  cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();const dpr=w/cv.offsetWidth;target.x=(e.clientX-r.left)*dpr;target.y=(e.clientY-r.top)*dpr;target.set=true;});
+  const K=0.18,D=0.74;
+  function frame(){ctx.clearRect(0,0,w,h);
+    for(let i=0;i<N;i++){const n=nodes[i];const tx=i===0?target.x:nodes[i-1].x,ty=i===0?target.y:nodes[i-1].y;
+      n.vx=(n.vx+(tx-n.x)*K)*D;n.vy=(n.vy+(ty-n.y)*K)*D;n.x+=n.vx;n.y+=n.vy;}
+    ctx.beginPath();ctx.moveTo(nodes[0].x,nodes[0].y);for(let i=1;i<N;i++)ctx.lineTo(nodes[i].x,nodes[i].y);
+    ctx.strokeStyle='rgba(26,165,145,.5)';ctx.lineWidth=2;ctx.stroke();
+    for(let i=0;i<N;i++){const n=nodes[i],rad=Math.max(2,16-i);ctx.beginPath();ctx.arc(n.x,n.y,rad,0,7);
+      ctx.fillStyle=i===0?'#F5A623':`rgba(233,75,93,${1-i/N})`;ctx.fill();}
+    requestAnimationFrame(frame);}
+  // init target center
+  requestAnimationFrame(()=>{target.x=w/2;target.y=h/2;});
+  frame();})();
+
+/* ===== S6 view transitions ===== */
+document.querySelectorAll('#vtGrid .vt-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const run=()=>{document.querySelectorAll('#vtGrid .vt-card.expanded').forEach(c=>{if(c!==card)c.classList.remove('expanded')});card.classList.toggle('expanded');};
+    if(document.startViewTransition)document.startViewTransition(run);else run();
+  });
+});
+
+/* ===== S8 variable font wave ===== */
+(function(){const el=document.getElementById('vfWave');if(!el)return;const txt=el.textContent;el.textContent='';
+  const spans=[];[...txt].forEach(ch=>{const s=document.createElement('span');s.textContent=ch===' '?' ':ch;el.appendChild(s);spans.push(s);});
+  el.addEventListener('mousemove',e=>{spans.forEach(s=>{const r=s.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;
+    const d=Math.hypot(e.clientX-cx,e.clientY-cy);const w=Math.round(Math.max(100,900-d*2.2));
+    s.style.fontVariationSettings='"wght" '+w;s.style.color=d<60?'var(--amber)':'var(--cream)';});});
+  el.addEventListener('mouseleave',()=>spans.forEach(s=>{s.style.fontVariationSettings='"wght" 300';s.style.color='var(--cream)';}));})();
+</script>
+</body>
+</html>

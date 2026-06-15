@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIBE OS — S9 · Echtes 3D im Browser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0E2244;--navy-deep:#081429;--pink:#E94B5D;--teal:#1AA591;--cream:#FDF8F0;--slate:#7E8AA0;--amber:#F5A623;--blue:#5B8DEF;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--navy-deep);color:var(--cream);font-family:'Lato',sans-serif;overflow-x:clip}
+::selection{background:var(--pink);color:#fff}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--teal)}
+.scroll-bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:9997;background:linear-gradient(90deg,var(--teal),var(--pink),var(--amber))}
+
+.hero{min-height:64vh;display:flex;flex-direction:column;justify-content:center;padding:5rem 6vw 3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem}
+.kicker::before{content:"";width:42px;height:1px;background:var(--amber)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(3rem,10vw,8.5rem);line-height:.9;letter-spacing:-.02em;margin-bottom:1.2rem;font-variation-settings:"opsz" 144,"wght" 900}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero p{max-width:580px;font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;color:#dfe4ee;font-weight:300}
+
+.demo{padding:3.6rem 6vw;border-top:1px solid rgba(255,255,255,.07)}
+.demo-head{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.demo-head .no{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--amber);font-weight:700}
+.demo-head .lv{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .65rem;border-radius:20px;color:var(--amber);background:rgba(245,166,35,.13)}
+.demo-head h3{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.5rem,3.4vw,2.4rem);letter-spacing:-.01em}
+.demo-head .desc{flex-basis:100%;color:#9aa3b5;font-weight:300;font-size:.98rem;line-height:1.55;max-width:720px}
+.stage{background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.08);border-radius:18px;min-height:420px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.stage canvas{width:100%;height:440px;display:block}
+.cap{position:absolute;left:1.4rem;bottom:1.2rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:#fff;background:rgba(8,20,41,.5);padding:.5rem .9rem;border-radius:20px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none}
+.note{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--slate);margin-top:1rem;line-height:1.5}
+.note b{color:var(--teal)}
+.warn{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--amber);text-align:center;padding:2rem;max-width:480px;line-height:1.6}
+footer{padding:5rem 6vw 6rem;border-top:1px solid rgba(255,255,255,.1);text-align:center}
+footer .big{font-family:'Fraunces',serif;font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem;font-variation-settings:"opsz" 144,"wght" 900}
+footer .meta{font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.1em;color:var(--slate);line-height:1.8}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div class="scroll-bar"></div>
+
+<header class="hero">
+  <div class="kicker">Vibe OS · S9 · Echtes 3D im Browser</div>
+  <h1>Drei <em>Dimensionen.</em></h1>
+  <p>Eine echte 3D-Engine, eine GPU-Partikelwolke aus 120.000 Punkten und eine prozedurale Welt aus reiner Mathematik. Beweg überall die Maus — alles reagiert in Echtzeit.</p>
+</header>
+
+<!-- S9a -->
+<section class="demo"><div class="demo-head"><span class="lv">S9 · Tier Ω</span><span class="no">S9-a</span><h3>three.js Award-Hero</h3><p class="desc">Ein Glas-Torusknoten mit physikalischer Refraktion (<code>transmission</code>), prozeduraler Umgebungs-Reflexion und Bloom-Post-Processing. Die Maus dreht ihn. Genau dieses Setup steckt hinter unzähligen Award-Sites.</p></div>
+  <div class="stage"><canvas id="awardCv"></canvas><span class="cap">three.js · MeshPhysicalMaterial · UnrealBloom</span></div>
+  <div class="note">PBR-Glas + PMREM-Environment + Bloom-Pass. <b>Eine CDN-Zeile</b> (three.js), sonst nichts.</div></section>
+
+<!-- S9b -->
+<section class="demo"><div class="demo-head"><span class="lv">S9 · Tier Ω</span><span class="no">S9-b</span><h3>GPGPU Partikel-Morph</h3><p class="desc">120.000 Punkte morphen endlos zwischen Kugel, Würfel, Torus und Galaxie — die Interpolation läuft pro Punkt im Vertex-Shader auf der GPU. Der Apple-Keynote-Punktwolken-Effekt.</p></div>
+  <div class="stage"><canvas id="morphCv"></canvas><span class="cap">120k Points · GPU vertex-morph · additive</span></div>
+  <div class="note">Zwei Ziel-Positionen pro Punkt als Attribute, <code>mix()</code> im Vertex-Shader. <b>120.000 Punkte bei 60fps.</b></div></section>
+
+<!-- S9c -->
+<section class="demo"><div class="demo-head"><span class="lv">S9 · Tier Ω</span><span class="no">S9-c</span><h3>Raymarching SDF-Welt</h3><p class="desc">Keine Geometrie, kein Modell — diese organischen Blobs existieren nur als Distanzfunktion in <b>einem einzigen Fragment-Shader</b>. Der Strahl wird pro Pixel durch den Raum marschiert, beleuchtet und genebelt. Maus = Kamera-Orbit.</p></div>
+  <div class="stage"><canvas id="sdfCv"></canvas><span class="cap">Raymarching · smooth-min SDF · raw WebGL</span></div>
+  <div class="note">Signed Distance Fields + Sphere-Tracing + Normalen-Beleuchtung. <b>Keine Library, ~50 Zeilen GLSL.</b></div></section>
+
+<footer>
+  <div class="big">Das Ende der Liste.</div>
+  <div class="meta">Vibe OS · S9 · three.js · GPGPU-Morph · Raymarching · WebGL · 0 Build-Tools<br>Lab (45) + Tier S (7) + S9 (3) = das komplette Arsenal</div>
+</footer>
+
+<!-- ===== raw WebGL raymarch (S9c) + progress, classic script ===== -->
+<script>
+const root=document.documentElement,bar=document.querySelector('.scroll-bar');
+addEventListener('scroll',()=>{bar.style.width=(root.scrollTop/(root.scrollHeight-root.clientHeight))*100+'%'},{passive:true});
+
+(function(){
+const cv=document.getElementById('sdfCv');if(!cv)return;
+const gl=cv.getContext('webgl');if(!gl){cv.outerHTML='<div class="warn">WebGL nicht verfügbar.</div>';return;}
+const VERT='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+const FRAG=`precision highp float;
+uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;
+float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
+float map(vec3 p){float t=u_time*.6;float d=1e9;
+ for(int i=0;i<6;i++){float fi=float(i);
+  vec3 c=vec3(sin(t+fi*1.7)*1.6,cos(t*.8+fi*2.1)*1.4,sin(t*.6+fi*1.1)*1.6);
+  d=smin(d,length(p-c)-0.62,0.7);}
+ return d;}
+vec3 nrm(vec3 p){vec2 e=vec2(.0012,0.);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}
+void main(){
+ vec2 uv=(gl_FragCoord.xy-.5*u_res)/u_res.y;
+ vec2 m=(u_mouse-.5)*6.2831;
+ float a=m.x;
+ vec3 ro=vec3(sin(a)*6.5,m.y*3.5,cos(a)*6.5);
+ vec3 f=normalize(-ro),r=normalize(cross(vec3(0,1,0),f)),u=cross(f,r);
+ vec3 rd=normalize(uv.x*r+uv.y*u+1.7*f);
+ float td=0.;vec3 col=vec3(.03,.06,.14);
+ for(int i=0;i<90;i++){vec3 p=ro+rd*td;float d=map(p);
+  if(d<.001){vec3 n=nrm(p);
+   float dif=clamp(dot(n,normalize(vec3(.8,1.4,.6))),0.,1.);
+   float fr=pow(1.-clamp(dot(n,-rd),0.,1.),3.);
+   vec3 base=mix(vec3(.914,.294,.365),vec3(.102,.647,.569),.5+.5*sin(p.y*.8+u_time*.7));
+   col=base*(.22+dif)+fr*vec3(.96,.65,.14);break;}
+  if(td>40.)break;td+=d;}
+ col=mix(col,vec3(.03,.06,.14),1.-exp(-td*.022));
+ gl_FragColor=vec4(pow(max(col,0.),vec3(.85)),1.);}`;
+function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(o));return o;}
+const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VERT));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(pr);gl.useProgram(pr);
+const bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const lc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lc);gl.vertexAttribPointer(lc,2,gl.FLOAT,false,0,0);
+const uR=gl.getUniformLocation(pr,'u_res'),uT=gl.getUniformLocation(pr,'u_time'),uM=gl.getUniformLocation(pr,'u_mouse');
+const mouse={x:.5,y:.5};
+cv.addEventListener('mousemove',e=>{const b=cv.getBoundingClientRect();mouse.x=(e.clientX-b.left)/b.width;mouse.y=1-(e.clientY-b.top)/b.height;});
+function size(){const dpr=Math.min(devicePixelRatio||1,1.5);cv.width=cv.offsetWidth*dpr;cv.height=cv.offsetHeight*dpr;gl.viewport(0,0,cv.width,cv.height);}
+size();addEventListener('resize',size);
+function frame(t){gl.uniform2f(uR,cv.width,cv.height);gl.uniform1f(uT,t*.001);gl.uniform2f(uM,mouse.x,mouse.y);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script>
+
+<!-- ===== three.js (S9a + S9b), module script ===== -->
+<script type="module">
+import * as THREE from 'three';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+/* ---------- S9a Award Hero ---------- */
+(function(){
+  const cv=document.getElementById('awardCv');if(!cv)return;
+  const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(42,1,.1,100);cam.position.set(0,0,6);
+  const pmrem=new THREE.PMREMGenerator(renderer);
+  scene.environment=pmrem.fromScene(new RoomEnvironment(),0.03).texture;
+  const geo=new THREE.TorusKnotGeometry(1.05,.34,240,44);
+  const mat=new THREE.MeshPhysicalMaterial({roughness:.04,metalness:0,transmission:1,thickness:1.6,ior:1.45,clearcoat:1,clearcoatRoughness:.05,color:0xffffff,attenuationColor:new THREE.Color(0xE94B5D),attenuationDistance:2.6});
+  const knot=new THREE.Mesh(geo,mat);scene.add(knot);
+  const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(4,5,6);scene.add(key);
+  const rim=new THREE.DirectionalLight(0x1AA591,1.4);rim.position.set(-5,-2,-4);scene.add(rim);
+  const composer=new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,cam));
+  const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.55,.75,.85);composer.addPass(bloom);
+  let tx=0,ty=0,cx=0,cy=0;
+  cv.addEventListener('mousemove',e=>{const b=cv.getBoundingClientRect();tx=((e.clientX-b.left)/b.width-.5)*2;ty=((e.clientY-b.top)/b.height-.5)*2;});
+  function size(){const w=cv.offsetWidth,h=cv.offsetHeight;renderer.setSize(w,h,false);composer.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  size();addEventListener('resize',size);
+  function loop(t){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;knot.rotation.y=t*.0003+cx*.8;knot.rotation.x=t*.0002+cy*.6;composer.render();requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- S9b GPGPU Particle Morph ---------- */
+(function(){
+  const cv=document.getElementById('morphCv');if(!cv)return;
+  const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,1,.1,100);cam.position.set(0,0,6.5);
+  const N=120000;
+  function shapes(N){
+    const sp=new Float32Array(N*3),cu=new Float32Array(N*3),to=new Float32Array(N*3),ga=new Float32Array(N*3);
+    for(let i=0;i<N;i++){
+      const u=Math.random(),v=Math.random(),th=2*Math.PI*u,ph=Math.acos(2*v-1),R=2.3;
+      sp[i*3]=R*Math.sin(ph)*Math.cos(th);sp[i*3+1]=R*Math.cos(ph);sp[i*3+2]=R*Math.sin(ph)*Math.sin(th);
+      let x=Math.random()*2-1,y=Math.random()*2-1,z=Math.random()*2-1;const fc=Math.floor(Math.random()*6),S=1.9;
+      if(fc===0)x=1;else if(fc===1)x=-1;else if(fc===2)y=1;else if(fc===3)y=-1;else if(fc===4)z=1;else z=-1;
+      cu[i*3]=x*S;cu[i*3+1]=y*S;cu[i*3+2]=z*S;
+      const aa=Math.random()*2*Math.PI,bb=Math.random()*2*Math.PI,rr=1.7,tr=.62;
+      to[i*3]=(rr+tr*Math.cos(bb))*Math.cos(aa);to[i*3+1]=tr*Math.sin(bb);to[i*3+2]=(rr+tr*Math.cos(bb))*Math.sin(aa);
+      const arm=Math.floor(Math.random()*3),rad=Math.pow(Math.random(),.6)*3.2,ang=rad*2.1+arm*(2*Math.PI/3)+(Math.random()-.5)*.5;
+      ga[i*3]=Math.cos(ang)*rad;ga[i*3+1]=(Math.random()-.5)*.6/(rad*.4+.4);ga[i*3+2]=Math.sin(ang)*rad;
+    }
+    return [sp,cu,to,ga];
+  }
+  const S=shapes(N);
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(S[0].slice(),3));
+  const aA=new THREE.BufferAttribute(S[0].slice(),3),aB=new THREE.BufferAttribute(S[1].slice(),3);
+  geo.setAttribute('aA',aA);geo.setAttribute('aB',aB);
+  const mat=new THREE.ShaderMaterial({
+    uniforms:{uMix:{value:0},uSize:{value:14*Math.min(devicePixelRatio,2)},cPink:{value:new THREE.Color(0xE94B5D)},cTeal:{value:new THREE.Color(0x1AA591)},cAmber:{value:new THREE.Color(0xF5A623)}},
+    vertexShader:`attribute vec3 aA;attribute vec3 aB;uniform float uMix;uniform float uSize;varying float vR;
+      void main(){vec3 p=mix(aA,aB,uMix);vR=length(p);vec4 mv=modelViewMatrix*vec4(p,1.);gl_PointSize=uSize*(1.0/-mv.z);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`precision highp float;varying float vR;uniform vec3 cPink;uniform vec3 cTeal;uniform vec3 cAmber;
+      void main(){vec2 c=gl_PointCoord-.5;float d=dot(c,c);if(d>.25)discard;float a=smoothstep(.25,.0,d);
+      vec3 col=mix(cTeal,cPink,clamp(vR/3.0,0.,1.));col=mix(col,cAmber,clamp((vR-2.6)*.7,0.,1.));
+      gl_FragColor=vec4(col,a*.92);}`,
+    transparent:true,blending:THREE.AdditiveBlending,depthWrite:false
+  });
+  const pts=new THREE.Points(geo,mat);pts.frustumCulled=false;scene.add(pts);
+  let idx=0,phase=0;
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function setShapes(a,b){aA.copyArray(S[a]);aA.needsUpdate=true;aB.copyArray(S[b]);aB.needsUpdate=true;}
+  let tx=0,ty=0,cxv=0,cyv=0;
+  cv.addEventListener('mousemove',e=>{const b=cv.getBoundingClientRect();tx=((e.clientX-b.left)/b.width-.5)*2;ty=((e.clientY-b.top)/b.height-.5)*2;});
+  function size(){const w=cv.offsetWidth,h=cv.offsetHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  size();addEventListener('resize',size);
+  function loop(){
+    phase+=0.0055;
+    if(phase<1)mat.uniforms.uMix.value=ease(phase);
+    else mat.uniforms.uMix.value=1;
+    if(phase>=1.7){phase=0;idx=(idx+1)%4;setShapes(idx,(idx+1)%4);}
+    cxv+=(tx-cxv)*.04;cyv+=(ty-cyv)*.04;
+    pts.rotation.y+=0.0016;pts.rotation.y+=cxv*.0009;pts.rotation.x=cyv*.5;
+    renderer.render(scene,cam);requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

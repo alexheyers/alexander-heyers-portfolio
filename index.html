@@ -345,7 +345,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
       <div class="term rv" style="--d:.06s">
         <div class="bar"><i></i><i></i><i></i><span>n8n — self-hosted</span></div>
         <div class="body"><span class="pr">➜</span> <span class="cm">n8n</span> list --active
-<span class="te">~36</span> Workflows <span class="ok">running</span>
+<span class="te">35</span> Workflows <span class="ok">running</span>
 <span class="dim">+ Toolkit:</span> deploy · validate · test
    visualize · backup <span class="dim">(20+ Scripts)</span>
 <span class="ok">✓</span> Docker · eigener VPS · <span class="fl">24/7</span></div>
@@ -367,10 +367,56 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   </div>
 </section>
 
+<!-- AGENTEN ERKLÄRT -->
+<section class="sec" id="agenten">
+  <div class="wrap">
+    <div class="lab rv">04 · Agenten, entmystifiziert</div>
+    <h2 class="rv" style="--d:.06s">Ein Agent ist kein Zauberwort.<br><em>Es ist ein Modell in einer Schleife.</em></h2>
+    <p class="intro rv" style="--d:.1s">Recruiter fragen zu Recht: „Versteht der das wirklich — oder benutzt er nur ein Tool?" Hier ist die Antwort, ohne Buzzwords. Ein Agent ist ein Sprachmodell, das in einer Schleife denkt, Werkzeuge benutzt und sich selbst prüft, bis ein Ziel erreicht ist. Meine Arbeit ist nicht, jede Zeile zu tippen — sondern diese Schleife zu bauen, mit den richtigen Werkzeugen zu bestücken und sie zu dirigieren.</p>
+    <div class="cards" style="grid-template-columns:1.12fr .88fr;margin-top:2.4rem">
+      <div class="term rv" style="--d:.06s">
+        <div class="bar"><i></i><i></i><i></i><span>agent — die Schleife</span></div>
+        <div class="body"><span class="pr">➜</span> <span class="cm">solange</span> Ziel <span class="cm">nicht</span> erreicht:
+   gedanke  = modell.denkt(<span class="te">kontext</span>)
+   werkzeug = modell.wählt(gedanke)
+   <span class="te">ergebnis</span> = werkzeug.führt_aus()
+   kontext += ergebnis     <span class="dim"># lernt dazu, korrigiert</span>
+<span class="ok">✓</span> Ziel erreicht <span class="fl">— ohne Mikromanagement</span></div>
+      </div>
+      <div class="card rv" style="--d:.16s">
+        <div class="n">4×</div>
+        <h3>Die vier Zutaten</h3>
+        <p><b>Modell</b> — denkt &amp; entscheidet.<br><b>Werkzeuge</b> — handeln: Shell, Dateien, APIs, MCP.<br><b>Schleife</b> — prüft sich selbst, korrigiert.<br><b>Ziel</b> — die klare Vorgabe. <em>Das ist mein Part.</em></p>
+        <div class="m">mehr braucht ein Agent nicht</div>
+      </div>
+    </div>
+    <div class="cards c3" style="margin-top:1.3rem">
+      <div class="card rv" style="--d:.06s"><div class="n">SDK</div><h3>Agent SDK · Claude Code</h3><p>Das Claude Agent SDK ist das Gerüst, das aus dieser Schleife ein produktionsreifes System macht — Werkzeug-Aufrufe, Kontext-Management, Subagenten, Rechte. Claude Code ist genau diese Schleife, im Terminal, mit Zugriff auf mein ganzes System.</p><div class="m">Agent SDK · Claude Code · Terminal</div></div>
+      <div class="card rv" style="--d:.14s"><div class="n">MCP</div><h3>Model Context Protocol</h3><p>MCP ist der Standard-Stecker für Agenten-Werkzeuge: Statt jede Integration neu zu bauen, spricht der Agent über MCP mit Notion, Linear, Supabase, n8n und dem Browser. Ich binde fertige MCP-Server an — und verstehe, wie man eigene baut.</p><div class="m">MCP-Server · Tools · Integrationen</div></div>
+      <div class="card rv" style="--d:.22s"><div class="n">∞</div><h3>Multi-Agent-Orchestrierung</h3><p>Ein Agent stößt an Kontext-Grenzen — also dirigiere ich mehrere: ein Planer, spezialisierte Subagenten parallel, ein Prüfer am Ende. Worktree-isoliert, nach der BMAD-Methode. So entsteht Großes, das ein einzelner Kontext nicht hält.</p><div class="m">Subagenten · Workflows · BMAD</div></div>
+    </div>
+    <div class="cards c3" style="margin-top:1.3rem">
+      <div class="card rv" style="--d:.06s"><div class="n">⌘</div><h3>Cowork × Terminal</h3><p>Zwei Cockpits, ein Gehirn: Im Terminal (Claude Code) baue, teste und deploye ich, in Cowork plane ich visuell. Beide teilen dasselbe Memory, dieselben Skills und denselben VPS-Zugang.</p><div class="m">Cowork · Terminal · VPS</div></div>
+      <div class="card rv" style="--d:.14s"><div class="n">⚙</div><h3>Eigene Skills, Hooks &amp; Memory</h3><p>Ich erweitere die Agenten selbst: wiederverwendbare Skills für wiederkehrende Aufgaben, Hooks (z.B. automatisches Session-Log nach Notion) und persistentes Memory über Sessions hinweg. Der Agent wird mein Werkzeug — nicht umgekehrt.</p><div class="m">Skills · Hooks · Memory</div></div>
+      <div class="card rv" style="--d:.22s"><div class="n">⧉</div><h3>Werkzeuge, die handeln</h3><p>Meine Agenten haben echte Hände: Shell, Dateisystem, Git, Browser-Automation, Bild- und Voice-Generierung. Sie lesen, schreiben, deployen, testen — und korrigieren sich selbst, bis das Ergebnis steht.</p><div class="m">Shell · Git · Browser · APIs</div></div>
+    </div>
+    <div class="cards" style="grid-template-columns:1fr;margin-top:1.3rem">
+      <div class="term rv" style="--d:.06s">
+        <div class="bar"><i></i><i></i><i></i><span>so ist diese Seite entstanden</span></div>
+        <div class="body"><span class="pr">➜</span> orchestriere <span class="cm">build</span>(<span class="te">"diese-seite"</span>)
+   <span class="te">planer</span>       → Struktur · Spec · Bildwelt
+   <span class="te">3× subagent</span>  → Hero · Showcases · Finale    <span class="dim">parallel, isoliert</span>
+   <span class="te">prüfer</span>       → Award-Review + Screenshots
+<span class="ok">✓</span> Ich habe dirigiert. <span class="fl">Nicht jede Zeile getippt — und das ist der Skill.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- BELEGE -->
 <section class="sec" id="belege">
   <div class="wrap">
-    <div class="lab rv">04 · Die Beweise</div>
+    <div class="lab rv">05 · Die Beweise</div>
     <h2 class="rv" style="--d:.06s">Andere behaupten. <em>Ich verlinke.</em></h2>
     <p class="intro rv" style="--d:.1s">Jede Kachel ist ein echter Screenshot eines Live-Systems. Klicken statt glauben.</p>
     <div class="wall">
@@ -387,19 +433,19 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <!-- SHOWCASES -->
 <section class="sec" id="showcases">
   <div class="wrap">
-    <div class="lab rv">05 · Das gebaute Werk</div>
+    <div class="lab rv">06 · Das gebaute Werk</div>
     <h2 class="rv" style="--d:.06s">Nicht erzählt. <em>Gebaut.</em></h2>
     <p class="intro rv" style="--d:.1s">Ein Auszug aus dem, was im Bootcamp-Zeitraum entstanden ist — Full-Stack-Produkte, 3D-Showcases, eine Galaxie meines eigenen Systems, ein Effekt-Katalog. Live-Systeme sind klickbar; der Rest liegt im Portfolio.</p>
     <div class="gallery">
       <a class="gcard rv" style="--d:.04s" href="https://myflowmotion.cloud" target="_blank" rel="noopener"><div class="gph"><span class="gt">Full-Stack · live</span><img src="/assets/img/live/studio.jpg" alt="AI-Adoption-Studio"></div><div class="gc"><h3>AI-Adoption-Studio</h3><p>End-to-end orchestriert: Next.js + FastAPI + Supabase, deployt auf eigenem VPS in Docker.</p><span class="gs lv">myflowmotion.cloud →</span></div></a>
-      <div class="gcard rv" style="--d:.1s"><div class="gph"><span class="gt">Three.js · System-Viz</span><img src="/assets/img/showcases/system-map.jpg" alt="System-Map"></div><div class="gc"><h3>System-Galaxie</h3><p>Mein gesamtes System als begehbare 3D-Karte: 119 Knoten, 48 n8n-Workflows, MCP-Server, Skills, Hooks — datengetrieben.</p><span class="gs">komplexe Systeme sichtbar machen</span></div></div>
+      <a class="gcard rv" style="--d:.1s" href="/showcases/system-map/index.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Three.js · System-Viz</span><img src="/assets/img/showcases/system-map.jpg" alt="System-Map"></div><div class="gc"><h3>System-Galaxie</h3><p>Mein gesamtes System als begehbare 3D-Karte: 119 Knoten, 48 n8n-Workflows, MCP-Server, Skills, Hooks — datengetrieben.</p><span class="gs">Begehen →</span></div></a>
       <a class="gcard rv" style="--d:.16s" href="https://myflowmotion-lusion.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">WebGL · live</span><img src="/assets/img/live/lusion.jpg" alt="Lusion-Edition"></div><div class="gc"><h3>MyFlowMotion · Lusion</h3><p>3D-Szenenfahrt auf lusion.co-Niveau — echte Tiefe, scroll-getriebene Kamera.</p><span class="gs lv">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.06s" href="https://myflowmotion-sketch.vercel.app" target="_blank" rel="noopener"><div class="gph"><span class="gt">Illustriert · live</span><img src="/assets/img/showcases/sketch-edition.jpg" alt="Sketch-Edition"></div><div class="gc"><h3>Sketch-Edition</h3><p>Handgezeichnetes Skizzenbuch-Scrollytelling — illustriertes Porträt + Agenten-Welt.</p><span class="gs lv">Ansehen →</span></div></a>
-      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">GPGPU · Partikel</span><img src="/assets/img/showcases/86-tage-showcase.jpg" alt="86-Tage-Showcase"></div><div class="gc"><h3>Partikel-Showcase</h3><p>100.000+ Punkte morphen scroll-gesteuert durch Wörter und werden zu einem Gesicht.</p><span class="gs">Frontier-WebGL</span></div></div>
+      <a class="gcard rv" style="--d:.12s" href="/showcases/86-tage-showcase.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">GPGPU · Partikel</span><img src="/assets/img/showcases/86-tage-showcase.jpg" alt="86-Tage-Showcase"></div><div class="gc"><h3>Partikel-Showcase</h3><p>100.000+ Punkte morphen scroll-gesteuert durch Wörter und werden zu einem Gesicht.</p><span class="gs">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.18s" href="https://deinebusinesspage.de" target="_blank" rel="noopener"><div class="gph"><span class="gt">Produkt · live</span><img src="/assets/img/live/dbp.jpg" alt="deinebusinesspage.de"></div><div class="gc"><h3>deinebusinesspage.de</h3><p>Eigenes Produkt — konzipiert, gebaut, bepreist (990/1.490 €), online.</p><span class="gs lv">Ansehen →</span></div></a>
-      <div class="gcard rv" style="--d:.06s"><div class="gph"><span class="gt">Effekt-Bibliothek</span><img src="/assets/img/showcases/design-lab.jpg" alt="Effekt-Katalog"></div><div class="gc"><h3>Effekt-Katalog Tier 1–Ω</h3><p>Kuratierte Bibliothek von CSS-Basis bis GPGPU-Partikel — ich kenne und dirigiere das ganze Design-Vokabular.</p><span class="gs">Design-Direktion</span></div></div>
-      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">Echtes 3D</span><img src="/assets/img/showcases/design-s9.jpg" alt="Tier-Omega 3D"></div><div class="gc"><h3>Tier-Ω · Echtes 3D</h3><p>Glas-Refraktion, Bloom, Raymarching — three.js auf Award-Niveau, in einer Datei.</p><span class="gs">WebGL / GLSL</span></div></div>
-      <div class="gcard rv" style="--d:.18s"><div class="gph"><span class="gt">Design-Fusion</span><img src="/assets/img/showcases/claude-edition.jpg" alt="Claude-Edition"></div><div class="gc"><h3>Claude-Edition</h3><p>Eine Story, drei Design-Sprachen iteriert — Geschmack ist kein Zufall, sondern Methode.</p><span class="gs">Design-Iteration</span></div></div>
+      <a class="gcard rv" style="--d:.06s" href="/showcases/design-lab.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Effekt-Bibliothek</span><img src="/assets/img/showcases/design-lab.jpg" alt="Effekt-Katalog"></div><div class="gc"><h3>Effekt-Katalog Tier 1–Ω</h3><p>Kuratierte Bibliothek von CSS-Basis bis GPGPU-Partikel — ich kenne und dirigiere das ganze Design-Vokabular.</p><span class="gs">Durchblättern →</span></div></a>
+      <a class="gcard rv" style="--d:.12s" href="/showcases/design-s9.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Echtes 3D</span><img src="/assets/img/showcases/design-s9.jpg" alt="Tier-Omega 3D"></div><div class="gc"><h3>Tier-Ω · Echtes 3D</h3><p>Glas-Refraktion, Bloom, Raymarching — three.js auf Award-Niveau, in einer Datei.</p><span class="gs">Ansehen →</span></div></a>
+      <a class="gcard rv" style="--d:.18s" href="/showcases/claude-edition.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Design-Fusion</span><img src="/assets/img/showcases/claude-edition.jpg" alt="Claude-Edition"></div><div class="gc"><h3>Claude-Edition</h3><p>Eine Story, drei Design-Sprachen iteriert — Geschmack ist kein Zufall, sondern Methode.</p><span class="gs">Ansehen →</span></div></a>
       <div class="gcard rv" style="--d:.06s"><div class="gph"><span class="gt">Partikel-Typo</span><img src="/assets/img/showcases/studio-masterpiece.jpg" alt="Studio-Masterpiece"></div><div class="gc"><h3>Partikel-Headlines</h3><p>Wörter, die sich aus Three.js-Partikeln formen — Kamera-Fit, kein Bleed.</p><span class="gs">three.js · Shader</span></div></div>
       <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">Build-in-Public</span><img src="/assets/img/showcases/making-of.jpg" alt="Making-of"></div><div class="gc"><h3>Making-of</h3><p>Wie aus Forensik und Iteration ein Award-Design wird — der Bau-Prozess als Doku.</p><span class="gs">dokumentierte Iteration</span></div></div>
       <a class="gcard rv" style="--d:.18s" href="https://alexheyers.github.io/mein-lerntagebuch/" target="_blank" rel="noopener"><div class="gph"><span class="gt">Building in Public · live</span><img src="/assets/img/live/tagebuch.jpg" alt="Lerntagebuch"></div><div class="gc"><h3>Lerntagebuch</h3><p>Tägliches technisches Lerntagebuch, GitHub Pages, Auto-Deploy nach Merge.</p><span class="gs lv">Ansehen →</span></div></a>
@@ -410,7 +456,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <!-- SKILLS -->
 <section class="sec" id="skills">
   <div class="wrap">
-    <div class="lab rv">06 · Was ich baue</div>
+    <div class="lab rv">07 · Was ich baue</div>
     <h2 class="rv" style="--d:.06s">Vom Bedürfnis zum <em>laufenden System</em> — die ganze Kette.</h2>
     <p class="intro rv" style="--d:.1s">Kein Entwickler-Titel, sondern Breite: Ich übersetze Geschäfts-Bedürfnisse in Systeme und dirigiere KI, bis Agentur-Qualität rauskommt. Jedes Feld ist am Artefakt belegt.</p>
     <div class="skills">
@@ -431,7 +477,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <!-- CERTS -->
 <section class="sec" id="cert">
   <div class="wrap">
-    <div class="lab rv">07 · Offiziell zertifiziert</div>
+    <div class="lab rv">08 · Offiziell zertifiziert</div>
     <h2 class="rv" style="--d:.06s">Nicht behauptet — <em>zertifiziert.</em> Von Anthropic selbst.</h2>
     <p class="intro rv" style="--d:.1s">Die Firma hinter Claude prüft, dass ich produktiv mit Claude Code &amp; Agentic-Tools arbeite. Jedes Zertifikat ist klickbar verifizierbar.</p>
     <div class="cards c3">
