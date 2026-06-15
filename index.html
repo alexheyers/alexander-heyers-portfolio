@@ -245,6 +245,16 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 .skill h4{font-family:var(--disp);font-weight:500;font-size:1.12rem;margin-bottom:.25rem}
 .skill p{font-size:.86rem;color:var(--ink-60)}
 .skill .sp{font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-40);margin-top:.4rem}
+/* Hero-Porträt */
+.portrait-card{position:relative;background:#14120e;border-radius:26px;overflow:hidden;aspect-ratio:4/5;max-width:440px;margin-left:auto;box-shadow:0 44px 90px -36px rgba(35,32,26,.55);border:1px solid rgba(255,255,255,.08)}
+.portrait-card>img{width:100%;height:100%;object-fit:cover;object-position:center 8%}
+.portrait-card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 48%,rgba(10,8,5,.82))}
+.portrait-card::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 70% 25%,rgba(224,162,60,.14),transparent 60%);mix-blend-mode:screen}
+.pc-meta{position:absolute;left:1.5rem;right:1.5rem;bottom:1.4rem;z-index:2}
+.pc-meta .nm{display:block;font-family:var(--disp);font-weight:500;font-size:1.5rem;color:#fff}
+.pc-meta .rl{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);display:flex;gap:.5rem;align-items:center}
+.pc-meta .rl::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(31,158,140,.5);animation:lpulse 2.4s var(--ezl) infinite}
+.pc-badge{position:absolute;top:1.1rem;right:1.1rem;z-index:2;font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#14120e;background:var(--peach);padding:.4rem .7rem;border-radius:20px}
 @media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}*{animation:none!important}}
 </style>
 </head>
@@ -274,16 +284,10 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
       <div class="meta rv" style="--d:.26s"><span class="pill">20 Jahre Hospitality</span><span class="pill">n8n · Voice-Agents</span><span class="pill">Claude Code · zertifiziert</span><span class="pill">verfügbar 01.08.2026</span></div>
       <div class="ctas rv" style="--d:.34s"><a class="btn solid" href="#belege">Die Belege ansehen →</a><a class="btn glass" href="/fakten.html">Schnellversion</a></div>
     </div>
-    <div class="term rv" style="--d:.3s">
-      <div class="bar"><i></i><i></i><i></i><span>alex@terminal — claude</span></div>
-      <div class="body"><span class="dim"># Bedürfnis rein, System raus.</span>
-<span class="pr">➜</span> <span class="cm">claude</span> "bau einen Voice-Agent mit
-   Consent-Phase, deploy auf VPS"
-<span class="dim">…orchestriere Agenten</span>
-<span class="ok">✓</span> n8n-Workflow live
-<span class="ok">✓</span> ElevenLabs verdrahtet
-<span class="ok">✓</span> deployed · <span class="fl">HTTP 200</span>
-<span class="pr">➜</span> <span class="dim">Klarheit ist der Skill, nicht Syntax.</span><span class="cursor"></span></div>
+    <div class="portrait-card rv" style="--d:.28s">
+      <img src="/assets/img/portrait.jpg" alt="Alex Heyers — Portrait">
+      <span class="pc-badge">verfügbar 01.08.2026</span>
+      <div class="pc-meta"><span class="nm">Alex Heyers</span><span class="rl">Solutions Engineer · Remote DACH</span></div>
     </div>
   </div>
 </section>
