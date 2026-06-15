@@ -11,7 +11,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='26' fill='%23C8623B'/><circle cx='44' cy='22' r='9' fill='%231F9E8C'/></svg>">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -267,7 +266,6 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <!-- HERO -->
 <section class="hero">
   <svg class="scribble" style="top:5rem;right:5%;width:130px;height:42px" viewBox="0 0 150 46" aria-hidden="true"><path d="M6,30 C28,8 44,42 66,22 C86,6 104,40 122,20 C132,12 140,26 146,18"/></svg>
-  <canvas id="glass" class="glassobj" aria-hidden="true"></canvas>
   <div class="wrap hgrid">
     <div>
       <div class="kick rv">Solutions Engineer · CSM · AI-Automation</div>
@@ -510,28 +508,6 @@ if(matchMedia('(hover:hover)').matches){
 if(!reduce&&matchMedia('(hover:hover)').matches){
   document.querySelectorAll('.pc').forEach(el=>{const img=el.querySelector('.ph img');if(!img)return;el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;img.style.transform=`scale(1.09) translate(${px*-16}px,${py*-16}px)`;});el.addEventListener('mouseleave',()=>{img.style.transform='';});});
 }
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-const cv=document.getElementById('glass');
-if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){try{
-  const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
-  const scene=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(45,1,.1,100);cam.position.z=5;
-  const pmrem=new THREE.PMREMGenerator(renderer);
-  scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
-  const geo=new THREE.IcosahedronGeometry(1.0,1);
-  const mat=new THREE.MeshPhysicalMaterial({transmission:1,thickness:1.1,roughness:.04,ior:1.45,metalness:0,clearcoat:1,clearcoatRoughness:.1,color:0xffffff,attenuationColor:new THREE.Color('#EAD3A8'),attenuationDistance:5,iridescence:.35,iridescenceIOR:1.3});
-  const mesh=new THREE.Mesh(geo,mat);mesh.position.set(2.15,1.0,0);scene.add(mesh);
-  function size(){const w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
-  size();addEventListener('resize',size);
-  let mx=0,my=0,tmx=0,tmy=0,sy=0;
-  addEventListener('mousemove',e=>{tmx=e.clientX/innerWidth-.5;tmy=e.clientY/innerHeight-.5;});
-  addEventListener('scroll',()=>{sy=scrollY;},{passive:true});
-  (function loop(t){if(document.hidden){return requestAnimationFrame(loop);}mx+=(tmx-mx)*.05;my+=(tmy-my)*.05;mesh.rotation.y=t*0.00018+mx*.9;mesh.rotation.x=my*.6+Math.sin(t*0.0003)*.18;mesh.position.y=1.0-sy*0.0016;renderer.render(scene,cam);requestAnimationFrame(loop);})(0);
-}catch(e){console.warn('glass off',e);}}
 </script>
 </body>
 </html>
