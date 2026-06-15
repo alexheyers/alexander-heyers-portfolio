@@ -201,6 +201,17 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 .lab{display:inline-flex;align-items:center;gap:.6rem}
 .lab::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral);flex:none;animation:lpulse 2.6s var(--ezl) infinite}
 @keyframes lpulse{0%,100%{box-shadow:0 0 0 0 rgba(200,98,59,.4)}50%{box-shadow:0 0 0 5px rgba(200,98,59,0)}}
+/* rotierendes Sticker-Badge (Flow-Party-Adaption) */
+.badge{position:absolute;width:clamp(104px,11vw,138px);aspect-ratio:1;z-index:6;pointer-events:none}
+.badge .ring{width:100%;height:100%;animation:spin 16s linear infinite}
+.badge text{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;fill:var(--ink);text-transform:uppercase}
+.badge .ctr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--coral);font-size:1.5rem}
+.badge::before{content:"";position:absolute;inset:8%;border-radius:50%;background:var(--paper);box-shadow:0 14px 34px -16px rgba(35,32,26,.32);z-index:-1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cpanel{position:relative}
+/* handgezeichnete Scribbles */
+.scribble{position:absolute;pointer-events:none;z-index:1;opacity:.5}
+.scribble path{fill:none;stroke:var(--coral);stroke-width:3;stroke-linecap:round;filter:url(#rough)}
 @media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}*{animation:none!important}}
 </style>
 </head>
@@ -208,6 +219,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <a class="skip" href="#belege">Zum Inhalt springen</a>
 <div id="pre"><div class="pw">Alex Heyers</div><div class="pb"><i></i></div><div class="ps">Zwischen Tresen und Terminal</div></div>
 <div class="cur"></div><div class="cur2"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough"><feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="4.5"/></filter></svg>
 <div class="aurora"><b class="b1"></b><b class="b2"></b><b class="b3"></b></div>
 <canvas id="motes" class="motes" aria-hidden="true"></canvas>
 <div class="grain"></div>
@@ -220,6 +232,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 
 <!-- HERO -->
 <section class="hero">
+  <svg class="scribble" style="top:6.5rem;right:7%;width:150px;height:46px" viewBox="0 0 150 46" aria-hidden="true"><path d="M6,30 C28,8 44,42 66,22 C86,6 104,40 122,20 C132,12 140,26 146,18"/></svg>
   <div class="wrap hgrid">
     <div>
       <div class="kick rv">Solutions Engineer · CSM · AI-Automation</div>
@@ -355,6 +368,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 <section class="contact" id="kontakt">
   <div class="wrap">
     <div class="cpanel rv">
+      <div class="badge" style="top:-56px;right:7%"><svg class="ring" viewBox="0 0 200 200"><defs><path id="bcirc" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><text><textPath href="#bcirc">VERFÜGBAR · 01.08.2026 · REMOTE DACH · </textPath></text></svg><span class="ctr">✦</span></div>
       <div class="ready">Verfügbar ab 01.08.2026</div>
       <h2>Lass uns <em>bauen.</em></h2>
       <p class="av">Vollzeit · Remote DACH / EMEA · Solutions Engineering, CSM &amp; AI-Automation.</p>
