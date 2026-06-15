@@ -255,7 +255,41 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 .pc-meta .rl{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);display:flex;gap:.5rem;align-items:center}
 .pc-meta .rl::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(31,158,140,.5);animation:lpulse 2.4s var(--ezl) infinite}
 .pc-badge{position:absolute;top:1.1rem;right:1.1rem;z-index:2;font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#14120e;background:var(--peach);padding:.4rem .7rem;border-radius:20px}
-@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}*{animation:none!important}}
+/* ===== UX-Layer: Fortschritt · Schiene · Smart-Nav ===== */
+.prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--teal));box-shadow:0 0 10px rgba(200,98,59,.35)}
+.nav{transition:padding .4s var(--ezl),box-shadow .4s var(--ezl),background .4s,top .4s var(--ezl)}
+.nav.shrunk{top:.6rem;padding:.45rem .5rem .45rem 1.2rem;box-shadow:0 16px 36px -16px rgba(35,32,26,.3)}
+.nav a.l{position:relative}
+.nav a.l.active{color:var(--coral)}
+.nav a.l.active::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;background:var(--coral);border-radius:2px}
+.rail{position:fixed;right:1.7rem;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:.05rem}
+.rail a{display:flex;align-items:center;justify-content:flex-end;gap:.65rem;padding:.34rem 0;color:var(--ink-40)}
+.rail a .tx{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(8px);transition:opacity .3s var(--ezl),transform .3s var(--ezl)}
+.rail a .tk{width:22px;height:2px;border-radius:2px;background:var(--ink-20);transition:width .35s var(--ezl),background .35s}
+.rail a:hover .tx{opacity:1;transform:none;color:var(--coral)}
+.rail a:hover .tk{width:34px;background:var(--coral)}
+.rail a.active .tk{width:42px;background:var(--coral)}
+.rail a:focus-visible{outline:none}
+.rail a:focus-visible .tx{opacity:1;transform:none;color:var(--coral)}
+.rail a:focus-visible .tk{width:42px;background:var(--coral);box-shadow:0 0 0 3px rgba(200,98,59,.3)}
+@media(max-width:1300px){.rail{display:none}}
+/* ===== Mobile-Verfeinerung ===== */
+@media(max-width:900px){.portrait-card{margin-inline:auto}}
+@media(max-width:560px){
+  .sec{padding:4.6rem 0}
+  .hero{padding:6.5rem 0 3rem;min-height:auto}
+  .statement{padding:5.5rem 0}
+  .term .body{font-size:.66rem;line-height:1.72;padding:1rem 1.05rem}
+  h2{max-width:none}
+  .intro{font-size:.98rem}
+}
+@media(max-width:480px){
+  .nav{gap:.7rem;padding:.5rem .55rem .5rem .95rem}
+  .nav .brand{font-size:.82rem}
+  .nav .cta{font-size:.54rem;padding:.45rem .7rem}
+}
+@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -272,9 +306,21 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
   <a class="l" href="#auto">Automation</a><a class="l" href="#showcases">Werk</a><a class="l" href="#skills">Skills</a><a class="l" href="#cert">Zertifikate</a>
   <a class="cta" href="#kontakt">Lass uns reden ↗</a>
 </nav>
+<div class="prog" aria-hidden="true"><i></i></div>
+<nav class="rail" aria-label="Abschnitts-Navigation">
+  <a href="#start"><span class="tx">Start</span><span class="tk"></span></a>
+  <a href="#tresen"><span class="tx">Tresen</span><span class="tk"></span></a>
+  <a href="#auto"><span class="tx">Automation</span><span class="tk"></span></a>
+  <a href="#agenten"><span class="tx">Agenten</span><span class="tk"></span></a>
+  <a href="#belege"><span class="tx">Belege</span><span class="tk"></span></a>
+  <a href="#showcases"><span class="tx">Werk</span><span class="tk"></span></a>
+  <a href="#skills"><span class="tx">Skills</span><span class="tk"></span></a>
+  <a href="#cert"><span class="tx">Zertifikate</span><span class="tk"></span></a>
+  <a href="#kontakt"><span class="tx">Kontakt</span><span class="tk"></span></a>
+</nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="start">
   <svg class="scribble" style="top:5rem;right:5%;width:130px;height:42px" viewBox="0 0 150 46" aria-hidden="true"><path d="M6,30 C28,8 44,42 66,22 C86,6 104,40 122,20 C132,12 140,26 146,18"/></svg>
   <div class="wrap hgrid">
     <div>
@@ -298,7 +344,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 </div></div>
 
 <!-- TRESEN -->
-<section class="sec">
+<section class="sec" id="tresen">
   <div class="wrap">
     <div class="lab rv">01 · Die Tresen-Jahre</div>
     <h2 class="rv" style="--d:.06s">Zwanzig Jahre <em>Operations</em> — unter Hochdruck, in Echtzeit.</h2>
@@ -446,8 +492,7 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
       <a class="gcard rv" style="--d:.06s" href="/showcases/design-lab.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Effekt-Bibliothek</span><img src="/assets/img/showcases/design-lab.jpg" alt="Effekt-Katalog"></div><div class="gc"><h3>Effekt-Katalog Tier 1–Ω</h3><p>Kuratierte Bibliothek von CSS-Basis bis GPGPU-Partikel — ich kenne und dirigiere das ganze Design-Vokabular.</p><span class="gs">Durchblättern →</span></div></a>
       <a class="gcard rv" style="--d:.12s" href="/showcases/design-s9.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Echtes 3D</span><img src="/assets/img/showcases/design-s9.jpg" alt="Tier-Omega 3D"></div><div class="gc"><h3>Tier-Ω · Echtes 3D</h3><p>Glas-Refraktion, Bloom, Raymarching — three.js auf Award-Niveau, in einer Datei.</p><span class="gs">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.18s" href="/showcases/claude-edition.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Design-Fusion</span><img src="/assets/img/showcases/claude-edition.jpg" alt="Claude-Edition"></div><div class="gc"><h3>Claude-Edition</h3><p>Eine Story, drei Design-Sprachen iteriert — Geschmack ist kein Zufall, sondern Methode.</p><span class="gs">Ansehen →</span></div></a>
-      <div class="gcard rv" style="--d:.06s"><div class="gph"><span class="gt">Partikel-Typo</span><img src="/assets/img/showcases/studio-masterpiece.jpg" alt="Studio-Masterpiece"></div><div class="gc"><h3>Partikel-Headlines</h3><p>Wörter, die sich aus Three.js-Partikeln formen — Kamera-Fit, kein Bleed.</p><span class="gs">three.js · Shader</span></div></div>
-      <div class="gcard rv" style="--d:.12s"><div class="gph"><span class="gt">Build-in-Public</span><img src="/assets/img/showcases/making-of.jpg" alt="Making-of"></div><div class="gc"><h3>Making-of</h3><p>Wie aus Forensik und Iteration ein Award-Design wird — der Bau-Prozess als Doku.</p><span class="gs">dokumentierte Iteration</span></div></div>
+      <a class="gcard rv" style="--d:.06s" href="/showcases/studio-masterpiece.html" target="_blank" rel="noopener"><div class="gph"><span class="gt">Partikel-Typo · Scrollytelling</span><img src="/assets/img/showcases/studio-masterpiece.jpg" alt="Studio-Masterpiece"></div><div class="gc"><h3>Partikel-Headlines</h3><p>Wörter, die sich aus Three.js-Partikeln formen — Kamera-Fit, kein Bleed, scroll-getriebene Szenen.</p><span class="gs">Ansehen →</span></div></a>
       <a class="gcard rv" style="--d:.18s" href="https://alexheyers.github.io/mein-lerntagebuch/" target="_blank" rel="noopener"><div class="gph"><span class="gt">Building in Public · live</span><img src="/assets/img/live/tagebuch.jpg" alt="Lerntagebuch"></div><div class="gc"><h3>Lerntagebuch</h3><p>Tägliches technisches Lerntagebuch, GitHub Pages, Auto-Deploy nach Merge.</p><span class="gs lv">Ansehen →</span></div></a>
     </div>
   </div>
@@ -526,7 +571,7 @@ if(matchMedia('(hover:hover)').matches){
   document.querySelectorAll('a,.btn,.card,.cert,.pc,.icard,.chip').forEach(el=>{el.addEventListener('mouseenter',()=>cur2.classList.add('big'));el.addEventListener('mouseleave',()=>cur2.classList.remove('big'));});
 }
 if(!reduce&&window.Lenis){const lenis=new Lenis({lerp:.1});gsap.registerPlugin(ScrollTrigger);lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();lenis.scrollTo(id,{duration:1.3,offset:-20});}}));}
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();lenis.scrollTo(id,{duration:1.3,offset:-72});}}));}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const cu=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,to=+el.dataset.to,dur=1500;let s=null;function tk(n){if(s===null)s=n;const p=Math.min((n-s)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('de-DE');if(p<1)requestAnimationFrame(tk);}requestAnimationFrame(tk);cu.unobserve(el);}),{threshold:.6});
@@ -558,6 +603,32 @@ if(matchMedia('(hover:hover)').matches){
 if(!reduce&&matchMedia('(hover:hover)').matches){
   document.querySelectorAll('.pc').forEach(el=>{const img=el.querySelector('.ph img');if(!img)return;el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;img.style.transform=`scale(1.09) translate(${px*-16}px,${py*-16}px)`;});el.addEventListener('mouseleave',()=>{img.style.transform='';});});
 }
+/* ===== Scroll-Fortschritt · aktiver Abschnitt · Nav-Verdichtung ===== */
+(function(){
+  const prog=document.querySelector('.prog i');
+  const nav=document.querySelector('.nav');
+  const railLinks=[...document.querySelectorAll('.rail a')];
+  const navLinks=[...document.querySelectorAll('.nav a.l')];
+  const secs=railLinks.map(a=>({a,href:a.getAttribute('href'),el:document.getElementById(a.getAttribute('href').slice(1))})).filter(o=>o.el);
+  let ticking=false;
+  function upd(){
+    ticking=false;
+    const st=window.scrollY||document.documentElement.scrollTop||0;
+    const dh=(document.documentElement.scrollHeight-innerHeight)||1;
+    if(prog)prog.style.width=Math.max(0,Math.min(100,st/dh*100))+'%';
+    if(nav)nav.classList.toggle('shrunk',st>120);
+    const mid=st+innerHeight*0.4;
+    let cur=secs[0];
+    for(const o of secs){if(o.el.offsetTop<=mid)cur=o;}
+    railLinks.forEach(a=>a.classList.remove('active'));
+    navLinks.forEach(a=>a.classList.remove('active'));
+    if(cur){cur.a.classList.add('active');navLinks.forEach(a=>{if(a.getAttribute('href')===cur.href)a.classList.add('active');});}
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(upd);}}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll,{passive:true});
+  upd();
+})();
 </script>
 </body>
 </html>
