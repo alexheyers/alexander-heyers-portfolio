@@ -415,6 +415,17 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
 /* Galerie-Bilder wischen beim Einscrollen rein (mehr Bewegung) */
 .gcard .gph img{transition:transform 1s var(--ezl),clip-path 1.15s var(--ezl) .15s}
 .gcard.rv:not(.in) .gph img{clip-path:inset(0 101% 0 0)}
+/* ===== Wer-ich-bin: Foto-Anker (editorial) ===== */
+.werte-intro{display:grid;grid-template-columns:.78fr 1.22fr;gap:2.8rem;align-items:center}
+@media(max-width:760px){.werte-intro{grid-template-columns:1fr;gap:1.6rem}}
+.werte-photo{border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:#15130f;border:1px solid var(--glass-bd);box-shadow:0 34px 70px -34px rgba(35,32,26,.5);position:relative;max-width:380px}
+.werte-photo img{width:100%;height:100%;object-fit:cover}
+.werte-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 70% 20%,rgba(224,162,60,.16),transparent 60%);mix-blend-mode:screen;pointer-events:none}
+@media(max-width:760px){.werte-photo{aspect-ratio:16/10;max-width:440px;margin-inline:auto}}
+/* ===== Hintergrund: warm→kühl-Atmosphäre über den Scroll ===== */
+.aurora{--sp:0}
+.aurora .b1,.aurora .b3{opacity:calc(.5 - var(--sp,0)*.34)}
+.aurora .b2{opacity:calc(.36 + var(--sp,0)*.44)}
 @media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}.wkrow,.embedhint .o{animation:none!important}.heroportrait,.hplabel{opacity:1!important}.gcard .gph img,.ba-top{clip-path:none!important}*{animation:none!important}}
 </style>
 </head>
@@ -539,7 +550,7 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
     <p class="intro rv" style="--d:.1s">Kein nostalgischer Rückblick, sondern Belege. Zwei Jahrzehnte Hospitality haben genau die Skills geschliffen, die ein Solutions-Engineering-, Customer-Success- oder Enablement-Team täglich braucht: Teams aufbauen, Menschen befähigen, Launches unter Volllast liefern — und ruhig bleiben, wenn es ernst wird. Diese Skills lernt man nicht beim Lesen, sondern an einem vollen Freitagabend.</p>
     <div class="cards c3" style="margin-top:2.8rem">
       <div class="icard rv" style="--d:.06s"><div class="ph"><span class="yr">2009 · AIDA Cruises</span><img src="/assets/img/career/aida-team-2009.jpg" alt="Bar-Team an Bord der AIDA Cruises, 2009" onerror="this.style.opacity=0"></div><div class="meta2"><h3>Barchef an Bord</h3><div class="role">5 Bars · ~30 Bartender · 10+ Nationalitäten</div><div class="big"><span class="count" data-to="1300">0</span><small>Gäste/Tag</small></div></div></div>
-      <div class="icard rv" style="--d:.12s"><div class="ph"><span class="yr">2010–2012 · Intercontinental Köln</span><img src="/assets/img/career/harrys-team-christmas-2010.jpg" alt="Team der Harry's New York Bar, Intercontinental Köln" onerror="this.style.opacity=0"></div><div class="meta2"><h3>Harry's New York Bar</h3><div class="role">VIP-Bar · Stammgäste auf Top-Niveau betreut</div><div class="big"><span class="count" data-to="30">0</span><small>Bartender geführt</small></div></div></div>
+      <div class="icard rv" style="--d:.12s"><div class="ph"><span class="yr">2010–2012 · Intercontinental Köln</span><img src="/assets/img/career/harrys-team-christmas-2010.jpg" alt="Team der Harry's New York Bar, Intercontinental Köln" onerror="this.style.opacity=0"></div><div class="meta2"><h3>Harry's New York Bar</h3><div class="role">VIP-Szenebar im Intercontinental Köln — Prominenz, TV &amp; Stars</div><div class="big"><span style="font-style:normal">VIP</span><small>Gäste-Management auf Top-Niveau</small></div></div></div>
       <div class="icard rv" style="--d:.18s"><div class="ph"><span class="yr">Eröffnungen</span><img src="/assets/img/career/harrys-bar-alexander-2010.jpg" alt="Alexander Heyers bei einer Bar-Eröffnung" onerror="this.style.opacity=0"></div><div class="meta2"><h3>Locations eröffnet</h3><div class="role">Vom Konzept bis zum Betrieb · u.a. OX Darmstadt 2019 mit Sternekoch David Rink</div><div class="big"><span class="count" data-to="6">0</span><small>Eröffnungen</small></div></div></div>
     </div>
     <div class="cards c3" style="margin-top:2.4rem">
@@ -832,9 +843,14 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
 <!-- WER ICH BIN -->
 <section class="sec" id="werte">
   <div class="wrap">
-    <div class="lab rv">· Wer ich bin</div>
-    <h2 class="rv" style="--d:.06s"><em>Warum</em> es sich lohnt, mit mir zu arbeiten.</h2>
-    <p class="intro rv" style="--d:.1s">Zwanzig Jahre stand ich zwischen Tresen und Gast — heute zwischen Mensch und Maschine. Was bleibt, ist dieselbe Haltung: zuhören, übersetzen, liefern. Wer mit mir arbeitet, bekommt keinen Entwickler, der im Code verschwindet, sondern jemanden, der Business, Technik und Team im selben Takt hält.</p>
+    <div class="werte-intro rv" style="--d:.06s">
+      <div class="werte-photo"><img src="/assets/img/career/alexander-bartending-smile.jpg" alt="Alex Heyers" onerror="this.style.opacity=0"></div>
+      <div>
+        <div class="lab">· Wer ich bin</div>
+        <h2 style="margin-top:.7rem"><em>Warum</em> es sich lohnt, mit mir zu arbeiten.</h2>
+        <p class="intro" style="margin-top:1.2rem">Zwanzig Jahre stand ich zwischen Tresen und Gast — heute zwischen Mensch und Maschine. Was bleibt, ist dieselbe Haltung: zuhören, übersetzen, liefern. Wer mit mir arbeitet, bekommt keinen Entwickler, der im Code verschwindet, sondern jemanden, der Business, Technik und Team im selben Takt hält.</p>
+      </div>
+    </div>
     <div class="cards c3">
       <div class="card rv" style="--d:.06s"><div class="n">⌘</div><h3>Klarheit als Skill</h3><p>Ich übersetze zwischen Business und Technik und schreibe Anforderungen so präzise, dass ein Team sofort losbauen kann — ich briefe wie ein Solution Architect, nicht wie ein Ticket.</p><div class="m">BUSINESS ⇄ TECHNIK</div></div>
       <div class="card rv" style="--d:.1s"><div class="n">◳</div><h3>Building in Public</h3><p>Jeden Bauschritt dokumentiere ich offen und nachvollziehbar. Wer mit mir arbeitet, weiß jederzeit, wo ein Projekt steht — keine Black Box, keine Überraschungen.</p><div class="m">TRANSPARENT · VERLÄSSLICH</div></div>
@@ -1031,7 +1047,7 @@ if(!reduce&&matchMedia('(hover:hover)').matches){
 (function(){const au=document.querySelector('.aurora');if(!au||reduce)return;let mx=0,my=0,sy=0;
   function apply(){au.style.transform='translate('+mx+'px,'+(my+sy)+'px)';}
   if(matchMedia('(hover:hover)').matches)addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*-22;my=(e.clientY/innerHeight-.5)*-22;apply();},{passive:true});
-  addEventListener('scroll',()=>{sy=(window.scrollY||0)*0.05;apply();},{passive:true});apply();
+  addEventListener('scroll',()=>{sy=(window.scrollY||0)*0.05;au.style.setProperty('--sp',Math.max(0,Math.min(1,(window.scrollY||0)/((document.documentElement.scrollHeight-innerHeight)||1))));apply();},{passive:true});apply();
 })();
 </script>
 </body>
