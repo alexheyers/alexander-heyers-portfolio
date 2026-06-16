@@ -395,7 +395,27 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
 .lb-bar .lb-close:hover{background:var(--coral);border-color:var(--coral)}
 .lb-stage{flex:1;border-radius:14px;overflow:hidden;background:#15130f;border:1px solid rgba(255,255,255,.12)}
 .lb-stage iframe{width:100%;height:100%;border:0;display:block}
-@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}.wkrow,.embedhint .o{animation:none!important}.heroportrait,.hplabel{opacity:1!important}*{animation:none!important}}
+/* ===== Statement: Bar↔Terminal-Slider + Mapping ===== */
+.ba{position:relative;margin:3rem auto 0;max-width:980px;border-radius:24px;overflow:hidden;border:1px solid var(--glass-bd);box-shadow:0 44px 88px -36px rgba(35,32,26,.45);background:#15130f;cursor:ew-resize;touch-action:none}
+.ba-stage{position:relative;aspect-ratio:16/9}
+.ba-stage>img,.ba-top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.ba-top{position:absolute;inset:0;clip-path:inset(0 50% 0 0);will-change:clip-path}
+.ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:rgba(255,255,255,.9);transform:translateX(-1px);box-shadow:0 0 18px rgba(0,0,0,.45);z-index:3}
+.ba-handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--paper);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.05rem;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.ba-l{position:absolute;bottom:1rem;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(24,22,18,.5);backdrop-filter:blur(6px);padding:.35rem .7rem;border-radius:20px;pointer-events:none}
+.ba-l.left{left:1rem;color:var(--coral-soft)}.ba-l.right{right:1rem;color:#7FC7BA}
+.ba-hint{position:absolute;top:1rem;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(24,22,18,.4);backdrop-filter:blur(6px);padding:.3rem .7rem;border-radius:20px;pointer-events:none;transition:opacity .5s}
+.ba.touched .ba-hint{opacity:0}
+.map{margin:2.6rem auto 0;max-width:640px;display:flex;flex-direction:column;gap:.1rem}
+.map .mp{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.2rem;padding:.7rem 0;border-bottom:1px solid var(--ink-20)}
+.map .mp:last-child{border-bottom:0}
+.map .a{text-align:right;font-family:var(--disp);font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--coral)}
+.map .b{text-align:left;font-family:var(--mono);font-size:clamp(.78rem,1.5vw,1rem);color:var(--teal)}
+.map .x{font-family:var(--mono);font-size:.8rem;color:var(--ink-40)}
+/* Galerie-Bilder wischen beim Einscrollen rein (mehr Bewegung) */
+.gcard .gph img{transition:transform 1s var(--ezl),clip-path 1.15s var(--ezl) .15s}
+.gcard.rv:not(.in) .gph img{clip-path:inset(0 101% 0 0)}
+@media(prefers-reduced-motion:reduce){.rv,h1.kin .w{opacity:1!important;transform:none!important;transition:none}.term .body{clip-path:none!important}.prog i,.rail a .tk,.rail a .tx{transition:none!important}.wkrow,.embedhint .o{animation:none!important}.heroportrait,.hplabel{opacity:1!important}.gcard .gph img,.ba-top{clip-path:none!important}*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -537,7 +557,21 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
   <div class="wrap">
     <p class="big rv">„Service als <em>Choreografie</em>, jede Sekunde ein <em>Workflow</em>."</p>
     <div class="src rv" style="--d:.15s">— derselbe Skill. Nur heißt er heute n8n, Voice-Agent, Deployment.</div>
-    <div class="signframe" style="--d:.2s"><div class="ph"><img src="/assets/img/gen/signature-1.jpg" alt="Vom Tresen zum Terminal"></div></div>
+    <div class="ba rv" style="--d:.2s" id="ba">
+      <div class="ba-stage">
+        <img class="ba-base" src="/assets/img/sk_code_wall.jpg" alt="Terminal" onerror="this.style.opacity=0">
+        <div class="ba-top"><img src="/assets/img/career/alexander-cocktail-prep.jpg" alt="Tresen" onerror="this.style.opacity=0"></div>
+        <span class="ba-l left">Tresen</span><span class="ba-l right">Terminal</span>
+        <div class="ba-hint">↤ ziehen ↦</div>
+        <div class="ba-handle"></div>
+      </div>
+    </div>
+    <div class="map rv" style="--d:.1s">
+      <div class="mp"><span class="a">Choreografie</span><span class="x">↔</span><span class="b">Workflow</span></div>
+      <div class="mp"><span class="a">Gast</span><span class="x">↔</span><span class="b">User</span></div>
+      <div class="mp"><span class="a">Service unter Druck</span><span class="x">↔</span><span class="b">Deployment</span></div>
+      <div class="mp"><span class="a">VIP-Daten im Kopf</span><span class="x">↔</span><span class="b">State im System</span></div>
+    </div>
   </div>
 </section>
 
@@ -860,8 +894,7 @@ document.querySelectorAll('.count').forEach(el=>cu.observe(el));
 document.querySelectorAll('img').forEach(im=>im.addEventListener('error',()=>{im.style.opacity='0';if(im.parentNode)im.parentNode.classList.add('imgfail');}));
 if(!reduce&&window.gsap){gsap.utils.toArray('section').forEach(s=>{if(s.classList.contains('statement'))return;gsap.fromTo(s,{scale:1,opacity:1},{scale:.985,opacity:.82,ease:'none',scrollTrigger:{trigger:s,start:'bottom bottom',end:'bottom top',scrub:true}});});
   const st=document.querySelector('.statement');
-  if(st){gsap.fromTo('.signframe',{scale:.85,opacity:.2,y:50},{scale:1,opacity:1,y:0,ease:'power2.out',scrollTrigger:{trigger:st,start:'top 82%',end:'top 32%',scrub:1}});
-    gsap.fromTo('.signframe .ph img',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',ease:'none',scrollTrigger:{trigger:st,start:'top 78%',end:'top 38%',scrub:1}});}}
+  if(st){gsap.fromTo('.ba',{scale:.92,opacity:.3,y:40},{scale:1,opacity:1,y:0,ease:'power2.out',scrollTrigger:{trigger:st,start:'top 84%',end:'top 42%',scrub:1}});}}
 /* Terminal-Print beim Sichtbarwerden */
 const tio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('typed');tio.unobserve(e.target);}}),{threshold:.25});
 document.querySelectorAll('.term').forEach(el=>tio.observe(el));
@@ -876,8 +909,6 @@ if(!reduce&&matchMedia('(hover:hover)').matches){
 (function(){const cv=document.getElementById('motes');if(!cv||reduce)return;const x=cv.getContext('2d');const dpr=Math.min(devicePixelRatio||1,2);let w,h;function rs(){w=cv.width=innerWidth*dpr;h=cv.height=innerHeight*dpr;}rs();addEventListener('resize',rs);const cols=['200,98,59','31,158,140','224,162,60'];const P=Array.from({length:64},(_,i)=>({x:Math.random()*w,y:Math.random()*h,r:(Math.random()*1.8+.5)*dpr,vx:(Math.random()-.5)*.14*dpr,vy:(Math.random()-.5)*.14*dpr,a:Math.random()*.35+.08,c:cols[i%3]}));const TH=132*dpr;(function loop(){if(document.hidden){return requestAnimationFrame(loop);}x.clearRect(0,0,w,h);for(let i=0;i<P.length;i++){for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.hypot(dx,dy);if(d<TH){x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.strokeStyle='rgba(200,98,59,'+(1-d/TH)*0.07+')';x.lineWidth=dpr*.6;x.stroke();}}}for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;x.beginPath();x.arc(p.x,p.y,p.r,0,6.2832);x.fillStyle='rgba('+p.c+','+p.a+')';x.fill();}requestAnimationFrame(loop);})();})();
 /* Aurora reagiert auf Maus + magnetische Buttons */
 if(matchMedia('(hover:hover)').matches){
-  const au=document.querySelector('.aurora');
-  addEventListener('mousemove',e=>{const mx=e.clientX/innerWidth-.5,my=e.clientY/innerHeight-.5;if(au)au.style.transform=`translate(${mx*-22}px,${my*-22}px)`;});
   document.querySelectorAll('.btn.solid,.nav .cta').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.22}px,${(e.clientY-r.top-r.height/2)*.32}px)`;});el.addEventListener('mouseleave',()=>el.style.transform='');});
 }
 /* magnetic image-hover Beweis-Wand */
@@ -969,6 +1000,24 @@ if(!reduce&&matchMedia('(hover:hover)').matches){
     gl.uniform2f(uRes,cv.width,cv.height);gl.uniform1f(uT,reduce?0:t);gl.uniform2f(uM,mx,my);
     gl.drawArrays(gl.TRIANGLES,0,3);if(!reduce)requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
+})();
+/* ===== Bar↔Terminal-Slider ===== */
+(function(){const ba=document.getElementById('ba');if(!ba)return;
+  const top=ba.querySelector('.ba-top'),handle=ba.querySelector('.ba-handle');
+  function set(x){x=Math.max(2,Math.min(98,x));top.style.clipPath='inset(0 '+(100-x)+'% 0 0)';handle.style.left=x+'%';}
+  let drag=false;
+  function px(e){const r=ba.getBoundingClientRect();const cx=e.touches?e.touches[0].clientX:e.clientX;return (cx-r.left)/r.width*100;}
+  ba.addEventListener('pointerdown',e=>{drag=true;ba.classList.add('touched');set(px(e));try{ba.setPointerCapture(e.pointerId);}catch(_){}});
+  ba.addEventListener('pointermove',e=>{if(drag)set(px(e));});
+  addEventListener('pointerup',()=>{drag=false;});
+  set(50);
+  if(!reduce){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){let t=0;const id=setInterval(()=>{t++;set(50+Math.sin(t/5.5)*30);if(t>=30){clearInterval(id);set(50);}},38);io.unobserve(ba);}}),{threshold:.5});io.observe(ba);}
+})();
+/* ===== Aurora: Maus + Scroll-Parallax (Tiefe) ===== */
+(function(){const au=document.querySelector('.aurora');if(!au||reduce)return;let mx=0,my=0,sy=0;
+  function apply(){au.style.transform='translate('+mx+'px,'+(my+sy)+'px)';}
+  if(matchMedia('(hover:hover)').matches)addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*-22;my=(e.clientY/innerHeight-.5)*-22;apply();},{passive:true});
+  addEventListener('scroll',()=>{sy=(window.scrollY||0)*0.05;apply();},{passive:true});apply();
 })();
 </script>
 </body>
