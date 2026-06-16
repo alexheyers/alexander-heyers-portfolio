@@ -341,8 +341,8 @@ a:focus-visible,.btn:focus-visible,.cert:focus-visible,.pc:focus-visible,.chip:f
 h1.kin .w.tr{color:var(--coral)}
 h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
 .heroportrait{position:absolute;right:0;bottom:0;height:90%;max-width:46%;z-index:1;pointer-events:none;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 32%,#000 100%),linear-gradient(0deg,transparent 1%,#000 13%);
-  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 32%,#000 100%),linear-gradient(0deg,transparent 1%,#000 13%);mask-composite:intersect;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 32%,#000 100%),linear-gradient(0deg,transparent 1%,#000 12%,#000 95%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 32%,#000 100%),linear-gradient(0deg,transparent 1%,#000 12%,#000 95%,transparent 100%);mask-composite:intersect;
   opacity:0;animation:hpIn 1.6s var(--ezl) .5s forwards}
 .heroportrait img{height:100%;width:auto;object-fit:contain;object-position:bottom right;filter:contrast(1.04) saturate(.97)}
 @keyframes hpIn{to{opacity:1}}
@@ -903,6 +903,7 @@ if(!reduce&&matchMedia('(hover:hover)').matches){
    base=mix(base,vec3(.09,.40,.38),smoothstep(.45,.95,f)*(1.-warm)*.5);
    float fil=smoothstep(.85,1.,f+length(r)*.2);base=mix(base,mix(vec3(1.),vec3(.5,.9,.85),1.-warm),fil*.4);
    base+=(1.-warm)*vec3(.09,.40,.38)*.06*exp(-length(p-m*1.1)*2.2);
+   float pz=smoothstep(.44,.92,uv.x);base=mix(base,vec3(.05,.045,.04),pz*.93);
    base*=1.-.10*length(p*vec2(res.x/res.y,1.))*.5;base=pow(max(base,0.),vec3(.95));gl_FragColor=vec4(base,1.);}`;
   function sh(ty,s){const o=gl.createShader(ty);gl.shaderSource(o,s);gl.compileShader(o);return o;}
   const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}'));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
