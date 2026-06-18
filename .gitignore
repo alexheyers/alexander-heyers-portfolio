@@ -20,3 +20,4 @@ dist/
 
 # Effekt-Lupe Captures (lokal)
 .effekt-lupe/
+.vercel
