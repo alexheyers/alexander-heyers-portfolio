@@ -170,6 +170,7 @@ const CAT = {
   service:   {label:'Dienste & APIs',    color:'#B08968'},
   output:    {label:'Output & Domains',  color:'#BF5F6F'},
   workflow:  {label:'n8n-Workflows',     color:'#EA4B71'},
+  localai:   {label:'Lokale KI · Murmel', color:'#7FB069'},
 };
 
 /* Galaxie-Scheibe: Cluster als Spiralarme um den Kern, flach mit leichter Neigung */
@@ -182,6 +183,7 @@ const CLUSTERS = {
   studio:    {pos:[-45,8,-40],  label:'AI-Adoption-Studio · Showcase', r:13},
   output:    {pos:[4,-8,-64],   label:'Deploy & Output',               r:16},
   mcplocal:  {pos:[41,4,-28],   label:'MCP · Lokal',                   r:11},
+  localai:   {pos:[30,16,-10],  label:'Lokale KI · Murmel',            r:10},
 };
 
 /* id, label, cat, cluster, icon(simple-icons slug), size, detail */
@@ -271,12 +273,22 @@ const NODES = [
  {id:'dom-mva',l:'meinvoiceagent.de',cat:'output',cl:'output',sz:.8,d:'Voice Agents DACH — 990/1990/2990€ + 199€/Monat.'},
  {id:'dom-mfm',l:'myflowmotion.cloud',cat:'output',cl:'output',sz:.8,d:'Portfolio-Schaufenster — Host des AI-Adoption-Studios auf dem VPS.'},
  {id:'dom-studio',l:'studio.de',cat:'output',cl:'output',sz:.8,d:'Firmen-Domain der KI-Studio.'},
+
+ // ---- LOKALE KI · MURMEL (selbst gebaut, 100% lokal, kein Abo) ----
+ {id:'murmel',l:'Murmel',cat:'localai',cl:'localai',icon:'swift',sz:1.5,d:'Selbst gebautes Voice-to-Text für macOS (Swift). fn-Taste halten → sprechen → Text ins aktive Fenster. 100% lokal, kein Abo. Repo alexheyers/murmel, eigene Seite murmel.vercel.app.'},
+ {id:'whisper-cpp',l:'whisper.cpp · large-v3-turbo',cat:'localai',cl:'localai',icon:'openai',sz:1.1,d:'OpenAIs Whisper als hochoptimiertes C++ — lokale Spracherkennung auf Apple Silicon (~1,5 GB Modell). Erkennt Deutsch + Englisch gemischt.'},
+ {id:'ollama',l:'Ollama',cat:'localai',cl:'localai',icon:'ollama',sz:1.15,d:'Lokaler LLM-Server („Docker für LLMs") — per Homebrew installiert, lauscht auf 127.0.0.1:11434. Macht ein lokales Modell per HTTP nutzbar, kein API-Key, keine Cloud.'},
+ {id:'qwen',l:'Qwen2.5 · 3B',cat:'localai',cl:'localai',sz:1,d:'Kompaktes 3-Mrd.-Parameter-Modell (Alibaba, Apache-2.0, ~1,9 GB) — läuft in Ollama, poliert Murmels Diktate (gezähmt mit striktem System-Prompt + Halluzinations-Schutz).'},
 ];
 
 const EDGES = [
  // Core
  ['mac','claude-code','Terminal'],['cowork','claude-code','Desktop'],['chrome-ext','claude-code','Browser'],
  ['memory','claude-code','Persistenz'],['memory','cowork','Symlink'],['bootcamp','claude-code','Session-Input'],
+ // Lokale KI · Murmel
+ ['murmel','mac','läuft nativ'],['murmel','claude-code','gebaut mit'],
+ ['murmel','whisper-cpp','Spracherkennung'],['murmel','ollama','Politur'],
+ ['ollama','qwen','führt aus'],['murmel','github','Repo'],['murmel','vercel','eigene Seite'],
  // Plugins/Skills/Hooks → Hub
  ['plugin-superpowers','claude-code','Plugin'],['plugin-vercel','claude-code','Plugin'],
  ['skill-algorithmic-art','claude-code','Skill'],['skill-canvas-design','claude-code','Skill'],
