@@ -487,6 +487,42 @@ h1.kin .w.te{color:var(--teal);font-style:italic;font-weight:500}
   <span class="set">Claude Code<b>·</b>n8n<b>·</b>Voice-Agents<b>·</b>End-to-End<b>·</b>Solutions Engineering<b>·</b>Building in Public<b>·</b>MCP<b>·</b>Docker / VPS<b>·</b></span>
 </div></div>
 
+<!-- AKTUELL: MURMEL-SPOTLIGHT -->
+<style>
+.mspot{padding:2.6rem 0 .5rem}
+.mspot .card{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:2rem;align-items:center;background:var(--glass);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--glass-bd);border-radius:26px;padding:clamp(1.6rem,3vw,2.6rem);box-shadow:0 30px 60px -34px rgba(35,32,26,.32);overflow:hidden}
+@media(max-width:840px){.mspot .card{grid-template-columns:1fr}}
+.mspot .live-now{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:600}
+.mspot .live-now i{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:mpulse 1.8s infinite}
+@keyframes mpulse{0%{box-shadow:0 0 0 0 rgba(200,98,59,.55)}70%{box-shadow:0 0 0 10px rgba(200,98,59,0)}100%{box-shadow:0 0 0 0 rgba(200,98,59,0)}}
+.mspot h2{font-family:var(--disp);font-weight:500;font-size:clamp(1.8rem,3.6vw,2.8rem);line-height:1.05;letter-spacing:-.015em;margin:.9rem 0 0}
+.mspot h2 em{font-style:italic;color:var(--coral)}
+.mspot .lead2{color:var(--ink-60);margin-top:.9rem;max-width:46ch;font-size:1.02rem}
+.mspot .lead2 b{color:var(--ink);font-weight:500}
+.mspot .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem}
+.mspot .pills span{font-family:var(--mono);font-size:.6rem;letter-spacing:.04em;padding:.45rem .8rem;background:var(--paper);border:1px solid var(--ink-20);border-radius:30px;color:var(--ink-60)}
+.mspot .pills b{color:var(--coral);font-weight:600}
+.mspot .ctas{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem}
+.mspot .shot{display:block;border-radius:18px;overflow:hidden;border:1px solid var(--glass-bd);box-shadow:0 24px 50px -28px rgba(35,32,26,.4);transform:rotate(-.6deg);transition:transform .6s var(--ezl)}
+.mspot .shot:hover{transform:rotate(0) translateY(-4px)}
+.mspot .shot img{display:block;width:100%;height:auto}
+</style>
+<section class="mspot wrap" id="aktuell">
+  <div class="card rv">
+    <div>
+      <span class="live-now"><i></i>Frisch gebaut · gerade entstanden</span>
+      <h2>Murmel — ich spreche, <em>der Mac tippt.</em></h2>
+      <p class="lead2">Heute aus Ärger über ein 15-€-Abo gebaut: eine <b>native macOS-App</b>, die lokal zuhört und das Gesprochene überall einfügt. <b>whisper.cpp + Ollama</b>, komplett offline — an einem Tag fertig.</p>
+      <div class="pills"><span><b>Swift</b> · nativ</span><span>whisper.cpp</span><span>Ollama</span><span><b>0 €</b>/Monat</span></div>
+      <div class="ctas">
+        <a class="btn solid" href="/projekte/murmel.html">Case-Study ansehen →</a>
+        <a class="btn glass" href="https://github.com/alexheyers/murmel" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <a class="shot" href="/projekte/murmel.html" aria-label="Murmel Case-Study ansehen"><img src="/assets/img/live/murmel.jpg" alt="Murmel läuft auf dem Mac — Menüleisten-Panel über dem Terminal" loading="lazy"></a>
+  </div>
+</section>
+
 <!-- WERK-WAND (Flaggschiff) -->
 <section class="sec" id="werk">
   <div class="wrap">
