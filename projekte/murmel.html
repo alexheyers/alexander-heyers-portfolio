@@ -400,6 +400,41 @@ h2 em{font-style:italic;color:var(--coral)}
   </div>
 </section>
 
+<!-- RAG / DATEN-ASSISTENT -->
+<section class="blk wrap" id="rag">
+  <div class="lab rv">Neu · RAG</div>
+  <h2 class="rv" style="--d:.06s">Frag deine <em>eigenen Daten</em> — per Stimme.</h2>
+  <p class="intro rv" style="--d:.1s">Der größte Schritt: Murmel beantwortet nicht nur aus dem Allgemeinwissen des Modells, sondern aus <b>meinen eigenen Dateien und Diktaten</b>. Mitten im Schreiben sage ich z.&nbsp;B. <i>„recherchiere meine LinkedIn-Strategie und füg sie ein"</i> — und das Ergebnis landet am Cursor. Komplett lokal.</p>
+
+  <div class="cards">
+    <div class="capc rv" style="--d:.12s">
+      <div class="ic">was ist das</div>
+      <h4>RAG, einfach erklärt</h4>
+      <p><b>Retrieval-Augmented Generation</b> = „erst nachschlagen, dann antworten". Statt nur aus dem Training zu raten, holt Murmel die passenden Stellen aus deinen Daten und gibt sie dem Modell als Kontext mit.</p>
+    </div>
+    <div class="capc rv" style="--d:.16s">
+      <div class="ic">deine quellen</div>
+      <h4>Ordner + Diktat-Verlauf</h4>
+      <p>Du wählst Ordner (Notizen, Code, Docs). Murmel indexiert sie lokal — inkrementell, nur Geändertes neu. Der Diktat-Verlauf ist auch dabei.</p>
+    </div>
+    <div class="capc rv" style="--d:.2s">
+      <div class="ic">100% lokal</div>
+      <h4>Kein Byte in die Cloud</h4>
+      <p>Embeddings via <b>nomic-embed-text</b> (lokal in Ollama), Vektoren in SQLite, Antwort via Qwen. Privat, offline, 0&nbsp;€ — auch deine Daten bleiben bei dir.</p>
+    </div>
+  </div>
+
+  <div class="term rv" style="--d:.16s">
+    <div class="bar"><i></i><i></i><i></i><span class="t">so läuft eine RAG-Anfrage</span></div>
+<pre><span class="cl-d"># im Text, fn halten und sprechen:</span>
+<span class="cl-g">you&gt;</span> <span class="cl-t">„recherchiere meine LinkedIn-Strategie und füg sie ein"</span>
+<span class="cl-d">  1.</span> Frage → Embedding (nomic-embed-text, lokal)
+<span class="cl-d">  2.</span> ähnlichste Stellen aus deinen Daten finden  <span class="cl-d">(Cosine-Similarity)</span>
+<span class="cl-d">  3.</span> Qwen formuliert MIT diesem Kontext
+<span class="cl-a">✓</span> <span class="cl-t">Ergebnis am Cursor eingefügt · Quellen im Overlay sichtbar</span></pre>
+  </div>
+</section>
+
 <!-- AUF APPLE GEBAUT -->
 <section class="blk wrap" id="apple">
   <div class="lab rv">Auf Apple gebaut</div>
